@@ -1,0 +1,20 @@
+{
+    "101": {
+        "name": "Mama Noodles",
+        "quantity": 50,
+        "price": 6.0,
+        "category": "Food"
+    },
+    "102": {
+        "name": "Lactasoy Milk",
+        "quantity": 20,
+        "price": 12.0,
+        "category": "Drink"
+    },
+    "103": {
+        "name": "Singha Water",
+        "quantity": 100,
+        "price": 10.0,
+        "category": "Drink"
+    }
+}
