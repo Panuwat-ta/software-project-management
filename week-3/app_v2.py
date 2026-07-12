@@ -1,0 +1,219 @@
+import json
+import os
+from typing import Dict, List, Optional
+
+class Product:
+    """คลาสแทนข้อมูลของสินค้าแต่ละรายการ"""
+    def __init__(self, product_id: str, name: str, quantity: int, price: float, category: str):
+        self.product_id = product_id
+        self.name = name
+        self.quantity = quantity
+        self.price = price
+        self.category = category
+
+    def to_dict(self) -> dict:
+        """แปลงออบเจกต์เป็น dictionary เพื่อใช้บันทึกลง JSON"""
+        return {
+            "name": self.name,
+            "quantity": self.quantity,
+            "price": self.price,
+            "category": self.category
+        }
+
+    @classmethod
+    def from_dict(cls, product_id: str, data: dict) -> 'Product':
+        """สร้างออบเจกต์ Product จาก dictionary พร้อมรองรับสกีมาเวอร์ชันเก่า"""
+        # รองรับ Backward Compatibility
+        name = data.get("name") or data.get("n", "Unknown")
+        quantity = data.get("quantity") if "quantity" in data else data.get("q", 0)
+        price = data.get("price") if "price" in data else data.get("p", 0.0)
+        category = data.get("category") or data.get("c", "General")
+        
+        return cls(product_id, name, int(quantity), float(price), category)
+
+
+class InventoryManager:
+    """คลาสจัดการตรรกะทางธุรกิจและการบันทึกข้อมูลคลังสินค้า"""
+    def __init__(self, db_path: str = "data.json"):
+        self.db_path = db_path
+        self.products: Dict[str, Product] = {}
+        self.load_data()
+
+    def load_data(self):
+        """โหลดข้อมูลสินค้าจากไฟล์ JSON"""
+        if not os.path.exists(self.db_path):
+            self._set_default_data()
+            self.save_data()
+            return
+
+        try:
+            with open(self.db_path, 'r', encoding='utf-8') as f:
+                raw_data = json.load(f)
+                self.products = {
+                    pid: Product.from_dict(pid, pdata)
+                    for pid, pdata in raw_data.items()
+                }
+        except (json.JSONDecodeError, IOError) as e:
+            print(f"Error loading database: {e}. Starting with empty inventory.")
+            self.products = {}
+
+    def save_data(self):
+        """บันทึกข้อมูลสินค้าปัจจุบันลงไฟล์ JSON อย่างปลอดภัย (Atomic Save)"""
+        temp_path = self.db_path + ".tmp"
+        try:
+            with open(temp_path, 'w', encoding='utf-8') as f:
+                output = {pid: prod.to_dict() for pid, prod in self.products.items()}
+                json.dump(output, f, indent=4, ensure_ascii=False)
+            os.replace(temp_path, self.db_path)
+        except IOError as e:
+            print(f"Error saving database: {e}")
+
+    def _set_default_data(self):
+        """กำหนดข้อมูลเริ่มต้นหากยังไม่มีไฟล์คลังสินค้า"""
+        self.products = {
+            "101": Product("101", "Mama Noodles", 50, 6.0, "Food"),
+            "102": Product("102", "Lactasoy Milk", 20, 12.0, "Drink"),
+            "103": Product("103", "Singha Water", 100, 10.0, "Drink")
+        }
+
+    def add_or_update_product(self, product_id: str, name: str, quantity: int, price: float, category: str) -> bool:
+        """เพิ่มสินค้าใหม่หรือแก้ไขข้อมูลสินค้าเดิม"""
+        self.products[product_id] = Product(product_id, name, quantity, price, category)
+        self.save_data()
+        return True
+
+    def cut_stock(self, product_id: str, amount: int) -> tuple[bool, str, Optional[int]]:
+        """ตัดสต็อกสินค้าและรายงานผลลัพธ์พร้อมแจ้งเตือนสถานะ"""
+        if product_id not in self.products:
+            return False, "Product not found!", None
+            
+        product = self.products[product_id]
+        if product.quantity < amount:
+            return False, "Error: Not enough stock!", product.quantity
+            
+        product.quantity -= amount
+        self.save_data()
+        return True, "Stock updated.", product.quantity
+
+    def get_inventory_summary(self) -> dict:
+        """สรุปภาพรวมของสินค้าในคลัง"""
+        total_types = len(self.products)
+        total_value = sum(p.quantity * p.price for p in self.products.values())
+        low_stock_list = [p.name for p in self.products.values() if p.quantity < 10]
+        
+        return {
+            "total_types": total_types,
+            "total_value": total_value,
+            "low_stock_list": low_stock_list
+        }
+
+
+class InventoryCLI:
+    """คลาสจัดการส่วนต่อประสานผู้ใช้ทาง CLI และการตรวจสอบข้อมูลนำเข้า"""
+    def __init__(self, manager: InventoryManager):
+        self.manager = manager
+
+    def _get_input(self, prompt: str, validator_func) -> any:
+        """Helper สำหรับรับข้อมูลทางแป้นพิมพ์พร้อมตรวจสอบความถูกต้อง"""
+        while True:
+            try:
+                user_input = input(prompt).strip()
+                result = validator_func(user_input)
+                # If validator throws ValueError, we catch it
+                # If it raises an exception with a message, we handle it
+                # So the lambda functions should raise ValueError explicitly if failed.
+                if isinstance(result, Exception):
+                    raise result
+                return result
+            except ValueError as e:
+                print(f"Invalid input: {e}. Please try again.")
+
+    def run(self):
+        """ลูปเมนูหลักของโปรแกรม"""
+        while True:
+            print("\n=== INVENTORY SYSTEM v2.0 ===")
+            print("1. Show all products")
+            print("2. Add or Update product")
+            print("3. Cut stock (Out)")
+            print("4. Check inventory summary")
+            print("5. Exit")
+            choice = input("Select menu: ").strip()
+
+            if choice == "1":
+                self.show_all()
+            elif choice == "2":
+                self.add_or_update()
+            elif choice == "3":
+                self.cut_stock()
+            elif choice == "4":
+                self.show_summary()
+            elif choice == "5":
+                print("Thank you for using the system. Goodbye!")
+                break
+            else:
+                print("Invalid choice, please select 1-5.")
+
+    def show_all(self):
+        print("-" * 65)
+        if not self.manager.products:
+            print("Inventory is empty.")
+        for pid, p in self.manager.products.items():
+            print(f"ID: {pid:<5} | Name: {p.name:<20} | Stock: {p.quantity:<6} | Price: {p.price:<7.2f} THB | Type: {p.category}")
+        print("-" * 65)
+
+    def add_or_update(self):
+        pid = self._get_input("Enter ID: ", lambda x: x if x else ValueError("ID cannot be empty"))
+        name = self._get_input("Enter Name: ", lambda x: x if x else ValueError("Name cannot be empty"))
+        
+        def validate_qty(val):
+            q = int(val)
+            if q < 0: raise ValueError("Quantity cannot be negative")
+            return q
+            
+        def validate_price(val):
+            p = float(val)
+            if p < 0: raise ValueError("Price cannot be negative")
+            return p
+
+        qty = self._get_input("Enter Qty: ", validate_qty)
+        price = self._get_input("Enter Price: ", validate_price)
+        category = self._get_input("Enter Category: ", lambda x: x if x else "General")
+
+        self.manager.add_or_update_product(pid, name, qty, price, category)
+        print("Success: Product recorded.")
+
+    def cut_stock(self):
+        pid = input("Enter product ID to cut stock: ").strip()
+        if not pid:
+            print("Failed: ID cannot be empty.")
+            return
+            
+        def validate_amount(val):
+            a = int(val)
+            if a <= 0: raise ValueError("Amount must be greater than zero")
+            return a
+
+        amount = self._get_input("How many items out?: ", validate_amount)
+        success, message, remaining = self.manager.cut_stock(pid, amount)
+        
+        if success:
+            print(message)
+            if remaining is not None and remaining < 5:
+                print("!!! WARNING: ITEM IS RUNNING VERY LOW IN STOCK (< 5) !!!")
+        else:
+            print(f"Failed: {message}")
+
+    def show_summary(self):
+        summary = self.manager.get_inventory_summary()
+        print("\n--- INVENTORY SUMMARY ---")
+        print(f"Total product types: {summary['total_types']}")
+        print(f"Total inventory value: {summary['total_value']:,.2f} THB")
+        print(f"Alert low stock (<10): {', '.join(summary['low_stock_list']) if summary['low_stock_list'] else 'None'}")
+
+
+if __name__ == "__main__":
+    # ใช้โฟลเดอร์ปัจจุบันของไฟล์สคริปต์เพื่อบันทึกไฟล์ JSON ให้เป็นหมวดหมู่
+    db_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data.json")
+    manager = InventoryManager(db_path=db_file)
+    cli = InventoryCLI(manager)
+    cli.run()
