@@ -13,6 +13,7 @@
 ---
 
 ## Workspace Links
+* **[Project Website](http://panuwat.me/software-project-management/)** - เว็บไซต์นำเสนอโครงการ
 * **[Trello Board](https://trello.com/b/bsc6WHDT)** - กระดานติดตามสถานะการดำเนินงาน
 * **[draw.io](https://drive.google.com/file/d/1tFYndnVNnFhFePMNs_YaC3N4-rA2QI3y/view?usp=sharing)** - diagram
 
@@ -20,6 +21,10 @@
 
 ```text
 .
+├── Phase1/                       # เอกสารนำเสนอและวางแผนโครงการระยะที่ 1 (Phase 1)
+│   ├── Integrated_Planning_Proposal.md # ข้อเสนอและแผนงานแบบบูรณาการ
+│   ├── Integrated_Planning_Proposal.pdf # ไฟล์ PDF ของข้อเสนอ
+│   └── presentation.html         # สไลด์นำเสนอโครงการ (HTML)
 ├── doc/                          # เอกสารเพิ่มเติม
 │   ├── app.md                    # เอกสารอธิบายโครงสร้างและการทำงานของระบบคลังสินค้าใหม่ (v2.0)
 │   └── test.md                   # เอกสารอธิบายการทำงานของสคริปต์ Automated Test (PyTest)
@@ -46,6 +51,14 @@
 │   ├── test.json                 # รายงานผลลัพธ์การทดสอบระบบอัตโนมัติ
 │   ├── test_app.py               # สคริปต์ Automated Test (Unittest)
 │   └── test_app1.py              # สคริปต์ Automated Test (PyTest) พร้อมระบบออกรีพอร์ต JSON
+├── week-4/                       # สัปดาห์ที่ 4: การทดสอบและการแก้ไขปรับปรุงโค้ด (Testing & Code Refinement)
+│   ├── app.py                    # ซอร์สโค้ดระบบที่มีการพัฒนาปรับปรุงล่าสุด
+│   ├── data.json                 # ฐานข้อมูล JSON ของแอปพลิเคชัน
+│   ├── test.json                 # รายงานผลลัพธ์การทดสอบระบบ
+│   ├── test_app.png              # รูปภาพหน้าจอหรือผลการทดสอบ
+│   └── test_app.py               # สคริปต์ Automated Test
+├── .gitignore                    # ไฟล์กำหนดรายการที่ไม่ต้องนำเข้า Git
+├── index.html                    # หน้าแรกของการนำเสนอโครงการ (เว็บ)
 ├── work.md                       # บันทึกลิงก์สไลด์การบรรยายประจำสัปดาห์
 └── README.md                     # แนะนำโครงการและรายชื่อสมาชิกในทีม (ไฟล์ปัจจุบัน)
 ```
