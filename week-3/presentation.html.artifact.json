@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "kind": "html",
+  "title": "week-3/presentation.html",
+  "entry": "week-3/presentation.html",
+  "renderer": "html",
+  "status": "complete",
+  "exports": [
+    "html",
+    "pdf",
+    "zip"
+  ],
+  "createdAt": "2026-08-03T17:21:51.548Z",
+  "updatedAt": "2026-08-03T17:21:51.548Z",
+  "metadata": {
+    "inferred": true,
+    "reconciled": true
+  }
+}
