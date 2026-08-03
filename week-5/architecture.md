@@ -26,7 +26,7 @@ flowchart TD
     Show --> Menu
     SaveDB --> Menu
 
-    classDef hotspot fill:#ffcccc,stroke:#ff0000,stroke-width:2px;
+    classDef hotspot fill:##ff0000,stroke:#ff0000,stroke-width:2px;
     class SaveDB,LoadDB hotspot
 ```
 
