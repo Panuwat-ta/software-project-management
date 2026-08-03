@@ -12,78 +12,75 @@
 </head>
 <body>
 <div id="deck">
-
         <div class="slide center-content">
             <div class="badge">Week 5</div>
-            <h1>Project Finalization</h1>
-            <h3>สรุปโครงการ เอกสารสถาปัตยกรรม และงบประมาณ</h3>
+            <h1>Quality, Architecture & Budget</h1>
+            <h3>บทสรุปโครงการ การประเมินคุณภาพ และงบประมาณ</h3>
             <p style="margin-top: 2rem; max-width: 600px; color: var(--text-muted);">
-                ประเมินคุณภาพซอฟต์แวร์ตามมาตรฐาน ISO/IEC 25010 และสรุปต้นทุน
+                ประเมินผลลัพธ์เชิงคุณภาพของซอฟต์แวร์ตามมาตรฐาน ISO/IEC 25010<br>
+                พร้อมแจกแจงค่าใช้จ่ายตลอดกระบวนการพัฒนา (Cost & Budget)
             </p>
         </div>
-            
+
         <div class="slide">
-            <h2>1. ISO/IEC 25010 & Architecture</h2>
+            <h2>1. ประเมินคุณภาพซอฟต์แวร์ (ISO/IEC 25010)</h2>
             <div class="grid-2">
                 <div class="card">
-                    <h3>Quality Evaluation</h3>
-                    <p>การประเมินคุณภาพทั้ง 8 ด้านของระบบใหม่ พบว่าพัฒนาการด้านเสถียรภาพและคุณภาพโค้ดดีขึ้นมาก</p>
+                    <h3>✅ Functional Suitability</h3>
+                    <p style="font-size: 0.9rem;">ระบบตัดสต็อกได้ถูกต้อง 100% เพิ่มฟีเจอร์สมาชิกและส่วนลดตาม Tier ได้สมบูรณ์</p>
                 </div>
                 <div class="card">
-                    <h3>To-Be Architecture</h3>
-                    <p>คลาสไดอะแกรมที่ประยุกต์ใช้ <strong>Design Patterns</strong> (Facade, Singleton, Strategy)</p>
+                    <h3>✅ Reliability (ความทนทาน)</h3>
+                    <p style="font-size: 0.9rem;">ขจัดความเสี่ยงไฟดับ/โปรแกรมแครช ทำให้ข้อมูลสูญหาย ด้วย Atomic Save</p>
+                </div>
+                <div class="card">
+                    <h3>✅ Usability (การใช้งาน)</h3>
+                    <p style="font-size: 0.9rem;">มีการแจ้งเตือน (Error Message) ชัดเจนทุกครั้งที่ผู้ใช้งานกรอกข้อมูลผิดพลาด</p>
+                </div>
+                <div class="card">
+                    <h3>✅ Maintainability (การบำรุงรักษา)</h3>
+                    <p style="font-size: 0.9rem;">เปลี่ยนจาก Monolithic เป็น OOP/MVC ทำให้นักพัฒนารุ่นต่อไปสานงานต่อได้ง่าย</p>
                 </div>
             </div>
         </div>
 
         <div class="slide">
-            <h2>2. ISO/IEC 25010: จุดที่ต้องยกระดับ</h2>
+            <h2>2. โครงสร้างและเวลาทำงาน (Time & Architecture)</h2>
             <table>
-                <thead><tr><th>คุณลักษณะระบบเดิม</th><th>คะแนน</th><th>ประเด็น</th></tr></thead>
+                <thead><tr><th>มิติการประเมิน</th><th>ก่อนทำ (As-is)</th><th>หลังทำ (To-be)</th></tr></thead>
                 <tbody>
-                    <tr><td>Reliability</td><td>★</td><td>ไม่มี Transaction และเสี่ยงต่อ JSON Corruption</td></tr>
-                    <tr><td>Security</td><td>★</td><td>ไม่มี Authentication หรือ Authorization</td></tr>
-                    <tr><td>Functional Suitability</td><td>★★</td><td>ขาด Validation และฟีเจอร์ที่วางแผนไว้</td></tr>
-                    <tr><td>Maintainability</td><td>★★</td><td>โค้ด Monolithic และแยกส่วนไม่ชัดเจน</td></tr>
+                    <tr><td><strong>Architecture</strong></td><td>Monolithic Script (ไฟล์เดียว)</td><td>MVC (Separation of Concerns)</td></tr>
+                    <tr><td><strong>State Management</strong></td><td>Global Variable (x)</td><td>Class Attributes & DB Managers</td></tr>
+                    <tr><td><strong>Man-hours</strong></td><td colspan="2" style="text-align: center;">40 ชั่วโมงทำงานรวมตลอด 4 เฟสหลัก</td></tr>
                 </tbody>
             </table>
-            <p style="margin-top: 1.5rem;">จุดแข็งเดิมคือ Portability (★★★★) เพราะระบบ Python ทำงานข้ามแพลตฟอร์มได้</p>
         </div>
 
         <div class="slide">
-            <h2>3. To-Be Architecture</h2>
+            <h2>3. สรุปงบประมาณ (Cost Estimate & Budget)</h2>
             <div class="grid-2">
-                <div class="card"><h3>Facade</h3><p><code>SystemCLI</code> เป็นจุดควบคุมการทำงานและซ่อนความซับซ้อนของระบบ</p></div>
-                <div class="card"><h3>Singleton</h3><p><code>DatabaseManager</code> จัดการการเชื่อมต่อและ Transaction ของ SQLite</p></div>
-                <div class="card"><h3>Service Layer</h3><p><code>ProductManager</code> และ <code>MemberSystem</code> ดูแลกฎธุรกิจและการตรวจสอบข้อมูล</p></div>
-                <div class="card"><h3>Checkout</h3><p>คำนวณยอดสุทธิ ส่วนลด และสร้างใบเสร็จจากข้อมูลสมาชิก</p></div>
+                <div class="card">
+                    <h3>ต้นทุนการพัฒนา</h3>
+                    <ul style="font-size: 0.9rem;">
+                        <li><strong>ค่าแรง (Labor Cost):</strong> ประมาณ 31,000 THB สำหรับการวิเคราะห์ เขียนโค้ด และทดสอบ (40 ชม.)</li>
+                        <li><strong>ค่าเครื่องมือ (Infra):</strong> ประมาณ 3,000 THB</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>ยอดรวมเบ็ดเสร็จ</h3>
+                    <ul style="font-size: 0.9rem;">
+                        <li><strong>เงินสำรอง (Contingency):</strong> 10% ของยอด (3,400 THB)</li>
+                        <li><strong>Grand Total:</strong> ประมาณ <strong>37,400 THB</strong> ตลอดระยะเวลาดำเนินงานโครงการ</li>
+                    </ul>
+                </div>
             </div>
         </div>
-            
-        <div class="slide">
-            <h2>4. Project Budget &amp; WBS</h2>
-            <table>
-                <thead><tr><th>รายการ</th><th>จำนวน</th></tr></thead>
-                <tbody>
-                    <tr><td>งานตาม WBS</td><td>8 รายการ / 40 ชั่วโมง</td></tr>
-                    <tr><td>ค่าแรงทางตรง</td><td>31,000 บาท</td></tr>
-                    <tr><td>โครงสร้างพื้นฐานและเครื่องมือ</td><td>3,000 บาท</td></tr>
-                    <tr><td>งบสำรองความเสี่ยง 15%</td><td>5,100 บาท</td></tr>
-                    <tr><td><strong>งบประมาณรวม</strong></td><td><strong>39,100 บาท</strong></td></tr>
-                </tbody>
-            </table>
-        </div>
 
         <div class="slide">
-            <h2>5. บทสรุปโครงการ</h2>
-            <ul>
-                <li>ระบุข้อจำกัดของระบบเดิมด้วยการวิเคราะห์โค้ดและ Hotspots</li>
-                <li>จัดทำแนวทาง Refactor, การทดสอบ และเกณฑ์คุณภาพสำหรับการบำรุงรักษา</li>
-                <li>สรุปสถาปัตยกรรมเป้าหมายและทรัพยากรที่ต้องใช้สำหรับการพัฒนาต่อ</li>
-            </ul>
-            <p>เอกสารและสไลด์ทั้ง 5 สัปดาห์เชื่อมโยงกันตั้งแต่การวางแผน ออกแบบ พัฒนา ทดสอบ จนถึงการประเมินเพื่อปิดโครงการ</p>
+            <h2>4. สรุปผลการส่งมอบ (Project Handover)</h2>
+            <p style="font-size: 1.05rem; line-height: 1.6;">โครงการแก้ไขระบบ CLI Inventory Management System ประสบความสำเร็จตามเป้าประสงค์ (Project Charter) ครบถ้วน ทีมพัฒนาได้ปิดจุดอ่อนสำคัญ (Hotspots) และเสริมเกราะด้วยชุดทดสอบอัตโนมัติ ทำให้ระบบสามารถใช้งานจริงบนโปรดักชันได้อย่างมีประสิทธิภาพและเสถียรภาพสูงสุด</p>
         </div>
-                </div>
+    </div>
 
     <!-- Navigation -->
     <div class="controls">

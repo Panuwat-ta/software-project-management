@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="th">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Week 1 — Planning & Legacy Code Review</title>
+  <link rel="stylesheet" href="../shared-theme.css">
+  <style>
+    body {
+      display: block;
+      min-height: 100vh;
+      overflow: auto;
+      background-color: var(--paper);
+    }
+
+    .document {
+      width: 100%;
+      margin: 0;
+      padding: 30px clamp(15px, 2vw, 30px);
+    }
+
+    .file-path {
+      margin: 0 0 18px;
+      color: var(--indigo);
+      font: 500 .75rem/1.5 'IBM Plex Mono', monospace;
+      letter-spacing: .09em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      max-width: 850px;
+      font: 600 1.85rem/1.2 'Taviraj', serif !important;
+      margin-bottom: 0.5rem;
+    }
+
+    .lede {
+      max-width: 720px;
+      margin: 0;
+      color: var(--text-muted);
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+
+    .divider {
+      height: 1px;
+      margin: 36px 0;
+      background: var(--rule);
+    }
+
+    .summary {
+      display: grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap: 48px;
+    }
+
+    .panel {
+      padding: 0;
+      background: transparent;
+      border: none;
+      border-radius: 0;
+    }
+
+    .panel h2 {
+      margin-bottom: 18px;
+      font: 600 1.3rem/1.3 'Taviraj', serif;
+    }
+
+    .facts {
+      display: grid;
+      gap: 0;
+      margin: 0;
+    }
+
+    .facts div {
+      display: grid;
+      grid-template-columns: 110px 1fr;
+      gap: 18px;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .facts div:last-child {
+      border: 0;
+      padding-bottom: 0;
+    }
+
+    dt {
+      color: var(--text-muted);
+      font: 500 .75rem/1.4 'IBM Plex Mono', monospace;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    dd,
+    p,
+    li {
+      margin: 0;
+      color: var(--text-main);
+      font-size: 0.95rem !important;
+      line-height: 1.6 !important;
+    }
+
+    .steps {
+      display: grid;
+      gap: 12px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      counter-reset: plan;
+    }
+
+    .steps li {
+      position: relative;
+      margin: 0;
+      padding: 0 0 0 32px;
+      background: transparent;
+      border: none;
+      counter-increment: plan;
+    }
+
+    .steps li::before {
+      position: absolute;
+      top: 0;
+      left: 0;
+      color: var(--indigo);
+      content: "0" counter(plan) ".";
+      font: 600 .85rem/1.6 'IBM Plex Mono', monospace;
+    }
+
+    .deck-link {
+      display: inline-flex;
+      min-height: 44px;
+      align-items: center;
+      padding: 0 16px;
+      color: var(--ink);
+      text-decoration: none;
+      background: var(--amber);
+      border: 1px solid var(--amber);
+      border-radius: 999px;
+      font: 500 .76rem/1 'IBM Plex Mono', monospace;
+      letter-spacing: .05em;
+      text-transform: uppercase;
+      transition: transform .2s ease, background .2s ease;
+    }
+
+    .deck-link:hover {
+      color: var(--ink);
+      background: oklch(.76 .12 75);
+      transform: translateY(-2px);
+    }
+
+    .deck-link:focus-visible {
+      outline: 3px solid var(--indigo);
+      outline-offset: 3px;
+    }
+
+    @media (max-width:720px) {
+      .summary {
+        grid-template-columns: 1fr;
+      }
+
+      .facts div {
+        grid-template-columns: 1fr;
+        gap: 4px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="document" data-od-id="week-1-content">
+    <p class="file-path" data-od-id="source-path">/week-1/content.html</p>
+    <div class="badge" data-od-id="week-1-label">Week 1 · Review</div>
+    <h1 data-od-id="week-1-heading">Planning & Legacy Code Review</h1>
+    <p class="lede">สรุปผลการวิเคราะห์โครงสร้างโค้ดเดิม การจัดทำ Project Charter และกำหนดขอบเขตของการพัฒนา</p>
+    
+    <div class="divider"></div>
+    
+    <section class="summary" aria-label="สถานะของระบบเดิม" data-od-id="week-1-summary">
+      <article class="panel" data-od-id="project-facts">
+        <h2>1. วิเคราะห์ระบบเดิม (Legacy Code Review)</h2>
+        <dl class="facts">
+          <div>
+            <dt>Global State</dt>
+            <dd>ระบบเดิมใช้ตัวแปร global <code>x</code> ในการเก็บข้อมูลคลังสินค้า ทำให้เกิดความเสี่ยง (Global State Conflict) เมื่อมีการประมวลผลซ้อนกัน</dd>
+          </div>
+          <div>
+            <dt>Data Storage</dt>
+            <dd>ใช้ <code>json.dump()</code> บันทึกไฟล์ทับทันที หากเกิดข้อผิดพลาดระหว่างรัน (เช่น ไฟดับ) ข้อมูลสูญหายทั้งหมด</dd>
+          </div>
+          <div>
+            <dt>Input Handling</dt>
+            <dd>ระบบไม่ตรวจสอบประเภทของข้อมูล (No Input Validation) หากผู้ใช้กรอกตัวอักษรลงในช่องตัวเลข โปรแกรมจะแครช (ValueError)</dd>
+          </div>
+        </dl>
+      </article>
+
+      <article class="panel" data-od-id="project-objectives">
+        <h2>2. เป้าหมายสัปดาห์ที่ 1</h2>
+        <ol class="steps">
+          <li><strong>System Understanding:</strong> ทำความเข้าใจตรรกะเดิมของฟังก์ชันทั้ง 5 (load, add, show, cut_stock, check)</li>
+          <li><strong>Project Charter:</strong> กำหนดเป้าหมายหลักในการแก้ปัญหาระบบเดิม (เน้นเสถียรภาพ)</li>
+          <li><strong>Scope Definition:</strong> ตัดสินใจแบ่งงานเป็น 4 เฟสหลัก เพื่อค่อยๆ ปรับปรุงโดยไม่กระทบความสามารถเดิมของระบบ</li>
+        </ol>
+      </article>
+    </section>
+
+    <div class="divider"></div>
+
+    <section class="summary" aria-label="ขอบเขตและการประเมินความเสี่ยง" style="grid-template-columns: 1fr;">
+      <article class="panel" data-od-id="project-scope">
+        <h2>3. ขอบเขตงาน (Final Scope)</h2>
+        <dl class="facts">
+          <div>
+            <dt>In-Scope</dt>
+            <dd>Refactoring ให้อยู่ในรูป Object-Oriented (OOP), การเพิ่มฐานข้อมูลสมาชิก (members.json), การเพิ่มตรรกะคำนวณส่วนลด, การป้องกัน Error และทำ Unit Test.</dd>
+          </div>
+          <div>
+            <dt>Out-of-Scope</dt>
+            <dd>ไม่มีการพัฒนาหน้าต่าง GUI, ไม่มีการใช้ SQL Database ภายนอก (ยังคงใช้ Local JSON/SQLite เพื่อความเรียบง่าย)</dd>
+          </div>
+        </dl>
+      </article>
+      
+      <article class="panel" data-od-id="project-risks">
+        <h2>4. แผนงานระยะต่อไป</h2>
+        <p style="padding-top: 12px; color: var(--text-main); font-size: 0.95rem; line-height: 1.6;">
+          เมื่อได้ปัญหาที่ชัดเจนแล้ว ในสัปดาห์ที่ 2 ทีมจะดำเนินการออกแบบ <strong>Data Flow Diagram (DFD)</strong> และปรับโครงสร้างการทำงานจาก Global State ให้เป็นรูปแบบ Class (MVC) รวมถึงประเมินความเสี่ยงเชิงระบบอย่างละเอียด
+        </p>
+      </article>
+    </section>
+  </main>
+</body>
+
+</html>

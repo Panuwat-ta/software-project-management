@@ -1,95 +1,581 @@
 <!doctype html>
 <html lang="th">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Project Documentation Portal</title>
-  <link href="https://fonts.googleapis.com/css2?family=Taviraj:wght@500;600;700&family=Sarabun:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Taviraj:wght@500;600;700&family=Sarabun:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap"
+    rel="stylesheet">
   <style>
-    :root { --ink:#12172B; --ink-soft:#1C2340; --paper:#F6F4EE; --paper-warm:#EFE9DA; --rule:#DBD5C6; --indigo:#3D4B94; --indigo-deep:#2A3570; --amber:#C1832A; --amber-soft:rgba(193,131,42,.14); --text-main:#1B1F2B; --text-muted:#6B6F7D; }
-    * { box-sizing:border-box; }
-    body { min-width:320px; min-height:100vh; margin:0; color:var(--text-main); font-family:'Sarabun',sans-serif; background-color:var(--paper); background-image:radial-gradient(circle at 1px 1px, oklch(.47 .06 271 / .13) 1px, transparent 0); background-size:18px 18px; }
-    .portal { display:grid; grid-template-columns:292px minmax(0,1fr); min-height:100vh; }
-    .sidebar { position:relative; z-index:2; display:flex; flex-direction:column; padding:30px 18px 20px; color:var(--paper); background:var(--ink); }
-    .brand { padding:4px 14px 28px; border-bottom:1px solid rgb(246 244 238 / .16); }
-    .brand-mark, .section-label, .doc-number { font:500 .72rem/1.4 'IBM Plex Mono',monospace; letter-spacing:.12em; text-transform:uppercase; }
-    .brand-mark { color:var(--amber); }
-    .brand h1 { margin:8px 0 0; color:var(--paper); font:600 1.75rem/1.1 'Taviraj',serif; }
-    .project-name { margin:8px 0 0; color:rgb(246 244 238 / .68); font-size:.88rem; line-height:1.45; }
-    .nav-group + .nav-group { margin-top:20px; padding-top:18px; border-top:1px solid rgb(246 244 238 / .14); }
-    .nav-section { display:block; margin:0 12px 8px; color:rgb(246 244 238 / .48); font:500 .67rem/1.3 'IBM Plex Mono',monospace; letter-spacing:.1em; text-transform:uppercase; }
-    .nav-list { display:grid; gap:5px; margin:0; padding:0; list-style:none; }
-    .nav-item { position:relative; display:flex; gap:12px; align-items:center; width:100%; min-height:58px; padding:8px 12px; color:rgb(246 244 238 / .75); text-align:left; cursor:pointer; background:transparent; border:0; border-left:3px solid transparent; font:500 .96rem/1.2 'Sarabun',sans-serif; transition:background .3s cubic-bezier(.2,.8,.2,1), color .3s ease, border-color .3s ease; }
-    .nav-item:hover, .nav-item.is-active { color:var(--paper); background:var(--ink-soft); border-left-color:var(--amber); }
-    .stamp { display:grid; flex:0 0 33px; width:33px; height:33px; place-items:center; color:rgb(246 244 238 / .7); border:1px solid rgb(246 244 238 / .4); border-radius:50%; font:500 .68rem/1 'IBM Plex Mono',monospace; transition:transform .3s cubic-bezier(.2,.8,.2,1),color .3s ease,border-color .3s ease,background .3s ease; }
-    .nav-item:hover .stamp, .nav-item.is-active .stamp { color:var(--ink); background:var(--amber); border-color:var(--amber); transform:rotate(-7deg); }
-    .nav-copy { display:grid; gap:2px; }
-    .nav-phase { color:inherit; }
-    .nav-detail { color:rgb(246 244 238 / .5); font-size:.73rem; }
-    .sidebar-footer { margin-top:auto; padding:18px 14px 0; color:rgb(246 244 238 / .47); border-top:1px solid rgb(246 244 238 / .16); font:400 .68rem/1.55 'IBM Plex Mono',monospace; letter-spacing:.03em; }
-    main { display:grid; grid-template-rows:auto minmax(0,1fr); min-width:0; min-height:100vh; }
-    .topbar { display:flex; gap:20px; align-items:center; justify-content:space-between; padding:20px clamp(20px,4vw,48px); background:var(--paper-warm); border-bottom:1px solid var(--rule); }
-    .eyebrow { margin:0 0 5px; color:var(--indigo); font:500 .72rem/1.3 'IBM Plex Mono',monospace; letter-spacing:.12em; text-transform:uppercase; }
-    .page-title { margin:0; color:var(--text-main); font:600 clamp(1.45rem,2.7vw,2.25rem)/1.15 'Taviraj',serif; }
-    .topbar-actions { display:flex; flex:0 0 auto; gap:10px; align-items:center; }
-    .doc-number { padding:8px 10px; color:var(--indigo-deep); border:1px solid var(--rule); background:var(--paper); }
-    .fullscreen-button { min-height:44px; padding:0 14px; color:var(--indigo-deep); cursor:pointer; background:var(--paper); border:1px solid var(--rule); border-radius:999px; font:500 .72rem/1 'IBM Plex Mono',monospace; letter-spacing:.06em; text-transform:uppercase; transition:background .25s ease,border-color .25s ease,color .25s ease,transform .25s ease; }
-    .fullscreen-button:hover { color:var(--ink); background:var(--amber); border-color:var(--amber); transform:translateY(-2px); }
-    .viewer { position:relative; min-height:0; padding:clamp(16px,2.5vw,32px); }
-    iframe { display:block; width:100%; height:100%; min-height:540px; background:var(--paper); border:1px solid var(--rule); border-radius:18px; box-shadow:0 18px 42px rgb(18 23 43 / .12); opacity:1; transform:translateY(0); transition:opacity .3s ease, transform .3s ease; }
-    iframe.is-loading { opacity:0; transform:translateY(8px); }
-    .loader { position:absolute; z-index:3; top:50%; left:50%; display:grid; width:66px; height:66px; place-items:center; opacity:0; pointer-events:none; background:var(--paper); border:1px solid var(--rule); border-radius:50%; box-shadow:0 10px 25px rgb(18 23 43 / .14); transform:translate(-50%,-50%) scale(.9); transition:opacity .2s ease,transform .2s ease; }
-    .loader.is-visible { opacity:1; transform:translate(-50%,-50%) scale(1); }
-    .loader::after { width:24px; height:24px; content:''; border:3px solid var(--rule); border-top-color:var(--amber); border-radius:50%; animation:spin .7s linear infinite; }
-    .viewer:fullscreen { display:block; width:100vw; height:100vh; padding:20px; background:var(--paper); }
-    .viewer:fullscreen iframe { width:100%; height:100%; min-height:0; border-radius:12px; }
-    @keyframes spin { to { transform:rotate(1turn); } }
-    button:focus-visible { outline:3px solid var(--amber); outline-offset:3px; }
-    @media (max-width:899px) { .portal { display:block; } .sidebar { position:sticky; top:0; padding:12px 14px; overflow:hidden; } .brand { display:flex; gap:10px; align-items:baseline; padding:0 4px 10px; border:0; } .brand h1 { margin:0; font-size:1.25rem; } .project-name, .sidebar-footer, .nav-section { display:none; } .sidebar nav { display:flex; gap:12px; overflow-x:auto; scrollbar-width:thin; } .nav-group { display:flex; flex:0 0 auto; } .nav-group + .nav-group { margin:0; padding:0; border:0; } .nav-list { display:flex; gap:4px; width:max-content; margin:0; } .nav-item { min-height:48px; width:auto; padding:6px 9px; border-left:0; border-bottom:3px solid transparent; white-space:nowrap; } .nav-item:hover,.nav-item.is-active { border-bottom-color:var(--amber); border-left-color:transparent; } .stamp { flex-basis:28px; width:28px; height:28px; } .nav-detail { display:none; } main { min-height:calc(100vh - 128px); } .topbar { padding:15px 20px; } iframe { min-height:600px; border-radius:12px; } }
-    @media (max-width:540px) { .topbar { gap:10px; } .doc-number { display:none; } .fullscreen-button { padding:0 11px; font-size:.65rem; } .viewer { padding:12px; } .page-title { font-size:1.35rem; } }
-    @media (prefers-reduced-motion:reduce) { *,*::before,*::after { scroll-behavior:auto!important; animation-duration:.01ms!important; transition-duration:.01ms!important; } }
+    :root {
+      --ink: #12172B;
+      --ink-soft: #1C2340;
+      --paper: #F6F4EE;
+      --paper-warm: #EFE9DA;
+      --rule: #DBD5C6;
+      --indigo: #3D4B94;
+      --indigo-deep: #2A3570;
+      --amber: #C1832A;
+      --amber-soft: rgba(193, 131, 42, .14);
+      --text-main: #1B1F2B;
+      --text-muted: #6B6F7D;
+    }
+
+    * {
+      box-sizing: border-box;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(107, 111, 125, 0.4) transparent;
+    }
+
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: rgba(107, 111, 125, 0.3);
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(107, 111, 125, 0.5);
+    }
+
+    body {
+      min-width: 320px;
+      height: 100vh;
+      margin: 0;
+      overflow: hidden;
+      color: var(--text-main);
+      font-family: 'Sarabun', sans-serif;
+      background-color: var(--paper);
+      background-image: radial-gradient(circle at 1px 1px, oklch(.47 .06 271 / .13) 1px, transparent 0);
+      background-size: 18px 18px;
+    }
+
+    .portal {
+      display: grid;
+      grid-template-columns: 292px minmax(0, 1fr);
+      height: 100vh;
+    }
+
+    .sidebar {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      padding: 30px 18px 20px;
+      overflow-y: auto;
+      color: var(--paper);
+      background: var(--ink);
+    }
+
+    .brand {
+      padding: 4px 14px 28px;
+      border-bottom: 1px solid rgb(246 244 238 / .16);
+    }
+
+    .brand-mark,
+    .section-label,
+    .doc-number {
+      font: 500 .75rem/1.4 'IBM Plex Mono', monospace;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    .brand-mark {
+      color: var(--amber);
+    }
+
+    .brand h1 {
+      margin: 8px 0 0;
+      color: var(--paper);
+      font: 600 1.85rem/1.1 'Taviraj', serif;
+    }
+
+    .project-name {
+      margin: 8px 0 0;
+      color: rgb(246 244 238 / .68);
+      font-size: .85rem;
+      line-height: 1.45;
+    }
+
+    .nav-group+.nav-group {
+      margin-top: 20px;
+      padding-top: 18px;
+      border-top: 1px solid rgb(246 244 238 / .14);
+    }
+
+    .nav-section {
+      display: block;
+      margin: 0 12px 8px;
+      color: rgb(246 244 238 / .48);
+      font: 500 .75rem/1.3 'IBM Plex Mono', monospace;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+
+    .nav-list {
+      display: grid;
+      gap: 5px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .nav-item {
+      position: relative;
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      width: 100%;
+      min-height: 54px;
+      padding: 6px 10px;
+      color: rgb(246 244 238 / .75);
+      text-align: left;
+      cursor: pointer;
+      background: transparent;
+      border: 0;
+      border-left: 3px solid transparent;
+      font: 500 .95rem/1.2 'Sarabun', sans-serif;
+      transition: background .3s cubic-bezier(.2, .8, .2, 1), color .3s ease, border-color .3s ease;
+    }
+
+    .nav-item:hover,
+    .nav-item.is-active {
+      color: var(--paper);
+      background: var(--ink-soft);
+      border-left-color: var(--amber);
+    }
+
+    .stamp {
+      display: grid;
+      flex: 0 0 32px;
+      width: 32px;
+      height: 32px;
+      place-items: center;
+      color: rgb(246 244 238 / .45);
+      font: 500 .75rem 'IBM Plex Mono', monospace;
+      letter-spacing: .02em;
+      border: 1px solid rgb(246 244 238 / .15);
+      border-radius: 4px;
+      transition: transform .3s cubic-bezier(.2, .8, .2, 1), color .3s ease, border-color .3s ease, background .3s ease;
+    }
+
+    .nav-item:hover .stamp,
+    .nav-item.is-active .stamp {
+      color: var(--ink);
+      background: var(--amber);
+      border-color: var(--amber);
+      transform: rotate(-7deg);
+    }
+
+    .nav-copy {
+      display: grid;
+      gap: 2px;
+    }
+
+    .nav-phase {
+      color: inherit;
+    }
+
+    .nav-detail {
+      color: rgb(246 244 238 / .5);
+      font-size: .75rem;
+    }
+
+    .sidebar-footer {
+      margin-top: auto;
+      padding: 18px 14px 0;
+      color: rgb(246 244 238 / .47);
+      border-top: 1px solid rgb(246 244 238 / .16);
+      font: 400 .75rem/1.55 'IBM Plex Mono', monospace;
+      letter-spacing: .03em;
+    }
+
+    main {
+      display: grid;
+      grid-template-rows: auto minmax(0, 1fr);
+      min-width: 0;
+      min-height: 100vh;
+    }
+
+    .topbar {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px clamp(20px, 4vw, 48px);
+      background: var(--paper-warm);
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .eyebrow {
+      margin: 0 0 5px;
+      color: var(--indigo);
+      font: 500 .75rem/1.3 'IBM Plex Mono', monospace;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    .page-title {
+      margin: 0;
+      color: var(--text-main);
+      font: 600 1.85rem/1.15 'Taviraj', serif;
+    }
+
+    .topbar-actions {
+      display: flex;
+      flex: 0 0 auto;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .doc-number {
+      padding: 8px 10px;
+      color: var(--indigo-deep);
+      border: 1px solid var(--rule);
+      background: var(--paper);
+    }
+
+    .fullscreen-button {
+      min-height: 44px;
+      padding: 0 14px;
+      color: var(--indigo-deep);
+      cursor: pointer;
+      background: var(--paper);
+      border: 1px solid var(--rule);
+      border-radius: 999px;
+      font: 500 .75rem/1 'IBM Plex Mono', monospace;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      transition: background .25s ease, border-color .25s ease, color .25s ease, transform .25s ease;
+    }
+
+    .fullscreen-button:hover {
+      color: var(--ink);
+      background: var(--amber);
+      border-color: var(--amber);
+      transform: translateY(-2px);
+    }
+
+    .viewer {
+      position: relative;
+      min-height: 0;
+      padding: clamp(16px, 2.5vw, 32px);
+    }
+
+    iframe {
+      display: block;
+      width: 100%;
+      height: 100%;
+      min-height: 540px;
+      background: transparent;
+      border: none;
+      border-radius: 0;
+      box-shadow: none;
+      opacity: 1;
+      transform: translateY(0);
+      transition: opacity .3s ease, transform .3s ease;
+    }
+
+    iframe.is-loading {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+
+    .loader {
+      position: absolute;
+      z-index: 3;
+      top: 50%;
+      left: 50%;
+      display: grid;
+      width: 66px;
+      height: 66px;
+      place-items: center;
+      opacity: 0;
+      pointer-events: none;
+      background: var(--paper);
+      border: 1px solid var(--rule);
+      border-radius: 50%;
+      box-shadow: 0 10px 25px rgb(18 23 43 / .14);
+      transform: translate(-50%, -50%) scale(.9);
+      transition: opacity .2s ease, transform .2s ease;
+    }
+
+    .loader.is-visible {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+    }
+
+    .loader::after {
+      width: 24px;
+      height: 24px;
+      content: '';
+      border: 3px solid var(--rule);
+      border-top-color: var(--amber);
+      border-radius: 50%;
+      animation: spin .7s linear infinite;
+    }
+
+    .viewer:fullscreen {
+      display: block;
+      width: 100vw;
+      height: 100vh;
+      padding: 20px;
+      background: var(--paper);
+    }
+
+    .viewer:fullscreen iframe {
+      width: 100%;
+      height: 100%;
+      min-height: 0;
+      border-radius: 12px;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(1turn);
+      }
+    }
+
+    button:focus-visible {
+      outline: 3px solid var(--amber);
+      outline-offset: 3px;
+    }
+
+    @media (max-width:899px) {
+      .portal {
+        display: block;
+      }
+
+      .sidebar {
+        position: sticky;
+        top: 0;
+        padding: 12px 14px;
+        overflow: hidden;
+      }
+
+      .brand {
+        display: flex;
+        gap: 10px;
+        align-items: baseline;
+        padding: 0 4px 10px;
+        border: 0;
+      }
+
+      .brand h1 {
+        margin: 0;
+        font-size: 1.25rem;
+      }
+
+      .project-name,
+      .sidebar-footer,
+      .nav-section {
+        display: none;
+      }
+
+      .sidebar nav {
+        display: flex;
+        gap: 12px;
+        overflow-x: auto;
+        scrollbar-width: thin;
+      }
+
+      .nav-group {
+        display: flex;
+        flex: 0 0 auto;
+      }
+
+      .nav-group+.nav-group {
+        margin: 0;
+        padding: 0;
+        border: 0;
+      }
+
+      .nav-list {
+        display: flex;
+        gap: 4px;
+        width: max-content;
+        margin: 0;
+      }
+
+      .nav-item {
+        min-height: 48px;
+        width: auto;
+        padding: 6px 9px;
+        border-left: 0;
+        border-bottom: 3px solid transparent;
+        white-space: nowrap;
+      }
+
+      .nav-item:hover,
+      .nav-item.is-active {
+        border-bottom-color: var(--amber);
+        border-left-color: transparent;
+      }
+
+      .stamp {
+        flex-basis: 28px;
+        width: 28px;
+        height: 28px;
+      }
+
+      .nav-detail {
+        display: none;
+      }
+
+      main {
+        min-height: calc(100vh - 128px);
+      }
+
+      .topbar {
+        padding: 15px 20px;
+      }
+
+      iframe {
+        min-height: 600px;
+        border-radius: 12px;
+      }
+    }
+
+    @media (max-width:540px) {
+      .topbar {
+        gap: 10px;
+      }
+
+      .doc-number {
+        display: none;
+      }
+
+      .fullscreen-button {
+        padding: 0 11px;
+        font-size: .65rem;
+      }
+
+      .viewer {
+        padding: 12px;
+      }
+
+      .page-title {
+        font-size: 1.35rem;
+      }
+    }
+
+    @media (prefers-reduced-motion:reduce) {
+
+      *,
+      *::before,
+      *::after {
+        scroll-behavior: auto !important;
+        animation-duration: .01ms !important;
+        transition-duration: .01ms !important;
+      }
+    }
   </style>
 </head>
+
 <body>
   <div class="portal" data-od-id="documentation-portal">
     <aside class="sidebar" aria-label="เอกสารโครงการ" data-od-id="portal-sidebar">
-      <div class="brand" data-od-id="portal-brand"><span class="brand-mark">Project Ledger</span><h1>Documentation</h1><p class="project-name">CLI Inventory Management System</p></div>
+      <div class="brand" data-od-id="portal-brand"><span class="brand-mark">Project Ledger</span>
+        <h1>Documentation</h1>
+        <p class="project-name">CLI Inventory Management System</p>
+      </div>
       <nav aria-label="ลำดับเอกสาร" data-od-id="document-navigation">
-        <div class="nav-group"><span class="nav-section">เนื้อหาเอกสาร</span><ul class="nav-list">
-          <li><button class="nav-item is-active" type="button" data-doc="0" aria-current="page" data-od-id="nav-phase-1-content"><span class="stamp">01</span><span class="nav-copy"><span class="nav-phase">Phase 1 — เนื้อหา</span><span class="nav-detail">Project record &amp; planning</span></span></button></li>
-        </ul></div>
-        <div class="nav-group"><span class="nav-section">สไลด์นำเสนอ</span><ul class="nav-list">
-          <li><button class="nav-item" type="button" data-doc="1" data-od-id="nav-phase-1-slides"><span class="stamp">02</span><span class="nav-copy"><span class="nav-phase">Phase 1 — สไลด์</span><span class="nav-detail">Integrated planning proposal</span></span></button></li>
-          <li><button class="nav-item" type="button" data-doc="2" data-od-id="nav-week-1"><span class="stamp">03</span><span class="nav-copy"><span class="nav-phase">Week 1</span><span class="nav-detail">Planning &amp; legacy review</span></span></button></li>
-          <li><button class="nav-item" type="button" data-doc="3" data-od-id="nav-week-2"><span class="stamp">04</span><span class="nav-copy"><span class="nav-phase">Week 2</span><span class="nav-detail">Evolution &amp; refactoring design</span></span></button></li>
-          <li><button class="nav-item" type="button" data-doc="4" data-od-id="nav-week-3"><span class="stamp">05</span><span class="nav-copy"><span class="nav-phase">Week 3</span><span class="nav-detail">Implementation &amp; automated testing</span></span></button></li>
-          <li><button class="nav-item" type="button" data-doc="5" data-od-id="nav-week-4"><span class="stamp">06</span><span class="nav-copy"><span class="nav-phase">Week 4</span><span class="nav-detail">Testing &amp; code refinement</span></span></button></li>
-          <li><button class="nav-item" type="button" data-doc="6" data-od-id="nav-week-5"><span class="stamp">07</span><span class="nav-copy"><span class="nav-phase">Week 5</span><span class="nav-detail">Quality, architecture &amp; budget</span></span></button></li>
-        </ul></div>
+        <div class="nav-group"><span class="nav-section">เนื้อหาเอกสาร</span>
+          <ul class="nav-list">
+            <li><button class="nav-item is-active" type="button" data-doc="0" aria-current="page"
+                data-od-id="nav-phase-1-content"><span class="stamp">01</span><span class="nav-copy"><span
+                    class="nav-phase">Phase 1</span><span class="nav-detail">Project record &amp;
+                    planning</span></span></button></li>
+            <li><button class="nav-item" type="button" data-doc="1" data-od-id="nav-week-1-content"><span
+                  class="stamp">02</span><span class="nav-copy"><span class="nav-phase">Week 1</span><span
+                    class="nav-detail">Planning &amp; legacy review</span></span></button></li>
+            <li><button class="nav-item" type="button" data-doc="2" data-od-id="nav-week-2-content"><span
+                  class="stamp">03</span><span class="nav-copy"><span class="nav-phase">Week 2</span><span
+                    class="nav-detail">Evolution &amp; refactoring design</span></span></button></li>
+            <li><button class="nav-item" type="button" data-doc="3" data-od-id="nav-week-3-content"><span
+                  class="stamp">04</span><span class="nav-copy"><span class="nav-phase">Week 3</span><span
+                    class="nav-detail">Implementation &amp; automated testing</span></span></button></li>
+            <li><button class="nav-item" type="button" data-doc="4" data-od-id="nav-week-4-content"><span
+                  class="stamp">05</span><span class="nav-copy"><span class="nav-phase">Week 4</span><span
+                    class="nav-detail">Testing &amp; code refinement</span></span></button></li>
+            <li><button class="nav-item" type="button" data-doc="5" data-od-id="nav-week-5-content"><span
+                  class="stamp">06</span><span class="nav-copy"><span class="nav-phase">Week 5</span><span
+                    class="nav-detail">Quality, architecture &amp; budget</span></span></button></li>
+          </ul>
+        </div>
+        <div class="nav-group"><span class="nav-section">สไลด์นำเสนอ</span>
+          <ul class="nav-list">
+            <li><button class="nav-item" type="button" data-doc="6" data-od-id="nav-phase-1-slides"><span
+                  class="stamp">07</span><span class="nav-copy"><span class="nav-phase">Phase 1</span><span
+                    class="nav-detail">Integrated planning proposal</span></span></button></li>
+            <li><button class="nav-item" type="button" data-doc="7" data-od-id="nav-week-1"><span
+                  class="stamp">08</span><span class="nav-copy"><span class="nav-phase">Week 1</span><span
+                    class="nav-detail">Planning &amp; legacy review</span></span></button></li>
+            <li><button class="nav-item" type="button" data-doc="8" data-od-id="nav-week-2"><span
+                  class="stamp">09</span><span class="nav-copy"><span class="nav-phase">Week 2</span><span
+                    class="nav-detail">Evolution &amp; refactoring design</span></span></button></li>
+            <li><button class="nav-item" type="button" data-doc="9" data-od-id="nav-week-3"><span
+                  class="stamp">10</span><span class="nav-copy"><span class="nav-phase">Week 3</span><span
+                    class="nav-detail">Implementation &amp; automated testing</span></span></button></li>
+            <li><button class="nav-item" type="button" data-doc="10" data-od-id="nav-week-4"><span
+                  class="stamp">11</span><span class="nav-copy"><span class="nav-phase">Week 4</span><span
+                    class="nav-detail">Testing &amp; code refinement</span></span></button></li>
+            <li><button class="nav-item" type="button" data-doc="11" data-od-id="nav-week-5"><span
+                  class="stamp">12</span><span class="nav-copy"><span class="nav-phase">Week 5</span><span
+                    class="nav-detail">Quality, architecture &amp; budget</span></span></button></li>
+          </ul>
+        </div>
       </nav>
       <div class="sidebar-footer">SPM / 2026<br>PROJECT DOCUMENTATION</div>
     </aside>
     <main data-od-id="portal-main">
-      <header class="topbar" data-od-id="portal-topbar"><div><p class="eyebrow" id="breadcrumb" data-od-id="portal-breadcrumb">เนื้อหา · PHASE 1</p><h2 class="page-title" id="documentTitle" data-od-id="portal-title">Integrated Planning Proposal</h2></div><div class="topbar-actions"><button class="fullscreen-button" id="fullscreenButton" type="button" aria-label="ขยายสไลด์สำหรับนำเสนอเต็มจอ" data-od-id="fullscreen-presentation" hidden>นำเสนอเต็มจอ</button><div class="doc-number" id="documentNumber" data-od-id="portal-document-number">DOC 01/07</div></div></header>
-      <section class="viewer" aria-label="ตัวแสดงเอกสาร" data-od-id="document-viewer"><div class="loader" id="loader" aria-hidden="true"></div><iframe id="contentFrame" title="Integrated Planning Proposal" src="Phase1/content.html" data-od-id="content-frame"></iframe></section>
+      <header class="topbar" data-od-id="portal-topbar">
+        <div>
+          <p class="eyebrow" id="breadcrumb" data-od-id="portal-breadcrumb">เนื้อหา · PHASE 1</p>
+          <h2 class="page-title" id="documentTitle" data-od-id="portal-title">Integrated Planning Proposal</h2>
+        </div>
+        <div class="topbar-actions"><button class="fullscreen-button" id="fullscreenButton" type="button"
+            aria-label="ขยายสไลด์สำหรับนำเสนอเต็มจอ" data-od-id="fullscreen-presentation" hidden>นำเสนอเต็มจอ</button>
+          <div class="doc-number" id="documentNumber" data-od-id="portal-document-number">DOC 01/07</div>
+        </div>
+      </header>
+      <section class="viewer" aria-label="ตัวแสดงเอกสาร" data-od-id="document-viewer">
+        <div class="loader" id="loader" aria-hidden="true"></div><iframe id="contentFrame"
+          title="Integrated Planning Proposal" src="Phase1/content.html" data-od-id="content-frame"></iframe>
+      </section>
     </main>
   </div>
   <script>
     const documents = [
-      { phase:'เนื้อหา · PHASE 1', title:'Integrated Planning Proposal', path:'Phase1/content.html', kind:'content' },
-      { phase:'สไลด์ · PHASE 1', title:'Integrated Planning Proposal', path:'Phase1/presentation.html', kind:'slides' },
-      { phase:'สไลด์ · WEEK 1', title:'Planning & Legacy Code Review', path:'week-1/presentation.html', kind:'slides' },
-      { phase:'สไลด์ · WEEK 2', title:'Evolution & Refactoring Design', path:'week-2/presentation.html', kind:'slides' },
-      { phase:'สไลด์ · WEEK 3', title:'Implementation & Automated Testing', path:'week-3/presentation.html', kind:'slides' },
-      { phase:'สไลด์ · WEEK 4', title:'Testing & Code Refinement', path:'week-4/presentation.html', kind:'slides' },
-      { phase:'สไลด์ · WEEK 5', title:'Quality, Architecture & Budget', path:'week-5/presentation.html', kind:'slides' }
+      { phase: 'เนื้อหา · PHASE 1', title: 'Integrated Planning Proposal', path: 'Phase1/content.html', kind: 'content' },
+      { phase: 'เนื้อหา · WEEK 1', title: 'Planning & Legacy Code Review', path: 'week-1/content.html', kind: 'content' },
+      { phase: 'เนื้อหา · WEEK 2', title: 'Evolution & Refactoring Design', path: 'week-2/content.html', kind: 'content' },
+      { phase: 'เนื้อหา · WEEK 3', title: 'Implementation & Automated Testing', path: 'week-3/content.html', kind: 'content' },
+      { phase: 'เนื้อหา · WEEK 4', title: 'Testing & Code Refinement', path: 'week-4/content.html', kind: 'content' },
+      { phase: 'เนื้อหา · WEEK 5', title: 'Quality, Architecture & Budget', path: 'week-5/content.html', kind: 'content' },
+      { phase: 'สไลด์ · PHASE 1', title: 'Integrated Planning Proposal', path: 'Phase1/presentation.html', kind: 'slides' },
+      { phase: 'สไลด์ · WEEK 1', title: 'Planning & Legacy Code Review', path: 'week-1/presentation.html', kind: 'slides' },
+      { phase: 'สไลด์ · WEEK 2', title: 'Evolution & Refactoring Design', path: 'week-2/presentation.html', kind: 'slides' },
+      { phase: 'สไลด์ · WEEK 3', title: 'Implementation & Automated Testing', path: 'week-3/presentation.html', kind: 'slides' },
+      { phase: 'สไลด์ · WEEK 4', title: 'Testing & Code Refinement', path: 'week-4/presentation.html', kind: 'slides' },
+      { phase: 'สไลด์ · WEEK 5', title: 'Quality, Architecture & Budget', path: 'week-5/presentation.html', kind: 'slides' }
     ];
     const frame = document.getElementById('contentFrame'); const loader = document.getElementById('loader'); const viewer = document.querySelector('.viewer'); const fullscreenButton = document.getElementById('fullscreenButton'); const navItems = [...document.querySelectorAll('.nav-item')];
-    function openDocument(index) { const doc = documents[index]; navItems.forEach((item, i) => { const active = i === index; item.classList.toggle('is-active', active); item.toggleAttribute('aria-current', active); }); document.getElementById('breadcrumb').textContent = doc.phase; document.getElementById('documentTitle').textContent = doc.title; document.getElementById('documentNumber').textContent = `DOC ${String(index + 1).padStart(2,'0')}/${String(documents.length).padStart(2,'0')}`; fullscreenButton.hidden = doc.kind !== 'slides'; frame.title = doc.title; loader.classList.add('is-visible'); frame.classList.add('is-loading'); frame.src = doc.path; }
+    function openDocument(index) { const doc = documents[index]; navItems.forEach((item, i) => { const active = i === index; item.classList.toggle('is-active', active); item.toggleAttribute('aria-current', active); }); document.getElementById('breadcrumb').textContent = doc.phase; document.getElementById('documentTitle').textContent = doc.title; document.getElementById('documentNumber').textContent = `DOC ${String(index + 1).padStart(2, '0')}/${String(documents.length).padStart(2, '0')}`; fullscreenButton.hidden = doc.kind !== 'slides'; frame.title = doc.title; loader.classList.add('is-visible'); frame.classList.add('is-loading'); frame.src = doc.path; }
     navItems.forEach(item => item.addEventListener('click', () => openDocument(Number(item.dataset.doc))));
     frame.addEventListener('load', () => { loader.classList.remove('is-visible'); frame.classList.remove('is-loading'); });
     fullscreenButton.addEventListener('click', async () => { if (document.fullscreenElement) { await document.exitFullscreen(); } else if (viewer.requestFullscreen) { await viewer.requestFullscreen(); } });
     document.addEventListener('fullscreenchange', () => { const active = document.fullscreenElement === viewer; fullscreenButton.textContent = active ? 'ออกจากเต็มจอ' : 'นำเสนอเต็มจอ'; fullscreenButton.setAttribute('aria-label', active ? 'ออกจากโหมดนำเสนอเต็มจอ' : 'ขยายสไลด์สำหรับนำเสนอเต็มจอ'); });
   </script>
 </body>
+
 </html>

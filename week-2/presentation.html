@@ -12,74 +12,86 @@
 </head>
 <body>
 <div id="deck">
-
         <div class="slide center-content">
             <div class="badge">Week 2</div>
             <h1>Evolution & Refactoring Design</h1>
-            <h3>ออกแบบโครงสร้างและวางระบบใหม่</h3>
+            <h3>ออกแบบสถาปัตยกรรมใหม่ และประเมินความเสี่ยง</h3>
             <p style="margin-top: 2rem; max-width: 600px; color: var(--text-muted);">
-                ออกแบบ Data Flow Diagram (DFD) ใหม่<br>
-                เตรียมแผนสำหรับฐานข้อมูล SQLite และระบบสมาชิก
+                ออกแบบ Data Flow Diagram (DFD) ใหม่ เตรียมฐานข้อมูลสมาชิก<br>
+                และปรับโครงสร้างด้วย Separation of Concerns (SoC)
             </p>
         </div>
-            
+
         <div class="slide">
-            <h2>1. DFD และ Blueprint</h2>
-            <p>ออกแบบ <strong>Data Flow Diagram</strong> เพื่อแสดงการไหลของข้อมูลที่ปลอดภัยยิ่งขึ้น</p>
+            <h2>1. โครงสร้างสถาปัตยกรรมใหม่ (MVC Architecture)</h2>
             <div class="grid-2">
                 <div class="card">
-                    <h3>Blueprint สำหรับการ Refactor</h3>
-                    <p>เปลี่ยนจาก JSON เป็น <strong>SQLite</strong> เพื่อการรองรับ Transactions</p>
+                    <h3>Presentation Layer</h3>
+                    <p style="font-size: 0.9rem;">ส่วนรับ Input (CLI) ดักจับข้อผิดพลาด (Validation) และแสดงผล (View)</p>
                 </div>
                 <div class="card">
-                    <h3>Member Discount System</h3>
-                    <p>ออกแบบระบบ Membership (Regular, Silver, Gold, Platinum)</p>
+                    <h3>Business Logic Layer</h3>
+                    <p style="font-size: 0.9rem;">ส่วน Controller (<code>InventoryManager</code>, <code>MemberManager</code>) จัดการเงื่อนไขและส่วนลด</p>
+                </div>
+                <div class="card">
+                    <h3>Data Access Layer</h3>
+                    <p style="font-size: 0.9rem;">ส่วน Storage และ Models แยกอ่านเขียนไฟล์ JSON โดยเฉพาะ</p>
+                </div>
+                <div class="card">
+                    <h3>Database Separation</h3>
+                    <p style="font-size: 0.9rem;">แยกไฟล์ <code>data.json</code> (สินค้า) และ <code>members.json</code> (สมาชิก)</p>
                 </div>
             </div>
         </div>
-            
-        <div class="slide">
-            <h2>2. การระบุ Hotspots</h2>
-            <p>ตรวจพบความเสี่ยงหลายจุดจากการประเมิน (Static Analysis)</p>
-            <ul>
-                <li><strong>Data Corruption:</strong> เสี่ยงต่อไฟล์ JSON พังหากไฟดับระหว่าง Save</li>
-                <li><strong>Input Validation:</strong> ขาดการตรวจสอบ Input เสี่ยงระบบ Crash</li>
-            </ul>
-        </div>
 
         <div class="slide">
-            <h2>3. ผลการวิเคราะห์โค้ดเดิม</h2>
+            <h2>2. การเปลี่ยนแปลงการจัดการสถานะ (State Management)</h2>
             <table>
-                <thead><tr><th>ตัวชี้วัด</th><th>ผล</th><th>ข้อสังเกต</th></tr></thead>
+                <thead><tr><th>โครงสร้างแบบเดิม (As-is)</th><th>โครงสร้างแบบใหม่ (To-be)</th></tr></thead>
                 <tbody>
-                    <tr><td>LOC / LLOC</td><td>99 / 77</td><td>โค้ดหลักรวมอยู่ในไฟล์เดียว</td></tr>
-                    <tr><td>Pylint</td><td>7.10 / 10</td><td>พบปัญหา PEP 8 และ Docstring</td></tr>
-                    <tr><td><code>main()</code> Complexity</td><td>CC 14, เกรด C</td><td>มี 17 branches และ 55 statements</td></tr>
+                    <tr><td>ใช้ <code>global x</code> ทุกฟังก์ชัน</td><td>ใช้ <strong>In-Memory Dictionary</strong> ภายใน Class</td></tr>
+                    <tr><td>โหลดข้อมูลใหม่ทุกครั้ง</td><td>โหลดครั้งเดียวตอนเปิด (Init) ลด I/O Overhead</td></tr>
+                    <tr><td>รับและเขียนไฟล์ตรงจุดที่เกิด Event</td><td>เขียนรวมกัน (Consolidated Save) ป้องกันไฟล์เสียหาย</td></tr>
                 </tbody>
             </table>
-            <p style="margin-top: 1.5rem;">ประเด็นเร่งด่วน: Input ที่ไม่ผ่านการตรวจสอบ, Global State, การไม่ระบุ UTF-8 และการรับค่าติดลบ</p>
         </div>
 
         <div class="slide">
-            <h2>4. Blueprint ของระบบใหม่</h2>
+            <h2>3. ระบบจัดการฐานข้อมูลสมาชิก (Member Integration)</h2>
             <div class="grid-2">
-                <div class="card"><h3>โครงสร้าง 3 ชั้น</h3><p>แยก CLI Presentation, Business Logic และ Data Access เพื่อลดการพึ่งพากันของโค้ด</p></div>
-                <div class="card"><h3>Data Evolution</h3><p>กำหนด Schema และแผนย้ายข้อมูลจาก JSON ไปสู่ SQLite เพื่อรองรับ Transaction</p></div>
-                <div class="card"><h3>Member Discount</h3><p>เตรียมระดับ Regular, Silver, Gold และ Platinum สำหรับ Checkout Flow</p></div>
-                <div class="card"><h3>Quality Gate</h3><p>กำหนดงาน Refactor, Validation, Automated Test และเอกสารไว้ใน Trello</p></div>
+                <div class="card">
+                    <h3>Member Model</h3>
+                    <ul style="font-size: 0.9rem;">
+                        <li><strong>รหัสสมาชิก:</strong> Member ID</li>
+                        <li><strong>ข้อมูลทั่วไป:</strong> ชื่อ, นามสกุล</li>
+                        <li><strong>ระดับสมาชิก (Tier):</strong> Regular, Silver, Gold, Platinum</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>Member Methods</h3>
+                    <ul style="font-size: 0.9rem;">
+                        <li><strong>add_member():</strong> สร้างสมาชิกใหม่</li>
+                        <li><strong>find_member():</strong> ค้นหาและคืนค่าข้อมูล</li>
+                        <li><strong>safe_save():</strong> บันทึกโดยไม่ให้ไฟล์เดิมเสียหาย</li>
+                    </ul>
+                </div>
             </div>
         </div>
 
         <div class="slide">
-            <h2>5. แผนดำเนินงานต่อ</h2>
-            <ol>
-                <li>แยกโค้ดเป็นคลาสและย้ายสถานะออกจาก Global State</li>
-                <li>เพิ่ม Input Validation และการบันทึกข้อมูลแบบปลอดภัย</li>
-                <li>พัฒนาชุดทดสอบอัตโนมัติควบคู่กับการ Refactor</li>
-                <li>ติดตามความเสี่ยงและ Definition of Done ผ่านบอร์ดงาน</li>
-            </ol>
-        </div>
+            <h2>4. Data Flow Diagram (DFD Level 1)</h2>
+            <div class="mermaid-container">
+                <div class="mermaid">
+                    graph LR
+                        User["User (CLI)"] -->|Input| Controller["Controller (Logic)"]
+                        Controller -->|Verify & Calculate| Mem["In-Memory Data"]
+                        Mem -->|Trigger Save| Safe["Safe Atomic Writer"]
+                        Safe -->|Write Temp| Temp["Temp File"]
+                        Temp -->|Rename/Overwrite| Disk["JSON (Disk)"]
                 </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Navigation -->
     <div class="controls">

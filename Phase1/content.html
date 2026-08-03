@@ -1,57 +1,278 @@
 <!doctype html>
 <html lang="th">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Phase 1 — Integrated Planning Proposal</title>
   <link rel="stylesheet" href="../shared-theme.css">
   <style>
-    body { display:block; min-height:100vh; overflow:auto; background-color:var(--paper); }
-    .document { width:min(100%,1120px); margin:0 auto; padding:clamp(28px,6vw,76px) clamp(20px,6vw,72px); }
-    .file-path { margin:0 0 18px; color:var(--indigo); font:500 .73rem/1.5 'IBM Plex Mono',monospace; letter-spacing:.09em; text-transform:uppercase; }
-    h1 { max-width:850px; }
-    .lede { max-width:720px; margin:0; color:var(--text-muted); font-size:clamp(1.08rem,2vw,1.32rem); }
-    .divider { height:1px; margin:36px 0; background:var(--rule); }
-    .summary { display:grid; grid-template-columns:1.2fr .8fr; gap:18px; }
-    .panel { padding:24px; background:#fff; border:1px solid var(--rule); border-radius:14px; }
-    .panel h2 { margin-bottom:18px; font-size:clamp(1.35rem,2.2vw,1.8rem); }
-    .facts { display:grid; gap:0; margin:0; }
-    .facts div { display:grid; grid-template-columns:110px 1fr; gap:18px; padding:12px 0; border-bottom:1px solid var(--rule); }
-    .facts div:last-child { border:0; padding-bottom:0; }
-    dt { color:var(--text-muted); font:500 .7rem/1.4 'IBM Plex Mono',monospace; letter-spacing:.08em; text-transform:uppercase; }
-    dd { margin:0; color:var(--text-main); }
-    .steps { display:grid; gap:12px; margin:0; padding:0; list-style:none; counter-reset:plan; }
-    .steps li { position:relative; min-height:54px; margin:0; padding:12px 12px 12px 56px; background:var(--paper-warm); border:1px solid var(--rule); border-radius:10px; counter-increment:plan; }
-    .steps li::before { position:absolute; top:12px; left:14px; color:var(--indigo); content:"0" counter(plan); font:500 .72rem/1.8 'IBM Plex Mono',monospace; }
-    .deck-link { display:inline-flex; min-height:44px; align-items:center; padding:0 16px; color:var(--ink); text-decoration:none; background:var(--amber); border:1px solid var(--amber); border-radius:999px; font:500 .76rem/1 'IBM Plex Mono',monospace; letter-spacing:.05em; text-transform:uppercase; transition:transform .2s ease,background .2s ease; }
-    .deck-link:hover { color:var(--ink); background:oklch(.76 .12 75); transform:translateY(-2px); }
-    .deck-link:focus-visible { outline:3px solid var(--indigo); outline-offset:3px; }
-    @media (max-width:720px) { .summary { grid-template-columns:1fr; } .facts div { grid-template-columns:1fr; gap:4px; } }
+    body {
+      display: block;
+      min-height: 100vh;
+      overflow: auto;
+      background-color: var(--paper);
+    }
+
+    .document {
+      width: 100%;
+      margin: 0;
+      padding: 30px clamp(15px, 2vw, 30px);
+    }
+
+    .file-path {
+      margin: 0 0 18px;
+      color: var(--indigo);
+      font: 500 .75rem/1.5 'IBM Plex Mono', monospace;
+      letter-spacing: .09em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      max-width: 850px;
+      font: 600 1.85rem/1.2 'Taviraj', serif !important;
+      margin-bottom: 0.5rem;
+    }
+
+    .lede {
+      max-width: 720px;
+      margin: 0;
+      color: var(--text-muted);
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+
+    .divider {
+      height: 1px;
+      margin: 36px 0;
+      background: var(--rule);
+    }
+
+    .summary {
+      display: grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap: 48px;
+    }
+
+    .panel {
+      padding: 0;
+      background: transparent;
+      border: none;
+      border-radius: 0;
+    }
+
+    .panel h2 {
+      margin-bottom: 18px;
+      font: 600 1.3rem/1.3 'Taviraj', serif;
+    }
+
+    .facts {
+      display: grid;
+      gap: 0;
+      margin: 0;
+    }
+
+    .facts div {
+      display: grid;
+      grid-template-columns: 110px 1fr;
+      gap: 18px;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .facts div:last-child {
+      border: 0;
+      padding-bottom: 0;
+    }
+
+    dt {
+      color: var(--text-muted);
+      font: 500 .75rem/1.4 'IBM Plex Mono', monospace;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    dd,
+    p,
+    li {
+      margin: 0;
+      color: var(--text-main);
+      font-size: 0.95rem !important;
+      line-height: 1.6 !important;
+    }
+
+    .steps {
+      display: grid;
+      gap: 12px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      counter-reset: plan;
+    }
+
+    .steps li {
+      position: relative;
+      margin: 0;
+      padding: 0 0 0 32px;
+      background: transparent;
+      border: none;
+      counter-increment: plan;
+    }
+
+    .steps li::before {
+      position: absolute;
+      top: 0;
+      left: 0;
+      color: var(--indigo);
+      content: "0" counter(plan) ".";
+      font: 600 .85rem/1.6 'IBM Plex Mono', monospace;
+    }
+
+    .deck-link {
+      display: inline-flex;
+      min-height: 44px;
+      align-items: center;
+      padding: 0 16px;
+      color: var(--ink);
+      text-decoration: none;
+      background: var(--amber);
+      border: 1px solid var(--amber);
+      border-radius: 999px;
+      font: 500 .76rem/1 'IBM Plex Mono', monospace;
+      letter-spacing: .05em;
+      text-transform: uppercase;
+      transition: transform .2s ease, background .2s ease;
+    }
+
+    .deck-link:hover {
+      color: var(--ink);
+      background: oklch(.76 .12 75);
+      transform: translateY(-2px);
+    }
+
+    .deck-link:focus-visible {
+      outline: 3px solid var(--indigo);
+      outline-offset: 3px;
+    }
+
+    @media (max-width:720px) {
+      .summary {
+        grid-template-columns: 1fr;
+      }
+
+      .facts div {
+        grid-template-columns: 1fr;
+        gap: 4px;
+      }
+    }
   </style>
 </head>
+
 <body>
   <main class="document" data-od-id="phase-1-content">
-    <p class="file-path" data-od-id="source-path">/Phase1/content.html</p>
-    <div class="badge" data-od-id="phase-1-label">Phase 1 · Planning</div>
+    <p class="file-path" data-od-id="source-path">/Phase1/Integrated_Planning_Proposal.md</p>
+    <div class="badge" data-od-id="phase-1-label">Phase 1 · Project Proposal</div>
     <h1 data-od-id="phase-1-heading">Integrated Planning Proposal</h1>
-    <p class="lede">เอกสารสรุปจุดเริ่มต้นของการปรับปรุง CLI Inventory Management System ตั้งแต่เป้าหมาย ขอบเขต ความเสี่ยง ไปจนถึงแนวทางทดสอบ.</p>
+    <p class="lede">ข้อเสนอโครงการฉบับสมบูรณ์ สำหรับปรับปรุงและบำรุงรักษาซอฟต์แวร์ CLI Inventory Management System โดยมุ่งเน้นที่เสถียรภาพ การวางโครงสร้างโค้ด และระบบทดสอบอัตโนมัติ</p>
+    
     <div class="divider"></div>
-    <section class="summary" aria-label="สรุปเอกสาร" data-od-id="phase-1-summary">
-      <article class="panel" data-od-id="project-facts">
-        <h2>Project record</h2>
+    
+    <section class="summary" aria-label="สรุปเป้าหมายโครงการ" data-od-id="phase-1-objectives" style="grid-template-columns: 1fr;">
+      <article class="panel" data-od-id="project-objectives">
+        <h2>1. เป้าหมายโครงการ (Project Objectives)</h2>
         <dl class="facts">
-          <div><dt>System</dt><dd>CLI Inventory Management System</dd></div>
-          <div><dt>Focus</dt><dd>Stability, modularity, data integrity และ automated testing</dd></div>
-          <div><dt>Scope</dt><dd>Refactoring, member database, checkout engine และ QA</dd></div>
+          <div>
+            <dt>Stability Improvement</dt>
+            <dd>ปรับปรุงเสถียรภาพการทำงาน ทำให้ระบบจัดการสินค้ามีความทนทานต่อข้อผิดพลาด (Fault Tolerance) ไม่หยุดทำงานหรือพังลงจากการรับข้อมูลนำเข้าที่ไม่ถูกต้อง (Crash Prevention)</dd>
+          </div>
+          <div>
+            <dt>Refactoring</dt>
+            <dd>ทำความสะอาดโค้ดเดิม ยุบโค้ดส่วนที่ซ้ำซ้อน แยกฟังก์ชันออกเป็นโมดูล (Modularized) ให้ชัดเจนด้วย OOP/MVC</dd>
+          </div>
+          <div>
+            <dt>Data Integrity</dt>
+            <dd>ปรับปรุงฟังก์ชันการบันทึกฐานข้อมูล JSON ให้ปลอดภัย ป้องกันความเสี่ยงจากข้อมูลสูญหายด้วยวิธี Safe Atomic Write</dd>
+          </div>
+          <div>
+            <dt>Automated Testing</dt>
+            <dd>จัดทำชุดทดสอบ (PyTest) เพื่อให้มั่นใจว่าการปรับปรุงโค้ดเดิมจะไม่ส่งผลเสียต่อการทำงานที่มีอยู่ (Regression Testing)</dd>
+          </div>
         </dl>
       </article>
-      <article class="panel" data-od-id="planning-steps">
-        <h2>Planning sequence</h2>
-        <ol class="steps"><li>วิเคราะห์ข้อจำกัดของระบบเดิม</li><li>กำหนด WBS และแผนรับมือความเสี่ยง</li><li>จัดทำแนวทางทดสอบก่อนพัฒนา</li></ol>
+    </section>
+
+    <div class="divider"></div>
+
+    <section class="summary" aria-label="ขอบเขตการทำงาน (WBS)" data-od-id="phase-1-scope">
+      <article class="panel" data-od-id="scope-wbs">
+        <h2>2. ขอบเขตการทำงาน (Final Scope - WBS)</h2>
+        <ol class="steps">
+          <li><strong>เฟส 1: การวางรากฐานและจัดโครงสร้างสถาปัตยกรรม</strong> (Refactoring & Infrastructure) <br>- แยกไฟล์ฐานข้อมูลเป็น <code>members.json</code> และ <code>data.json</code> <br>- เปลี่ยนไปใช้ Class (<code>InventoryManager</code>, <code>MemberManager</code>)</li>
+          <li><strong>เฟส 2: การจัดการฐานข้อมูลสมาชิก</strong> (Member Database Integration) <br>- สร้างเมธอดสำหรับเพิ่ม ค้นหา บันทึกข้อมูลสมาชิก และใช้ Safe Atomic Write</li>
+          <li><strong>เฟส 3: ปรับปรุงตรรกะการคำนวณ</strong> (Discount & Checkout Engine) <br>- พัฒนาระบบรับข้อมูลการจ่ายยอด ตรรกะคำนวณส่วนลด และแสดงผลก่อนหักสต็อก</li>
+          <li><strong>เฟส 4: เพิ่มระบบดักข้อผิดพลาดเชิงลึกและทดสอบ</strong> (Exception Handling & QA) <br>- ดักจับประเภทข้อมูลนำเข้า ทำ Graceful Degradation และเขียน Unit Tests ครอบคลุมเคสต่างๆ</li>
+        </ol>
+      </article>
+
+      <article class="panel" data-od-id="time-schedule">
+        <h2>3. ตารางแผนเวลา (Time Schedule)</h2>
+        <dl class="facts">
+          <div><dt>Week 1</dt><dd>วิเคราะห์โครงสร้างโค้ดเดิม จัดทำ Project Charter ร่าง Scope</dd></div>
+          <div><dt>Week 2</dt><dd>ออกแบบ DFD ประเมินความเสี่ยง วางแผนจัดการสถานะ Global</dd></div>
+          <div><dt>Week 3</dt><dd>เขียนโค้ดระบบจัดการสินค้า จัดทำ Exception Handling</dd></div>
+          <div><dt>Week 4</dt><dd>จัดทำ Unit Test ด้วย PyTest และทำเอกสารสรุป Integrated Proposal</dd></div>
+        </dl>
       </article>
     </section>
+
     <div class="divider"></div>
-    <a class="deck-link" href="presentation.html" target="_blank" rel="noopener" data-od-id="open-phase-1-deck">เปิดสไลด์ฉบับเต็ม ↗</a>
+
+    <section class="summary" aria-label="ความเสี่ยงและแผนรับมือ" data-od-id="phase-1-risk" style="grid-template-columns: 1fr;">
+      <article class="panel" data-od-id="risk-matrix">
+        <h2>4. ตารางวิเคราะห์ความเสี่ยงและแผนรับมือ (Risk Matrix & Mitigation)</h2>
+        <dl class="facts">
+          <div>
+            <dt>Global State Conflict</dt>
+            <dd><strong>Risk:</strong> การประกาศตัวแปรระดับ global อาจทำให้เขียนทับข้อมูลโดยไม่ได้ตั้งใจ <br><strong>Mitigation:</strong> แปลงระบบเป็น OOP แยก Business Logic ออกจาก Presentation Layer (CLI)</dd>
+          </div>
+          <div>
+            <dt>Data Corruption</dt>
+            <dd><strong>Risk:</strong> เขียนทับไฟล์ตรงๆ หากแอปล่มข้อมูลจะหาย <br><strong>Mitigation:</strong> ใช้กระบวนการ Safe Save (Atomic Write) บันทึกผ่าน Temporary Files ก่อนเขียนทับ</dd>
+          </div>
+          <div>
+            <dt>Input Type Mismatch</dt>
+            <dd><strong>Risk:</strong> ผู้ใช้กรอกตัวอักษรแทนตัวเลขทำให้เกิด ValueError และระบบล่ม <br><strong>Mitigation:</strong> บังคับใช้ Input Validation ดักจับด้วย try-except เสมอ</dd>
+          </div>
+          <div>
+            <dt>Encoding Risk</dt>
+            <dd><strong>Risk:</strong> อ่านไฟล์โดยไม่ระบุ encoding อาจทำให้ภาษาไทยเพี้ยนใน OS อื่น <br><strong>Mitigation:</strong> กำหนด <code>encoding='utf-8'</code> เป็นมาตรฐานการอ่าน/เขียนไฟล์ทุกครั้ง</dd>
+          </div>
+        </dl>
+      </article>
+    </section>
+
+    <div class="divider"></div>
+
+    <section class="summary" aria-label="สถาปัตยกรรมและการทดสอบ" data-od-id="phase-1-arch">
+      <article class="panel" data-od-id="architecture">
+        <h2>5. DFD Level 1 (Data Flow)</h2>
+        <p style="margin-bottom: 12px; color: var(--text-muted); font-size: 0.95rem;">โครงสร้างกระแสข้อมูลที่ออกแบบใหม่เพื่อจัดการสถานะอย่างปลอดภัย</p>
+        <pre style="background: var(--paper-warm); padding: 12px; border-radius: 8px; overflow-x: auto; font-family: 'IBM Plex Mono', monospace; font-size: 0.85rem; color: var(--ink);"><code>User -> P1: load -> Memory Store -> P2: show_all -> User
+User -> P3: add_update -> Memory Store -> P6: save -> Disk
+User -> P4: cut_stock -> Memory Store -> P6: save -> Disk</code></pre>
+      </article>
+
+      <article class="panel" data-od-id="qa-testing">
+        <h2>6. Automated Testing (PyTest)</h2>
+        <p style="margin-bottom: 12px; color: var(--text-muted); font-size: 0.95rem;">เกราะป้องกันเพื่อรับประกันความเสถียร (Regression Prevention)</p>
+        <pre style="background: var(--ink-soft); padding: 12px; border-radius: 8px; overflow-x: auto; font-family: 'IBM Plex Mono', monospace; font-size: 0.85rem; color: #fff;"><code>def test_cut_stock_not_enough(manager):
+    success, msg, rem = manager.cut_stock("2", 15)
+    assert success is False
+    assert msg == "Error: Not enough stock!"
+    assert rem == 10</code></pre>
+      </article>
+    </section>
   </main>
 </body>
+
 </html>

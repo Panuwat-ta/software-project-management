@@ -12,74 +12,67 @@
 </head>
 <body>
 <div id="deck">
-
         <div class="slide center-content">
             <div class="badge">Week 3</div>
-            <h1>Implementation & Testing</h1>
-            <h3>ลงมือพัฒนาโค้ดใหม่และการทดสอบ</h3>
+            <h1>Implementation & Discount Engine</h1>
+            <h3>พัฒนาระบบคำนวณส่วนลด และจัดการบทบาทในทีม</h3>
             <p style="margin-top: 2rem; max-width: 600px; color: var(--text-muted);">
-                การพัฒนาเวอร์ชันใหม่ (app_v2.py) และเขียนระบบทดสอบอัตโนมัติ (Automated Testing)
+                เสริมตรรกะการคิดเงินหลังหักส่วนลดตาม Tier สมาชิก<br>
+                และกำหนดมาตรฐาน Definition of Done (DoD)
             </p>
         </div>
-            
+
         <div class="slide">
-            <h2>1. การปรับโครงสร้างโค้ด (Refactoring)</h2>
-            <p>การปรับปรุงโค้ดใหม่ให้เป็น <strong>Object-Oriented Programming (OOP)</strong></p>
-            <ul>
-                <li>ลดการพึ่งพาตัวแปร Global ด้วย Class Structure</li>
-                <li>เพิ่ม <code>Input Validation</code> และ Exception Handling</li>
-                <li>ปรับใช้งาน <code>Atomic Write</code> บันทึกไฟล์ปลอดภัยขึ้นชั่วคราว</li>
-            </ul>
-        </div>
-            
-        <div class="slide">
-            <h2>2. Automated Testing</h2>
-            <div class="grid-2">
-                <div class="card">
-                    <h3>PyTest & Unittest</h3>
-                    <p>รันสคริปต์ <code>test_app.py</code> และ <code>test_app1.py</code> เพื่อทำ Unit Testing ในทุกฟังก์ชัน</p>
-                </div>
-                <div class="card">
-                    <h3>JSON Reports</h3>
-                    <p>สกัดรายงานผลลัพธ์การทดสอบออกมาในรูปแบบ JSON อัตโนมัติ (test.json)</p>
-                </div>
-            </div>
+            <h2>1. ตรรกะการคิดส่วนลด (Discount Logic Engine)</h2>
+            <pre><code class="language-python"># Discount Logic Flow (Pseudo-code)
+def process_checkout(product_id, qty, member_id):
+    if qty > product_stock: 
+        return "Error: Not enough stock!"
+        
+    member = find_member(member_id)
+    discount_rate = 0
+    if member.tier == 'Gold': discount_rate = 0.10
+    elif member.tier == 'Silver': discount_rate = 0.05
+    
+    total = base_price - (base_price * discount_rate)
+    return proceed_to_payment(total)</code></pre>
+            <p style="margin-top: 1rem; font-size: 0.95rem;">ระบบจะแสดงยอดเงินสุทธิให้ยืนยันก่อน แล้วจึงทำการตัดสต็อก (Cut Stock)</p>
         </div>
 
         <div class="slide">
-            <h2>3. สิ่งที่พัฒนาใน <code>app_v2.py</code></h2>
-            <div class="grid-2">
-                <div class="card"><h3>Product &amp; InventoryManager</h3><p>จัดเก็บข้อมูลสินค้าเป็นวัตถุ แยกการโหลด บันทึก เพิ่ม/แก้ไข ตัดสต็อก และสรุปคลังสินค้า</p></div>
-                <div class="card"><h3>InventoryCLI</h3><p>แยกส่วนรับข้อมูลและการแสดงผล พร้อมตรวจสอบจำนวนและราคาก่อนประมวลผล</p></div>
-                <div class="card"><h3>Data Integrity</h3><p>ใช้ไฟล์ชั่วคราวและ <code>os.replace</code> เพื่อบันทึก JSON แบบ Atomic Save</p></div>
-                <div class="card"><h3>Maintainability</h3><p>ใช้ชื่อที่สื่อความหมาย, Type Hints และ Docstrings เพื่อให้ดูแลโค้ดต่อได้ง่าย</p></div>
-            </div>
-        </div>
-
-        <div class="slide">
-            <h2>4. การทดสอบที่ครอบคลุม</h2>
+            <h2>2. บทบาทหน้าที่ในทีม (RACI Matrix)</h2>
             <table>
-                <thead><tr><th>กรณีทดสอบ</th><th>สิ่งที่ยืนยัน</th></tr></thead>
+                <thead><tr><th>สมาชิกทีม</th><th>บทบาทที่รับผิดชอบหลัก</th></tr></thead>
                 <tbody>
-                    <tr><td>Inventory summary</td><td>จำนวนประเภทสินค้า มูลค่ารวม และรายการสต็อกต่ำ</td></tr>
-                    <tr><td>Cut stock</td><td>ตัดสำเร็จ, จำนวนไม่พอ และไม่พบรหัสสินค้า</td></tr>
-                    <tr><td>Add / Update</td><td>เพิ่มสินค้าใหม่และแก้ไขสินค้าเดิมได้ถูกต้อง</td></tr>
-                    <tr><td>JSON report</td><td>บันทึกผล PASS/FAIL/ERROR ลง <code>test.json</code></td></tr>
+                    <tr><td><strong>ภานุวัฒน์</strong> (PM/Dev)</td><td><strong>Responsible/Accountable:</strong> ร่างแผน WBS และพัฒนาฟีเจอร์หลัก (Discount, Safe Save)</td></tr>
+                    <tr><td><strong>เอกพันธ์</strong> (QA)</td><td><strong>Responsible:</strong> ออกแบบ Test Case และเขียน PyTest</td></tr>
+                    <tr><td><strong>ณฐภาพ</strong> (Tech Lead)</td><td><strong>Consulted/Accountable:</strong> แนะนำ MVC, ตรวจรับ Code (Approve) และ Merge</td></tr>
                 </tbody>
             </table>
         </div>
 
         <div class="slide">
-            <h2>5. การควบคุมคุณภาพทีม</h2>
-            <p>ใช้ RACI และ Definition of Done เพื่อให้ทุกงานมีผู้รับผิดชอบและเกณฑ์ส่งมอบที่ชัดเจน</p>
-            <ul>
-                <li><strong>Developer:</strong> พัฒนาและปรับโครงสร้างโค้ด</li>
-                <li><strong>QA / Tester:</strong> รับผิดชอบ Automated Test</li>
-                <li><strong>Tech Lead:</strong> อนุมัติการรวมโค้ดและรับผิดชอบผลลัพธ์สุดท้าย</li>
-                <li><strong>DoD:</strong> Tests ผ่าน, โค้ดได้มาตรฐาน, ปลอดภัย, เอกสารครบ และผ่าน Code Review</li>
-            </ul>
-        </div>
+            <h2>3. มาตรฐานการส่งมอบงาน (Definition of Done)</h2>
+            <div class="grid-2">
+                <div class="card">
+                    <h3>⚙️ Code & Architecture</h3>
+                    <ul style="font-size: 0.9rem;">
+                        <li>เปลี่ยนโค้ดเป็น OOP / MVC สมบูรณ์</li>
+                        <li>ตั้งชื่อตัวแปรตาม PEP 8</li>
+                        <li>ดักจับ Input Error (try-except) ครบถ้วน</li>
+                    </ul>
                 </div>
+                <div class="card">
+                    <h3>🧪 Testing & QA</h3>
+                    <ul style="font-size: 0.9rem;">
+                        <li>ผ่าน Automated Tests 100%</li>
+                        <li>ไม่มี FAIL / ERROR เกิดขึ้น</li>
+                        <li>ได้รับการ Approve จาก Tech Lead</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Navigation -->
     <div class="controls">

@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="th">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Week 4 — Testing & Code Refinement</title>
+  <link rel="stylesheet" href="../shared-theme.css">
+  <style>
+    body {
+      display: block;
+      min-height: 100vh;
+      overflow: auto;
+      background-color: var(--paper);
+    }
+
+    .document {
+      width: 100%;
+      margin: 0;
+      padding: 30px clamp(15px, 2vw, 30px);
+    }
+
+    .file-path {
+      margin: 0 0 18px;
+      color: var(--indigo);
+      font: 500 .73rem/1.5 'IBM Plex Mono', monospace;
+      letter-spacing: .09em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      max-width: 850px;
+      font-size: clamp(1.8rem, 3vw, 2.4rem) !important;
+    }
+
+    .lede {
+      max-width: 720px;
+      margin: 0;
+      color: var(--text-muted);
+      font-size: clamp(1.08rem, 2vw, 1.32rem);
+    }
+
+    .divider {
+      height: 1px;
+      margin: 36px 0;
+      background: var(--rule);
+    }
+
+    .summary {
+      display: grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap: 18px;
+    }
+
+    .panel {
+      padding: 24px;
+      background: #fff;
+      border: 1px solid var(--rule);
+      border-radius: 14px;
+    }
+
+    .panel h2 {
+      margin-bottom: 18px;
+      font-size: clamp(1.35rem, 2.2vw, 1.8rem);
+    }
+
+    .facts {
+      display: grid;
+      gap: 0;
+      margin: 0;
+    }
+
+    .facts div {
+      display: grid;
+      grid-template-columns: 110px 1fr;
+      gap: 18px;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .facts div:last-child {
+      border: 0;
+      padding-bottom: 0;
+    }
+
+    dt {
+      color: var(--text-muted);
+      font: 500 .7rem/1.4 'IBM Plex Mono', monospace;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    dd,
+    p,
+    li {
+      margin: 0;
+      color: var(--text-main);
+      font-size: 0.95rem !important;
+      line-height: 1.6 !important;
+    }
+
+    .steps {
+      display: grid;
+      gap: 12px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      counter-reset: plan;
+    }
+
+    .steps li {
+      position: relative;
+      margin: 0;
+      padding: 0 0 0 32px;
+      background: transparent;
+      border: none;
+      counter-increment: plan;
+    }
+
+    .steps li::before {
+      position: absolute;
+      top: 0;
+      left: 0;
+      color: var(--indigo);
+      content: "0" counter(plan) ".";
+      font: 600 .85rem/1.6 'IBM Plex Mono', monospace;
+    }
+
+    .deck-link {
+      display: inline-flex;
+      min-height: 44px;
+      align-items: center;
+      padding: 0 16px;
+      color: var(--ink);
+      text-decoration: none;
+      background: var(--amber);
+      border: 1px solid var(--amber);
+      border-radius: 999px;
+      font: 500 .76rem/1 'IBM Plex Mono', monospace;
+      letter-spacing: .05em;
+      text-transform: uppercase;
+      transition: transform .2s ease, background .2s ease;
+    }
+
+    .deck-link:hover {
+      color: var(--ink);
+      background: oklch(.76 .12 75);
+      transform: translateY(-2px);
+    }
+
+    .deck-link:focus-visible {
+      outline: 3px solid var(--indigo);
+      outline-offset: 3px;
+    }
+
+    @media (max-width:720px) {
+      .summary {
+        grid-template-columns: 1fr;
+      }
+
+      .facts div {
+        grid-template-columns: 1fr;
+        gap: 4px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="document" data-od-id="week-4-content">
+    <p class="file-path" data-od-id="source-path">/week-4/content.html</p>
+    <div class="badge" data-od-id="week-4-label">Week 4 · QA & Refinement</div>
+    <h1 data-od-id="week-4-heading">Exception Handling & QA</h1>
+    <p class="lede">เพิ่มระบบดักข้อผิดพลาดเชิงลึก ทดสอบระบบด้วย Automated Tests และจัดการความเสียหายของฐานข้อมูล (Graceful Degradation)</p>
+    
+    <div class="divider"></div>
+    
+    <section class="summary" aria-label="เป้าหมายของสัปดาห์นี้" data-od-id="week-4-summary">
+      <article class="panel" data-od-id="project-facts">
+        <h2>1. เป้าหมายสัปดาห์ที่ 4 (Phase 4)</h2>
+        <dl class="facts">
+          <div>
+            <dt>Exception Handling</dt>
+            <dd>เขียนโค้ดดักจับประเภทข้อมูลนำเข้าที่ผิดแปลก เช่น การกรอกตัวอักษรแทนตัวเลข การส่งค่าว่าง หรือค่าติดลบที่ไม่ควรเกิดขึ้น (Input Validation)</dd>
+          </div>
+          <div>
+            <dt>Graceful Degradation</dt>
+            <dd>ออกแบบให้ระบบสามารถทำงานต่อไปได้หรือแจ้งเตือนอย่างเหมาะสมหากฐานข้อมูลได้รับความเสียหายบางส่วน แทนที่จะแครชไปเลย</dd>
+          </div>
+          <div>
+            <dt>Quality Assurance (QA)</dt>
+            <dd>พัฒนา Unit Tests ด้วย PyTest ให้ครอบคลุมทุก Use Case สำคัญ โดยเฉพาะส่วนที่เกี่ยวกับการคิดเงินและจัดการสต็อก</dd>
+          </div>
+        </dl>
+      </article>
+
+      <article class="panel" data-od-id="test-cases">
+        <h2>2. ขอบเขตการทดสอบ (Automated Test Coverage)</h2>
+        <ol class="steps">
+          <li><strong>Happy Path:</strong> ทดสอบการทำงานปกติ เช่น <code>test_cut_stock_success</code></li>
+          <li><strong>Edge Cases:</strong> ทดสอบการสั่งตัดสต็อกมากกว่าที่มีอยู่ (<code>test_cut_stock_not_enough</code>) และรหัสสินค้าที่ไม่มีในระบบ (<code>test_cut_stock_not_found</code>)</li>
+          <li><strong>Data Integrity:</strong> ทดสอบระบบ Atomic Save จำลองว่าหากเซฟไฟล์ไม่เสร็จ ไฟล์เดิมต้องไม่พัง (รันผ่าน <code>tempfile</code> fixtures)</li>
+        </ol>
+      </article>
+    </section>
+
+    <div class="divider"></div>
+
+    <section class="summary" aria-label="ผลลัพธ์และความสำเร็จ" style="grid-template-columns: 1fr;">
+      <article class="panel" data-od-id="quality-refinement">
+        <h2>3. สรุปผลการปรับปรุงและการทดสอบ (Quality Result)</h2>
+        <div style="margin-top: 15px; font-size: 0.95rem; line-height: 1.6; color: var(--text-main);">
+          <p>หลังจากพัฒนาจนครบ 4 สัปดาห์ ระบบ CLI Inventory Management System มีความเสถียรขึ้นอย่างมาก:</p>
+          <ul style="padding-left: 20px;">
+            <li><strong>Regression Proof:</strong> ชุดทดสอบ PyTest ทำให้มั่นใจว่าหากอนาคตมีนักพัฒนาท่านอื่นมาแก้โค้ด จะไม่ทำให้ฟีเจอร์สำคัญพังโดยไม่รู้ตัว</li>
+            <li><strong>Fail-Safe Mechanism:</strong> ข้อมูลสูญหายจากการบันทึกทับไม่เกิดขึ้นอีกแล้วด้วยระบบ Safe Atomic Write</li>
+            <li><strong>Delivery:</strong> ทีมได้ส่งมอบผลงานเป็น Integrated Planning Proposal ที่สรุปแผน แผนภาพโครงสร้าง ขอบเขตความรับผิดชอบ และแนวทางการป้องกันความเสี่ยงครบถ้วนสมบูรณ์</li>
+          </ul>
+        </div>
+      </article>
+    </section>
+  </main>
+</body>
+
+</html>

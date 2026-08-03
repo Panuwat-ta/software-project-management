@@ -12,7 +12,6 @@
 </head>
 <body>
 <div id="deck">
-
         <div class="slide center-content">
             <div class="badge">Week 1</div>
             <h1>Planning & Legacy Code Review</h1>
@@ -25,75 +24,76 @@
             
         <div class="slide">
             <h2>1. กฎบัตรโครงการ (Project Charter)</h2>
-            <div class="grid-2" style="margin-top: 3rem;">
+            <div class="grid-2" style="margin-top: 2rem;">
                 <div class="card">
                     <h3>👥 ทีมงานและบทบาท</h3>
                     <ul>
-                        <li><strong>PM / Developer:</strong> ภานุวัฒน์</li>
-                        <li><strong>Tech Lead:</strong> ณฐภาพ</li>
-                        <li><strong>QA / Tester:</strong> เอกพันธ์</li>
+                        <li><strong>PM / Developer:</strong> ภานุวัฒน์ - วิเคราะห์ระบบ, เขียนโค้ดหลัก</li>
+                        <li><strong>Tech Lead:</strong> ณฐภาพ - ตรวจรับงาน, ออกแบบ Architecture</li>
+                        <li><strong>QA / Tester:</strong> เอกพันธ์ - เขียน Unit Tests (PyTest)</li>
                     </ul>
                 </div>
                 <div class="card">
-                    <h3>🎯 เป้าหมายสัปดาห์ที่ 1</h3>
-                    <p>ทำความเข้าใจโค้ดดั้งเดิม <code>app_v1.py</code> และ <code>data.json</code></p>
+                    <h3>🎯 เป้าหมายหลัก (Objectives)</h3>
+                    <ul>
+                        <li><strong>Stability:</strong> ปรับปรุงให้ทนทานต่อข้อผิดพลาด (Fault Tolerance)</li>
+                        <li><strong>Refactoring:</strong> ยุบโค้ดซ้ำซ้อน แยกโมดูลให้ชัดเจน (MVC)</li>
+                        <li><strong>Testing:</strong> สร้าง Automated Tests ป้องกัน Regression</li>
+                    </ul>
                 </div>
             </div>
         </div>
             
         <div class="slide">
-            <h2>2. โค้ดดั้งเดิม (Legacy Code)</h2>
-            <p>ระบบเดิมเป็น CLI แบบ Monolithic และใช้ไฟล์ JSON เป็นที่เก็บข้อมูล</p>
-            <ul>
-                <li>ใช้ตัวแปร Global ทำให้ตรวจสอบสถานะลำบาก</li>
-                <li>เก็บข้อมูลในไฟล์ JSON โดยขาดกลไกป้องกันข้อมูลสูญหาย (Atomic Save)</li>
-                <li>ตรรกะทั้งหมดอยู่ในไฟล์เดียว (Monolithic)</li>
-            </ul>
-        </div>
-
-        <div class="slide">
-            <h2>3. เป้าหมายและขอบเขต</h2>
-            <div class="grid-2">
-                <div class="card">
-                    <h3>In scope</h3>
-                    <ul>
-                        <li>แยก Business Logic ออกจาก CLI</li>
-                        <li>ตรวจสอบข้อมูลนำเข้าและค่าติดลบ</li>
-                        <li>บันทึกข้อมูลแบบ Atomic Write</li>
-                        <li>สร้าง Automated Unit Tests</li>
-                    </ul>
-                </div>
-                <div class="card">
-                    <h3>ข้อจำกัดในระยะแรก</h3>
-                    <ul>
-                        <li>คงรูปแบบการใช้งานเป็น CLI</li>
-                        <li>ไม่พัฒนา GUI หรือ Web Application</li>
-                        <li>รักษาพฤติกรรมหลักของระบบคลังสินค้าเดิม</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-
-        <div class="slide">
-            <h2>4. ความเสี่ยงและแนวทางรับมือ</h2>
+            <h2>2. โค้ดดั้งเดิม (Legacy Code) และปัญหา</h2>
+            <p>ระบบเดิมเป็น CLI แบบ Monolithic และใช้ไฟล์ JSON ผูกกับตัวแปร Global</p>
             <table>
-                <thead><tr><th>ความเสี่ยง</th><th>ผลกระทบ</th><th>แนวทาง</th></tr></thead>
+                <thead><tr><th>ปัญหาที่พบ (Code Smells)</th><th>ผลกระทบที่มีต่อระบบ</th></tr></thead>
                 <tbody>
-                    <tr><td>Refactor กระทบพฤติกรรมเดิม</td><td>Regression</td><td>ปรับทีละส่วนและรันชุดทดสอบทุกครั้ง</td></tr>
-                    <tr><td>ข้อมูล JSON เดิมไม่ตรง Schema</td><td>อ่านข้อมูลไม่ได้</td><td>ตรวจสอบและทำความสะอาดข้อมูลก่อนใช้งาน</td></tr>
-                    <tr><td>ไม่มี Legacy Tests</td><td>ตรวจพบข้อผิดพลาดช้า</td><td>จัดทำ Test Case ก่อนแก้โค้ดหลัก</td></tr>
+                    <tr><td>ใช้ <code>global x</code> ในทุกฟังก์ชัน</td><td>เสี่ยงค่าขัดแย้งกัน ทำ Unit Test ยาก</td></tr>
+                    <tr><td>ใช้ <code>json.dump()</code> ตรงๆ</td><td>หากไฟดับกลางคัน ข้อมูลหาย (Data Corruption)</td></tr>
+                    <tr><td>ไม่มี <code>Input Validation</code></td><td>ผู้ใช้พิมพ์ตัวอักษรแทนตัวเลข โปรแกรมจะ Error ทันที</td></tr>
+                    <tr><td>ตรรกะกองรวมกัน (Monolithic)</td><td>การแก้ไขส่วนใดส่วนหนึ่งอาจกระทบส่วนอื่นได้ง่าย</td></tr>
                 </tbody>
             </table>
         </div>
 
         <div class="slide">
-            <h2>5. ผลส่งมอบและก้าวถัดไป</h2>
+            <h2>3. ขอบเขตการทำงาน (Final Scope - WBS)</h2>
             <div class="grid-2">
-                <div class="card"><h3>ผลส่งมอบ</h3><p>Project Charter, Scope, รายงานทำความเข้าใจระบบเดิม และแผนงานบน Trello</p></div>
-                <div class="card"><h3>สัปดาห์ถัดไป</h3><p>วิเคราะห์ Hotspot ออกแบบ Data Flow และ Blueprint สำหรับโครงสร้างที่ปรับปรุงแล้ว</p></div>
+                <div class="card">
+                    <h3>✅ In-Scope (สิ่งที่ทำ)</h3>
+                    <ul style="font-size: 0.9rem;">
+                        <li>เฟส 1: Refactoring & Infrastructure (OOP, แยกไฟล์)</li>
+                        <li>เฟส 2: Member Database Integration</li>
+                        <li>เฟส 3: Discount & Checkout Engine</li>
+                        <li>เฟส 4: Exception Handling & Automated Tests (PyTest)</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>❌ Out-of-Scope (สิ่งที่ไม่ทำ)</h3>
+                    <ul style="font-size: 0.9rem;">
+                        <li>ไม่มีการพัฒนาหน้าต่าง GUI (คงรูปแบบ CLI ไว้)</li>
+                        <li>ไม่เชื่อมต่อระบบฐานข้อมูล SQL ภายนอก (ยังใช้ Local File)</li>
+                        <li>ไม่ทำระบบซื้อขายเต็มรูปแบบนอกเหนือจากการทดสอบของระบบย่อย</li>
+                    </ul>
+                </div>
             </div>
         </div>
-                </div>
+
+        <div class="slide">
+            <h2>4. ความเสี่ยงและแนวทางรับมือ (Risk Mitigation)</h2>
+            <table>
+                <thead><tr><th>ความเสี่ยงหลัก (Critical Risk)</th><th>แนวทางป้องกัน (Mitigation)</th></tr></thead>
+                <tbody>
+                    <tr><td>Global State Conflict</td><td><strong>แปลงระบบเป็น OOP</strong> แยกเป็น Manager Classes</td></tr>
+                    <tr><td>Data Corruption ตอนเซฟ</td><td><strong>ใช้ Safe Atomic Write</strong> ผ่าน Temp File</td></tr>
+                    <tr><td>Input Type Mismatch (ValueError)</td><td><strong>ดักจับด้วย try-except</strong> ล่วงหน้าก่อนเข้า Business Logic</td></tr>
+                    <tr><td>Encoding Risk (ภาษาไทยเพี้ยน)</td><td><strong>บังคับ <code>encoding='utf-8'</code></strong> ทุกครั้งที่มีการ I/O</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 
     <!-- Navigation -->
     <div class="controls">

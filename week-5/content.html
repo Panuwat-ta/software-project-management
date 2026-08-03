@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="th">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Week 5 — Quality, Architecture & Budget</title>
+  <link rel="stylesheet" href="../shared-theme.css">
+  <style>
+    body {
+      display: block;
+      min-height: 100vh;
+      overflow: auto;
+      background-color: var(--paper);
+    }
+
+    .document {
+      width: 100%;
+      margin: 0;
+      padding: 30px clamp(15px, 2vw, 30px);
+    }
+
+    .file-path {
+      margin: 0 0 18px;
+      color: var(--indigo);
+      font: 500 .73rem/1.5 'IBM Plex Mono', monospace;
+      letter-spacing: .09em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      max-width: 850px;
+      font-size: clamp(1.8rem, 3vw, 2.4rem) !important;
+    }
+
+    .lede {
+      max-width: 720px;
+      margin: 0;
+      color: var(--text-muted);
+      font-size: clamp(1.08rem, 2vw, 1.32rem);
+    }
+
+    .divider {
+      height: 1px;
+      margin: 36px 0;
+      background: var(--rule);
+    }
+
+    .summary {
+      display: grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap: 18px;
+    }
+
+    .panel {
+      padding: 24px;
+      background: #fff;
+      border: 1px solid var(--rule);
+      border-radius: 14px;
+    }
+
+    .panel h2 {
+      margin-bottom: 18px;
+      font-size: clamp(1.35rem, 2.2vw, 1.8rem);
+    }
+
+    .facts {
+      display: grid;
+      gap: 0;
+      margin: 0;
+    }
+
+    .facts div {
+      display: grid;
+      grid-template-columns: 110px 1fr;
+      gap: 18px;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .facts div:last-child {
+      border: 0;
+      padding-bottom: 0;
+    }
+
+    dt {
+      color: var(--text-muted);
+      font: 500 .7rem/1.4 'IBM Plex Mono', monospace;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    dd,
+    p,
+    li {
+      margin: 0;
+      color: var(--text-main);
+      font-size: 0.95rem !important;
+      line-height: 1.6 !important;
+    }
+
+    .steps {
+      display: grid;
+      gap: 12px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      counter-reset: plan;
+    }
+
+    .steps li {
+      position: relative;
+      margin: 0;
+      padding: 0 0 0 32px;
+      background: transparent;
+      border: none;
+      counter-increment: plan;
+    }
+
+    .steps li::before {
+      position: absolute;
+      top: 0;
+      left: 0;
+      color: var(--indigo);
+      content: "0" counter(plan) ".";
+      font: 600 .85rem/1.6 'IBM Plex Mono', monospace;
+    }
+
+    .deck-link {
+      display: inline-flex;
+      min-height: 44px;
+      align-items: center;
+      padding: 0 16px;
+      color: var(--ink);
+      text-decoration: none;
+      background: var(--amber);
+      border: 1px solid var(--amber);
+      border-radius: 999px;
+      font: 500 .76rem/1 'IBM Plex Mono', monospace;
+      letter-spacing: .05em;
+      text-transform: uppercase;
+      transition: transform .2s ease, background .2s ease;
+    }
+
+    .deck-link:hover {
+      color: var(--ink);
+      background: oklch(.76 .12 75);
+      transform: translateY(-2px);
+    }
+
+    .deck-link:focus-visible {
+      outline: 3px solid var(--indigo);
+      outline-offset: 3px;
+    }
+
+    @media (max-width:720px) {
+      .summary {
+        grid-template-columns: 1fr;
+      }
+
+      .facts div {
+        grid-template-columns: 1fr;
+        gap: 4px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="document" data-od-id="week-5-content">
+    <p class="file-path" data-od-id="source-path">/week-5/content.html</p>
+    <div class="badge" data-od-id="week-5-label">Week 5 · Project Finalization</div>
+    <h1 data-od-id="week-5-heading">Quality, Architecture & Budget</h1>
+    <p class="lede">สรุปปิดโครงการ นำเสนอสถาปัตยกรรมเปรียบเทียบ งบประมาณ และการประเมินคุณภาพซอฟต์แวร์ตามมาตรฐานสากล ISO/IEC 25010</p>
+    
+    <div class="divider"></div>
+    
+    <section class="summary" aria-label="สรุปคุณภาพซอฟต์แวร์" data-od-id="week-5-summary">
+      <article class="panel" data-od-id="project-facts">
+        <h2>1. สถาปัตยกรรมและงบประมาณ (Architecture & Cost)</h2>
+        <dl class="facts">
+          <div>
+            <dt>As-is vs To-be</dt>
+            <dd>ยกระดับจาก <strong>Monolithic Script (JSON)</strong> แบบดั้งเดิมที่ผูกติดกับ Global State ไปสู่ <strong>MVC Architecture</strong> ที่แยกชั้น Presentation, Business Logic และ Data Access อย่างชัดเจน</dd>
+          </div>
+          <div>
+            <dt>Budget Breakdown</dt>
+            <dd>งบประมาณตลอดโครงการครอบคลุมค่าแรงพัฒนา (40 Man-hours = 31,000 THB), ค่าโครงสร้างพื้นฐาน (3,000 THB) และเงินสำรองฉุกเฉิน (Contingency 10% = 3,400 THB)</dd>
+          </div>
+          <div>
+            <dt>Total Cost</dt>
+            <dd>รวมต้นทุนทั้งหมดที่ใช้ในการดำเนินการอยู่ที่ประมาณ <strong>37,400 THB</strong></dd>
+          </div>
+        </dl>
+      </article>
+
+      <article class="panel" data-od-id="quality-iso25010">
+        <h2>2. การประเมินคุณภาพ (ISO/IEC 25010)</h2>
+        <ol class="steps">
+          <li><strong>Functional Suitability:</strong> ระบบมีความสมบูรณ์เชิงฟังก์ชัน สามารถตัดสต็อกได้อย่างแม่นยำ และมีระบบสมาชิกรองรับส่วนลดตาม Tier อย่างครบถ้วน</li>
+          <li><strong>Reliability:</strong> ระบบมีความทนทาน (Fault Tolerance) สูงขึ้น ป้องกันปัญหาแครชและข้อมูลสูญหายจากการบันทึกด้วยเทคนิค Atomic Save</li>
+          <li><strong>Usability:</strong> ถึงแม้จะเป็น CLI แต่มีกลไกดักจับ Input ผิดพลาดพร้อมข้อความแจ้งเตือนที่ชัดเจน เพื่อแนะนำให้ผู้ใช้กรอกข้อมูลได้ถูกต้อง</li>
+          <li><strong>Maintainability:</strong> โครงสร้างโค้ดแบบใหม่ (Modular) และชุดทดสอบ (Automated PyTest) ช่วยให้นักพัฒนารุ่นต่อไปสามารถปรับปรุงหรือขยายระบบได้ง่ายโดยไม่ต้องกลัวบั๊กเก่ากำเริบ</li>
+        </ol>
+      </article>
+    </section>
+
+    <div class="divider"></div>
+
+    <section class="summary" aria-label="แผนงานส่งมอบ" style="grid-template-columns: 1fr;">
+      <article class="panel" data-od-id="delivery-plan">
+        <h2>3. สรุปผลการส่งมอบโครงการ (Project Handover)</h2>
+        <div style="margin-top: 15px; font-size: 0.95rem; line-height: 1.6; color: var(--text-main);">
+          <p>โครงการปรับปรุง CLI Inventory Management System ได้สำเร็จลุล่วงตามวัตถุประสงค์ (Project Objectives) ที่ตั้งไว้ในสัปดาห์ที่ 1 อย่างครบถ้วนสมบูรณ์:</p>
+          <ul style="padding-left: 20px;">
+            <li>ปัญหา <strong>Spaghetti Code</strong> ได้รับการแก้ไขเป็นที่เรียบร้อย</li>
+            <li>ผ่านการประเมินคุณภาพโดย <strong>QA Team</strong> ด้วยความสำเร็จระดับ 100% (No Error)</li>
+            <li>เอกสารประกอบทั้งหมด รวมถึง Integrated Planning Proposal และ Source Code ฉบับสมบูรณ์ ได้รับการส่งมอบเข้าสู่สายการผลิตจริง (Production Ready)</li>
+          </ul>
+        </div>
+      </article>
+    </section>
+  </main>
+</body>
+
+</html>

@@ -12,62 +12,63 @@
 </head>
 <body>
 <div id="deck">
-
         <div class="slide center-content">
             <div class="badge">Week 4</div>
-            <h1>Testing & Code Refinement</h1>
-            <h3>การทดสอบและการแก้ไขปรับปรุงโค้ดขั้นสุดท้าย</h3>
+            <h1>Exception Handling & QA</h1>
+            <h3>ดักจับข้อผิดพลาด ทดสอบคุณภาพ และความปลอดภัย</h3>
             <p style="margin-top: 2rem; max-width: 600px; color: var(--text-muted);">
-                ตรวจสอบความถูกต้องและประสิทธิภาพของระบบก่อนนำไปใช้จริง
+                เขียน Unit Tests เพื่อป้องกันข้อบกพร่องดั้งเดิมกลับมา<br>
+                และจำลองสภาวะแวดล้อมที่ทำให้ระบบเสียหาย (Regression Prevention)
             </p>
         </div>
-            
-        <div class="slide">
-            <h2>1. Code Refinement</h2>
-            <p>ยืนยันโครงสร้างสุดท้ายของระบบใน <code>app.py</code></p>
-            <ul>
-                <li>แยก <code>Product</code>, <code>InventoryManager</code> และ <code>InventoryCLI</code> ตามหน้าที่</li>
-                <li>ตรวจสอบข้อมูลนำเข้าก่อนเพิ่มสินค้า ตัดสต็อก และคำนวณราคา</li>
-                <li>บันทึกไฟล์ JSON ด้วย Atomic Save และระบุ UTF-8</li>
-            </ul>
-        </div>
-            
-        <div class="slide">
-            <h2>2. Final Testing</h2>
-            <p>ทำ System Testing แบบครบวงจรและสรุปผล</p>
-            <div class="card" style="margin-top: 1rem;">
-                <h3>รายงานการทดสอบ</h3>
-                <p>รวบรวมหลักฐานและภาพหน้าจอการทดสอบว่าผ่านทุกฟังก์ชัน</p>
-            </div>
-        </div>
 
         <div class="slide">
-            <h2>3. ขอบเขตการทดสอบ</h2>
+            <h2>1. กลไกดักจับข้อผิดพลาด (Exception Handling)</h2>
             <div class="grid-2">
-                <div class="card"><h3>ฟังก์ชันหลัก</h3><p>ทดสอบสรุปคลังสินค้า การเพิ่ม/แก้ไข และการตัดสต็อก</p></div>
-                <div class="card"><h3>กรณีขอบเขต</h3><p>ทดสอบจำนวนสินค้าไม่พอ และรหัสสินค้าที่ไม่มีอยู่ในระบบ</p></div>
-                <div class="card"><h3>ความถูกต้องของข้อมูล</h3><p>ยืนยันมูลค่ารวมของคลังสินค้าและจำนวนคงเหลือหลังตัดสต็อก</p></div>
-                <div class="card"><h3>หลักฐาน</h3><p>มีสคริปต์ <code>test_app.py</code> และภาพผลการทดสอบ <code>test_app.png</code></p></div>
+                <div class="card">
+                    <h3>Input Validation</h3>
+                    <p style="font-size: 0.9rem;">ดัก <code>ValueError</code> เมื่อผู้ใช้กรอกข้อมูลผิดประเภท (เช่น ตัวอักษรแทนตัวเลข)</p>
+                </div>
+                <div class="card">
+                    <h3>Edge Case Checks</h3>
+                    <p style="font-size: 0.9rem;">เช็คจำนวนสินค้าติดลบ หรือค่าว่างก่อนให้ระบบนำไปประมวลผลต่อ</p>
+                </div>
+                <div class="card">
+                    <h3>Graceful Degradation</h3>
+                    <p style="font-size: 0.9rem;">หากฐานข้อมูลไม่สมบูรณ์ ระบบจะรายงานปัญหาก่อนแทนการปิดตัวเองกะทันหัน (Crash)</p>
+                </div>
+                <div class="card">
+                    <h3>Safe Atomic Write</h3>
+                    <p style="font-size: 0.9rem;">เซฟลงไฟล์ <code>temp.json</code> ก่อนย้ายไปแทนที่ <code>data.json</code> ป้องกัน Data Loss</p>
+                </div>
             </div>
         </div>
 
         <div class="slide">
-            <h2>4. ผลลัพธ์ที่พร้อมส่งต่อ</h2>
+            <h2>2. ขอบเขตการทดสอบ (Automated Test Coverage)</h2>
             <table>
-                <thead><tr><th>ด้าน</th><th>ผลการปรับปรุง</th></tr></thead>
+                <thead><tr><th>ชื่อฟังก์ชันทดสอบ</th><th>พฤติกรรมที่ตรวจสอบ (Test Case)</th></tr></thead>
                 <tbody>
-                    <tr><td>โครงสร้าง</td><td>โค้ดแยกความรับผิดชอบและทดสอบได้ง่ายขึ้น</td></tr>
-                    <tr><td>เสถียรภาพ</td><td>จัดการ Input ผิดพลาดและป้องกันข้อมูลเสียหายระหว่างบันทึก</td></tr>
-                    <tr><td>คุณภาพ</td><td>Automated Test ครอบคลุมการทำงานปกติและกรณีผิดพลาด</td></tr>
+                    <tr><td><code>test_cut_stock_success</code></td><td>ทดสอบหักสต็อกปกติในเงื่อนไขที่สมบูรณ์ (Happy Path)</td></tr>
+                    <tr><td><code>test_cut_stock_not_enough</code></td><td>ทดสอบดักข้อผิดพลาดเมื่อเบิกของเกินจำนวน (Edge Case)</td></tr>
+                    <tr><td><code>test_cut_stock_not_found</code></td><td>ทดสอบตัดสต็อกด้วย ID ที่ไม่มีอยู่จริง (Edge Case)</td></tr>
+                    <tr><td><code>test_atomic_save</code></td><td>จำลองให้บันทึกไม่สำเร็จ ข้อมูลเดิมต้องยังคงอยู่ (Data Integrity)</td></tr>
                 </tbody>
             </table>
         </div>
 
         <div class="slide">
-            <h2>5. เตรียมปิดโครงการ</h2>
-            <p>นำผลการทดสอบและโค้ดเวอร์ชันสุดท้ายไปใช้จัดทำการประเมินคุณภาพ ISO/IEC 25010, เอกสารสถาปัตยกรรม และงบประมาณโครงการในสัปดาห์ที่ 5</p>
+            <h2>3. ตัวอย่างโค้ดการทดสอบ (PyTest Snippet)</h2>
+            <pre><code class="language-python">def test_cut_stock_not_enough(manager):
+    """ทดสอบดัก Error เมื่อสั่งซื้อเยอะกว่าของที่มี"""
+    success, msg, remaining = manager.cut_stock("2", 15)
+    
+    assert success is False
+    assert msg == "Error: Not enough stock!"
+    assert remaining == 10  # สต็อกเดิมต้องไม่ลด</code></pre>
+            <p style="margin-top: 1rem; font-size: 0.95rem;">ผลลัพธ์: ผ่านการทดสอบทั้งหมด (Success Rate 100%) ทำให้มั่นใจว่าความเสี่ยงดั้งเดิมถูกแก้ไขอย่างสมบูรณ์</p>
         </div>
-                </div>
+    </div>
 
     <!-- Navigation -->
     <div class="controls">
