@@ -25,6 +25,9 @@ flowchart TD
     
     Show --> Menu
     SaveDB --> Menu
+
+    classDef hotspot fill:#ffcccc,stroke:#ff0000,stroke-width:2px;
+    class SaveDB,LoadDB hotspot
 ```
 
 ---
@@ -35,6 +38,7 @@ flowchart TD
 ```mermaid
 classDiagram
     class SystemCLI {
+        <<Facade>>
         -db_manager: DatabaseManager
         +start()
         +display_menu()
@@ -42,6 +46,7 @@ classDiagram
     }
     
     class DatabaseManager {
+        <<Singleton>>
         -db_connection: sqlite3.Connection
         +connect()
         +commit_transaction()
@@ -50,17 +55,20 @@ classDiagram
     }
     
     class ProductManager {
+        <<Service>>
         +fetch_all_products()
         +update_stock(product_id: int, qty: int)
         -validate_input(qty: int)
     }
     
     class MemberSystem {
+        <<Strategy Context>>
         +get_member_tier(member_id: int): String
         +get_discount_rate(tier: String): float
     }
     
     class CheckoutProcess {
+        <<Controller>>
         +calculate_net_price(subtotal: float, discount_rate: float): float
         +generate_receipt()
     }
