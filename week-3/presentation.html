@@ -348,6 +348,40 @@
                 </div>
             </div>
         </div>
+
+        <div class="slide">
+            <h2>3. สิ่งที่พัฒนาใน <code>app_v2.py</code></h2>
+            <div class="grid-2">
+                <div class="card"><h3>Product &amp; InventoryManager</h3><p>จัดเก็บข้อมูลสินค้าเป็นวัตถุ แยกการโหลด บันทึก เพิ่ม/แก้ไข ตัดสต็อก และสรุปคลังสินค้า</p></div>
+                <div class="card"><h3>InventoryCLI</h3><p>แยกส่วนรับข้อมูลและการแสดงผล พร้อมตรวจสอบจำนวนและราคาก่อนประมวลผล</p></div>
+                <div class="card"><h3>Data Integrity</h3><p>ใช้ไฟล์ชั่วคราวและ <code>os.replace</code> เพื่อบันทึก JSON แบบ Atomic Save</p></div>
+                <div class="card"><h3>Maintainability</h3><p>ใช้ชื่อที่สื่อความหมาย, Type Hints และ Docstrings เพื่อให้ดูแลโค้ดต่อได้ง่าย</p></div>
+            </div>
+        </div>
+
+        <div class="slide">
+            <h2>4. การทดสอบที่ครอบคลุม</h2>
+            <table>
+                <thead><tr><th>กรณีทดสอบ</th><th>สิ่งที่ยืนยัน</th></tr></thead>
+                <tbody>
+                    <tr><td>Inventory summary</td><td>จำนวนประเภทสินค้า มูลค่ารวม และรายการสต็อกต่ำ</td></tr>
+                    <tr><td>Cut stock</td><td>ตัดสำเร็จ, จำนวนไม่พอ และไม่พบรหัสสินค้า</td></tr>
+                    <tr><td>Add / Update</td><td>เพิ่มสินค้าใหม่และแก้ไขสินค้าเดิมได้ถูกต้อง</td></tr>
+                    <tr><td>JSON report</td><td>บันทึกผล PASS/FAIL/ERROR ลง <code>test.json</code></td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="slide">
+            <h2>5. การควบคุมคุณภาพทีม</h2>
+            <p>ใช้ RACI และ Definition of Done เพื่อให้ทุกงานมีผู้รับผิดชอบและเกณฑ์ส่งมอบที่ชัดเจน</p>
+            <ul>
+                <li><strong>Developer:</strong> พัฒนาและปรับโครงสร้างโค้ด</li>
+                <li><strong>QA / Tester:</strong> รับผิดชอบ Automated Test</li>
+                <li><strong>Tech Lead:</strong> อนุมัติการรวมโค้ดและรับผิดชอบผลลัพธ์สุดท้าย</li>
+                <li><strong>DoD:</strong> Tests ผ่าน, โค้ดได้มาตรฐาน, ปลอดภัย, เอกสารครบ และผ่าน Code Review</li>
+            </ul>
+        </div>
                 </div>
 
     <!-- Navigation -->

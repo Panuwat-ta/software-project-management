@@ -346,12 +346,55 @@
             
         <div class="slide">
             <h2>2. โค้ดดั้งเดิม (Legacy Code)</h2>
-            <p>พบจุดที่ต้องปรับปรุงมากมาย</p>
+            <p>ระบบเดิมเป็น CLI แบบ Monolithic และใช้ไฟล์ JSON เป็นที่เก็บข้อมูล</p>
             <ul>
                 <li>ใช้ตัวแปร Global ทำให้ตรวจสอบสถานะลำบาก</li>
                 <li>เก็บข้อมูลในไฟล์ JSON โดยขาดกลไกป้องกันข้อมูลสูญหาย (Atomic Save)</li>
                 <li>ตรรกะทั้งหมดอยู่ในไฟล์เดียว (Monolithic)</li>
             </ul>
+        </div>
+
+        <div class="slide">
+            <h2>3. เป้าหมายและขอบเขต</h2>
+            <div class="grid-2">
+                <div class="card">
+                    <h3>In scope</h3>
+                    <ul>
+                        <li>แยก Business Logic ออกจาก CLI</li>
+                        <li>ตรวจสอบข้อมูลนำเข้าและค่าติดลบ</li>
+                        <li>บันทึกข้อมูลแบบ Atomic Write</li>
+                        <li>สร้าง Automated Unit Tests</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>ข้อจำกัดในระยะแรก</h3>
+                    <ul>
+                        <li>คงรูปแบบการใช้งานเป็น CLI</li>
+                        <li>ไม่พัฒนา GUI หรือ Web Application</li>
+                        <li>รักษาพฤติกรรมหลักของระบบคลังสินค้าเดิม</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide">
+            <h2>4. ความเสี่ยงและแนวทางรับมือ</h2>
+            <table>
+                <thead><tr><th>ความเสี่ยง</th><th>ผลกระทบ</th><th>แนวทาง</th></tr></thead>
+                <tbody>
+                    <tr><td>Refactor กระทบพฤติกรรมเดิม</td><td>Regression</td><td>ปรับทีละส่วนและรันชุดทดสอบทุกครั้ง</td></tr>
+                    <tr><td>ข้อมูล JSON เดิมไม่ตรง Schema</td><td>อ่านข้อมูลไม่ได้</td><td>ตรวจสอบและทำความสะอาดข้อมูลก่อนใช้งาน</td></tr>
+                    <tr><td>ไม่มี Legacy Tests</td><td>ตรวจพบข้อผิดพลาดช้า</td><td>จัดทำ Test Case ก่อนแก้โค้ดหลัก</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="slide">
+            <h2>5. ผลส่งมอบและก้าวถัดไป</h2>
+            <div class="grid-2">
+                <div class="card"><h3>ผลส่งมอบ</h3><p>Project Charter, Scope, รายงานทำความเข้าใจระบบเดิม และแผนงานบน Trello</p></div>
+                <div class="card"><h3>สัปดาห์ถัดไป</h3><p>วิเคราะห์ Hotspot ออกแบบ Data Flow และ Blueprint สำหรับโครงสร้างที่ปรับปรุงแล้ว</p></div>
+            </div>
         </div>
                 </div>
 

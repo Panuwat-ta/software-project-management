@@ -338,15 +338,53 @@
                 </div>
             </div>
         </div>
+
+        <div class="slide">
+            <h2>2. ISO/IEC 25010: จุดที่ต้องยกระดับ</h2>
+            <table>
+                <thead><tr><th>คุณลักษณะระบบเดิม</th><th>คะแนน</th><th>ประเด็น</th></tr></thead>
+                <tbody>
+                    <tr><td>Reliability</td><td>★</td><td>ไม่มี Transaction และเสี่ยงต่อ JSON Corruption</td></tr>
+                    <tr><td>Security</td><td>★</td><td>ไม่มี Authentication หรือ Authorization</td></tr>
+                    <tr><td>Functional Suitability</td><td>★★</td><td>ขาด Validation และฟีเจอร์ที่วางแผนไว้</td></tr>
+                    <tr><td>Maintainability</td><td>★★</td><td>โค้ด Monolithic และแยกส่วนไม่ชัดเจน</td></tr>
+                </tbody>
+            </table>
+            <p style="margin-top: 1.5rem;">จุดแข็งเดิมคือ Portability (★★★★) เพราะระบบ Python ทำงานข้ามแพลตฟอร์มได้</p>
+        </div>
+
+        <div class="slide">
+            <h2>3. To-Be Architecture</h2>
+            <div class="grid-2">
+                <div class="card"><h3>Facade</h3><p><code>SystemCLI</code> เป็นจุดควบคุมการทำงานและซ่อนความซับซ้อนของระบบ</p></div>
+                <div class="card"><h3>Singleton</h3><p><code>DatabaseManager</code> จัดการการเชื่อมต่อและ Transaction ของ SQLite</p></div>
+                <div class="card"><h3>Service Layer</h3><p><code>ProductManager</code> และ <code>MemberSystem</code> ดูแลกฎธุรกิจและการตรวจสอบข้อมูล</p></div>
+                <div class="card"><h3>Checkout</h3><p>คำนวณยอดสุทธิ ส่วนลด และสร้างใบเสร็จจากข้อมูลสมาชิก</p></div>
+            </div>
+        </div>
             
         <div class="slide">
-            <h2>2. Project Budget & WBS</h2>
-            <p>สรุปต้นทุนในการพัฒนา (Man-Hours) และแผนงบประมาณโครงการ</p>
+            <h2>4. Project Budget &amp; WBS</h2>
+            <table>
+                <thead><tr><th>รายการ</th><th>จำนวน</th></tr></thead>
+                <tbody>
+                    <tr><td>งานตาม WBS</td><td>8 รายการ / 40 ชั่วโมง</td></tr>
+                    <tr><td>ค่าแรงทางตรง</td><td>31,000 บาท</td></tr>
+                    <tr><td>โครงสร้างพื้นฐานและเครื่องมือ</td><td>3,000 บาท</td></tr>
+                    <tr><td>งบสำรองความเสี่ยง 15%</td><td>5,100 บาท</td></tr>
+                    <tr><td><strong>งบประมาณรวม</strong></td><td><strong>39,100 บาท</strong></td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="slide">
+            <h2>5. บทสรุปโครงการ</h2>
             <ul>
-                <li>ประเมินชั่วโมงการทำงาน (Direct Labor Costs) ของทีมรวม 40 ชม.</li>
-                <li>การตั้งงบประมาณพื้นฐานและแผนความเสี่ยง 15%</li>
-                <li>แจกแจงรายการงาน (WBS) ต่อโครงสร้างสถาปัตยกรรมใหม่</li>
+                <li>ระบุข้อจำกัดของระบบเดิมด้วยการวิเคราะห์โค้ดและ Hotspots</li>
+                <li>จัดทำแนวทาง Refactor, การทดสอบ และเกณฑ์คุณภาพสำหรับการบำรุงรักษา</li>
+                <li>สรุปสถาปัตยกรรมเป้าหมายและทรัพยากรที่ต้องใช้สำหรับการพัฒนาต่อ</li>
             </ul>
+            <p>เอกสารและสไลด์ทั้ง 5 สัปดาห์เชื่อมโยงกันตั้งแต่การวางแผน ออกแบบ พัฒนา ทดสอบ จนถึงการประเมินเพื่อปิดโครงการ</p>
         </div>
                 </div>
 
