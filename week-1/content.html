@@ -231,6 +231,96 @@
       </article>
     </section>
   </main>
+
+  
+  
+
+  <script src="https://cdn.jsdelivr.net/npm/svg-pan-zoom@3.6.1/dist/svg-pan-zoom.min.js"></script>
+  <script>
+    // Bulletproof Fullscreen Mermaid logic (with Pan & Zoom)
+    document.addEventListener("DOMContentLoaded", () => {
+      document.querySelectorAll('.mermaid-container').forEach(container => {
+        // Remove old buttons if script runs twice
+        container.querySelectorAll('.btn-expand-mermaid').forEach(b => b.remove());
+        
+        const btn = document.createElement('button');
+        btn.className = 'btn-expand-mermaid';
+        btn.innerHTML = '🔍 Fullscreen';
+        
+        btn.onclick = () => {
+          const originalSvg = container.querySelector('svg');
+          if (!originalSvg) return;
+
+          // Create a true viewport-fixed overlay attached to body
+          const overlay = document.createElement('div');
+          overlay.style.position = 'fixed';
+          overlay.style.top = '0';
+          overlay.style.left = '0';
+          overlay.style.width = '100vw';
+          overlay.style.height = '100vh';
+          overlay.style.backgroundColor = 'var(--paper, #F6F4EE)';
+          overlay.style.zIndex = '999999';
+          overlay.style.display = 'flex';
+          overlay.style.alignItems = 'center';
+          overlay.style.justifyContent = 'center';
+          
+          // Create Close button
+          const closeBtn = document.createElement('button');
+          closeBtn.innerHTML = '✖ Close';
+          closeBtn.style.position = 'absolute';
+          closeBtn.style.top = '20px';
+          closeBtn.style.right = '20px';
+          closeBtn.style.padding = '8px 16px';
+          closeBtn.style.fontSize = '1rem';
+          closeBtn.style.fontWeight = 'bold';
+          closeBtn.style.cursor = 'pointer';
+          closeBtn.style.backgroundColor = '#ff4d4d';
+          closeBtn.style.color = '#fff';
+          closeBtn.style.border = 'none';
+          closeBtn.style.borderRadius = '8px';
+          closeBtn.style.zIndex = '1000000';
+          closeBtn.style.boxShadow = '0 4px 12px rgba(0,0,0,0.2)';
+          
+          closeBtn.onmouseover = () => closeBtn.style.backgroundColor = '#e60000';
+          closeBtn.onmouseout = () => closeBtn.style.backgroundColor = '#ff4d4d';
+
+          // Clone the SVG so we don't mess up the original layout
+          const clonedSvg = originalSvg.cloneNode(true);
+          clonedSvg.style.width = '100%';
+          clonedSvg.style.height = '100%';
+          clonedSvg.style.maxWidth = '100vw';
+          clonedSvg.style.maxHeight = '100vh';
+          
+          overlay.appendChild(clonedSvg);
+          overlay.appendChild(closeBtn);
+          document.body.appendChild(overlay);
+
+          // Disable scrolling on body
+          const oldOverflow = document.body.style.overflow;
+          document.body.style.overflow = 'hidden';
+
+          // Initialize pan-zoom on clone
+          const panZoomInstance = svgPanZoom(clonedSvg, {
+            zoomEnabled: true,
+            controlIconsEnabled: true,
+            fit: true,
+            center: true,
+            minZoom: 0.5,
+            maxZoom: 10,
+            mouseWheelZoomEnabled: true
+          });
+
+          closeBtn.onclick = () => {
+            panZoomInstance.destroy();
+            document.body.removeChild(overlay);
+            document.body.style.overflow = oldOverflow;
+          };
+        };
+        container.appendChild(btn);
+      });
+    });
+  </script>
+
 </body>
 
 </html>

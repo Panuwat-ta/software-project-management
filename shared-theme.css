@@ -77,7 +77,13 @@ td { color: var(--text-main); line-height: 1.5; }
 tbody tr:hover td { background: oklch(0.95 0.02 85); }
 pre { padding: 1rem; overflow: auto; color: var(--paper) !important; background: var(--ink) !important; border: 1px solid var(--ink-soft) !important; border-radius: 12px !important; }
 pre code { color: inherit; }
-.mermaid-container { margin-top: 1rem; padding: 1rem; overflow-x: auto; color: var(--text-main); text-align: center; background: #fff; border: 1px solid var(--rule); border-radius: 12px; }
+.mermaid-container { position: relative; margin-top: 1rem; padding: 1rem; overflow-x: auto; color: var(--text-main); text-align: center; background: #fff; border: 1px solid var(--rule); border-radius: 12px; transition: all 0.3s ease; }
+.btn-expand-mermaid { position: absolute; top: 10px; right: 10px; background: var(--paper-warm); border: 1px solid var(--rule); border-radius: 6px; padding: 6px 12px; font-size: 0.8rem; font-weight: 600; cursor: pointer; color: var(--indigo-deep); z-index: 99999; display: flex; align-items: center; gap: 6px; box-shadow: 0 2px 5px rgba(18,23,43,0.1); opacity: 0; transition: opacity 0.3s ease, background 0.2s, color 0.2s; }
+.mermaid-container:hover .btn-expand-mermaid, .mermaid-container.fullscreen .btn-expand-mermaid { opacity: 1; }
+.btn-expand-mermaid:hover { background: var(--amber); color: var(--ink); border-color: var(--amber); }
+.mermaid-container.fullscreen { position: fixed; top: 0; left: 0; right: 0; bottom: 0; width: auto; height: auto; max-width: none; max-height: none; margin: 0; padding: 2rem; z-index: 9999; background: var(--paper); display: flex; align-items: center; justify-content: center; border-radius: 0; overflow: hidden; }
+.mermaid-container.fullscreen .mermaid { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; transform: none; }
+.mermaid-container.fullscreen .mermaid svg { width: 100% !important; height: 100% !important; max-width: 100% !important; max-height: 100% !important; }
 .center-content { align-items: center; justify-content: center; text-align: center; }
 .center-content .badge { align-self: center; }
 .controls { position: absolute; z-index: 5; bottom: 1.2rem; left: 50%; display: flex; gap: .85rem; align-items: center; padding: .45rem .75rem; transform: translateX(-50%); background: var(--paper-warm); border: 1px solid var(--rule); border-radius: 999px; box-shadow: 0 8px 20px rgb(18 23 43 / .09); }
