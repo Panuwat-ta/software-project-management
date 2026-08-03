@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 5: Project Finalization</title>
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Prompt:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- Code Highlight -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <style>
+        :root {
+            --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --accent: #8b5cf6;
+            --accent-glow: rgba(139, 92, 246, 0.5);
+            --accent-secondary: #06b6d4;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Prompt', 'Inter', sans-serif;
+            background: var(--bg-gradient);
+            color: var(--text-main);
+            min-height: 100vh;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Background Animation */
+        .bg-shapes {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            overflow: hidden;
+            z-index: -1;
+        }
+        .shape {
+            position: absolute;
+            filter: blur(80px);
+            opacity: 0.5;
+            animation: float 20s infinite alternate;
+        }
+        .shape-1 {
+            width: 400px; height: 400px;
+            background: var(--accent);
+            top: -100px; left: -100px;
+            border-radius: 50%;
+        }
+        .shape-2 {
+            width: 500px; height: 500px;
+            background: var(--accent-secondary);
+            bottom: -150px; right: -100px;
+            border-radius: 50%;
+            animation-delay: -5s;
+        }
+
+        @keyframes float {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(50px, 50px) scale(1.1); }
+        }
+
+        /* Presentation Container */
+        #deck {
+            position: relative;
+            width: 90vw;
+            max-width: 1200px;
+            height: 80vh;
+            perspective: 1000px;
+        }
+
+        .slide {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 3rem 4rem;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateZ(-100px) rotateY(10deg);
+            transition: all 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            overflow-y: auto;
+        }
+
+        .slide.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateZ(0) rotateY(0deg);
+            z-index: 10;
+        }
+
+        .slide.prev {
+            transform: translateZ(-100px) rotateY(-10deg);
+        }
+
+        /* Typography */
+        h1, h2, h3 {
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+        
+        h1 {
+            font-size: 3.5rem;
+            background: -webkit-linear-gradient(0deg, var(--text-main), var(--accent-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            color: var(--accent-secondary);
+            border-bottom: 2px solid var(--glass-border);
+            padding-bottom: 1rem;
+        }
+
+        h3 {
+            font-size: 1.5rem;
+            color: var(--accent);
+            margin-top: 1rem;
+        }
+
+        p, li {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+
+        ul, ol {
+            margin-left: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        li::marker {
+            color: var(--accent);
+        }
+
+        /* Components */
+        .badge {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background: rgba(139, 92, 246, 0.2);
+            color: var(--accent);
+            border: 1px solid rgba(139, 92, 246, 0.4);
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .card {
+            background: rgba(0,0,0,0.2);
+            border: 1px solid var(--glass-border);
+            padding: 1.5rem;
+            border-radius: 16px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+            border-color: rgba(139, 92, 246, 0.4);
+        }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin-top: 1.5rem;
+        }
+        
+        th, td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        th {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-main);
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 0.5px;
+        }
+        
+        th:first-child { border-top-left-radius: 12px; }
+        th:last-child { border-top-right-radius: 12px; }
+
+        tr:hover td {
+            background: rgba(255,255,255,0.02);
+        }
+
+        /* Controls */
+        .controls {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            background: var(--glass-bg);
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(10px);
+            z-index: 100;
+        }
+
+        .btn {
+            background: transparent;
+            border: none;
+            color: var(--text-main);
+            font-size: 1.5rem;
+            cursor: pointer;
+            width: 40px; height: 40px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.3s;
+        }
+
+        .btn:hover {
+            background: var(--accent);
+            box-shadow: 0 0 15px var(--accent-glow);
+        }
+
+        .btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+            background: transparent;
+            box-shadow: none;
+        }
+
+        .counter {
+            font-weight: 600;
+            color: var(--text-muted);
+            font-family: 'Inter', sans-serif;
+            letter-spacing: 2px;
+        }
+
+        /* Slide specific tweaks */
+        .center-content {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            height: 100%;
+        }
+
+        .mermaid-container {
+            background: rgba(255,255,255,0.95);
+            border-radius: 16px;
+            padding: 1rem;
+            margin-top: 1rem;
+            overflow-x: auto;
+            text-align: center;
+            color: #000;
+        }
+
+        /* Custom Scrollbar for slides */
+        .slide::-webkit-scrollbar {
+            width: 8px;
+        }
+        .slide::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .slide::-webkit-scrollbar-thumb {
+            background: rgba(255,255,255,0.2);
+            border-radius: 10px;
+        }
+        
+        pre {
+            border-radius: 12px !important;
+            background: #1e1e1e !important;
+            border: 1px solid var(--glass-border);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-shapes">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+    </div>
+
+    <div id="deck">
+
+        <div class="slide center-content">
+            <div class="badge">Week 5</div>
+            <h1>Project Finalization</h1>
+            <h3>สรุปโครงการ เอกสารสถาปัตยกรรม และงบประมาณ</h3>
+            <p style="margin-top: 2rem; max-width: 600px; color: var(--text-muted);">
+                ประเมินคุณภาพซอฟต์แวร์ตามมาตรฐาน ISO/IEC 25010 และสรุปต้นทุน
+            </p>
+        </div>
+            \n
+        <div class="slide">
+            <h2>1. ISO/IEC 25010 & Architecture</h2>
+            <div class="grid-2">
+                <div class="card">
+                    <h3>Quality Evaluation</h3>
+                    <p>การประเมินคุณภาพทั้ง 8 ด้านของระบบใหม่ พบว่าพัฒนาการด้านเสถียรภาพและคุณภาพโค้ดดีขึ้นมาก</p>
+                </div>
+                <div class="card">
+                    <h3>To-Be Architecture</h3>
+                    <p>คลาสไดอะแกรมที่ประยุกต์ใช้ <strong>Design Patterns</strong> (Facade, Singleton, Strategy)</p>
+                </div>
+            </div>
+        </div>
+            \n
+        <div class="slide">
+            <h2>2. Project Budget & WBS</h2>
+            <p>สรุปต้นทุนในการพัฒนา (Man-Hours) และแผนงบประมาณโครงการ</p>
+            <ul>
+                <li>ประเมินชั่วโมงการทำงาน (Direct Labor Costs) ของทีมรวม 40 ชม.</li>
+                <li>การตั้งงบประมาณพื้นฐานและแผนความเสี่ยง 15%</li>
+                <li>แจกแจงรายการงาน (WBS) ต่อโครงสร้างสถาปัตยกรรมใหม่</li>
+            </ul>
+        </div>
+                </div>
+
+    <!-- Navigation -->
+    <div class="controls">
+        <button class="btn" id="prevBtn" onclick="prevSlide()" disabled>&#8592;</button>
+        <div class="counter"><span id="currentSlide">1</span> / <span id="totalSlides">3</span></div>
+        <button class="btn" id="nextBtn" onclick="nextSlide()">&#8594;</button>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+    <script>
+        // Initialize Mermaid
+        mermaid.initialize({ startOnLoad: true, theme: 'default' });
+
+        // Slide Logic
+        const slides = document.querySelectorAll('.slide');
+        const total = slides.length;
+        let current = 0;
+
+        document.getElementById('totalSlides').textContent = total;
+
+        function updateSlides() {
+            slides.forEach((slide, index) => {
+                slide.classList.remove('active', 'prev');
+                if (index === current) {
+                    slide.classList.add('active');
+                } else if (index < current) {
+                    slide.classList.add('prev');
+                }
+            });
+
+            document.getElementById('currentSlide').textContent = current + 1;
+            document.getElementById('prevBtn').disabled = current === 0;
+            document.getElementById('nextBtn').disabled = current === total - 1;
+        }
+
+        function nextSlide() {
+            if (current < total - 1) {
+                current++;
+                updateSlides();
+            }
+        }
+
+        function prevSlide() {
+            if (current > 0) {
+                current--;
+                updateSlides();
+            }
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === 'Space') {
+                nextSlide();
+            } else if (e.key === 'ArrowLeft') {
+                prevSlide();
+            }
+        });
+
+        // Initialize first slide
+        updateSlides();
+    </script>
+</body>
+</html>
