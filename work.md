@@ -9,6 +9,11 @@
 
 [week5](https://docs.google.com/presentation/d/1ZLFbA3bWdn8sJwtlg8zoPHuSog_4qa4Wy77tiwaiJPA/edit?slide=id.g3f9686b8005_0_11#slide=id.g3f9686b8005_0_11)
 
+[week6](https://docs.google.com/presentation/d/1UzUYHIb_qFAFkmmDgb3CAY9nujSDShV7DPDN7w3IGfk/edit?slide=id.p1#slide=id.p1)
+
+[week7](https://docs.google.com/presentation/d/1tPd2pdFb0N2-iBrC2T7QOnhmlsAhZdB-0kiQeIVY8h4/edit?slide=id.p1#slide=id.p1)
+
+
 
 
 # Software Project Management
@@ -21,3 +26,7 @@
 [week4](https://docs.google.com/presentation/d/17dqcqyb7JO_aBbaJF_eVPmp1eeD5r9RwbXIhpkSfIJE/edit?slide=id.g3f4f00b1cef_0_9#slide=id.g3f4f00b1cef_0_9)
 
 [week5](https://docs.google.com/presentation/d/1HSeYY7LQODLE-sI73aLPc_KCQrwUrpicjyBKulyE6fI/edit?slide=id.p1#slide=id.p1)
+
+[week6](https://docs.google.com/presentation/d/11bXpFgQi19zU-h9KPs8ziVZtMF9dyq5Vkrzv1Ijouqc/edit?slide=id.p1#slide=id.p1)
+
+[week7](https://docs.google.com/presentation/d/1uU4TMagkbvpkDbXg1cl0oRRT5GSHu1oHwq6lOB3M4jU/edit?slide=id.p1#slide=id.p1)

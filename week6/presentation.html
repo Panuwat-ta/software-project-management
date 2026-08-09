@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 6: Architecture & Governance</title>
+    <link rel="stylesheet" href="../shared-theme.css">
+    <style>
+        .card { padding: 1.5rem; }
+        .card h3 { color: var(--indigo); border-bottom: 1px solid var(--rule); padding-bottom: 0.5rem; margin-bottom: 1rem; }
+        .card p { font-size: 0.95rem; line-height: 1.6; margin-bottom: 0.5rem; }
+        ul.slide-list { padding-left: 1.5rem; font-size: 0.95rem; line-height: 1.6; }
+        ul.slide-list li { margin-bottom: 0.5rem; }
+    </style>
+</head>
+<body>
+<div id="deck">
+    <div class="slide center-content">
+        <div class="badge">Week 6</div>
+        <h1>Architecture & Governance</h1>
+        <h3>การออกแบบสถาปัตยกรรมและกลไกการบริหารโปรเจคเชิงลึก</h3>
+        <p style="margin-top: 2rem; max-width: 700px; color: var(--text-muted); font-size: 1.1rem; line-height: 1.6;">
+            เจาะลึกการอัปเกรดระบบสู่ SQLite และ Design Patterns,<br>
+            การวางมาตรฐานการสื่อสาร (DoR/DoD), <br>
+            และการบริหารจัดการงบประมาณแบบ Earned Value Management (EVM)
+        </p>
+    </div>
+
+    <div class="slide">
+        <h2>1. สถาปัตยกรรมเป้าหมาย (To-Be Architecture)</h2>
+        <p style="margin-bottom: 1rem; font-size: 1.05rem;">การเปลี่ยนผ่านจาก Monolithic JSON ไปสู่สถาปัตยกรรมแบบ Modular อาศัย 3 องค์ประกอบหลัก:</p>
+        <div class="grid-2">
+            <div class="card">
+                <h3>💾 Database & Repository</h3>
+                <ul class="slide-list">
+                    <li><strong>SQLiteDatabaseContext:</strong> ใช้ <em>Singleton Pattern</em> ควบคุมให้มี Connection เดียว ป้องกันปัญหา Database Locked</li>
+                    <li><strong>InventoryRepository:</strong> หุ้มคำสั่ง SQL ทั้งหมด บังคับใช้ Parameterized Query เพื่อป้องกัน <strong>SQL Injection</strong> โดยสมบูรณ์</li>
+                </ul>
+            </div>
+            <div class="card">
+                <h3>👑 Member Tier Strategy</h3>
+                <ul class="slide-list">
+                    <li>ใช้ <em>Strategy Pattern</em> ในการคำนวณส่วนลดแยกตามระดับ (Regular, Silver, Gold, Platinum)</li>
+                    <li>ขจัดปัญหา Code Smell ประเภท <code>if-else</code> ซ้อนทับกันยาวเหยียดในหน้า Checkout</li>
+                    <li>รองรับการสเกล (Scalability) เพื่อเพิ่มระดับสมาชิกใหม่ในอนาคตได้ทันที</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide">
+        <h2>2. มาตรฐานการทำงาน (DoR / DoD)</h2>
+        <p style="margin-bottom: 1.5rem; font-size: 1.05rem;">เพื่อควบคุมคุณภาพงานในทีมที่มี PM, QA และ Tech Lead เราใช้ Trello ควบคู่กับกฎเหล็กดังนี้:</p>
+        <table style="width: 100%; font-size: 0.95rem;">
+            <thead><tr><th style="width:30%">เกณฑ์ควบคุม</th><th>เงื่อนไขความสำเร็จแบบละเอียด</th></tr></thead>
+            <tbody>
+                <tr>
+                    <td><strong>Definition of Ready (DoR)</strong><br><span style="font-size: 0.8rem; color: var(--text-muted);">(ก่อนเริ่มเขียนโค้ด)</span></td>
+                    <td>
+                        <ul style="margin:0; padding-left:1rem;">
+                            <li>การ์ดงานมีรายละเอียด (Description) อธิบายฟีเจอร์ชัดเจน</li>
+                            <li>ประเมินและระบุความเสี่ยง/จุดกระทบ (Hotspots) เรียบร้อย</li>
+                            <li>มอบหมายตัวบุคคลรับผิดชอบ (Assignee) ตาม RACI</li>
+                            <li>แตก Branch ใหม่จาก <code>develop</code> ใน GitHub พร้อมทำงาน</li>
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Definition of Done (DoD)</strong><br><span style="font-size: 0.8rem; color: var(--text-muted);">(ก่อนย้ายงานสถานะ Done)</span></td>
+                    <td>
+                        <ul style="margin:0; padding-left:1rem;">
+                            <li>ผ่านกระบวนการ Code Review อย่างเข้มงวดโดย Tech Lead</li>
+                            <li>สคริปต์ <code>test_app.py</code> (ของ QA) ต้องรันผ่าน 100% บน Automated Pipeline</li>
+                            <li>โค้ดถูก Merge เข้าสู่ <code>develop</code> โดยไร้ข้อขัดแย้ง (Conflicts)</li>
+                        </ul>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="slide">
+        <h2>3. การวิเคราะห์ผลต่างงบประมาณ (Cost Variance - EVM)</h2>
+        <p style="font-size: 1.05rem; line-height: 1.6; margin-bottom: 1rem;">การใช้ข้อมูลจริงในการแก้ไขปัญหาโครงการงบประมาณบานปลาย (Over Budget):</p>
+        <div class="grid-2">
+            <div class="card" style="background-color: #fcf4f4; border-color: #f5c2c7;">
+                <h3 style="color: #b02a37;">🚨 ปัญหาที่พบ (The Variance)</h3>
+                <ul class="slide-list" style="color: #6a1a21;">
+                    <li><strong>งาน:</strong> ย้ายฐานข้อมูล JSON -> SQLite</li>
+                    <li><strong>Planned (ตั้งงบ):</strong> 6 ชม. (2,400 บาท)</li>
+                    <li><strong>Actual (ใช้จริง):</strong> 10 ชม. (4,000 บาท)</li>
+                    <li><strong>สาเหตุ:</strong> โค้ดเก่าซับซ้อนเกินคาด ต้อง Refactor โครงสร้างก่อนถึงจะต่อ Database ได้</li>
+                    <li><strong>Cost Variance:</strong> <strong>-1,600 บาท (Over Budget)</strong></li>
+                </ul>
+            </div>
+            <div class="card" style="background-color: #f0f7f4; border-color: #badbcc;">
+                <h3 style="color: #146c43;">✅ วิธีแก้ไข (Management Action)</h3>
+                <ul class="slide-list" style="color: #0f5132;">
+                    <li>แจ้งเตือนทีมถึงความเสี่ยงสถานะการเงินของโปรเจค</li>
+                    <li><strong>PM:</strong> อนุมัติเบิกเงินสำรองฉุกเฉิน (Contingency Reserve) ที่ตั้งไว้ 15% มาโปะส่วนต่างทันที</li>
+                    <li><strong>Tech Lead:</strong> ปรับ Blueprint สำหรับรอบหน้าให้วิเคราะห์ Hotspot ให้ลึกขึ้น ป้องกันการประเมินเวลาพลาด</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="controls">
+    <button class="btn" id="prevBtn" onclick="prevSlide()" disabled>&#8592;</button>
+    <div class="counter"><span id="currentSlide">1</span> / <span id="totalSlides">4</span></div>
+    <button class="btn" id="nextBtn" onclick="nextSlide()">&#8594;</button>
+</div>
+
+<script>
+    const slides = document.querySelectorAll('.slide');
+    const total = slides.length;
+    let current = 0;
+    document.getElementById('totalSlides').textContent = total;
+
+    function updateSlides() {
+        slides.forEach((slide, index) => {
+            slide.classList.remove('active', 'prev');
+            if (index === current) slide.classList.add('active');
+            else if (index < current) slide.classList.add('prev');
+        });
+        document.getElementById('currentSlide').textContent = current + 1;
+        document.getElementById('prevBtn').disabled = current === 0;
+        document.getElementById('nextBtn').disabled = current === total - 1;
+    }
+
+    function nextSlide() { if (current < total - 1) { current++; updateSlides(); } }
+    function prevSlide() { if (current > 0) { current--; updateSlides(); } }
+    document.addEventListener('keydown', (e) => { if (e.key === 'ArrowRight' || e.key === 'Space') nextSlide(); else if (e.key === 'ArrowLeft') prevSlide(); });
+    updateSlides();
+</script>
+</body>
+</html>

@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="th">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Week 6 — Architecture & Governance</title>
+  <link rel="stylesheet" href="../shared-theme.css">
+  <style>
+    body { display: block; min-height: 100vh; overflow: auto; background-color: var(--paper); }
+    .document { width: 100%; margin: 0; padding: 30px clamp(15px, 2vw, 30px); }
+    .file-path { margin: 0 0 18px; color: var(--indigo); font: 500 .73rem/1.5 'IBM Plex Mono', monospace; letter-spacing: .09em; text-transform: uppercase; }
+    h1 { max-width: 850px; font-size: clamp(1.8rem, 3vw, 2.4rem) !important; }
+    .lede { max-width: 720px; margin: 0; color: var(--text-muted); font-size: clamp(1.08rem, 2vw, 1.32rem); }
+    .divider { height: 1px; margin: 36px 0; background: var(--rule); }
+    .summary { display: grid; grid-template-columns: 1fr; gap: 24px; }
+    .panel { padding: 30px; background: #fff; border: 1px solid var(--rule); border-radius: 14px; }
+    .panel h2 { margin-bottom: 24px; font-size: clamp(1.35rem, 2.2vw, 1.8rem); color: var(--indigo-deep); border-bottom: 2px solid var(--rule); padding-bottom: 10px; }
+    .facts { display: grid; gap: 0; margin: 0; }
+    .facts div { display: grid; grid-template-columns: 200px 1fr; gap: 24px; padding: 16px 0; border-bottom: 1px solid var(--rule); }
+    .facts div:last-child { border: 0; padding-bottom: 0; }
+    dt { color: var(--text-muted); font: 600 .75rem/1.4 'IBM Plex Mono', monospace; letter-spacing: .08em; text-transform: uppercase; }
+    dd, p, li { margin: 0; color: var(--text-main); font-size: 1rem !important; line-height: 1.7 !important; }
+    ul { margin-top: 10px; padding-left: 24px; }
+    li { margin-bottom: 8px; }
+  </style>
+</head>
+
+<body>
+  <main class="document" data-od-id="week-6-content">
+    <p class="file-path">/week6/content.html</p>
+    <div class="badge">Week 6 · Architecture & Governance</div>
+    <h1>Architecture & Governance</h1>
+    <p class="lede">รายละเอียดเชิงลึกของการออกแบบสถาปัตยกรรมระบบเป้าหมาย (To-Be Architecture), การกำหนดมาตรฐานการสื่อสารและกฎเกณฑ์การทำงาน (DoR/DoD) รวมถึงการวิเคราะห์ผลต่างงบประมาณด้วยหลักการ EVM</p>
+    
+    <div class="divider"></div>
+    
+    <section class="summary">
+      <article class="panel">
+        <h2>1. To-Be Architecture (การออกแบบสถาปัตยกรรมระบบเป้าหมาย)</h2>
+        <div style="font-size: 1rem; line-height: 1.7; color: var(--text-main);">
+          <p>เพื่อแก้ไขปัญหาจากระบบเดิมที่เป็น Monolithic Script ซึ่งใช้งานไฟล์ JSON และมีปัญหาเรื่องการผูกติดกับ Global State สถาปัตยกรรมใหม่ถูกออกแบบโดยมุ่งเน้นที่การแยกส่วนประกอบ (Separation of Concerns) และรองรับการขยายตัว (Scalability) ดังนี้:</p>
+          <ul>
+            <li><strong>SQLiteDatabaseContext (Singleton Pattern):</strong>
+                <ul>
+                    <li><strong>ปัญหาที่แก้:</strong> ลดปัญหา Database/File Locked เมื่อมีผู้ใช้งานหรือคำสั่งพยายามเขียนไฟล์พร้อมกัน</li>
+                    <li><strong>วิธีการทำงาน:</strong> ควบคุมให้มีจุดเชื่อมต่อ (Connection) ไปยังฐานข้อมูล SQLite เพียงจุดเดียวตลอดการทำงานของโปรแกรม ทำให้สามารถจัดการ Transaction (Commit/Rollback) ได้อย่างมีประสิทธิภาพ</li>
+                </ul>
+            </li>
+            <li><strong>InventoryRepository (Repository Pattern):</strong>
+                <ul>
+                    <li><strong>ปัญหาที่แก้:</strong> แยกคำสั่ง SQL ออกจาก Business Logic เพื่อให้ง่ายต่อการทดสอบและดูแลรักษา</li>
+                    <li><strong>วิธีการทำงาน:</strong> ครอบการทำงานของฐานข้อมูลทั้งหมด (CRUD) ไว้ในคลาสเดียว และบังคับใช้ <em>Parameterized Queries</em> เพื่อป้องกันการถูกโจมตีผ่าน SQL Injection อย่างเด็ดขาด</li>
+                </ul>
+            </li>
+            <li><strong>MemberTier (Strategy Pattern):</strong>
+                <ul>
+                    <li><strong>ปัญหาที่แก้:</strong> โค้ดเดิมมีการใช้ <code>if-else</code> ซ้อนกันจำนวนมากในการคำนวณส่วนลด ซึ่งยากต่อการเพิ่มระดับสมาชิกใหม่</li>
+                    <li><strong>วิธีการทำงาน:</strong> สร้าง Interface หรือ Base Class สำหรับ Member และสืบทอดเป็น Regular, Silver, Gold, Platinum โดยแต่ละคลาสจะรับผิดชอบในการคืนค่าอัตราส่วนลด (Discount Rate) ของตัวเอง ทำให้การเพิ่มสมาชิกระดับใหม่ในอนาคต (เช่น Diamond) สามารถทำได้โดยไม่ต้องแก้ไขโค้ดเดิม (Open/Closed Principle)</li>
+                </ul>
+            </li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="panel">
+        <h2>2. Communication Matrix และ DoR / DoD</h2>
+        <p style="margin-bottom: 20px;">การกำหนดกรอบการสื่อสารและมาตรฐานการทำงานร่วมกันภายในทีม (Project Manager, QA/Tester, Tech Lead) เพื่อให้การบริหารจัดการโครงการด้วย Trello และ GitHub เป็นไปอย่างราบรื่น:</p>
+        <dl class="facts">
+          <div>
+            <dt>การอัปเดตงานประจำวัน (Standup)</dt>
+            <dd><strong>ช่องทาง:</strong> Discord Voice | <strong>ความถี่:</strong> ทุกเย็น (15 นาที) | <strong>ผู้ดูแล:</strong> Project Manager</dd>
+          </div>
+          <div>
+            <dt>Definition of Ready (DoR)</dt>
+            <dd>ก่อนที่ Developer จะเริ่มดึงงานจาก Trello ไปทำ การ์ดงานนั้นต้องมีองค์ประกอบครบถ้วน:
+                <ul>
+                    <li>ระบุเป้าหมายและฟีเจอร์อย่างละเอียด (Description)</li>
+                    <li>ประเมินความเสี่ยงและจุดกระทบ (Hotspots) ที่อาจทำให้ระบบเดิมพัง</li>
+                    <li>มีการมอบหมายผู้รับผิดชอบ (Assignee) อิงตาม RACI Matrix (Responsible, Accountable)</li>
+                    <li>สร้าง Branch ใน GitHub เตรียมพร้อมสำหรับการพัฒนา โดยแยกออกจากกิ่งหลัก (Develop)</li>
+                </ul>
+            </dd>
+          </div>
+          <div>
+            <dt>Definition of Done (DoD)</dt>
+            <dd>งานจะถูกย้ายไปยังช่อง "Done" ได้ก็ต่อเมื่อผ่านเงื่อนไขคุณภาพสูงสุด:
+                <ul>
+                    <li>ผ่านการตรวจสอบโค้ด (Code Review) จาก Tech Lead เพื่อรักษามาตรฐานความสะอาดของโค้ด (เช่น PEP 8)</li>
+                    <li>ต้องรันสคริปต์ <code>test_app.py</code> ที่สร้างโดย QA ผ่านแบบ 100% (No Error, No Warning) บน CI/CD Pipeline</li>
+                    <li>Merge โค้ดเข้ากิ่งหลักสำเร็จโดยไม่มีข้อขัดแย้ง (Merge Conflict)</li>
+                </ul>
+            </dd>
+          </div>
+        </dl>
+      </article>
+
+      <article class="panel">
+        <h2>3. การวิเคราะห์ผลต่างงบประมาณ (Cost Variance Analysis - EVM)</h2>
+        <div style="font-size: 1rem; line-height: 1.7; color: var(--text-main);">
+          <p>ตัวอย่างการนำหลักการ Earned Value Management (EVM) มาใช้ประเมินสถานการณ์และควบคุมงบประมาณ เมื่อพบปัญหาเฉพาะหน้า:</p>
+          <ul>
+            <li><strong>สถานการณ์:</strong> งานแปลงระบบจัดเก็บข้อมูลจาก JSON เป็น SQLite (มอบหมายให้ Developer)</li>
+            <li><strong>Planned Cost (งบที่ตั้งไว้):</strong> ประเมินเวลาไว้ที่ 6 ชั่วโมง (อิงเรต 400 บาท/ชม.) รวม <strong>2,400 บาท</strong></li>
+            <li><strong>Earned Value (มูลค่างานที่ทำเสร็จ):</strong> งานถูกดำเนินการจนเสร็จสิ้นและผ่านการทดสอบ 100% คิดเป็นมูลค่า <strong>2,400 บาท</strong></li>
+            <li><strong>Actual Cost (ต้นทุนจริง):</strong> Developer พบว่าโครงสร้างข้อมูลเก่าใน JSON (Spaghetti Code) มีความซับซ้อนและไม่มีมาตรฐาน จึงต้องเสียเวลาแกะโค้ดและ Refactor เพิ่มเติม ทำให้ใช้เวลาจริงไป 10 ชั่วโมง คิดเป็นต้นทุน <strong>4,000 บาท</strong></li>
+            <li><strong>การคำนวณ CV (Cost Variance):</strong> <code>CV = EV - AC = 2,400 - 4,000 = <strong>-1,600 บาท</strong></code></li>
+            <li><strong>การจัดการความเสี่ยง (Management Action):</strong> 
+                <ol>
+                    <li>แจ้งเตือน (Warning) สถานะ Over Budget ให้ทีมทราบ</li>
+                    <li>Project Manager ทำเรื่องดึงเงินจากงบสำรอง (Contingency Reserve) ที่ตั้งไว้ 15% ของโครงการมาชดเชยส่วนต่าง 1,600 บาท</li>
+                    <li>เรียกประชุมด่วนกับ Tech Lead เพื่อปรับปรุง Blueprint ในฟีเจอร์ถัดไป (เช่น ระบบสมาชิกระดับ Platinum) ให้รัดกุมยิ่งขึ้น เพื่อป้องกันการประเมินเวลาพลาดในอนาคต</li>
+                </ol>
+            </li>
+          </ul>
+        </div>
+      </article>
+    </section>
+  </main>
+</body>
+</html>
