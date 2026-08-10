@@ -1,9 +1,13 @@
 name: PyTest CI/CD Pipeline
 
 on:
+  push:
+    branches:
+      - test-at
   pull_request:
     branches:
       - develop
+      - test-at
 
 jobs:
   test:
@@ -25,5 +29,4 @@ jobs:
 
     - name: Run PyTest
       run: |
-        cd week-4
         pytest test_app.py --maxfail=1 --disable-warnings -q
