@@ -5,7 +5,7 @@ from typing import Dict, List, Optional
 class Product:
     """คลาสแทนข้อมูลของสินค้าแต่ละรายการ"""
     def __init__(self, product_id: str, name: str, quantity: int, price: float, category: str):
-        self.product_id = product_id
+        self.product_id = product_id-test
         self.name = name
         self.quantity = quantity
         self.price = price
