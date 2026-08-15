@@ -1,0 +1,250 @@
+WEEK 5: SOFTWARE QUALITY & COSTING
+ISO/IEC 25010 Quality Model & Design Pattern Reverse Engineering
+“การส่องกระจกวัดคุณภาพโค้ดดั้งเดิม เพื่อวางรากฐานการปรับเปลี่ยนสถาปัตยกรรมอย่างเป็นระบบ”
+Academic Framework: ISO/IEC 25010:2011 - Systems and Software Quality Requirements (SQuaRE)
+ENGSE225: SOFTWARE EVOLUTION AND MAINTENANCE WEEK 5 MASTERCLASS
+
+WEEK 5: SOFTWARE QUALITY & COSTING
+ISO/IEC 25010 Quality Model & Design Pattern Reverse Engineering
+“การส่องกระจกวัดคุณภาพโค้ดดั้งเดิม เพื่อวางรากฐานการปรับเปลี่ยนสถาปัตยกรรมอย่างเป็นระบบ”
+Academic Framework: ISO/IEC 25010:2011 - Systems and Software Quality Requirements (SQuaRE)
+ENGSE225: SOFTWARE EVOLUTION AND MAINTENANCE WEEK 5 MASTERCLASS
+
+1. ISO/IEC 25010 Model
+เข้าใจโครงสร้างโมเดลคุณภาพ ISO/IEC 25010 (SQuaRE) และความสำคัญในงานวิวัฒนาการซอฟต์แวร์
+2. Maintainability Metrics
+ประเมินคุณภาพโค้ดเก่าในแกน Maintainability ทั้ง 5 ด้านได้อย่างเป็นรูปธรรมและมีหลักเกณฑ์
+3. Reverse Engineering
+ทำ Reverse Engineering บนโค้ดเก่าเพื่อระบุ Pattern ดั้งเดิม และวางแผนเปลี่ยนผ่านสู่ To-Be Architecture
+WEEKLY COURSE OBJECTIVES ENGSE225
+เป้าหมายการเรียนรู้ประจำสัปดาห์
+
+“ถ้าเราวัดคุณภาพโค้ดเดิมไม่ได้ เราจะไม่สามารถคำนวณต้นทุนการแก้ไขในวิชาบริหารจัดการ (SPM) ได้เลย”
+สัปดาห์ที่ 1 - 2
+Program Comprehension & Reverse Engineering หาจุดเสี่ยงสถาปัตยกรรมเดิม
+สัปดาห์ที่ 3 - 4
+SCM & PyTest Setup พร้อมผ่านด่าน Phase Gate Baseline Audit (v1.0-baseline)
+สัปดาห์ที่ 5 (วันนี้)
+Quality Metrics Audit (ISO 25010) & Design Patterns Mapping ประเมินต้นทุน SPM
+สัปดาห์ที่ 6 - 7
+Refactoring Execution & Re-architecting เปลี่ยนผ่านสู่ระบบใหม่เต็มรูปแบบ
+COURSE PROGRESSION ROADMAP PHASE 2 ACTIVATION
+จุดเชื่อมโยงสู่เฟสที่ 2: Analysis & Setup
+
+SQuaRE Framework คืออะไร?
+SQuaRE (Software Product Quality Requirements and Evaluation) คือ ตระกูลมาตรฐานสากลที่ถูกพัฒนาขึ้นมาทดแทนมาตรฐาน ISO/IEC 9126 ดั้งเดิม
+ทำหน้าที่กำหนดกรอบมาตรฐานครอบคลุมตั้งแต่การกำหนดความต้องการคุณภาพ การประเมิน และการวัดผลตัวชี้วัด (Metrics) อย่างเป็นระบบ
+มุมมองการประเมิน 2 มิติ
+Internal Quality (มุมมองวิศวกร): ตรวจวัดโครงสร้างซอร์สโค้ด ความสะอาด และสถาปัตยกรรมภายใน (Static Code Analysis)
+Quality in Use (มุมมองผู้ใช้งาน): ตรวจวัดประสิทธิภาพ ประสิทธิผล และความพึงพอใจเมื่อนำระบบไปรันจริง
+SOFTWARE QUALITY STANDARD ISO/IEC 25000 SQUARE SERIES
+ตระกูลมาตรฐาน ISO/IEC 25000 (SQuaRE)
+
+Functional
+ความเหมาะสมตามหน้าที่
+Performance
+ประสิทธิภาพการทำงาน
+Compatibility
+ความเข้ากันได้ของระบบ
+Usability
+ความง่ายในการใช้งาน
+Reliability
+ความน่าเชื่อถือของระบบ
+Security
+ความมั่นคงปลอดภัย
+Maintainability ⭐
+หัวใจของวิชา Evolution
+Portability
+ความง่ายในการโยกย้าย
+QUALITY CHARACTERISTICS ISO/IEC 25010 SYSTEM QUALITY MODEL
+8 แกนหลักคุณภาพ ISO/IEC 25010
+
+CORE EVOLUTION PILLAR MAINTAINABILITY IMPACT
+แกนหลัก Maintainability คืออะไร?
+วิกฤตของ Maintainability ต่ำ:
+การแก้บั๊กย่อยจุดเดียว สร้าง Side Effects ลามพังทั้งระบบ
+ต้นทุนการบำรุงรักษา (Maintenance Cost) พุ่งสูงขึ้นเป็นเท่าตัว
+
+1. Modularity
+การแยกส่วนโมดูลอิสระ High Cohesion & Low Coupling
+2. Reusability
+การนำฟังก์ชันย่อยกลับมาใช้ประโยชน์ซ้ำได้โดยไม่ต้อง copy-paste
+3. Analyzability
+ความง่ายในการวินิจฉัยจุดเสียและประเมินผลกระทบ
+4. Modifiability
+ความง่ายในการปรับเปลี่ยนแก้ไขโดยไม่เกิด Side Effects
+5. Testability
+ความสามารถในการตั้งเกณฑ์และรัน Unit Test อัตโนมัติ
+SUB-CHARACTERISTICS BREAKDOWN ISO/IEC 25010 MAINTAINABILITY
+5 คุณลักษณะย่อยของ Maintainability
+
+นิยามทางวิชาการ
+ระดับที่ระบบหรือโปรแกรมถูกแยกออกเป็นส่วนๆ (Modules) โดยการเปลี่ยนแปลงในโมดูลหนึ่งจะส่งผลกระทบต่อโมดูลอื่นน้อยที่สุด
+จุดตรวจโค้ดเก่า (app_v1.py)
+❌ Low Modularity (Monolithic Code)
+ฟังก์ชัน main() รวบรวมตั้งแต่ UI Menu, Business Logic คำนวณยอด, จนถึง Data Access อ่านเขียน JSON ไว้ในที่เดียวกันอย่างแออัด
+MAINTAINABILITY AUDIT 1 MODULARITY ANALYSIS
+คุณลักษณะย่อยที่ 1: Modularity
+
+นิยามทางวิชาการ
+ระดับที่ชิ้นส่วนของสินทรัพย์ซอฟต์แวร์ (Software Asset/Code) สามารถนำไปใช้ประโยชน์ในโมดูลอื่น หรือในระบบอื่นได้โดยตรง
+จุดตรวจโค้ดเก่า (app_v1.py)
+❌ Low Reusability (Copy-Paste Pattern)
+ตรรกะคำนวณราคาสินค้าฝังแน่นอยู่ในเมนู choice == "4" ไม่สามารถถูกเรียกใช้โดยเมนูอื่นได้ หากต้องการใช้ ต้องคัดลอกโค้ดซ้ำไปวาง
+MAINTAINABILITY AUDIT 2 REUSABILITY ANALYSIS
+คุณลักษณะย่อยที่ 2: Reusability
+
+นิยามทางวิชาการ
+ระดับความสะดวกในการประเมินผลกระทบจากการแก้ไข การวินิจฉัยหาสาเหตุของความล้มเหลว (Defects) หรือการระบุชิ้นส่วนที่ต้องแก้ไข
+จุดตรวจโค้ดเก่า (app_v1.py)
+❌ Low Analyzability (Cryptic Naming)
+ตัวแปรใช้ชื่อสั้นกำกวม x, a, b, c, d ไร้คอมเมนต์และเอกสาร ทำให้นักพัฒนาต้องเสียเวลาอ่านแกะโฟลว์การทำงานอยู่นาน
+MAINTAINABILITY AUDIT 3 ANALYZABILITY ANALYSIS
+คุณลักษณะย่อยที่ 3: Analyzability
+
+นิยามทางวิชาการ
+ระดับที่ซอฟต์แวร์สามารถถูกปรับเปลี่ยนแก้ไขได้อย่างมีประสิทธิภาพ โดยไม่เกิดผลกระทบข้างเคียง (Side Effects) หรือทำให้ส่วนอื่นเสียหาย
+จุดตรวจโค้ดเก่า (app_v1.py)
+❌ Low Modifiability (Side Effect Ripple)
+ใช้ตัวแปรแบบ global x หากเมนู choice == "3" แก้ไขโครงสร้างข้อมูลผิดพลาด จะส่งผลให้เมนู 1 และ 4 ล่มพังตามไปด้วย
+MAINTAINABILITY AUDIT 4 MODIFIABILITY ANALYSIS
+คุณลักษณะย่อยที่ 4: Modifiability
+
+นิยามทางวิชาการ
+ระดับความง่ายในการตั้งเกณฑ์การทดสอบ และการลงมือทดสอบเพื่อยืนยันว่าซอฟต์แวร์ทำงานถูกต้องตามข้อกำหนด
+จุดตรวจโค้ดเก่า (app_v1.py)
+❌ Low Testability (Untestable I/O Mix)
+คำสั่ง input() และ print() ฝังปะปนกับ Business Logic ทำให้สคริปต์ PyTest ไม่สามารถดึงมาทำ Automated Unit Test ได้
+MAINTAINABILITY AUDIT 5 TESTABILITY ANALYSIS
+คุณลักษณะย่อยที่ 5: Testability
+
+กระบวนการวิเคราะห์ซอฟต์แวร์เพื่อสร้างแบบจำลองการออกแบบระดับสูง (Abstract Model):
+Procedural Monolithic: เขียนคำสั่งตามลำดับในสคริปต์ไฟล์เดียว
+Tight Coupling: UI และ Data Access ผูกติดกันแน่นหนาจนแยกไม่ออก
+Unprotected Global State: ตัวแปรกลางถูกแก้ไขจากทุกทิศทาง
+REVERSE ENGINEERING ANALYSIS AS-IS ARCHITECTURE RECOVERY
+แกะ Pattern ดั้งเดิม (Reverse Engineering)
+
+รูปแบบทางแก้ปัญหา (Reusable Solutions) ที่ผ่านการทดสอบและยอมรับในอุตสาหกรรม แบ่งออกเป็น 3 หมวดหลักโดย Gang of Four (GoF):
+1. Creational
+จัดการกระบวนการสร้าง Objects อย่างปลอดภัยและยืดหยุ่น (เช่น Singleton, Factory)
+2. Structural
+จัดการการประกอบโครงสร้าง Class และ Objects ให้เป็นระบบ (เช่น Repository, Adapter)
+3. Behavioral
+จัดการการสื่อสาร พฤติกรรม และการมอบหมายหน้าที่ระหว่าง Objects (เช่น Strategy, Observer)
+DESIGN PATTERN FUNDAMENTALS GANG OF FOUR (GOF) CATEGORIES
+ทำความรู้จักกับ Software Design Patterns
+
+ปัญหาในโค้ดเดิม (As-Is)
+มีการอ่าน/เขียนไฟล์ data.json กระจัดกระจาย และใช้ตัวแปร global x
+เสี่ยงต่อการแย่งกันใช้ข้อมูล (Race Condition) และข้อมูลไฟล์สูญหาย
+การแก้ด้วย Singleton Pattern
+ประกันว่า Class จัดการ Database/File Manager จะมีเพียง Single Instance เดียวตลอดวงจรระบบ
+สร้าง Global Point of Access ที่ปลอดภัย ควบคุมผ่าน getInstance()
+TO-BE ARCHITECTURAL PATTERN 1 SINGLETON PATTERN
+Design Pattern เป้าหมาย 1: Singleton
+
+แก้ปัญหาตรรกะ UI ผูกติดกับโครงสร้างการจัดเก็บไฟล์ JSON โดยตรง:
+Abstraction Layer: คั่นกลางระหว่าง Business Logic และ Data Access Layer
+Clean Methods: เรียกใช้ add_product(), get_all() โดยไม่สนใจว่าเก็บใน JSON หรือ SQL
+High Testability: สลับเปลี่ยน Mock Repository เพื่อรัน PyTest ได้อย่างง่ายดาย
+TO-BE ARCHITECTURAL PATTERN 2 REPOSITORY PATTERN
+Design Pattern เป้าหมาย 2: Repository
+
+มิติการประเมิน
+สถาปัตยกรรมดั้งเดิม (As-Is Architecture)
+สถาปัตยกรรมใหม่ (To-Be Architecture)
+Pattern Style
+Monolithic Procedural Script
+Layered Architecture + Repository Pattern
+Coupling Level
+Tight Coupling (UI ผูกติดกับ Data File)
+Loose Coupling (แยกส่วนคลาสชัดเจน)
+State Management
+Global Variable State (เสี่ยง Side Effects)
+Encapsulated Objects + Singleton Data Access
+ISO 25010 Rating
+Low Maintainability (1 - 2 ดาว)
+High Maintainability (4 - 5 ดาว Certified)
+ARCHITECTURAL TRANSITION AS-IS VS. TO-BE ARCHITECTURE MATRIX
+เปรียบเทียบสถาปัตยกรรม As-Is vs. To-Be
+
+ผลการประเมินฝั่งเทคนิค (ENGSE225)
+ตรวจพบ Maintainability ต่ำในแกน Modularity และ Modifiability ของโค้ดดั้งเดิม
+กำหนดทางแก้: ต้องทำ Refactoring แตกโมดูล และเขียน Repository Class ขึ้นมาทดแทน
+การส่งต่อข้อมูลสู่งบประมาณ (ENGSE202)
+แปลงงาน Refactoring เป็น Work Packages (WBS) และประเมิน Man-Hours
+คำนวณต้นทุนค่าแรงนักพัฒนาและตั้งเป็น Project Cost Baseline จริงของโครงการ
+CROSS-COURSE INTEGRATION BRIDGING QUALITY METRICS TO SPM COSTING
+การแปลงผลวิเคราะห์สู่ดัชนีต้นทุน (SPM)
+
+ระดมความคิดสมาชิกในกลุ่ม 4-5 คน ตรวจแกะไฟล์ app_v1.py เพื่อลงคะแนนดาวและออกแบบโครงสร้าง UML Class Diagram ใหม่
+Workshop: "SQuaRE Quality Auditing & Architectural Mapping"
+ภารกิจ: ประเมินโค้ดระบบคลังสินค้าดั้งเดิมตาม ISO/IEC 25010 และวาดแผนภาพเปรียบเทียบสถาปัตยกรรม As-Is vs. To-Be
+PRACTICAL LAB ACTIVITY SESSION WORKSHOP GUIDELINES
+กิจกรรมปฏิบัติการกลุ่มประจำวันนี้
+
+คุณลักษณะย่อย
+คะแนนดาว (1-5)
+ข้อสนับสนุนและจุดบกพร่องทางเทคนิคที่พบใน app_v1.py
+1. Modularity
+ฟังก์ชัน main() กระจุกตัวทุกหน้าที่ ไม่มีคลาสแยกสัดส่วน
+2. Reusability
+ตรรกะคำนวณฝังในเมนู ไม่สามารถเรียกใช้ซ้ำจากภายนอกได้
+3. Analyzability
+ตัวแปรชื่อ x, a, b กำกวม ไร้คอมเมนต์และสเปกอธิบาย
+4. Modifiability
+ใช้ global x เสี่ยงเกิด Side Effects กระทบเมนูอื่นพัง
+5. Testability
+input() และ print() ปะปน logic เขียน PyTest อัตโนมัติไม่ได้
+WORKSHOP STEP 1 ISO/IEC 25010 CHECKLIST AUDIT FORM
+ขั้นตอนที่ 1: ISO/IEC 25010 Checklist Audit
+
+ภารกิจการเขียน As-Is Diagram
+ให้นักศึกษาวาด Component / Procedural Diagram ของโค้ดเดิมเพื่อแสดงโครงสร้างปัจจุบันของระบบ
+การระบุ Hotspots (จุดเสี่ยงพัง)
+ระบุสัญลักษณ์สีแดงไฮไลต์ลงบนผังโครงสร้างเพื่อชี้เป้า Hotspots ที่ต้องได้รับการแก้ไขเร่งด่วนในขั้นตอน Refactoring
+เพื่อส่งต่อข้อมูลให้ PM นำไปลงทะเบียน Risk Register ในวิชา SPM
+ชี้ตำแหน่งตัวแปร Global x และ db
+ชี้จุดอุดตันในฟังก์ชัน main() ที่รับภาระทุกเมนู
+WORKSHOP STEP 2 AS-IS ARCHITECTURE CLASS DIAGRAM
+ขั้นตอนที่ 2: วาด Class Diagram ปัจจุบัน
+
+ออกแบบ UML Class Diagram ใหม่ที่จะทำ Refactoring ในเฟสที่ 3:
+Product Class: Data Model ห่อหุ้มคุณลักษณะสินค้า
+InventoryRepository: คลาส Repository อ่าน/เขียน JSON
+InventoryService: ประมวลผล Business Logic
+ConsoleUI: จัดการเมนูอินเทอร์เฟซผู้ใช้
+WORKSHOP STEP 3 TO-BE DESIGN PATTERN ARCHITECTURE
+ขั้นตอนที่ 3: ออกแบบ To-Be Class Diagram
+
+ตรวจสอบความสมบูรณ์ของเอกสารสรุปผลการปฏิบัติการก่อนอัปโหลดส่งระบบ:
+ตารางการประเมิน ISO/IEC 25010 Checklist: ครบถ้วนทั้ง 5 ด้านพร้อมข้อสนับสนุนเหตุผลทางเทคนิค
+แผนภาพสถาปัตยกรรมเดิม (As-Is Diagram): พร้อมการชี้เป้า Hotspots จุดเสี่ยงพังสีแดง
+แผนภาพสถาปัตยกรรมใหม่ (To-Be Class Diagram): ที่มีการประยุกต์ใช้ Design Patterns สดใหม่
+รายการชิ้นงาน Refactoring: จัดทำตารางรายการส่งต่อให้วิชา SPM เพื่อประเมิน Man-Hours และต้นทุน
+SESSION DELIVERABLES WORKSHOP CHECKLIST
+เช็คลิสต์สิ่งส่งมอบเล่มรายงาน Week 5
+
+เปิดช่วงถาม-ตอบ (Q&A)
+“การวัดคุณภาพโค้ดดั้งเดิมด้วยมาตรฐานสากล คือก้าวแรกในการเปลี่ยนซอฟต์แวร์สปาเก็ตตีให้กลายเป็นระบบระดับอุตสาหกรรม”
+ส่งตัวแทนเตรียมนำผลประเมินนี้ไปใช้ต่อยอดในชั่วโมงวิชาการจัดการโครงการ (ENGSE202)
+ENGSE225: SOFTWARE EVOLUTION AND MAINTENANCE Q&A & DISCUSSION
+
+International Organization for Standardization. (2011). Systems and software engineering — Systems and software Quality Requirements and Evaluation (SQuaRE) — System and software quality models (ISO/IEC Standard No. 25010:2011).
+International Organization for Standardization. (2014). Systems and software engineering — SQuaRE — Guide to SQuaRE (ISO/IEC Standard No. 25000:2014).
+Gamma, E., Helm, R., Johnson, R., & Vlissides, J. (1994). Design Patterns: Elements of Reusable Object-Oriented Software. Addison-Wesley.
+Chikofsky, E. J., & Cross, J. H. (1990). Reverse engineering and design recovery: A taxonomy. IEEE Software, 7(1), 13-17.
+Institute of Electrical and Electronics Engineers. (1998). IEEE Standard for Software Maintenance (IEEE Std 1219-1998).
+SOFTWARE ENGINEERING BIBLIOGRAPHY ACADEMIC REFERENCES
+เอกสารอ้างอิงและมาตรฐานวิชาการ
+
+https://miro.medium.com/v2/resize:fit:1400/1*C2Euk2Dc9H3Pyf7I9WY3cw.png
+Source: medium.com
+https://embed-ssl.wistia.com/deliveries/79bae570253e4117664a15b6ef6de1285643663b.webp?image_crop_resized=960x540
+Source: www.perforce.com
+https://i.sstatic.net/QVBH5.png
+Source: stackoverflow.com
+https://urbanistarchitecture.co.uk/media/pages/blog/riba-plan-of-work-stages/1007d19485-1708079193/13-riba-plan-of-work-design-stages-1024x.jpg
+Source: urbanistarchitecture.co.uk
+Image Sources
