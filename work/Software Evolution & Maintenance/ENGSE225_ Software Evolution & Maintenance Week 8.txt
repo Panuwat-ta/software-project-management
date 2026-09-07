@@ -1,0 +1,261 @@
+WEEK 8: CODE REFACTORING & CHANGE MANAGEMENT
+Code Refactoring Surgery & Change Request Management
+“ล้างหนี้ทางเทคนิคด้วยเทคนิค Refactoring ระดับสากล และวางระบบรองรับคำขอเปลี่ยนแปลงตามมาตรฐาน ISO/IEC 14764”
+Academic Framework: ISO/IEC 14764:2006 - Software Life Cycle Processes - Maintenance
+ENGSE225: SOFTWARE EVOLUTION AND MAINTENANCE WEEK 8 MASTERCLASS
+
+1. Refactoring Surgery
+ประยุกต์ใช้เทคนิค Fowler (Extract Class, Extract Function, Encapsulate Field, Rename) ล้างหนี้โค้ดเดิม
+2. Change Management
+ดำเนินกระบวนการจัดการ Change Request (CR) 3 ขั้นตอนตามมาตรฐาน ISO/IEC 14764
+3. Safe Refactoring
+ปฏิบัติการผ่าตัดโค้ดบน Git Branch และรักษาสภาวะ PyTest ผ่านไฟเขียว 100% ตลอดกระบวนการ
+4. Impact Analysis
+จัดทำ Impact Analysis Report ประเมินผลกระทบเชิงเทคนิคของคำขอ CR-01 (Barcode & Reorder Point)
+WEEKLY COURSE OBJECTIVES ENGSE225
+เป้าหมายการเรียนรู้ประจำสัปดาห์
+
+สัปดาห์ที่ 1 - 4 (เฟส 1)
+Program Comprehension, Reverse Engineering & SCM Baseline Setup
+สัปดาห์ที่ 5 - 7 (เฟส 2)
+ISO 25010 Audit, To-Be Class Diagram, Cost Baseline & Gate Review Sign-off
+สัปดาห์ที่ 8 (วันนี้ ⭐)
+Hands-on Surgery: เริ่มเปลี่ยนโค้ดสปาเก็ตตีสู่ Clean Architecture และประเมิน CR-01 Impact
+สัปดาห์ที่ 9 - 12 (เฟส 3)
+Feature Evolution, System Integration & Project Release Closure
+SOFTWARE EVOLUTION LIFECYCLE EXECUTION PHASE ACTIVATION
+สัปดาห์ที่ 8 ใน Execution Phase
+
+REFACTORING RATIONALE หนี้ทางเทคนิคกับการผ่าตัดโค้ด
+หนี้ทางเทคนิคกับการผ่าตัดโค้ด
+โค้ดเดิม app_v1.py สะสมหนี้รุนแรง (Global x, Cryptic Variables)
+Refactoring Principle: ปรับโครงสร้างภายในให้สะอาด โดย ไม่เปลี่ยนพฤติกรรมภายนอก
+
+Refactoring (Noun & Verb)
+Noun: การปรับเปลี่ยนโครงสร้างภายในซอฟต์แวร์เพื่อให้อ่านและแก้ไขง่ายขึ้น โดยไม่กระทบพฤติกรรมภายนอก
+Verb: การปรับแต่งโค้ดด้วยเทคนิคย่อยสลับกับการรัน Unit Test ถี่ๆ
+ข้อแตกต่างสำคัญ
+Refactoring: โครงสร้างใหม่ ➔ พฤติกรรมภายนอกเท่าเดิม 🟢
+Bug Fixing: แก้ไขพฤติกรรมที่ผิดให้ถูกต้อง 🔵
+Feature Addition: เพิ่มพฤติกรรมและความต้องการใหม่ 🟣
+FORMAL SOFTWARE DEFINITION นิยาม REFACTORING ของ MARTIN FOWLER
+นิยาม Refactoring ของ Martin Fowler
+
+1. Rename Variable
+เปลี่ยนชื่อตัวแปรและเมธอดลึกลับ (x, a, b) ให้สื่อเจตนา (Clean Naming)
+2. Extract Function
+สับฟังก์ชันยักษ์ main() ออกเป็นฟังก์ชันย่อยที่มีหน้าที่เดียว (Single Responsibility)
+3. Extract Class
+แยกโครงสร้างข้อมูลและพฤติกรรมออกเป็น Class (Product, Repository, Service)
+4. Encapsulate Field
+ขจัดตัวแปร Global x โดยส่งผ่าน Object Instance ด้วย Dependency Injection
+CORE REFACTORING TOOLKIT 4 เทคนิค REFACTORING ในสัปดาห์นี้
+4 เทคนิค Refactoring ในสัปดาห์นี้
+
+เปลี่ยนชื่อตัวแปรไร้บริบทให้เป็นชื่อที่เปิดเผยเจตนา (Intent-Revealing Names):
+ช่วยเพิ่มค่า Analyzability ตาม ISO 25010 ทำให้นักพัฒนาแกะโค้ดได้ทันทีโดยไม่ต้องพึ่งคอมเมนต์
+REFACTORING TECHNIQUE 1 เทคนิค 1: RENAME VARIABLE / METHOD
+เทคนิค 1: Rename Variable / Method
+
+Before Refactoring
+After Refactoring
+def
+load
+global
+if
+'r'
+def
+load_inventory_data
+global
+if
+with
+'r'
+as
+CODE REFACTORING EXECUTION ตัวอย่างโค้ดจริง: RENAME VARIABLE
+ตัวอย่างโค้ดจริง: Rename Variable
+
+REFACTORING TECHNIQUE 2 เทคนิค 2: EXTRACT FUNCTION
+เทคนิค 2: Extract Function
+ลด Cyclomatic Complexity: ลดค่า v(G) ของ main() จาก 22 ลงมาเหลือ  8
+Testability: ทำให้สามารถเขียน PyTest ทดสอบเฉพาะฟังก์ชันได้โดยไม่ต้องรัน main()
+
+Before (ฝังแน่นใน main)
+After (Extract Function)
+# คำนวณมูลค่ารวมฝังใน main()
+for
+in
+'q'
+'p'
+"Total Value: {total_val}"
+def
+calculate_total_inventory_value
+for
+in
+'quantity'
+'price'
+return
+CODE REFACTORING EXECUTION ตัวอย่างโค้ดจริง: EXTRACT FUNCTION
+ตัวอย่างโค้ดจริง: Extract Function
+
+สลายโครงสร้าง Dictionary ซ้อน Dictionary เดิม โดยแยกบทบาทหน้าที่ออกเป็น Class วัตถุตาม To-Be Architecture:
+Product Class
+Data Model ห่อหุ้ม Attributes (id, name, qty, price) พร้อมคุม Type Safety
+InventoryRepository
+Data Access Layer รับผิดชอบ CRUD อ่าน/เขียนไฟล์ JSON ตาม Repository Pattern
+InventoryService
+Business Logic Layer รับผิดชอบคำนวณราคารวม ตัดสต็อก และตรวจสอบเงื่อนไขธุรกิจ
+REFACTORING TECHNIQUE 3 เทคนิค 3: EXTRACT CLASS
+เทคนิค 3: Extract Class
+
+Class 1: Product Model
+Class 2: InventoryRepository
+class
+Product
+def
+__init__
+class
+InventoryRepository
+def
+__init__
+def
+load_all
+# อ่านไฟล์ JSON คืนค่า dict ของ Product
+pass
+CODE REFACTORING EXECUTION ตัวอย่างโค้ดจริง: EXTRACT CLASS
+ตัวอย่างโค้ดจริง: Extract Class
+
+ขจัดภัยร้ายตัวแปร Global x โดยส่งผ่าน Object Instance ด้วย Dependency Injection:
+Zero Global x: ยกเลิกคีย์เวิร์ด global x ทั้งหมดในโปรแกรม
+Dependency Injection: ฉีด Instance ของ Repository เข้าไปใน Service ผ่าน Constructor
+REFACTORING TECHNIQUE 4 เทคนิค 4: ENCAPSULATE FIELD
+เทคนิค 4: Encapsulate Field
+
+Before (พึ่งพา Global State)
+After (Injecting Repository)
+def
+add_item
+global
+# โค้ดอันตราย
+"n"
+"q"
+"p"
+class
+InventoryService
+def
+__init__
+def
+add_product
+CODE REFACTORING EXECUTION ขจัด GLOBAL X ด้วย DEPENDENCY INJECTION
+ขจัด global x ด้วย Dependency Injection
+
+กฎเหล็กสากลของการผ่าตัดโค้ด: "ห้ามทำ Refactoring บนโค้ดที่ไม่มี Unit Test คุ้มกัน"
+Step 1: Baseline Check ➔ สั่งรัน pytest test_app.py ต้องขึ้น 1 passed ไฟเขียว 100% ก่อนเริ่มแตะโค้ด
+Step 2: Small Steps Refactor ➔ เปลี่ยนแปลงโค้ดทีละเล็กละน้อย (เช่น เปลี่ยนชื่อตัวแปร 1 ตัว แล้วกด Save)
+Step 3: Instant Verification ➔ สั่งรัน pytest ซ้ำทันที! หากติดไฟแดง 🔴 ให้ใช้คำสั่ง git checkout ถอยกลับทันที
+REFACTORING SAFETY PROTOCOL รักษาสภาวะไฟเขียว PYTEST สม่ำเสมอ
+รักษาสภาวะไฟเขียว PyTest สม่ำเสมอ
+
+SOFTWARE MAINTENANCE STANDARD การจัดการ CR ตาม ISO/IEC 14764
+การจัดการ CR ตาม ISO/IEC 14764
+Step 1: Identification: รับและบันทึกใบคำขอ CR Form
+Step 2: Impact Analysis: ประเมินผลกระทบเชิงเทคนิคและงบประมาณ
+Step 3: Implementation: ลงมือแก้ไขและรัน Full Regression Verification
+
+สิ่งต้องห้ามประจำโครงการ
+ห้ามรับคำขอเปลี่ยนแปลงผ่านวาจา ข้อความแช็ตส่วนตัว หรือข้อตกลงลอยๆ โดยเด็ดขาด เพราะจะทำให้ Scope สกปรก
+การบันทึก CR Form
+CR ID: รหัสอ้างอิงทางการ (เช่น CR-01)
+Requester: ระบุผู้ร้องขอ (อาจารย์ / Sponsor)
+Business Justification: เหตุผลทางธุรกิจและสเปกใหม่
+ISO/IEC 14764 CLAUSE 7.1 STEP 1: CR IDENTIFICATION & LOGGING
+Step 1: CR Identification & Logging
+
+TECHNICAL ASSESSMENT STEP 2: IMPACT ANALYSIS FRAMEWORK
+Step 2: Impact Analysis
+Technical Impact: ต้องแก้ไขกี่ Class / Method?
+Test Impact: ต้องเพิ่ม Unit Test กี่ Test Case?
+Cost Impact: ต้องใช้ Man-Hours เพิ่มกี่ชั่วโมง? (ส่งต่อวิชา SPM)
+
+วิเคราะห์จุดกระทบจากคำขอ CR-01: "เพิ่มการเก็บรหัสบาร์โค้ด (Barcode) และจุดสั่งซื้อขั้นต่ำ (Reorder Point)"
+องค์ประกอบสถาปัตยกรรม
+จุดกระทบเชิงเทคนิคที่ต้องปรับแก้ (Affected Code)
+ผลกระทบด้านการทดสอบ (Test Impact)
+Class Product
+เพิ่ม Attributes: barcode: str และ reorder_point: int
+เพิ่ม Unit Test ตรวจชนิดข้อมูล
+InventoryRepository
+ปรับโครงสร้าง JSON serialization / deserialization คีย์ใหม่
+เพิ่ม Test Case อ่าน/เขียนไฟล์
+ConsoleUI
+เพิ่มช่องรับ Input Barcode และแสดงเตือน Reorder Alert
+ทดสอบ UI Mock Inputs
+CHANGE ANALYSIS CASE STUDY เครื่องมือ TRACEABILITY MATRIX
+เครื่องมือ Traceability Matrix
+
+ขั้นตอนการลงมือพัฒนาคำขอเปลี่ยนแปลงและสอบทานความปลอดภัย:
+Create Feature Branch: แตกสาย feature/cr01-barcode-reorder-point จาก develop
+Code Implementation: ลงมือเพิ่มโค้ดตามผลวิเคราะห์ Impact Analysis
+Full Regression Verification: รัน pytest สแกนผ่าน 100% เพื่อพิสูจน์ว่าฟังก์ชันเดิมไม่พัง
+ISO/IEC 14764 CLAUSE 7.3 STEP 3: IMPLEMENTATION & TESTING
+Step 3: Implementation & Testing
+
+PRACTICAL LAB ACTIVITY แนะนำกิจกรรม WORKSHOP ประจำวันนี้
+แนะนำกิจกรรม Workshop ประจำวันนี้
+ผ่าตัดโค้ดเดิม app_v1.py สู่ To-Be Clean Architecture
+รับใบ CR-01 แล้วจัดทำ Impact Analysis Report
+
+แตก Branch ปฏิบัติการ
+git checkout -b feature/refactor-core-architecture
+ลงมือ Refactor ตาม 4 เทคนิค Fowler (Rename, Extract Function, Extract Class, Encapsulate Field)
+รักษาสภาวะไฟเขียว
+สั่งรัน pytest ทุกครั้งที่แก้โค้ดเล็กน้อย ห้ามเพิ่มฟีเจอร์ใหม่ในขั้นตอนนี้เด็ดขาด!
+WORKSHOP EXECUTION STEP 1 ขั้นตอน 1: แตก BRANCH & REFACTOR
+ขั้นตอน 1: แตก Branch & Refactor
+
+รับโจทย์ CR-01 Form
+ลูกค้าขอเพิ่มการเก็บ "Barcode" และ "Reorder Point"
+ทำ Impact Analysis
+ระบุ Class/Method ที่ต้องแก้, จำนวน Test Case ที่ต้องเขียนเพิ่ม และประเมิน Man-Hours รวม
+WORKSHOP EXECUTION STEP 2 ขั้นตอน 2: รับใบ CR-01 & IMPACT
+ขั้นตอน 2: รับใบ CR-01 & Impact
+
+CROSS-COURSE ALIGNMENT การส่งต่อผลวิเคราะห์ CR-01 สู่ SPM
+การส่งต่อผลวิเคราะห์ CR-01 สู่ SPM
+เพื่อนำไปประเมินงบประมาณเพิ่มเติม ดึงเงิน Contingency Reserve และปรับการ์ดงานบนบอร์ด Jira ในช่วง 3 ชั่วโมงหลัง
+
+Fowler Refactoring
+ล้างหนี้ทางเทคนิคโดยไม่เปลี่ยนพฤติกรรมโปรแกรมภายนอก
+PyTest Safety Net
+เกราะป้องกันเดียวที่ทำให้ผ่าตัดโค้ดได้อย่างมั่นใจ
+ISO 14764 Process
+รับมือ CR อย่างเป็นระบบผ่าน CR Form ➔ Impact ➔ Implementation
+SESSION RECAP สรุปบทเรียนประจำสัปดาห์ที่ 8
+สรุปบทเรียนประจำสัปดาห์ที่ 8
+
+International Organization for Standardization. (2006). Software Engineering — Software Life Cycle Processes — Maintenance (ISO/IEC Standard No. 14764:2006).
+Fowler, M. (2018). Refactoring: Improving the Design of Existing Code (2nd ed.). Addison-Wesley.
+Martin, R. C. (2008). Clean Code: A Handbook of Agile Software Craftsmanship. Prentice Hall.
+Beck, K. (2002). Test-Driven Development: By Example. Addison-Wesley.
+Institute of Electrical and Electronics Engineers. (1998). IEEE Standard for Software Maintenance (IEEE Std 1219-1998).
+SOFTWARE ENGINEERING BIBLIOGRAPHY เอกสารอ้างอิงทางวิชาการ
+เอกสารอ้างอิงทางวิชาการ
+
+https://media2.dev.to/dynamic/image/width=800%2Cheight=%2Cfit=scale-down%2Cgravity=auto%2Cformat=auto/https%3A%2F%2Fdev-to-uploads.s3.amazonaws.com%2Fuploads%2Farticles%2Fhk1029knq4ujwsrh6tew.png
+Source: dev.to
+https://areknawo.com/images/2019/07/onedark.png
+Source: areknawo.com
+https://www.tmap.net/wp-content/uploads/sites/17/2025/06/cleancodearchitecture_0.png
+Source: www.tmap.net
+https://media.geeksforgeeks.org/wp-content/uploads/20241108093235513015/dependency-injection-di-design-pattern-2.webp
+Source: www.geeksforgeeks.org
+https://svg.template.creately.com/juvrle49
+Source: creately.com
+https://media.parasoft.com/cdn-cgi/imagedelivery/iu4N-Xe4Xq_f9Hw7qvnDtA/4ba91f68-28af-4907-4e60-d6c03e2b6000/w=1245,fit=crop,quality=85,format=auto
+Source: www.parasoft.com
+Image Sources
+
+https://mtu.ac.in/wp-content/uploads/2022/06/Skill-Development-Workshop-conducted-by-Department-of-Computer-Science-and-Engineering-.jpg
+Source: mtu.ac.in
+https://i5.walmartimages.com/asr/599cacf7-87ea-43d4-ab6e-11c45e0e53ca.e6d3cac5dae479abe7105b74a18268a7.jpeg?odnHeight=768&odnWidth=768&odnBg=FFFFFF
+Source: www.walmart.com
+Image Sources

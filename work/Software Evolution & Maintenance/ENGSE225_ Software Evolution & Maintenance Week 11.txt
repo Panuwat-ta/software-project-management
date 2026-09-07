@@ -1,0 +1,292 @@
+WEEK 11: SYSTEM HARDENING & CODE FREEZE
+ENGSE225: System Hardening & Freeze
+“หลอมรวมสายงานฟีเจอร์ กำจัดหนี้ทางเทคนิคซ่อนเร้น ปิดช่องโหว่ความปลอดภัยของระบบไฟล์ และล็อกขอบเขตตามมาตรฐาน ISO/IEC 12207”
+Academic Framework: ISO/IEC/IEEE 12207:2017 - Software Integration & Release Processes
+ENGSE225: SOFTWARE EVOLUTION AND MAINTENANCE WEEK 11 MASTERCLASS
+
+1. Code Smell Audit
+ใช้ Static Analysis ตรวจจับและกำจัด Duplicate Code, Dead Code และ Feature Envy ในระบบ
+2. Secure & Atomic IO
+ป้องกัน Data Corruption ด้วย Atomic File Writing และยกระดับ Robust Exception Handling
+3. Bandit Security Scan
+สแกนและอุดช่องโหว่ความปลอดภัยระดับซอร์สโค้ดอัตโนมัติด้วยเครื่องมือ Bandit และ Flake8
+4. Code Freeze Discipline
+ผสานฟังก์ชัน CR-01 + CR-02 และแช่แข็งโค้ดตามมาตรฐาน ISO 12207 พร้อมรัน PyTest 100%
+WEEKLY COURSE OBJECTIVES ENGSE225
+เป้าหมายการเรียนรู้ประจำสัปดาห์
+
+สัปดาห์ที่ 8 - 10 (สิ่งที่ทำเสร็จแล้ว)
+สัปดาห์ที่ 11 (สัปดาห์นี้ - Hardening)
+ผ่าตัดสถาปัตยกรรมล้างหนี้ทางเทคนิค (Refactoring Surgery ใน Sprint 1)
+พัฒนาระบบ Barcode และจุดสั่งซื้อขั้นต่ำ (CR-01) บนสาย Feature
+รับมือคำขอด่วน Export CSV สินค้าสต็อกต่ำ (CR-02) ผ่าน TDR
+Integration: รวมโค้ดจากทุก Feature Branches เข้าสู่ develop
+Hardening: กวาดล้าง Code Smells และปิดช่องโหว่ความปลอดภัย
+Code Freeze: ล็อกขอบเขตซอฟต์แวร์เตรียมนับถอยหลังสู่ Release v2.0
+PHASE 3 MILESTONE ตำแหน่งสัปดาห์ที่ 11 ใน PHASE 3
+ตำแหน่งสัปดาห์ที่ 11 ใน Phase 3
+
+SECURITY & ROBUSTNESS การเสริมความมั่นคงของระบบ
+การเสริมความมั่นคงของระบบ
+กำจัด Latent Defects: ตรวจจับข้อบกพร่องแฝงที่ยังไม่ระเบิดทันที
+ป้องกัน Data Corruption: ปกป้องระบบไฟล์เมื่อมีข้อผิดพลาดไม่คาดคิด
+เตรียมความพร้อม Production: มั่นใจในเสถียรภาพก่อนส่งมอบ UAT
+
+Code Smells: สัญญาณเตือนเชิงโครงสร้าง แม้โปรแกรมจะยังทำงานได้ แต่จะเพิ่มหนี้ทางเทคนิคและทำให้ระบบเปราะบาง:
+1. Duplicate Code
+ตรรกะเดียวกันปรากฏซ้ำกันในหลายจุด ละเมิดหลักการ Don't Repeat Yourself (DRY)
+2. Dead Code
+ฟังก์ชัน ตัวแปร หรือคำสั่งเก่าที่ไม่มีการเรียกใช้จริงหลงเหลืออยู่ สร้างความสับสน
+3. Feature Envy
+เมธอดในคลาสหนึ่งแอบเข้าถึงและประมวลผลข้อมูลของอีกคลาสหนึ่งมากเกินไป
+ARCHITECTURAL WEAKNESS การตรวจจับกลิ่นโค้ดในระบบ
+การตรวจจับกลิ่นโค้ดในระบบ
+
+ปัญหาในระบบคลังสินค้า
+ตรรกะตรวจสอบ if product_id in products: ถูกเขียนซ้ำๆ ทั้งในเมนูเพิ่มสต็อก, ลดสต็อก, และส่งออก CSV
+เสี่ยงทำให้เกิด Inconsistency หากมีการแก้เงื่อนไขไม่ครบทุกจุด
+แนวทางแก้ไข (Extract Method)
+ยุบตรรกะซ้ำซ้อนสร้างเป็น Helper Method กลางใน InventoryService:
+DRY PRINCIPLE VIOLATION CODE SMELL 1: DUPLICATE CODE
+Code Smell 1: Duplicate Code
+
+ต้นตอของ Dead Code
+Delete Ruthlessly
+ลบโค้ดส่วนเกินทิ้งทันที: ไม่ต้องกลัวโค้ดหาย เพราะระบบ Git Version Control ได้บันทึกประวัติย้อนหลังไว้ทั้งหมด 100%
+ช่วยลดภาระการทำความเข้าใจ (Cognitive Load) ของทีมลงอย่างมาก
+ฟังก์ชันคำนวณและตัวแปรชั่วคราวจากการทดลองใน Sprint 1 ที่ไม่ได้ใช้แล้ว
+บล็อกคอมเมนต์ขนาดใหญ่ที่ปิดทับโค้ดเก่าทิ้งไว้ในไฟล์
+Speculative Generality: เขียนโค้ดเผื่อฟังก์ชันในอนาคตที่ยังไม่จำเป็น
+COGNITIVE OVERHEAD CODE SMELL 2: DEAD CODE
+Code Smell 2: Dead Code
+
+อาการของ Feature Envy
+คลาสภายนอก (เช่น ConsoleUI หรือ CsvExporter) แอบเข้าไปดึงฟิลด์ของ Product มาคำนวณยอดเงินด้วยตัวเอง:
+แนวทางแก้ไข (Move Method)
+ย้ายตรรกะการคำนวณเข้าไปอยู่ในคลาสเจ้าของข้อมูล (Data Owner):
+INFORMATION HIDING CODE SMELL 3: FEATURE ENVY
+Code Smell 3: Feature Envy
+
+AUTOMATED LINTER TOOLS STATIC ANALYSIS: FLAKE8 & PYLINT
+Static Analysis: Flake8 & Pylint
+ช่วยเพิ่มค่า Analyzability และ Modifiability ตามมาตรฐาน ISO/IEC 25010
+# คำสั่งรันสแกน Flake8
+
+ในงานวิวัฒนาการซอฟต์แวร์ ความปลอดภัยต้องเป็นคุณลักษณะพื้นฐาน:
+1. Data Corruption Risk
+เมื่อโปรแกรมหยุดทำงานกะทันหันขณะกำลังบันทึกไฟล์ JSON ทำให้ข้อมูลเดิมถูกลบทิ้งกลายเป็นไฟล์ว่างเปล่าขนาด 0 Bytes
+2. Blind Exception Swallowing
+การเขียนดักจับข้อผิดพลาดแบบ except: pass ครอบจักรวาล ซึ่งแอบซ่อนระเบิดเวลาและทำให้ระบบเน่าเสียเงียบๆ
+SECURITY IN EVOLUTION การเขียนโค้ดให้มั่นคงปลอดภัย
+การเขียนโค้ดให้มั่นคงปลอดภัย
+
+ปัญหาของ open(..., 'w')
+โหมด 'w' จะล้างเนื้อหาไฟล์เดิมทิ้งทันที หากเกิดเหตุไฟดับหรือ Crash ระหว่าง json.dump() ข้อมูลจะสูญหายถาวร
+กระบวนการ Atomic 2 ขั้นตอน
+1. Write to Temp: เขียนข้อมูลใหม่ลงในไฟล์ชั่วคราว (.tmp) ให้เสร็จสมบูรณ์
+2. Atomic Replace: สั่ง os.replace() สลับไฟล์ในระดับ OS (All-or-Nothing)
+FAULT-TOLERANT I/O หลักการ ATOMIC FILE WRITING
+หลักการ Atomic File Writing
+
+import
+class
+InventoryRepository
+def
+save_all
+or
+'.'
+# 1. เขียนลงไฟล์ชั่วคราวให้สมบูรณ์ก่อน
+with
+'w'
+False
+'utf-8'
+as
+for
+in
+4
+# 2. ทำ Atomic Replace สลับไฟล์ในระดับ OS
+return
+True
+Zero Data Loss Guarantee
+การใช้ tempfile และ os.replace ทำให้การบันทึกไฟล์มีคุณสมบัติ Atomic: ข้อมูลจะถูกเขียนสำเร็จ 100% หรือไม่ก็รักษาไฟล์เดิมไว้ ไม่เกิดกรณีไฟล์พัง
+แก้ปัญหาความไม่น่าเชื่อถือของระบบจัดเก็บไฟล์ในระบบคลังสินค้าถาวร
+PYTHON IMPLEMENTATION โค้ด ATOMIC FILE WRITING ใน REPO
+โค้ด Atomic File Writing ใน Repo
+
+Anti-Pattern ห้ามทำ ❌
+Best Practice ✅
+# อย่าเขียนแบบนี้เด็ดขาด
+try
+except
+pass
+# ซ่อนข้อผิดพลาดไว้ใต้พรม
+ระบุ Exception เจาะจง (FileNotFoundError, JSONDecodeError)
+บันทึก Log บันทึกข้อผิดพลาดเพื่อการสืบสวน
+แจ้งเตือนข้อความที่ปลอดภัยโดยไม่เปิดเผย Stack Trace ภายใน
+ERROR RESILIENCE การจัดการข้อผิดพลาดอย่างรัดกุม
+การจัดการข้อผิดพลาดอย่างรัดกุม
+
+Bandit Security Linter สำหรับภาษา Python:
+## Bandit Security Scan Results
+Total lines of code: 420 Total issues (by severity): Undefined: 0, Low: 0, Medium: 0, High: 0
+[PASS] No security vulnerabilities found.
+ตรวจจับการ Hardcode รหัสผ่านและ API Keys
+ตรวจการใช้ฟังก์ชันอันตราย (eval(), exec())
+ตรวจช่องโหว่ Injection และการเปิดไฟล์ไม่ปลอดภัย
+# คำสั่งรัน Bandit สแกนระดับความเสี่ยง Medium/High
+SECURITY STATIC ANALYSIS สแกนช่องโหว่ความปลอดภัย: BANDIT
+สแกนช่องโหว่ความปลอดภัย: Bandit
+
+STABILIZATION PERIOD แนวคิดและเหตุผลของ CODE FREEZE
+แนวคิดและเหตุผลของ Code Freeze
+เหตุผล: การแก้โค้ดเพิ่มในนาทีสุดท้าย (Last-Minute Changes) คือสาเหตุอันดับ 1 ที่ทำให้ระบบพังทลายในวันส่งมอบ
+
+1. Feature Complete
+ฟังก์ชันทั้งหมดใน Sprint 2 (CR-01 และ CR-02) พัฒนาเสร็จสิ้น 100%
+2. Freezing Baseline
+ประกาศระงับการเปิด Feature Branch ใหม่ทุกกรณี
+3. Hardening
+อนุญาตเฉพาะการทำ Security Fixes และกำจัดบั๊กวิกฤต
+4. Release Ready
+เตรียมระบบสู่การทำ User Acceptance Test (UAT) ใน Week 12
+ISO/IEC/IEEE 12207:2017 กระบวนการ CODE FREEZE ISO 12207
+กระบวนการ Code Freeze ISO 12207
+
+สิ่งที่ห้ามทำเด็ดขาด ❌
+สิ่งที่ได้รับอนุญาต ✅
+ห้ามแตก Branch เพิ่มฟังก์ชันใหม่ตามใจชอบ
+ห้ามปรับแต่งหน้าตา UI เพื่อความสวยงามส่วนตัว
+ห้ามรับ Change Request ตัวใหม่เข้าสู่ระบบ
+แก้ไขบั๊กวิกฤต (Critical Defects) ที่พบจากการทดสอบ
+อุดช่องโหว่ความปลอดภัยตามรายงาน Bandit/Flake8
+เขียน Unit Test เพิ่มเติมเพื่อยกระดับ Code Coverage
+STRICT RULES OF ENGAGEMENT กฎเหล็กของสภาวะ CODE FREEZE
+กฎเหล็กของสภาวะ Code Freeze
+
+BRANCH MERGING STRATEGY สถาปัตยกรรมผสานสายงานขั้นสุดท้าย
+สถาปัตยกรรมผสานสายงานขั้นสุดท้าย
+หลอมรวม 2 ฟังก์ชันหลักของ Sprint 2 เข้าสู่สาขา develop:
+สร้างเวอร์ชันบูรณาการสมบูรณ์แบบก่อนก้าวเข้าสู่ Release
+กิ่ง 1: feature/cr01-barcode-reorder-point
+กิ่ง 2: feature/cr02-csv-export
+
+เมื่อทั้ง CR-01 และ CR-02 มีการแก้ไขไฟล์ app.py และ test_app.py พร้อมๆ กัน:
+1. Merge CR-01 First
+กด Merge กิ่ง feature/cr01 เข้าสู่ develop ผ่าน Pull Request ก่อนเป็นกิ่งแรก
+2. Sync & Resolve CR-02
+ในกิ่ง feature/cr02 สั่ง git pull origin develop แก้ Conflict ในเครื่องตนเอง ➔ รัน PyTest ➔ จึง Merge เข้าสายหลัก
+CROSS-FEATURE INTEGRATION การจัดการ CONFLICT ข้ามหลายสาย
+การจัดการ Conflict ข้ามหลายสาย
+
+End-to-End Test Scenario ใน test_app.py:
+def
+test_full_system_integration_flow
+"db.json"
+# 1. เพิ่มสินค้า CR-01
+"P1"
+"Pen"
+2
+10.0
+"885"
+5
+# 2. ตรวจสอบแจ้งเตือนและ Export CSV (CR-02)
+"out.csv"
+assert
+"885"
+in
+'utf-8'
+1. เพิ่มสินค้าใหม่พร้อมระบุ Barcode & Reorder Point
+2. สั่งตัดสต็อกจนกระทั่งสต็อกต่ำกว่าจุดเตือนภัย
+3. ตรวจสอบการแจ้งเตือนผ่าน get_low_stock_alerts()
+4. ส่งออกไฟล์ CSV ด้วย CsvReportExporter
+5. ยืนยันว่าไฟล์ CSV มีข้อมูล Barcode ครบถ้วนถูกต้อง
+END-TO-END TEST SCENARIO การทดสอบบูรณาการระบบรวม
+การทดสอบบูรณาการระบบรวม
+
+เกณฑ์วัดความครอบคลุมของการทดสอบ (Code Coverage) ด้วย pytest-cov:
+โมดูล / ชั้นสถาปัตยกรรม
+Target Coverage
+สถานะการรับรอง
+Domain Models (Product)
+100%
+Full Unit Coverage 🟢
+Data Access (InventoryRepository)
+100%
+Atomic I/O Certified 🟢
+Business Logic (InventoryService)
+100%
+All Rules Covered 🟢
+Overall System Coverage
+>= 90%
+Production Ready 🏆
+QUALITY BENCHMARK PYTEST CODE COVERAGE BENCHMARK
+PyTest Code Coverage Benchmark
+
+Workshop: "System Integration & Security Hardening Workshop"
+1. Multi-Merge
+ผสานโค้ดจากกิ่ง cr01 และ cr02 เข้าสู่ develop และแก้ Merge Conflict
+2. Static & Bandit
+รัน flake8 กวาดล้าง Code Smells และใช้ bandit อุดช่องโหว่ความปลอดภัย
+3. Atomic & Coverage
+ปรับปรุงระบบ Atomic File Writing และรัน PyTest Coverage >= 90%
+PRACTICAL LAB ACTIVITY แนะนำกิจกรรม WORKSHOP วันนี้
+แนะนำกิจกรรม Workshop วันนี้
+
+Merge CR-01 to develop
+ตรวจ Pull Request กิ่ง feature/cr01-barcode-reorder-point ➔ กด Confirm Merge เข้าสู่ develop
+Sync & Merge CR-02
+สลับเข้ากิ่ง feature/cr02-csv-export ➔ สั่ง git merge develop ➔ แก้ Conflict ➔ Push และ Merge เข้าสายหลัก
+WORKSHOP EXECUTION STEP 1 ขั้นตอน 1: ผสานรวมสายงาน
+ขั้นตอน 1: ผสานรวมสายงาน
+
+Flake8 Code Audit
+flake8 . --count --statistics
+เคลียร์ข้อผิดพลาดด้าน Syntax, Unused Imports และ PEP 8 ทั้งหมด
+Bandit Security Audit
+bandit -r . -x ./tests
+ตรวจสอบว่าไม่มีช่องโหว่ความปลอดภัยระดับ Medium หรือ High หลงเหลืออยู่
+WORKSHOP EXECUTION STEP 2 ขั้นตอน 2: สแกนความปลอดภัย
+ขั้นตอน 2: สแกนความปลอดภัย
+
+Full Integration Test
+เขียนฟังก์ชัน test_full_system_integration_flow() ครอบคลุมวงจรการทำงานตั้งแต่สต็อกจนถึง CSV
+Run Coverage Benchmark
+pytest -v --cov=. --cov-report=term-missing
+ยืนยันผลการรันผ่านไฟเขียว 100% และ Overall Coverage $\ge 90\%$
+WORKSHOP EXECUTION STEP 3 ขั้นตอน 3: ทดสอบ FULL SUITE
+ขั้นตอน 3: ทดสอบ Full Suite
+
+ชิ้นงาน 1: รายงานผลการสแกนความปลอดภัยและคุณภาพโค้ด (Flake8 & Bandit Security Report)
+ชิ้นงาน 2: ซอร์สโค้ดฉบับสมบูรณ์บนสาขา develop ที่มีระบบ Atomic File Writing
+ชิ้นงาน 3: ภาพบันทึกผลการรัน Full Suite PyTest 100% Pass และ Code Coverage $\ge 90\%$
+ส่งต่อข้อมูลสู่ ENGSE202: ส่งมอบสถานะความเสถียรของโค้ดให้ PM ทำข้อตกลง Scope Freeze
+PRE-FINAL INTEGRATION CHECKLIST เช็คลิสต์สิ่งส่งมอบสัปดาห์ 11
+เช็คลิสต์สิ่งส่งมอบสัปดาห์ 11
+
+Code Smells Clean
+กวาดล้างโค้ดซ้ำซ้อนและ Dead Code ด้วย Flake8 เพิ่ม Maintainability ยั่งยืน
+Atomic File Security
+ป้องกัน Data Corruption ด้วย Atomic Replace และอุดช่องโหว่ด้วย Bandit
+Code Freeze Discipline
+ล็อกขอบเขตระบบตาม ISO 12207 เพื่อการส่งมอบที่เสถียรสูงสุดใน Week 12
+SESSION RECAP สรุปบทเรียนประจำสัปดาห์ที่ 11
+สรุปบทเรียนประจำสัปดาห์ที่ 11
+
+ISO/IEC/IEEE. (2017). Systems and software engineering — Software life cycle processes (ISO/IEC/IEEE Standard No. 12207:2017).
+Fowler, M. (2018). Refactoring: Improving the Design of Existing Code (2nd ed.). Addison-Wesley.
+Martin, R. C. (2008). Clean Code: A Handbook of Agile Software Craftsmanship. Prentice Hall.
+Seacord, R. C. (2013). Secure Coding in C and C++ (2nd ed.). Addison-Wesley.
+CERT Coordination Center. (2016). SEI CERT Python Coding Standard. Software Engineering Institute, Carnegie Mellon University.
+IEEE. (2012). IEEE Standard for Configuration Management in Systems and Software Engineering (IEEE Std 828-2012).
+SOFTWARE ENGINEERING BIBLIOGRAPHY เอกสารอ้างอิงทางวิชาการ
+เอกสารอ้างอิงทางวิชาการ
+
+https://cypfer.com/wp-content/uploads/2024/11/DALL%C2%B7E-2024-11-12-09.14.05-A-high-quality-professional-JPEG-image-illustrating-cybersecurity-for-AI-driven-defenses.-The-image-should-show-an-abstract-AI-system-shielded-by-dig.webp
+Source: cypfer.com
+https://raw.githubusercontent.com/pycqa/bandit/main/bandit-terminal.png
+Source: github.com
+https://i5.walmartimages.ca/asr/695ee248-7fa0-4035-b7e5-491db5b79190.012f2d55935b8d38681def93ebbf5f55.jpeg
+Source: www.walmart.ca
+https://nvie.com/img/git-model@2x.png
+Source: nvie.com
+Image Sources

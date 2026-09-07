@@ -1,0 +1,264 @@
+WEEK 12: FINAL EVM & PROCUREMENT CLOSE-OUT
+ENGSE202: Final EVM & Close-out
+“การวัดความสำเร็จของเฟสพัฒนาด้วยดัชนี CPI/SPI การปิดรอบ Sprint 3 บน Jira และการกระทบยอดงบประมาณตามกรอบมาตรฐาน PMBOK Guide”
+Academic Framework: PMBOK Guide 7th Edition - Project Close-out & Performance Measurement
+ENGSE202: SOFTWARE PROJECT MANAGEMENT WEEK 12 MASTERCLASS
+
+1. CPI & SPI Indices
+ประเมินผลสัมฤทธิ์โครงการขั้นสุดท้ายของเฟสพัฒนาด้วยดัชนี CPI และ SPI รวม 3 Sprints
+2. Velocity & Burndown
+วิเคราะห์แนวโน้ม Velocity Trend และสุขภาพ Epic Burndown Report ตลอดทั้ง 3 Sprints
+3. Sponsor Sign-off
+รวบรวมเอกสารผลงานและใบรับรอง UAT ขอรับ Formal Sign-off จาก Project Sponsor
+4. Procurement Close
+กระทบยอดค่าใช้จ่ายเครื่องมือจริง เคลียร์งบสำรอง และ Decommission ทรัพยากรคลาวด์
+WEEKLY COURSE OBJECTIVES ENGSE202
+เป้าหมายการเรียนรู้ประจำสัปดาห์
+
+เส้นทางการบริหาร (Sprint 1 - 3)
+สัปดาห์ที่ 12 (ปิดฉากเฟสพัฒนา)
+ปิดรอบการพัฒนาจริง (Execution Phase) อย่างเป็นทางการ พร้อมสรุปตัวเลขทางการเงินและเวลา
+➔ เตรียมส่งมอบโครงการเข้าสู่ เฟสที่ 4: Quality Assurance & Final Closure (Week 13-15)
+Sprint 1 (W8-9): Refactoring Core System + วัดค่า Velocity ตั้งต้น
+Sprint 2 (W10-11): พัฒนา CR-01 / CR-02 + บริหาร CCB + ล็อก Scope
+Sprint 3 (W12): System Hardening, Cross-Team UAT, และ Final Docs
+PROJECT LIFECYCLE TRANSITION จุดตัดการสิ้นสุดเฟสที่ 3
+จุดตัดการสิ้นสุดเฟสที่ 3
+
+MEASUREMENT PERFORMANCE DOMAIN การประเมินผลสัมฤทธิ์ EVM ขั้นสุดท้าย
+การประเมินผลสัมฤทธิ์ EVM ขั้นสุดท้าย
+Planned Value (PV รวม): 15,525 THB (งบตั้งต้น + CR-02)
+Earned Value (EV รวม): 15,525 THB (ผ่าน DoD & UAT 100%)
+Actual Cost (AC รวม): 16,100 THB (ค่าแรงจริง + เครื่องมือ)
+
+Cost Performance Index (CPI)
+Schedule Performance Index (SPI)
+$CPI \ge 1.0$: คุ้มค่างบประมาณ 🟢
+$CPI < 1.0$: ใช้เงินเกินงบ 🔴
+$SPI \ge 1.0$: เร็วกว่าหรือตรงตามแผน 🟢
+$SPI < 1.0$: ล่าช้ากว่าแผน 🔴
+PERFORMANCE INDICES FORMULATION การคำนวณดัชนีประสิทธิภาพ CPI และ SPI
+การคำนวณดัชนีประสิทธิภาพ CPI และ SPI
+
+ตัวแปร EVM
+รายละเอียดและผลการคำนวณตลอด 3 Sprints
+มูลค่า / ดัชนีสรุป
+Planned Value (PV)
+งบประมาณแผนงานรวมทั้งหมด (รวม CR-02)
+15,525 THB
+Earned Value (EV)
+มูลค่างานที่ผ่าน UAT ครบ 100% สมบูรณ์
+15,525 THB
+Actual Cost (AC)
+ค่าแรงจริงจาก Log Time + ค่าใช้จ่ายเครื่องมือจริง
+16,100 THB
+Schedule Index (SPI)
+$SPI = EV / PV = 15,525 / 15,525$
+1.00 (On-Time 100% 🟢)
+Cost Index (CPI)
+$CPI = EV / AC = 15,525 / 16,100$
+0.96 (Over 3.7% 🟡)
+Cost Variance (CV)
+$CV = EV - AC = 15,525 - 16,100$
+-575 THB (ชดเชยงบสำรอง)
+PROJECT FINANCIAL LEDGER กรณีศึกษา: คำนวณ FINAL EVM ระบบคลัง
+กรณีศึกษา: คำนวณ Final EVM ระบบคลัง
+
+AGILE CAPACITY BENCHMARK การวิเคราะห์แนวโน้ม VELOCITY TREND
+การวิเคราะห์แนวโน้ม Velocity Trend
+Sprint 1: 15 Story Points (ช่วงผ่าตัดโค้ดเดิม)Sprint 2: 22 Story Points (ช่วงความเร็วพัฒนาสูงสุด)Sprint 3: 12 Story Points (ช่วง Hardening & UAT)
+
+ปิดมหากาพย์งาน (Epics)
+Zero Pending Tasks
+การ์ดงานย่อยทั้งหมดจาก WBS ถูกเผาทำลาย (Burned down) แตะระดับ 0 สำเร็จครบถ้วน ไร้งานคั่งค้าง
+Epic 1 (Refactoring): ปิดงานโครงสร้างคลาส 100%
+Epic 2 (Evolution): ปิดงาน Barcode, Alert, CSV
+SCOPE BURN-DOWN VERIFICATION การวิเคราะห์ผ่าน EPIC BURNDOWN
+การวิเคราะห์ผ่าน Epic Burndown
+
+STAKEHOLDER ENGAGEMENT DOMAIN การขอการรับรองจาก STAKEHOLDER
+การขอการรับรองจาก Stakeholder
+รายงานผลการคำนวณ Final EVM ($CPI = 0.96, SPI = 1.00$)
+ใบรับรอง UAT Sign-off Sheet มีลายเซ็นครบถ้วน
+หลักฐาน Release Tag v2.0.0-evolution บน GitHub
+
+หมวดข้อมูลรับรอง
+รายละเอียดที่บันทึกลงในใบรับรองความสำเร็จ
+Project Name
+Mini Inventory System Evolution v2.0 (Brownfield Maintenance)
+Deliverables Verified
+Refactored Layered Architecture, Barcode, Reorder Alerts, CSV Export, Full CI/CD
+Budget Performance
+Final CPI = 0.96 (ใช้เงินสำรอง Contingency Reserve ตามเกณฑ์อนุมัติ)
+Schedule Performance
+Final SPI = 1.00 (On-Time Delivery ตรงตามกำหนดเวลา 100%)
+Sponsor Acceptance
+อนุมัติปิดเฟส Execution และอนุญาตให้เข้าสู่เฟสปิดโครงการ (Phase 4)
+FORMAL MILESTONE CERTIFICATE โครงสร้างใบรับรอง PHASE 3 COMPLETION
+โครงสร้างใบรับรอง Phase 3 Completion
+
+Procurement Close-out
+กระบวนการตรวจสอบความถูกต้องของการส่งมอบสัญญา การกระทบยอดบัญชีค่าใช้จ่ายจริง และการเคลียร์หนี้สินเครื่องมือ
+3 กิจกรรมหลัก
+จัดทำ Final Reconciliation Sheet กระทบยอดใบเสร็จ
+กระทบยอดเงินสำรองคงเหลือ (Contingency Settlement)
+ยกเลิกทรัพยากรคลาวด์ส่วนเกิน (Decommissioning)
+PROCUREMENT MANAGEMENT CLOSE-OUT การปิดสัญญาจัดซื้อจัดจ้างเครื่องมือ
+การปิดสัญญาจัดซื้อจัดจ้างเครื่องมือ
+
+Tool / Service Item
+Budget Allocated
+Actual Incurred
+Variance
+Contract Status
+Jira Software (Cloud)
+0 THB
+0 THB
+0 THB
+Free Tier / Closed
+GitHub Actions Mins
+0 THB
+0 THB
+0 THB
+1,420 / 2,000 Mins (Free)
+Cloud Server Hosting
+500 THB
+480 THB
++20 THB 🟢
+Active / Decommissioned
+SSL & Domain Cert
+300 THB
+300 THB
+0 THB
+Paid & Settled
+รวมยอดค่าเครื่องมือจริง
+800 THB
+780 THB
++20 THB 🟢
+ปิดสัญญาสมบูรณ์ 🏆
+FINANCIAL SETTLEMENT LEDGER ตารางกระทบยอดค่าใช้จ่ายเครื่องมือ
+ตารางกระทบยอดค่าใช้จ่ายเครื่องมือ
+
+ประวัติการเบิกจ่ายงบสำรอง
+ยอดคงเหลือสุทธิส่งคืน
+เงินสำรองคงเหลือสุทธิ = 100 THB (0.00 THB Deficit 🟢)
+โครงการดำเนินการเสร็จสมบูรณ์โดยอยู่ในกรอบงบประมาณที่ได้รับอนุมัติ 100% ไม่ต้องขอเงินเพิ่ม
+งบสำรองความเสี่ยงตั้งต้น (Week 5): +2,025 THB
+เบิกจ่ายคำขอฉุกเฉิน CR-02 (Week 10): -1,350 THB
+เบิกจ่ายค่าแรงส่วนเกิน Refactoring (W12): -575 THB
+CONTINGENCY RESERVE RECONCILIATION กระทบยอดเงินสำรองความเสี่ยง
+กระทบยอดเงินสำรองความเสี่ยง
+
+CLOUD RESOURCE GOVERNANCE การยกเลิกทรัพยากรคลาวด์ส่วนเกิน
+การยกเลิกทรัพยากรคลาวด์ส่วนเกิน
+ปิด (Terminate) ฐานข้อมูลทดสอบชั่วคราว
+ปิด Mock Server ที่ใช้ในการรัน PyTest
+คงไว้เฉพาะ Production Server และ GitHub หลัก
+
+Workshop: "Phase 3 Close-out & Procurement Reconciliation"
+1. Complete Sprint 3
+ปิด Sprint 3 บน Jira ดึงกราฟ Velocity Chart และ Epic Burndown
+2. Final EVM
+คำนวณตัวเลข CPI, SPI และตาราง Procurement Reconciliation
+3. Sponsor Sign-off
+นำส่งผลงานและใบรับรอง UAT ขอรับลายเซ็น Sign-off จากอาจารย์
+PRACTICAL LAB ACTIVITY แนะนำกิจกรรม WORKSHOP วันนี้
+แนะนำกิจกรรม Workshop วันนี้
+
+ตรวจสอบสถานะการ์ด
+ตรวจเช็คว่าการ์ด TASK-301 (UAT), TASK-302 (Security), และ TASK-303 (Docs) อยู่ในช่อง Done ครบถ้วน
+กดปุ่ม Complete Sprint
+กดปุ่ม Complete Sprint 3 บันทึกค่าความเร็วและแคปเจอร์หน้าต่างสรุปผลลัพธ์เป็นหลักฐาน
+WORKSHOP EXECUTION STEP 1 ขั้นตอน 1: ปิดรอบ SPRINT 3 บน JIRA
+ขั้นตอน 1: ปิดรอบ Sprint 3 บน Jira
+
+Velocity Chart Report
+บันทึกภาพกราฟแท่งเปรียบเทียบ Commitment vs Completed ตลอดทั้ง 3 Sprints (Sprint 1, 2, 3)
+Epic Burndown Report
+บันทึกภาพรายงานการลดลงของ Story Points ใน Epic 1 และ Epic 2 จนแตะระดับ 0 เพื่อนำไปใส่ในเล่มรายงาน
+WORKSHOP EXECUTION STEP 2 ขั้นตอน 2: ดึงรายงานจาก JIRA
+ขั้นตอน 2: ดึงรายงานจาก Jira
+
+รวมชั่วโมง Log Work จริง
+รวมยอดชั่วโมงทำงานจริงทั้งหมดของสมาชิกในทีมทั้ง 3 Sprints ➔ คำนวณ $AC$ (ค่าแรงจริง + เครื่องมือจริง)
+คำนวณดัชนี CPI & SPI
+คำนวณ $CPI = EV / AC$ และ $SPI = EV / PV$ พร้อมสรุปผลวิเคราะห์ตัวเลขลงในตารางรายงาน
+WORKSHOP EXECUTION STEP 3 ขั้นตอน 3: คำนวณ FINAL EVM
+ขั้นตอน 3: คำนวณ Final EVM
+
+กรอกตารางกระทบยอด
+ตรวจสอบ GitHub Actions Minutes และกรอกตาราง Final Procurement Reconciliation Sheet ให้สมบูรณ์
+Decommission คลาวด์
+สรุปยอดเงินคงเหลือของ Contingency Reserve และทำการปิด (Terminate) ฐานข้อมูลทดสอบส่วนเกิน
+WORKSHOP EXECUTION STEP 4 ขั้นตอน 4: กระทบยอด PROCUREMENT
+ขั้นตอน 4: กระทบยอด Procurement
+
+ยื่นเอกสารต่อ Sponsor
+PM นำเล่มรายงาน Final EVM, ภาพ Velocity Chart, ตาราง Procurement Sheet, และใบรับรอง UAT เข้าพบอาจารย์
+ลงนาม Phase 3 Completion
+รายงานผลสัมฤทธิ์โครงการต่ออาจารย์ และรับลายเซ็นอนุมัติในเอกสาร Phase 3 Completion Certificate
+WORKSHOP EXECUTION STEP 5 ขั้นตอน 5: รับ FORMAL SIGN-OFF
+ขั้นตอน 5: รับ Formal Sign-off
+
+ส่วนที่ 1 (ENGSE225): UAT Sign-off Sheet + CHANGELOG.md + ลิงก์ Tag v2.0.0-evolution + PyTest 100%
+ส่วนที่ 2 (ENGSE202): รายงาน Final EVM ($CPI, SPI$) + แดชบอร์ด Velocity 3 Sprints + Procurement Sheet
+ส่วนที่ 3 (การรับรอง): ใบรับรอง Phase 3 Completion Certificate ที่มีลายเซ็นอาจารย์ (Sponsor)
+INTEGRATED PHASE 3 SUBMISSION โครงสร้างเล่มรายงานฉบับรวม
+โครงสร้างเล่มรายงานฉบับรวม
+
+Administrative Closure
+บันทึกประวัติการเงินโปร่งใส ป้องกันปัญหาข้อพิพาททางบัญชี
+Stakeholder Alignment
+ป้องกันการทวงถามฟีเจอร์ย้อนหลังด้วย UAT และ Sign-off ลายลักษณ์อักษร
+Knowledge Transfer
+รวบรวมข้อมูล Velocity และ Metric ไว้เป็นฐานข้อมูลอ้างอิงโครงการต่อไป
+STRATEGIC VALUE OF CLOSE-OUT ประโยชน์ของการปิดเฟสตาม PMBOK
+ประโยชน์ของการปิดเฟสตาม PMBOK
+
+สัปดาห์ที่ 13 - 14 (QA Audit)
+ประเมินคุณภาพรอบสุดท้าย (Final ISO 25010 Audit), ตรวจสอบความปลอดภัยขั้นสูง, และจัดทำคู่มือระบบฉบับสมบูรณ์
+สัปดาห์ที่ 15 (Final Pitching)
+พิธีปิดโครงการ (Project Final Presentation & Retrospective) และส่งมอบระบบคลังสินค้าอย่างสมบูรณ์แบบ
+FINAL PHASE OUTLOOK เตรียมพร้อมสู่เฟสที่ 4: QUALITY & CLOSURE
+เตรียมพร้อมสู่เฟสที่ 4: Quality & Closure
+
+กดปุ่ม Complete Sprint 3 บนระบบ Jira เรียบร้อยแล้ว
+บันทึกภาพรายงาน Velocity Chart และ Epic Burndown จาก Jira
+ตารางคำนวณ Final EVM ($CPI, SPI$) สรุปตัวเลขครบถ้วน
+ตาราง Procurement Reconciliation Sheet เคลียร์ยอดเงินเรียบร้อย
+ได้รับลายเซ็นรับรอง Sign-off ปิดเฟสที่ 3 จากอาจารย์ผู้สอน
+SESSION EXIT CRITERIA เช็คลิสต์ก่อนออกจากห้องเรียน
+เช็คลิสต์ก่อนออกจากห้องเรียน
+
+EVM Index Mastery
+ดัชนี CPI/SPI คือไม้บรรทัดวัดความสำเร็จทางการบริหารตามมาตรฐานสากล
+Velocity Analytics
+การปิด Sprint บน Jira ช่วยสร้างประวัติ Velocity ที่สะท้อนความสามารถจริง
+Procurement Close-out
+กระทบยอดค่าใช้จ่ายเครื่องมือ ปิดช่องโหว่ค่าใช้จ่ายแฝงอย่างสมบูรณ์แบบ
+SESSION RECAP สรุปบทเรียนประจำสัปดาห์ที่ 12
+สรุปบทเรียนประจำสัปดาห์ที่ 12
+
+ช่วงถาม-ตอบ (Q&A Session)
+“ผู้บริหารโครงการมืออาชีพ ไม่ได้วัดผลงานแค่วันที่เขียนโค้ดเสร็จ แต่วัดผลงานที่การปิดบัญชี การสรุปตัวเลขดัชนีอย่างโปร่งใส และการได้รับความพึงพอใจสูงสุดจากผู้มีส่วนได้ส่วนเสีย”
+ขอแสดงความยินดีกับทุกกลุ่มที่ผ่านการปิดเฟสที่ 3 (Execution Phase) ในวันนี้อย่างงดงาม
+ENGSE202: SOFTWARE PROJECT MANAGEMENT Q&A & DISCUSSION
+
+Project Management Institute. (2021). A Guide to the Project Management Body of Knowledge (PMBOK Guide) (7th ed.). Project Management Institute.
+Flemming, Q. W., & Koppelman, J. M. (2010). Earned Value Project Management (4th ed.). Project Management Institute.
+Schwaber, K., & Sutherland, J. (2020). The Scrum Guide: The Definitive Guide to Scrum: The Rules of the Game.
+Kerzner, H. (2017). Project Management: A Systems Approach to Planning, Scheduling, and Controlling (12th ed.). Wiley.
+Cohn, M. (2005). Agile Estimating and Planning. Prentice Hall.
+IEEE. (1998). IEEE Standard for Software Project Management Plans (IEEE Std 1058-1998).
+PROJECT MANAGEMENT BIBLIOGRAPHY เอกสารอ้างอิงทางวิชาการ
+เอกสารอ้างอิงทางวิชาการ
+
+https://aims.education/wp-content/uploads/2026/08/earned-value-management-EVM.jpg
+Source: aims.education
+https://confluence.atlassian.com/jirasoftwareserver/files/938845700/1004944293/1/1589962391108/velocitychart.png
+Source: confluence.atlassian.com
+https://images.template.net/452647/Simple-Project-Approval-Letter-Template-edit-online.png
+Source: www.template.net
+https://www.archondatastore.com/wp-content/uploads/2025/05/application-decommission-01-3-scaled.webp
+Source: www.archondatastore.com
+Image Sources
