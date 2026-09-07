@@ -1,0 +1,331 @@
+WEEK 10: DEFECTS, RCA & EMERGENCY CHANGE
+ENGSE225: Defect & Emergency CRs
+“การสืบสวนและกำจัดข้อบกพร่องอย่างเป็นระบบ พร้อมวางแนวทางรับมือคำขอฉุกเฉิน CR-02 ตามมาตรฐาน ISO/IEC 14764 และ IEEE 1219”
+Academic Framework: ISO/IEC 14764:2006 & IEEE Std 1219-1998 (Software Maintenance Process)
+ENGSE225: SOFTWARE EVOLUTION AND MAINTENANCE WEEK 10 MASTERCLASS
+
+1. Bug Life Cycle
+เข้าใจวงจรชีวิตของข้อบกพร่อง และติดตามสถานะผ่านระบบ Issue Tracking ตามมาตรฐานสากล
+2. Root Cause Analysis
+ประยุกต์ใช้เทคนิค RCA (5 Whys) เพื่อสืบสวนหาต้นตอข้อผิดพลาดของ Legacy Data Schema
+3. Defect-Driven Test
+เขียนชุดทดสอบย้อนกลับจากบั๊กด้วย PyTest เพื่อการันตีไม่ให้บั๊กเดิมย้อนกลับมาเกิดซ้ำ
+4. Emergency CR-02
+ดำเนินกระบวนการรับมือคำขอด่วน CR-02 ทำ Impact Assessment และสร้างท่อพัฒนา CsvExporter
+WEEKLY COURSE OBJECTIVES ENGSE225
+เป้าหมายการเรียนรู้ประจำสัปดาห์
+
+1. Internal Defects (บั๊กภายใน)
+เกิดข้อบกพร่องขอบเขต (Edge Cases) เมื่อไฟล์ data.json เดิมไม่มีฟิลด์ barcode ทำให้โปรแกรมเกิด Runtime Exception Crash
+ต้องเร่งสืบสวนรากเหง้าปัญหา (RCA) และวางระบบ Backward Compatibility
+2. Emergency CR-02 (คำขอด่วน)
+ลูกค้ายื่นใบคำขอด่วน CR-02 ขอฟังก์ชัน Export รายงานสินค้าสต็อกต่ำเป็นไฟล์ .csv ทันทีเพื่อนำไปสั่งซื้อสินค้าเติมคลัง
+ต้องใช้กระบวนการ Emergency Change Control ควบคุมไม่ให้ระบบเสียศูนย์
+THE MID-SPRINT REALITY ความท้าทายจริง ณ กึ่งกลาง SPRINT 2
+บริบทกลางรอบ Sprint 2
+
+DEFECT MANAGEMENT OVERVIEW การจัดการข้อบกพร่องในงานวิวัฒนาการ
+การจัดการข้อบกพร่องซอฟต์แวร์
+Legacy Data Incompatibility: ข้อมูลดั้งเดิมไม่รองรับ Schema ใหม่
+Edge Case Blindspots: ขาดการดักจับค่าว่างหรือชนิดข้อมูลผิด
+Side Effects: การเพิ่มฟังก์ชันใหม่กระทบฟังก์ชันเดิม
+
+1. New
+ผู้ทดสอบพบข้อผิดพลาดและเปิดบั๊กบน Issue Tracker
+2. Assigned
+Tech Lead มอบหมายงานให้นักพัฒนาเจ้าของโมดูล
+3. Fixing
+นักพัฒนาลงมือทำ RCA และแก้ไขโค้ดบน Bugfix Branch
+4. Verified
+Tester รัน PyTest ซ้ำยืนยันว่าบั๊กได้รับการแก้ไขจริง
+5. Closed
+ปิดการ์ดบั๊กอย่างเป็นทางการและ Merge เข้าสู่สายหลัก
+ISO/IEC 29119 STANDARD วงจรชีวิตของข้อบกพร่อง
+วงจรชีวิตของข้อบกพร่อง
+
+5 ข้อมูลจำเป็นที่ต้องระบุใน Issue Report:
+## Issue: [BUG-101] KeyError when reading data.json
+KeyError: 'barcode' in app.py:line 45 in Product.__init__
+1. Title & ID: ชี้เป้ากระชับ (เช่น BUG-101: Crash when loading legacy JSON)
+2. Severity & Priority: ความรุนแรง (Critical/Major) และความเร่งด่วน
+3. Environment: Python 3.11, Commit Hash, OS Version
+4. Steps to Reproduce: ลำดับ 1, 2, 3 จำลองปัญหาซ้ำได้ 100%
+5. Expected vs Actual: ผลลัพธ์ที่ควรได้ เทียบกับ Error Stack Trace
+DEFECT REPORTING STANDARD องค์ประกอบของ DEFECT REPORT ที่ดี
+องค์ประกอบของ Defect Report
+
+PROBLEM INVESTIGATION การสืบสวนหารากเหง้าของปัญหา (RCA)
+การสืบสวนหารากเหง้าปัญหา (RCA)
+หลีกเลี่ยง Symptom Fixing: การใส่ try-except: pass ปิด Error จะยิ่งซ่อนระเบิดเวลาลึกขึ้น
+ยกระดับสู่ Root Cause Fix: แก้ไขสถาปัตยกรรมเพื่อตัดรากปัญหาถาวร
+
+การไต่ระดับคำถาม 5 Whys
+Why 5 (Root Cause ที่แท้จริง)
+ขาดกลไก Data Validation และ Default Fallback ในชั้น InventoryRepository
+แนวทางแก้: ใส่ค่า Default dict.get('barcode', '') ใน Repository
+Why 1: ทำไมเกิด KeyError? ➔ หาคีย์ barcode ไม่เจอ
+Why 2: ทำไมหาคีย์ไม่เจอ? ➔ data.json สร้างจากสัปดาห์ 1
+Why 3: ทำไมระบบไม่อ่านข้อมูลเก่า? ➔ ขาดตรรกะ Schema Migration
+Why 4: ทำไมไม่มี Fallback? ➔ สมมุติว่าข้อมูลต้องใหม่อย่างเดียว
+INVESTIGATION TECHNIQUE เทคนิค RCA: THE 5 WHYS METHOD
+เทคนิค RCA: The 5 Whys Method
+
+Symptom-Prone Code (พังง่าย)
+Root Cause Fix (ปลอดภัย)
+# ดึงค่าตรงๆ ทำให้เกิด KeyError เมื่อเจอไฟล์เก่า
+def
+load_all
+for
+in
+# บรรทัดนี้ทำให้โปรแกรม Crash!
+'name'
+'qty'
+'price'
+'barcode'
+# ใช้ .get() เพื่อรองรับ Backward Compatibility
+def
+load_all
+for
+in
+# มี Fallback รองรับ Legacy Schema
+'name'
+''
+'qty'
+'price'
+'barcode'
+''
+'reorder_point'
+RCA CODE REFINEMENT กรณีศึกษา RCA: LEGACY DATA
+กรณีศึกษา RCA: Legacy Data
+
+“ทุกครั้งที่พบบั๊ก ก่อนลงมือแก้โค้ด ต้องเขียน Unit Test ตัวใหม่ที่เลียนแบบบั๊กนั้นขึ้นมาก่อนเสมอ”
+1. Reproduce (RED)
+เขียน Test Case จำลองบั๊กใน test_app.py ➔ รันแล้วต้องติด Fail
+2. Fix Code
+แก้ไขโค้ดที่รากเหง้าปัญหาในชั้น Repository หรือ Service
+3. Verify (GREEN)
+รัน Test Case เดิมซ้ำ ➔ ผลลัพธ์ต้องผ่านไฟเขียว Pass 100%
+4. Preserve
+บรรจุ Test Case นี้เข้าสู่ Full Regression Suite เพื่อเป็นเกราะถาวร
+REGRESSION PREVENTION PROTOCOL แนวคิด DEFECT-DRIVEN TESTING
+Defect-Driven Testing
+
+def
+test_repository_handles_legacy_json_without_barcode
+# 1. Arrange: จำลองไฟล์ JSON แบบดั้งเดิมที่ไร้ฟิลด์ barcode
+"legacy_data.json"
+'{"P001": {"name": "Pen", "qty": 10, "price": 15.0}}'
+# 2. Act: โหลดข้อมูลผ่าน Repository
+# 3. Assert: ระบบต้องไม่พัง และใส่ Default Fallback ให้อัตโนมัติ
+assert
+"P001"
+in
+assert
+"P001"
+""
+assert
+"P001"
+5
+Permanent Safeguard
+การใช้ tmp_path ของ PyTest ช่วยให้เราสร้างไฟล์ JSON จำลองขึ้นมาทดสอบในหน่วยความจำชั่วคราวได้โดยไม่รบกวนไฟล์จริง
+เมื่อรันผ่าน สคริปต์นี้จะป้องกันไม่ให้เพื่อนร่วมทีมเผลอลบตรรกะ Fallback ออกในอนาคต
+PYTEST IMPLEMENTATION ตัวอย่าง DEFECT-DRIVEN TEST
+ตัวอย่าง Defect-Driven Test
+
+1. Normal Change Request
+คำขอเพิ่มฟังก์ชันใหม่ทั่วไป ดำเนินการผ่านรอบ Sprint Planning และจัดเข้าคิว Backlog ปกติ
+ตัวอย่าง: ใบ CR-01 (Barcode & Reorder Point) ในสัปดาห์ที่ 8-9
+2. Emergency Change Request
+คำขอที่มีความจำเป็นเร่งด่วนทางธุรกิจ หรือระบบเกิดบั๊กวิกฤตที่ต้องได้รับการแก้ไขและปล่อยใช้งานทันที
+ตัวอย่าง: ใบ CR-02 (CSV Export สำหรับสั่งซื้อสินค้าด่วน)
+ISO 14764 / IEEE 1219 STANDARD การจำแนกประเภท CHANGE REQUEST
+การจำแนกประเภท Change Request
+
+แม้จะเป็นคำขอด่วน แต่มาตรฐานกำหนดว่า “ห้ามกระโดดไปแก้โค้ดโดยไร้การควบคุม”
+Step 1: Identify
+ตรวจสอบความถูกต้องและระดับความเร่งด่วนของใบ CR
+Step 2: Impact
+วิเคราะห์ผลกระทบต่อสถาปัตยกรรมและโครงสร้างข้อมูล
+Step 3: Estimate
+ประเมิน Man-Hours และความเสี่ยงส่งต่อฝ่ายบริหาร (CCB)
+Step 4: Hotfix & CI
+พัฒนาบน Branch เฉพาะและรัน PyTest ตรวจสอบเข้มงวด
+ISO/IEC 14764 EMERGENCY FAST-TRACK กระบวนการจัดการคำขอฉุกเฉิน
+จัดการคำขอฉุกเฉิน ISO 14764
+
+CASE STUDY INGESTION โจทย์คำขอเปลี่ยนแปลงฉุกเฉิน CR-02
+โจทย์กรณีศึกษาคำขอด่วน CR-02
+ความต้องการ: Export รายชื่อสินค้าสต็อกต่ำออกมาเป็นไฟล์ .csv ทันที
+ความจำเป็นทางธุรกิจ: นำไปเปิดใน Excel สั่งซื้อสินค้าเติมคลังด่วน ป้องกันสินค้าขาดสต็อก
+
+1. Data & Architecture Impact
+2. Testing Impact
+Data: อ่านข้อมูลจากโมเดล Product และเรียก is_low_stock()
+Architecture: สร้างคลาสใหม่ CsvReportExporter (ตามหลัก Single Responsibility) แยกขาดจาก UI
+Test Cases: ต้องเขียน Unit Test 2 เคส ทดสอบการสร้างไฟล์ CSV และความถูกต้องของ Header/Data
+Regression: ไม่กระทบฟังก์ชันเดิมใน InventoryService
+IMPACT ASSESSMENT 3 DIMENSIONS การประเมินผลกระทบของ CR-02
+การประเมินผลกระทบของ CR-02
+
+Bad Practice (ห้ามทำ)
+ยัดคำสั่ง import csv และเขียนไฟล์ลงใน ConsoleUI หรือ InventoryRepository ทำให้เกิด Tight Coupling และทำลาย Clean Architecture
+Clean Architecture (สร้างคลาสเฉพาะ)
+สร้างคลาสเฉพาะ CsvReportExporter ทำหน้าที่แปลง List ของ Product ออกมาเป็นข้อความและไฟล์ CSV อย่างเป็นอิสระ
+SINGLE RESPONSIBILITY PRINCIPLE การออกแบบ CSVREPORTEXPORTER
+การออกแบบ CsvReportExporter
+
+import
+class
+CsvReportExporter
+def
+export_low_stock_products
+"""ส่งออกรายการสินค้าสต็อกต่ำเป็นไฟล์ CSV คืนค่าจำนวนแถวที่เขียน"""
+"ProductID"
+"ProductName"
+"Barcode"
+"Quantity"
+"ReorderPoint"
+"Price"
+with
+'w'
+''
+'utf-8'
+as
+for
+in
+return
+Clean File Handling
+ใช้ Context Manager with open จัดการปิดไฟล์อัตโนมัติ
+กำหนด Encoding utf-8 รองรับภาษาไทยสมบูรณ์
+ออกแบบเป็น Static Method ทดสอบแยกได้ง่าย ไร้ State
+PYTHON CSV IMPLEMENTATION ตัวอย่างโค้ด: ส่งออกไฟล์ CSV
+ตัวอย่างโค้ด: ส่งออกไฟล์ CSV
+
+def
+test_export_low_stock_to_csv_creates_valid_file
+# 1. Arrange: เตรียมข้อมูลสินค้าสต็อกต่ำจำลอง
+"P01"
+"Sugar"
+2
+20.0
+"111"
+5
+"test_low_stock.csv"
+# 2. Act: เรียกใช้ฟังก์ชันส่งออก CSV
+# 3. Assert: ยืนยันว่าไฟล์ถูกสร้างจริงและข้อมูลถูกต้อง
+assert
+assert
+1
+'utf-8'
+assert
+"ProductID,ProductName,Barcode"
+in
+assert
+"P01,Sugar,111,2,5,20.0"
+in
+Clean Testing Strategy
+การใช้ fixture tmp_path ของ PyTest ช่วยสร้างไฟล์ CSV ทดสอบในโฟลเดอร์ชั่วคราวและลบทำความสะอาดทิ้งอัตโนมัติ
+ตรวจเช็คทั้งการสร้างไฟล์จริง จำนวนแถว และเนื้อหาภายใน Header/Data ครบถ้วน
+PYTEST TMP_PATH FIXTURE การเขียน UNIT TEST ส่งออก CSV
+การเขียน Unit Test ส่งออก CSV
+
+ตัวเลขประมาณการทางเทคนิคเพื่อส่งต่อให้ผู้จัดการโครงการ (PM) นำเข้าที่ประชุม CCB:
+องค์ประกอบงานทางเทคนิค (Task Breakdown)
+ผู้รับผิดชอบ (Role)
+Man-Hours
+ระดับความเสี่ยง
+1. สร้างคลาส CsvReportExporter
+Senior Developer
+2.0 ชม.
+Low 🟢
+2. เชื่อมโยงเมนู Console UI
+Developer
+1.0 ชม.
+Low 🟢
+3. เขียน Unit Test ครอบคลุมไฟล์ CSV
+QA Tester
+1.5 ชม.
+Low 🟢
+รวม Technical Effort ทั้งสิ้น
+4.5 Man-Hours
+Overall: Low Risk
+TECHNICAL ESTIMATION การประเมิน EFFORT & RISK CR-02
+การประเมิน Effort & Risk CR-02
+
+GIT BRANCHING STRATEGY HOTFIX PIPELINE VS FEATURE
+Hotfix Pipeline vs Feature
+Feature Branch (feature/cr02-csv-export): ใช้เมื่อคำขอนั้นสามารถรอรวมเข้าสาย develop ตามรอบ Sprint ได้ตามปกติ (กรณี CR-02)
+Hotfix Branch (hotfix/critical-db-crash): แตกออกจาก main โดยตรงเมื่อเกิดบั๊กวิกฤตบน Production และผสานกลับทั้ง main และ develop
+
+1. Bug Bashing
+ค้นหา Edge Cases ในฟังก์ชัน Barcode/Reorder Point และแก้บั๊กด้วย Defect-Driven Test
+2. CR-02 Assessment
+รับใบคำขอด่วน CR-02 ทำ Impact Assessment และประเมินตัวเลข 4.5 Man-Hours
+3. CSV Implementation
+เขียน Unit Test และพัฒนาคลาส CsvReportExporter จน PyTest ผ่านไฟเขียว 100%
+PRACTICAL LAB ACTIVITY แนะนำกิจกรรม WORKSHOP ประจำวัน
+แนะนำกิจกรรม Workshop ประจำวัน
+
+ทดลองยิง Edge Cases
+เปิด Issue บน GitHub
+เมื่อพบข้อผิดพลาด ให้เปิด Issue บน GitHub Issues ทันที ระบุ Steps to Reproduce และติดป้ายกำกับ label: bug
+Case A: ทดลองป้อน Barcode ซ้ำกับสินค้าอื่น
+Case B: ป้อน Reorder Point เป็นตัวอักษรหรือค่าติดลบ
+Case C: ลบฟิลด์ใน data.json แล้วรันระบบ
+WORKSHOP EXECUTION STEP 1 ขั้นตอน 1: BUG BASHING
+ขั้นตอน 1: Bug Bashing
+
+Write Failing Test First
+เขียน Test Case ใน test_app.py จำลองปัญหาตามที่ระบุใน Issue ➔ รัน pytest ต้องเป็น RED
+Fix Code & Auto Close
+แก้ไขโค้ดจน PyTest ผ่านไฟเขียว แล้ว Commit ด้วยข้อความ:
+git commit -m "fix: resolve legacy JSON missing barcode crash (fixes #12)"
+WORKSHOP EXECUTION STEP 2 ขั้นตอน 2: แก้บั๊กด้วย TDR
+ขั้นตอน 2: แก้บั๊กด้วย TDR
+
+Branch & Impact Form
+แตก Branch feature/cr02-csv-export และกรอกข้อมูล Technical Impact ลงใน CR-02 Form
+TDR Development & Push
+เขียน PyTest สำหรับ CSV ➔ พัฒนาคลาส CsvReportExporter ➔ รัน Full Suite ผ่าน 100% ➔ Push ขึ้น GitHub
+WORKSHOP EXECUTION STEP 3 ขั้นตอน 3: พัฒนาฟังก์ชัน CR-02
+ขั้นตอน 3: พัฒนาฟังก์ชัน CR-02
+
+1. Defect Log รายการบั๊ก
+ส่งมอบรายการบันทึกข้อบกพร่องที่สืบสวนและแก้ไขเสร็จสิ้นให้ PM นำไปรายงานสถานะในกระดาน Jira
+2. เอกสาร CR-02 Impact Form
+ส่งมอบตัวเลขประเมิน 4.5 Man-Hours ให้ PM นำเข้าที่ประชุม Change Control Board (CCB) เพื่อเจรจากับลูกค้า
+CROSS-COURSE ALIGNMENT การส่งมอบงานสู่วิชา ENGSE202
+การส่งมอบงานสู่วิชา ENGSE202
+
+RCA Root Fix
+แก้ปัญหาที่รากเหง้าโครงสร้างข้อมูล ไม่ใช่แค่การปิดบัง Error ภายนอก
+Defect-Driven
+เปลี่ยนทุกข้อผิดพลาดให้กลายเป็นชุดทดสอบเกราะคุ้มกันระบบถาวร
+Emergency ISO 14764
+รับมือคำขอด่วนอย่างเป็นระบบผ่าน Impact Assessment ก่อนแตะซอร์สโค้ด
+SESSION RECAP สรุปบทเรียนประจำสัปดาห์ที่ 10
+สรุปบทเรียนประจำสัปดาห์ที่ 10
+
+ช่วงถาม-ตอบ (Q&A Session)
+“การเป็นวิศวกรซอฟต์แวร์มืออาชีพ ไม่ได้วัดกันที่การเขียนโค้ดโดยไม่เคยมีบั๊ก แต่วัดกันที่ความรัดกุมของกระบวนการในการสืบสวน จัดการ และป้องกันไม่ให้บั๊กนั้นเกิดขึ้นซ้ำ”
+เตรียมเอกสาร CR-02 และข้อมูล Defect Log ให้พร้อมสำหรับวิชา ENGSE202 ในช่วง 3 ชั่วโมงหลัง
+ENGSE225: SOFTWARE EVOLUTION AND MAINTENANCE Q&A & DISCUSSION
+
+ISO/IEC. (2006). Software Engineering — Software Life Cycle Processes — Maintenance (ISO/IEC Standard No. 14764:2006).
+IEEE. (1998). IEEE Standard for Software Maintenance (IEEE Std 1219-1998).
+ISO/IEC/IEEE. (2022). Software and systems engineering — Software testing — Part 1: General concepts (ISO/IEC/IEEE Standard No. 29119-1:2022).
+Martin, R. C. (2017). Clean Architecture: A Craftsman's Guide to Software Structure and Design. Prentice Hall.
+Andersen, B., & Fagerhaug, T. (2006). Root Cause Analysis: Simplified Tools and Techniques. ASQ Quality Press.
+IEEE. (2012). IEEE Standard for Configuration Management in Systems and Software Engineering (IEEE Std 828-2012).
+SOFTWARE ENGINEERING BIBLIOGRAPHY เอกสารอ้างอิงทางวิชาการ
+เอกสารอ้างอิงทางวิชาการ
+
+https://media.geeksforgeeks.org/wp-content/uploads/20240611145805/Software-Quality-Assurance-(SQA)-focuses.webp
+Source: www.geeksforgeeks.org
+https://media.geeksforgeeks.org/wp-content/uploads/20241108093235513015/dependency-injection-di-design-pattern-2.webp
+Source: www.geeksforgeeks.org
+https://svg.template.creately.com/juvrle49
+Source: creately.com
+https://nvie.com/img/merge-without-ff@2x.png
+Source: nvie.com
+Image Sources

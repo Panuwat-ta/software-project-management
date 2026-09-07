@@ -1,0 +1,248 @@
+WEEK 10: SCOPE CONTROL & CCB GOVERNANCE
+ENGSE202: Scope Control & CCB
+“การรักษาสมดุลของสามเหลี่ยมบริหารโครงการ (Iron Triangle) การเจรจาต่อรองเมื่อมีคำของอก และการปรับปรุงงบประมาณด้วย Contingency Reserve”
+Academic Framework: PMBOK Guide 7th Edition - Project Work & Stakeholder Engagement Domains
+ENGSE202: SOFTWARE PROJECT MANAGEMENT WEEK 10 MASTERCLASS
+
+1. CCB Governance
+เข้าใจกระบวนการ Integrated Change Control และบทบาทของคณะกรรมการ CCB ในการสกัดกั้น Scope Creep
+2. The Iron Triangle
+ประยุกต์ใช้โมเดล Scope-Time-Cost วิเคราะห์ความคุ้มค่าและผลกระทบของคำขอเปลี่ยนแปลง
+3. Stakeholder Diplomacy
+เชี่ยวชาญทักษะการเจรจาต่อรองแบบ Principled Negotiation บริหารความคาดหวังเมื่อมีงานแทรก
+4. Reserve & Forecast
+ตัดยอดเงิน Contingency Reserve ปรับปรุง Burndown Chart และพยากรณ์การส่งมอบบน Jira
+WEEKLY COURSE OBJECTIVES ENGSE202
+เป้าหมายการเรียนรู้ประจำสัปดาห์
+
+ฝั่งเทคนิค ENGSE225 (3 ชม. แรก)
+ฝั่งบริหาร ENGSE202 (3 ชม. หลัง)
+แก้บั๊ก Legacy Data ใน InventoryRepository และบันทึก Defect Log
+ได้รับใบคำขอด่วน CR-02 (ขอส่งออกรายงานสต็อกต่ำเป็น CSV ทันที)
+Tech Lead ทำ Impact Analysis สรุปต้องใช้เวลาเพิ่ม 4.5 Man-Hours
+Governance (CCB): นำตัวเลข 4.5 ชม. เข้าที่ประชุม CCB เพื่อพิจารณามติ
+Negotiation: เจรจาต่อรองกับ Sponsor (อาจารย์) เพื่อรักษาสมดุลโครงการ
+Jira Adjustment: ดึงเงินสำรอง Contingency Reserve และปรับ Forecast
+CROSS-COURSE ALIGNMENT สะพานเชื่อมโยงเทคนิคสู่การบริหาร
+สะพานเชื่อมโยงสู่การบริหารจัดการ
+
+Scope Creep: สภาวะที่ขอบเขตของโครงการค่อยๆ ขยายตัวออกไปเรื่อยๆ โดยไร้การควบคุม ไร้การเพิ่มงบ และไร้การขยายเวลา
+สาเหตุหลักที่พบบ่อย
+ผลลัพธ์ความเสียหาย
+ทีมงานเกิดภาวะ Overworked / Burnout, อัตราข้อบกพร่องพุ่งสูง, โครงการส่งมอบล่าช้า และงบประมาณล่มสลายในที่สุด
+ลูกค้าขอเพิ่มฟังก์ชันย่อยนอกรอบ ("นิดเดียวเอง ช่วยเพิ่มให้หน่อย")
+ทีมพัฒนายอมตามใจโดยไม่แจ้ง PM (Gold Plating)
+ขาดกระบวนการ Change Control ที่เป็นลายลักษณ์อักษร
+PROJECT RISK DYNAMICS ภัยเงียบของ SCOPE CREEP ในโครงการ
+ภัยเงียบของ Scope Creep ในโครงการ
+
+TRIPLE CONSTRAINT MODEL สมดุลสามเหลี่ยม IRON TRIANGLE
+สมดุลสามเหลี่ยม Iron Triangle
+กฎเหล็ก: หากลูกค้าขอขยาย Scope (CR-02) เราจำเป็นต้องขยาย Cost (งบประมาณ) หรือขยาย Time (เวลา) เสมอ มิฉะนั้น Quality (คุณภาพ) จะพังทลาย
+
+กระบวนการอย่างเป็นทางการในการทบทวน ประเมิน และอนุมัติคำขอเปลี่ยนแปลง (Integrated Change Control):
+1. Submit CR
+รับคำขอเป็นลายลักษณ์อักษรผ่านใบ Change Request Form
+2. Impact Analysis
+ประเมินผลกระทบด้าน Architecture, Man-Hours และความเสี่ยง
+3. CCB Review
+นำเสนอต่อคณะกรรมการ CCB เพื่อลงมติพิจารณา
+4. Update Baseline
+ปรับปรุง Scope, Schedule, งบสำรอง และสื่อสารทีม
+PMBOK GUIDE 7TH EDITION กระบวนการควบคุมการเปลี่ยนแปลง
+กระบวนการควบคุมการเปลี่ยนแปลง
+
+Change Control Board (CCB): กลุ่มบุคคลที่ได้รับมอบอำนาจอย่างเป็นทางการในการพิจารณา อนุมัติ หรือปฏิเสธคำขอเปลี่ยนแปลง
+1. ฝั่งธุรกิจ / ลูกค้า
+2. ฝั่งบริหารและพัฒนา
+Sponsor / อาจารย์: ผู้มีอำนาจสูงสุดด้านงบประมาณและทิศทางธุรกิจ
+User Representative: ผู้ให้ความเห็นด้านคุณค่าและการใช้งานจริง
+Project Manager: นำเสนอผลกระทบด้านเวลา งบประมาณ และทรัพยากร
+Tech Lead: ชี้แจงผลกระทบทางสถาปัตยกรรมและความเสี่ยงเชิงโค้ด
+GOVERNANCE COMMITTEE บทบาทคณะกรรมการ CCB
+บทบาทคณะกรรมการ CCB
+
+เมื่อใบคำขอ CR-02 เข้าสู่ที่ประชุม CCB มติการตัดสินใจจะออกได้ 3 แนวทาง:
+🟢 Approve (อนุมัติ)
+ยอมรับการเปลี่ยนแปลงทันที โดยตกลงดึงงบจาก Contingency Reserve หรือขยายเวลา Sprint 2
+🟡 Defer (เลื่อนการทำ)
+เห็นชอบว่ามีประโยชน์ แต่ไม่ทำในรอบนี้ ให้ยกยอดไปเปิดเป็นการ์ด Task แรกของ Sprint 3
+🔴 Reject (ปฏิเสธ)
+ปฏิเสธคำขอ เนื่องจากไม่คุ้มค่าทางธุรกิจ หรือส่งผลให้โครงการหลักเสี่ยงล้มเหลวรุนแรง
+DECISION MAKING PROTOCOL 3 มติการตัดสินใจของ CCB
+3 มติการตัดสินใจของ CCB
+
+ข้อมูลจาก ENGSE225: ต้องการฟังก์ชัน Export CSV ใช้เวลาเพิ่ม 4.5 Man-Hours (ต้นทุนประมาณ 1,350 บาท):
+ทางเลือกทางการบริหาร
+ข้อดี (Pros)
+ข้อแลกเปลี่ยน / ความเสี่ยง (Trade-offs)
+Option A: Approve in Sprint 2
+ลูกค้าได้รับไฟล์ CSV ทันทีเพื่อสั่งซื้อสินค้าเติมคลัง ไม่เกิดสินค้าขาดสต็อก
+ต้องดึงเงินสำรอง 1,350 บาท และเสี่ยงทำให้งาน Barcode หลุดกำหนด
+Option B: Defer to Sprint 3
+ทีมรักษา Focus งานหลักของ Sprint 2 ได้ 100% ไม่ต้องทำโอที
+ลูกค้าต้องรออีก 1 สัปดาห์ อาจต้องใช้ระบบจดมือสั่งซื้อสินค้าชั่วคราว
+MANAGERIAL TRADE-OFF ANALYSIS กรณีศึกษา: วิเคราะห์คำขอด่วน CR-02
+กรณีศึกษา: วิเคราะห์คำขอด่วน CR-02
+
+DIPLOMATIC MANAGEMENT ศิลปะการเจรจาต่อรอง STAKEHOLDER
+ศิลปะการเจรจาต่อรอง Stakeholder
+สร้างความมั่นใจ: แสดงให้ลูกค้าเห็นว่าเราให้ความสำคัญกับปัญหาทางธุรกิจของเขา
+ปกป้องทีม: ปกป้องนักพัฒนาไม่ให้เกิดภาวะ Burnout จากการรับงานแทรกเกินกำลัง
+
+อ้างอิงตามทฤษฎี Principled Negotiation (Fisher & Ury, 2011):
+1. Separate People from Problem
+แยกเรื่องอารมณ์และตัวบุคคลออกจากตัวปัญหา มุ่งแก้ที่เนื้องาน
+2. Focus on Interests
+มุ่งเน้นผลประโยชน์ทางธุรกิจที่แท้จริง ไม่ใช่การยึดติดคำสั่ง
+3. Invent Options for Mutual Gain
+ร่วมกันคิดค้นทางเลือกใหม่ที่สร้างประโยชน์ร่วมกันทั้งสองฝ่าย
+4. Use Objective Criteria
+ยืนหยัดบนเกณฑ์ที่วัดผลได้ (ตัวเลข 4.5 Man-Hours และ Team Capacity)
+HARVARD NEGOTIATION PROJECT หลักเจรจา GETTING TO YES 4 เสา
+หลักเจรจา Getting to Yes 4 เสา
+
+สิ่งห้ามพูดเด็ดขาด ❌
+"ทำไม่ได้ครับ งานล้นมือแล้ว ลูกค้ามาสั่งช้าเอง ช่วยไม่ได้ครับ"
+ผลลัพธ์: ทำลายความสัมพันธ์และทำให้ Stakeholder กลายเป็น Resistant ทันที
+Positive Reframing ✅
+เทคนิค Yes, if...: "เราสามารถส่งมอบ CSV ให้ได้ในสัปดาห์นี้ครับ หากเราขอย้ายการตกแต่ง UI ไปทำใน Sprint 3 แทน"
+เทคนิค Defer with Priority: "เพื่อให้ระบบบาร์โค้ดเสถียรที่สุด เราขอนำฟังก์ชัน CSV นี้เป็น Task แรกของ Sprint 3 ครับ"
+PROFESSIONAL COMMUNICATION เทคนิคการสื่อสารปฏิเสธและเลื่อนงาน
+เทคนิคการสื่อสารปฏิเสธและเลื่อนงาน
+
+การดึง Contingency Reserve
+เมื่อ CCB มีมติ "Approved" ให้เพิ่มงาน CR-02 PM ต้องตัดยอดเงินจาก Contingency Reserve (ที่ตั้งไว้ในสัปดาห์ที่ 5) มาจ่ายค่าแรง 4.5 ชม.
+หลักธรรมาภิบาลทางการเงิน
+การตัดยอดต้องถูกบันทึกอย่างโปร่งใสลงใน Contingency Reserve Utilization Log เพื่อให้ตรวจสอบได้ในการทำ Audit ท้ายโครงการ
+FINANCIAL GOVERNANCE การปรับปรุงงบด้วยเงินสำรอง
+การปรับปรุงงบด้วยเงินสำรอง
+
+✅ เงินสำรองคงเหลือ 675 บาท จะถูกเก็บรักษาไว้รองรับความเสี่ยงใน Sprint 3 ต่อไป
+CR ID
+รายละเอียดการเบิกใช้เงินสำรอง
+อนุมัติโดย
+จำนวนเงิน
+งบสำรองคงเหลือ
+Initial
+งบสำรองความเสี่ยงเริ่มต้น (ที่ตั้งไว้ใน Week 5)
+Sponsor
+-
+2,025 THB
+CR-02
+Export Low Stock to CSV (4.5 ชม. @ 300 บาท)
+CCB Board
+-1,350 THB
+675 THB 🟢
+RESERVE AUDIT TRAIL ตารางบันทึกการใช้เงินสำรอง
+ตารางบันทึกการใช้เงินสำรอง
+
+JIRA METRIC ANALYTICS ผลกระทบต่องานบน BURNDOWN CHART
+ผลกระทบต่องานบน Burndown Chart
+เมื่อเพิ่มงาน 4.5 ชม. เข้าสู่ Sprint 2 กลางคัน เส้น Actual Line บน Jira จะ "หักหัวพุ่งสูงขึ้นกะทันหัน (Scope Injection Bump)"
+หน้าที่ของ PM: ไม่ต้องตกใจ แต่ต้องเขียน Comment กำกับบน Jira ว่า "Scope increase due to CCB approval on CR-02"
+
+1. Sprint End Date Adjustment
+หากทีมไม่มีชั่วโมงทำงานคงเหลือเพียงพอ (Remaining Capacity) PM ต้องขออนุมัติขยายวันสิ้นสุด Sprint 2 ออกไปตามมติ CCB
+2. Scope Swapping Technique
+ปลดการ์ดงานที่มีความสำคัญต่ำ (Low Priority Task) คืนกลับสู่ Backlog เพื่อรักษาวันปิด Sprint 2 เดิมไว้โดยไม่เพิ่มโหลดงาน
+DELIVERY FORECASTING การปรับปรุง FORECAST และ SWAPPING
+การปรับปรุง Forecast และ Swapping
+
+1. GitHub Actions CI/CD Minutes
+การเพิ่ม Unit Test สำหรับ CSV ส่งผลให้ CI/CD รันบ่อยขึ้น PM ต้องเช็คโควต้าว่าไม่เกิน 2,000 นาทีฟรีต่อเดือน
+2. Storage & Database
+ตรวจสอบว่าการสร้างและจัดเก็บไฟล์ CSV ชั่วคราวไม่กิน Disk Space จนกระทบค่าบริการ Cloud Server
+TOOL USAGE GOVERNANCE การทบทวนผลกระทบค่าเครื่องมือ
+การทบทวนผลกระทบค่าเครื่องมือ
+
+Workshop: "Change Control Board (CCB) Simulation & Jira Reprioritization"
+1. CCB Roleplay
+จำลองประชุม CCB เจรจาต่อรอง Impact ของ CR-02 กับ Sponsor (อาจารย์)
+2. CCB Minutes
+จัดทำบันทึกรายงานการประชุม CCB สรุปมติและเงื่อนไขการอนุมัติ
+3. Jira & Reserve
+สร้างการ์ด CR-02 บน Jira, ตัดยอดเงิน Contingency Reserve และอัปเดต Log
+PRACTICAL LAB ACTIVITY แนะนำกิจกรรม WORKSHOP ประจำวันนี้
+แนะนำกิจกรรม Workshop ประจำวันนี้
+
+บทบาทการเจรจาต่อรองของตัวแทน PM:
+ถือเอกสาร CR-02 Impact Analysis Form เข้าพบ Sponsor (อาจารย์)
+นำเสนอตัวเลข 4.5 Man-Hours ชี้แจงผลกระทบต่อ Iron Triangle
+เสนอทางเลือกระหว่าง Option A (ทำทันทีใน Sprint 2) vs Option B (ยกยอดไป Sprint 3)
+รับมติการตัดสินใจอย่างเป็นทางการและขอลายเซ็นกำกับ
+WORKSHOP EXECUTION STEP 1 ขั้นตอน 1: การจำลองประชุม CCB
+ขั้นตอน 1: การจำลองประชุม CCB
+
+หัวข้อในเอกสาร CCB Minutes
+การลงนามรับรอง
+ลงนามร่วมกันระหว่าง Project Manager และ Sponsor (อาจารย์) เพื่อใช้เป็นหลักฐานแนบส่งรายงาน
+วาระการประชุม: พิจารณาคำขอด่วน CR-02 (CSV Export)
+มติที่ประชุม: Approved / Rejected / Deferred
+ข้อตกลงร่วม: อนุมัติ 4.5 Man-Hours @ 300 THB/ชม.
+WORKSHOP EXECUTION STEP 2 ขั้นตอน 2: บันทึกรายงานมติ CCB
+ขั้นตอน 2: บันทึกรายงานมติ CCB
+
+สร้างการ์ดงานใหม่บน Jira
+ดึงเข้า Active Sprint 2
+ลากการ์ดงานเข้ากล่อง Active Sprint 2 และสังเกตเส้น Burndown Chart ปรับตัวสูงขึ้นตามชั่วโมงงานที่เพิ่มเข้ามา
+Summary: [CR-02] Export Low Stock Products to CSV
+Original Estimate: 4.5h
+Assignee: มอบหมาย Senior Dev / Dev ตาม RACI
+WORKSHOP EXECUTION STEP 3 ขั้นตอน 3: ปรับการ์ดงานบน JIRA
+ขั้นตอน 3: ปรับการ์ดงานบน Jira
+
+เอกสารที่ต้องอัปเดต
+รายการปฏิบัติงาน
+สถานะเป้าหมาย
+Contingency Reserve Log
+ตัดยอดเงิน 1,350 บาทสำหรับ CR-02
+ยอดคงเหลือ 675 THB 🟢
+Procurement & Tool Log
+ตรวจสอบโควต้านาที GitHub Actions ล่าสุด
+อยู่ในโควต้าฟรี (0 THB)
+Jira Burndown Screen
+แคปเจอร์ภาพกราฟ Burndown ที่มี Scope Bump
+แนบในรายงานสัปดาห์ที่ 10
+WORKSHOP EXECUTION STEP 4 ขั้นตอน 4: บันทึกเงินสำรองและโควต้า
+ขั้นตอน 4: บันทึกเงินสำรองและโควต้า
+
+ชิ้นงาน 1 (ENGSE225): เอกสารบันทึกข้อบกพร่อง (Defect Log) และสคริปต์ PyTest ดักจับบั๊ก Legacy Data
+ชิ้นงาน 2 (ENGSE225): เอกสารวิเคราะห์ผลกระทบและการตัดสินใจของ CCB (CR-02 Impact & Decision Form)
+ชิ้นงาน 3 (ENGSE202): บันทึกการประชุมเจรจากับ Stakeholder และมติ CCB (CCB Meeting Minutes)
+ชิ้นงาน 4 (ENGSE202): ภาพแคปเจอร์ Sprint 2 Burndown Chart บน Jira และตารางเบิกจ่าย Contingency Reserve Log
+COMBINED DELIVERABLES CHECKLIST เช็คลิสต์สิ่งส่งมอบสัปดาห์ที่ 10
+เช็คลิสต์สิ่งส่งมอบสัปดาห์ที่ 10
+
+CCB Anti-Scope Creep
+ควบคุมการเปลี่ยนแปลงผ่าน CCB ป้องกันงานงอกนอกรอบทำลายโครงการ
+Iron Triangle Balance
+เพิ่ม Scope ต้องแลกด้วย Cost หรือ Time เสมอเพื่อรักษา Quality
+Win-Win Negotiation
+เจรจาด้วยข้อมูลตัวเลข 4.5 ชม. และเบิกจ่ายเงิน Contingency Reserve โปร่งใส
+SESSION RECAP สรุปบทเรียนประจำสัปดาห์ที่ 10
+สรุปบทเรียนประจำสัปดาห์ที่ 10
+
+ช่วงถาม-ตอบ (Q&A Session)
+“ผู้จัดการโครงการที่ยอดเยี่ยม ไม่ใช่คนที่ตอบรับทุกอย่างที่ลูกค้าขอ แต่คือคนที่สามารถอธิบายผลกระทบได้อย่างโปร่งใส และร่วมมือกับลูกค้าเพื่อหาทางออกที่ดีที่สุดสำหรับโครงการ”
+เตรียมความพร้อมสำหรับการรวมฟังก์ชันทั้งหมด (System Hardening & Code Freeze Prep) ในสัปดาห์ที่ 11
+ENGSE202: SOFTWARE PROJECT MANAGEMENT Q&A & DISCUSSION
+
+Project Management Institute. (2021). A Guide to the Project Management Body of Knowledge (PMBOK Guide) (7th ed.). Project Management Institute.
+Kerzner, H. (2017). Project Management: A Systems Approach to Planning, Scheduling, and Controlling (12th ed.). Wiley.
+Fisher, R., Ury, W. L., & Patton, B. (2011). Getting to Yes: Negotiating Agreement Without Giving In (3rd ed.). Penguin.
+Atkinson, R. (1999). Project management: cost, time and quality, two best guesses and a phenomenon, its time to accept other success criteria. International Journal of Project Management, 17(6), 337-342.
+Flemming, Q. W., & Koppelman, J. M. (2010). Earned Value Project Management (4th ed.). Project Management Institute.
+Schwaber, K., & Sutherland, J. (2020). The Scrum Guide: The Definitive Guide to Scrum: The Rules of the Game.
+SOFTWARE MANAGEMENT BIBLIOGRAPHY เอกสารอ้างอิงทางวิชาการ
+เอกสารอ้างอิงทางวิชาการ
+
+https://www.trueprojectinsight.com/sites/default/files/inline-images/Balancing%20Scope%20with%20time%2C%20cost%2C%20and%20quality.png
+Source: www.trueprojectinsight.com
+https://medsurety.com/wp-content/uploads/2025/12/handshake-contract-deal-and-business-partnership-o1.jpg
+Source: medsurety.com
+https://confluence.atlassian.com/jirasoftwareserver0911/files/1318888324/1318888326/1/1510761241568/jsw-burndown-chart.png
+Source: confluence.atlassian.com
+https://www.slideegg.com/image/catalog/20470-board-meeting-ppt-templates.png
+Source: www.slideegg.com
+Image Sources

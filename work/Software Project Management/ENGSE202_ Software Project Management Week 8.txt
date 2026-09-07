@@ -1,0 +1,275 @@
+WEEK 8: AGILE MONITORING & GOVERNANCE
+ENGSE202: Project Monitoring & Governance
+“ขับเคลื่อนการทำงานบน Active Board ติดตามสุขภาพโครงการด้วย Burndown Chart บริหารผู้มีส่วนได้ส่วนเสีย และควบคุมค่าบริการเครื่องมืออย่างเป็นระบบ”
+Academic Framework: PMBOK Guide 7th Edition - Measurement & Stakeholder Performance Domains
+ENGSE202: SOFTWARE PROJECT MANAGEMENT WEEK 8 MASTERCLASS
+
+1. Burndown Chart
+อ่าน วิเคราะห์ และคาดการณ์แนวโน้มความเสร็จของงานจาก Sprint Burndown Chart และจัดการ Blocker
+2. Stakeholder Matrix
+จัดทำ Stakeholder Engagement Assessment Matrix เพื่อประเมินและบริหารความคาดหวังยามเกิด CR-01
+3. Procurement Control
+เข้าใจกรอบการจัดซื้อจัดจ้างซอฟต์แวร์ และจัดทำตารางบันทึกค่าบริการเครื่องมือพัฒนา (Procurement Log)
+4. Active Sprint Tracking
+ขับเคลื่อนการทำงานบน Active Sprint Board บันทึก Log Work จริง และสอบทาน Jira Automation
+WEEKLY COURSE OBJECTIVES ENGSE202
+เป้าหมายการเรียนรู้ประจำสัปดาห์
+
+ฝั่งเทคนิค ENGSE225 (3 ชม. แรก)
+ทีมลงมือผ่าตัดโค้ดดั้งเดิม (Refactoring) บน Git Branch feature/refactor-core-architecture และรับใบคำขอเปลี่ยนแปลง CR-01 (Barcode & Reorder Point)
+ฝั่งบริหาร ENGSE202 (3 ชม. หลัง)
+Tracking: บันทึก Man-Hours จริงจากการ Refactor ลงการ์ด Jira และคุม Burndown
+Stakeholder: บริหารความคาดหวังของลูกค้ายามได้รับใบ CR-01 กลางคัน
+Procurement: ควบคุมค่าใช้จ่ายซอฟต์แวร์เครื่องมือ (Jira, GitHub Actions, AWS)
+CROSS-COURSE ALIGNMENT สะพานเชื่อมโยงเทคนิคสู่การบริหาร
+สะพานเชื่อมโยงเทคนิคสู่การบริหาร
+
+อ้างอิงตามกรอบ PMBOK Guide 7th Edition (Measurement & Project Work Performance Domains):
+ปรัชญาการควบคุม
+การควบคุมโครงการ Agile ไม่ใช่การนั่งจับผิด แต่คือการ "วัดผลแบบ Real-time เพื่อขจัดอุปสรรคอย่างทันท่วงที"
+3 เสาหลักใน Execution Phase
+Transparency: งานทุกชิ้นและชั่วโมงจริงปรากฏบน Active Board
+Inspection: ส่องสุขภาพโครงการผ่าน Sprint Burndown Chart
+Adaptation: ขจัด Blocker และปรับแผนใน Daily Standup
+AGILE PROJECT GOVERNANCE การติดตามและควบคุมโครงการแบบ AGILE
+การติดตามและควบคุมโครงการแบบ Agile
+
+แผนภูมิแสดงความสัมพันธ์ระหว่างงานที่เหลืออยู่กับเวลาที่เหลือใน Sprint:
+แกน X (แกนนอน): วันทำงานใน Sprint (เช่น Day 1 ถึง Day 10)
+แกน Y (แกนตั้ง): ปริมาณงานที่เหลือ (Man-Hours หรือ Story Points)
+Ideal Burndown Line: เส้นตรงอุดมคติลากจากงานรวมลงสู่ 0
+Actual Burndown Line: เส้นขยับจริงตามการกด Log Work
+AGILE PERFORMANCE METRIC เจาะลึก SPRINT BURNDOWN CHART
+เจาะลึก Sprint Burndown Chart
+
+1. Ahead of Schedule 🟢
+เส้น Actual อยู่ใต้ Ideal Line ➔ ทีมปิดงานเสร็จเร็วกว่าแผน ประสิทธิภาพสูงหรือเผื่อเวลามากไป
+2. Behind Schedule 🔴
+เส้น Actual อยู่เหนือ Ideal Line ➔ ทำงานล่าช้ากว่าแผน เสี่ยงปิด Sprint ไม่ทัน ต้องหาสาเหตุ Blocker
+3. Scope Increase ⚠️
+เส้น Actual พุ่งสูงขึ้นกลาง Sprint ➔ มีงานแทรกกลางคัน หรือประมาณเวลาเพิ่มจากการยื่น Change Request
+BURNDOWN PATTERN ANALYSIS วิเคราะห์รูปแบบ BURNDOWN CHART
+วิเคราะห์รูปแบบ Burndown Chart
+
+Blocker คืออะไร?
+ปัญหาหรือความเสี่ยงที่เกิดขึ้นจริง แล้วทำให้สมาชิกในทีมไม่สามารถทำงานการ์ดนั้นๆ ต่อไปได้
+ตัวอย่าง: ติดขัดเพราะไร้ Mock Data หรือรอ Peer Review บน GitHub นานเกิน 24 ชม.
+บทบาทของ PM ใน Daily Standup
+เมื่อสมาชิกแจ้ง Blocker หน้าที่ของ PM คือบันทึกลง Impediment Backlog แล้วรีบเข้าช่วยปลดล็อกทันทีเพื่อรักษาสปีดทีม
+AGILE BLOCKER MANAGEMENT การบริหารจัดการ BLOCKER ในทีม
+การบริหารจัดการ Blocker ในทีม
+
+ระบบ Jira Flagging System
+เมื่อติด Blocker นักพัฒนากดเลือก "Add Flag" บนการ์ดงาน Jira ใบนั้นได้ทันที
+ผลลัพธ์ของการ Flag การ์ด
+การ์ดเปลี่ยนเป็นสีแดง/เหลือง มีสัญลักษณ์ธงปรากฏเด่นชัด
+สะดุดตาบน Active Board เตือนให้ PM เข้าเคลียร์ Blocker
+ต้องใส่ Comment ระบุสาเหตุและชื่อผู้ที่ต้องเข้าช่วย
+AGILE TOOL CONTROLS การจัดการ BLOCKER ด้วย JIRA FLAG
+การจัดการ Blocker ด้วย Jira Flag
+
+อ้างอิงตาม PMBOK Guide 7th Edition (Stakeholder Engagement Performance Domain):
+Stakeholders คือใคร?
+บุคคล กลุ่มบุคคล หรือองค์กรที่มีผลกระทบ หรือได้รับผลกระทบจากการตัดสินใจและผลลัพธ์ของโครงการ
+กลุ่ม Stakeholders ในโครงการ
+Sponsor / อาจารย์: ต้องการงานเสร็จตามงบ เวลา และสเปก
+Tech Lead / Devs: ต้องการโค้ดสะอาด ลดหนี้ทางเทคนิค
+End-Users: ต้องการฟีเจอร์ใหม่ที่ใช้งานง่าย ไร้บั๊ก
+STAKEHOLDER GOVERNANCE การบริหารจัดการผู้มีส่วนได้ส่วนเสีย
+การบริหารจัดการผู้มีส่วนได้ส่วนเสีย
+
+เครื่องมือวัดและวางแผนยกระดับการมีส่วนร่วมของผู้มีส่วนได้ส่วนเสีย แบ่งออกเป็น 5 ระดับ:
+1. Unaware
+ไม่ทราบถึงการมีอยู่หรือผลกระทบโครงการ
+2. Resistant
+ทราบเรื่องแต่ต่อต้าน ไม่เห็นด้วย
+3. Neutral
+ทราบเรื่องแต่ไม่แสดงท่าทีหนุนหรือค้าน
+4. Supportive
+ทราบเรื่องและพร้อมหนุนให้สำเร็จ
+5. Leading
+มีส่วนร่วมเข้มข้น ผลักดันโครงการ
+ENGAGEMENT LEVELS STAKEHOLDER ASSESSMENT MATRIX
+Stakeholder Assessment Matrix
+
+เปรียบเทียบระหว่าง C (Current Engagement) กับ D (Desired Engagement):
+Stakeholder Name / Role
+Unaware
+Resistant
+Neutral
+Supportive
+Leading
+Sponsor (อาจารย์)
+-
+-
+-
+C
+D
+Tech Lead (เพื่อนในทีม)
+-
+-
+-
+-
+C, D
+End-User (ผู้ใช้สมมุติ)
+-
+C
+-
+D
+-
+MATRIX STRUCTURE โครงสร้าง STAKEHOLDER MATRIX
+โครงสร้าง Stakeholder Matrix
+
+เมื่อได้รับใบคำขอ CR-01 (Barcode & Reorder Point) เข้ามากระทบกลาง Sprint 1:
+สิ่งห้ามทำเด็ดขาด
+❌ ยอมรับทันทีโดยไม่ประเมิน (ทำให้ทีมงาน Overwork และ Sprint ล้ม)
+❌ ปฏิเสธลูกค้ารุนแรงทันที (ทำให้ Stakeholder กลายเป็น Resistant)
+แนวทางปฏิบัติมืออาชีพ
+ใช้ Impact Analysis Form จากฝั่ง Maintenance ชี้แจงผลกระทบทางเวลา/งบอย่างมีเหตุผล แล้วนำ CR-01 เข้าจัดลำดับใส่ Sprint 2
+CHANGE MANAGEMENT DIPLOMACY การรับมือ CHANGE REQUEST (CR-01)
+การรับมือ Change Request (CR-01)
+
+ข้อมูล Impact Analysis (CR-01)
+เพิ่ม 8 Man-Hours, กระทบ 2 Class (Product, Repo), เขียน PyTest เพิ่ม 3 Cases
+การสื่อสารยกระดับ Stakeholder
+สื่อสารกับ Sponsor ผ่าน Communication Matrix เสนอทางเลือก: "ทำ CR-01 ใน Sprint 2 โดยขยายงบจาก Contingency Reserve หรือตัด Scope งานที่ไม่สำคัญออก"
+COMMUNICATION ALIGNMENT เชื่อม IMPACT ANALYSIS สู่ MATRIX
+เชื่อม Impact Analysis สู่ Matrix
+
+อ้างอิงตาม PMBOK Guide (Project Procurement Management Performance Domain):
+Procurement ในงานซอฟต์แวร์
+การจัดหา จัดซื้อ และบริหารจัดการสัญญาซอฟต์แวร์ เครื่องมือพัฒนา และบริการคลาวด์จากผู้ให้บริการภายนอก (SaaS Providers)
+เป้าหมายการควบคุม
+ควบคุมไม่ให้ค่าบริการเครื่องมือบานปลายจนกระทบงบประมาณรวมของโครงการ (Cost Baseline)
+SOFTWARE PROCUREMENT DOMAIN การจัดซื้อจัดจ้างซอฟต์แวร์
+การจัดซื้อจัดจ้างซอฟต์แวร์
+
+Software Licenses
+Jira Software, Trello Business, GitHub Enterprise
+Cloud Computing
+AWS EC2, Google Cloud Platform, Testing DB
+CI/CD Minutes
+GitHub Actions Compute Minutes สำหรับ PyTest
+SAAS & CLOUD TOOLS องค์ประกอบต้นทุนซอฟต์แวร์ SAAS
+องค์ประกอบต้นทุนซอฟต์แวร์ SaaS
+
+Tool / Service
+Provider
+Cost Model
+Estimated
+Actual Spent
+Jira Software
+Atlassian
+Free Tier (≤ 10 Users)
+0 THB
+0 THB
+GitHub Actions
+GitHub
+2,000 Free Mins/Month
+0 THB
+0 THB
+Cloud Database
+AWS / GCP
+Pay-as-you-go
+500 THB
+450 THB 🟢
+TOOL EXPENSE GOVERNANCE ตาราง PROCUREMENT & TOOL LOG
+ตาราง Procurement & Tool Log
+
+กรณีโควต้าเครื่องมือเกิน
+หาก GitHub Actions Compute Minutes หมดเนื่องจากรัน PyTest บ่อยเกิน เกิดค่าใช้จ่ายส่วนเกิน (AC > PV)
+แนวทางแก้ไขของ PM
+ทำเรื่องอนุมัติดึงงบจาก Contingency Reserve (สัปดาห์ที่ 5) มาจ่ายชดเชย และบันทึกสาเหตุลง Procurement Log
+FINANCIAL OVERRUN MANAGEMENT การคุมงบด้วย CONTINGENCY RESERVE
+การคุมงบด้วย Contingency Reserve
+
+Workshop: "Active Sprint Tracking & Stakeholder Matrix Setup"
+1. Active Board
+ขยับการ์ด Jira, กด Log Work และสอบทาน GitHub Automation
+2. Stakeholder Matrix
+จัดทำ Stakeholder Assessment Matrix สำหรับรับมือ CR-01
+3. Procurement Log
+บันทึกตาราง Procurement & Tool Log คุมค่าใช้จ่ายเครื่องมือ
+PRACTICAL LAB ACTIVITY กิจกรรมปฏิบัติการประจำวัน
+กิจกรรมปฏิบัติการประจำวัน
+
+ขยับการ์ด & Log Work
+ดึงการ์ด Refactoring เข้าช่อง In Progress และกดปุ่ม "Log Work" ใส่ชั่วโมงจริง
+ส่อง Burndown Chart
+สังเกตเส้น Burndown Chart บน Jira ขยับลงตามชั่วโมงงานที่เหลืออยู่จริง
+WORKSHOP EXECUTION STEP 1 ขั้นตอน 1: ACTIVE BOARD & WORK LOG
+ขั้นตอน 1: Active Board & Work Log
+
+ยิง PR พร้อม Issue Key
+ส่ง Pull Request บน GitHub โดยใส่ Jira Issue Key (เช่น ENGSE-201) ในชื่อ PR
+ตรวจสอบ Automation Status
+สังเกตการ์ดงานบน Jira ขยับจาก In Progress ไปช่อง Code Review อัตโนมัติ
+WORKSHOP EXECUTION STEP 2 ขั้นตอน 2: GITHUB & JIRA AUTOMATION
+ขั้นตอน 2: GitHub & Jira Automation
+
+Stakeholder Role
+Current (C)
+Desired (D)
+CR-01 Strategy
+Sponsor (อาจารย์)
+Supportive
+Leading
+รายงาน Impact Analysis
+Tech Lead (ทีมงาน)
+Leading
+Leading
+จัดสรร Refactoring
+End-User (ผู้ใช้)
+Resistant
+Supportive
+สาธิตฟีเจอร์ Barcode
+WORKSHOP EXECUTION STEP 3 ขั้นตอน 3: STAKEHOLDER MATRIX
+ขั้นตอน 3: Stakeholder Matrix
+
+Tool Item
+Quota Usage Status
+Financial Status
+Jira Software
+5 / 10 Active Users
+Free Tier (0 THB)
+GitHub Actions
+120 / 2,000 Mins Spent
+Free Quota (0 THB)
+Cloud Database
+450 / 500 THB Budget
+Under Budget (+50 THB 🟢)
+WORKSHOP EXECUTION STEP 4 ขั้นตอน 4: PROCUREMENT & TOOL LOG
+ขั้นตอน 4: Procurement & Tool Log
+
+ชิ้นงาน 1 (ENGSE225): ลิงก์ GitHub Pull Request ประวัติการ Refactor โค้ดผ่าน PyTest CI/CD ไฟเขียว 100%
+ชิ้นงาน 2 (ENGSE225): เอกสาร Change Request Impact Analysis Form (CR-01)
+ชิ้นงาน 3 (ENGSE202): ภาพแคปเจอร์ Sprint Burndown Chart บน Jira และรายงาน Work Log
+ชิ้นงาน 4 (ENGSE202): ตาราง Stakeholder Assessment Matrix และตาราง Procurement Log
+COMBINED PROGRESS DELIVERABLES เช็คลิสต์สิ่งส่งมอบสัปดาห์ที่ 8
+เช็คลิสต์สิ่งส่งมอบสัปดาห์ที่ 8
+
+Agile Tracking
+คุมงานผ่านข้อมูลจริง Burndown Chart & Work Log ไร้การคาดเดา
+Stakeholder Diplomacy
+ชี้แจงผลกระทบ CR-01 ด้วย Impact Analysis อย่างมืออาชีพ
+Procurement Control
+ควบคุมค่าบริการซอฟต์แวร์ SaaS และคลาวด์ใน Procurement Log
+SESSION RECAP สรุปบทเรียนประจำสัปดาห์ที่ 8
+สรุปบทเรียนประจำสัปดาห์ที่ 8
+
+เปิดช่วงถาม-ตอบ (Q&A)
+“โครงการซอฟต์แวร์ที่ยอดเยี่ยม คือโครงการที่โค้ดภายในถูกปรับปรุงอย่างสะอาด และกระบวนการบริหารจัดการภายนอกถูกควบคุมอย่างโปร่งใส”
+เตรียมความพร้อมสำหรับการปิดงาน Sprint 1 และการส่งมอบฟีเจอร์ CR-01 ในสัปดาห์ที่ 9
+ENGSE202: SOFTWARE PROJECT MANAGEMENT Q&A & DISCUSSION
+
+Project Management Institute. (2021). A Guide to the Project Management Body of Knowledge (PMBOK Guide) (7th ed.). Project Management Institute.
+Schwaber, K., & Sutherland, J. (2020). The Scrum Guide: The Definitive Guide to Scrum: The Rules of the Game.
+Institute of Electrical and Electronics Engineers. (1998). IEEE Standard for Software Project Management Plans (IEEE Std 1058-1998).
+Flemming, Q. W., & Koppelman, J. M. (2010). Earned Value Project Management (4th ed.). Project Management Institute.
+Kerzner, H. (2017). Project Management: A Systems Approach to Planning, Scheduling, and Controlling (12th ed.). Wiley.
+SOFTWARE MANAGEMENT BIBLIOGRAPHY เอกสารอ้างอิงทางวิชาการ
+เอกสารอ้างอิงทางวิชาการ
+
+https://squaredup.com/_next/image/?url=https%3A%2F%2Fcdn.sanity.io%2Fimages%2Fz7wg6mcy%2Fproduction-2025%2F38a3b237a0e644e9fbe7bf3f1ceb0fe3a6120c5c-2293x1167.png&w=3840&q=75
+Source: squaredup.com
+Image Sources

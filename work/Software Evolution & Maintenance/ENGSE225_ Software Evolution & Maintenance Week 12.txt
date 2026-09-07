@@ -1,0 +1,249 @@
+WEEK 12: THE GRAND EXECUTION SIGN-OFF
+ENGSE225: UAT & Production Release
+“การเปลี่ยนผ่านซอฟต์แวร์วิวัฒนาการสู่ Production Baseline (v2.0.0-evolution) ภายใต้กรอบมาตรฐาน ISO/IEC 12207 และ ISO/IEC 14764”
+Academic Framework: ISO/IEC/IEEE 12207:2017 - Software Release & Transition Processes
+ENGSE225: SOFTWARE EVOLUTION AND MAINTENANCE WEEK 12 MASTERCLASS
+
+1. User-Centric UAT
+ออกแบบและดำเนินกระบวนการ User Acceptance Testing (UAT) ตรวจสอบความต้องการจริง
+2. Defect vs Scope
+จำแนกความแตกต่างระหว่าง UAT Defects และความต้องการใหม่ (New Scope Identification)
+3. Release v2.0.0
+ส่งมอบโค้ดสู่สาย main และสร้าง Annotated Tag (v2.0.0-evolution) ตามหลัก SemVer 2.0
+4. Maintenance Log
+จัดทำ Maintenance Summary Report และ CHANGELOG.md ครบ 3 มิติตาม ISO/IEC 14764
+WEEKLY COURSE OBJECTIVES ENGSE225
+เป้าหมายการเรียนรู้ประจำสัปดาห์
+
+สัปดาห์ที่ 8 (Sprint 1)
+ผ่าตัด Refactoring ลบ global x แตกคลาสตาม Repository Pattern
+สัปดาห์ที่ 9-10 (Sprint 2)
+พัฒนาระบบ Barcode (CR-01) และส่งออก CSV (CR-02) ผ่าน TDR
+สัปดาห์ที่ 11 (Hardening)
+System Hardening สแกน Bandit และเข้าสู่สภาวะ Code Freeze
+สัปดาห์ที่ 12 (วันนี้ ⭐)
+ตรวจรับ UAT ➔ รวมสายเข้า main ➔ ปักแท็ก v2.0.0 ➔ ปิดโครงการ
+SOFTWARE EVOLUTION LIFECYCLE PHASE 3 EXECUTION CLOSURE
+บทสรุปของเฟสที่ 3 ใน Roadmap
+
+VALIDATION PROCESS การตรวจรับระบบ (UAT) ในงาน EVOLUTION
+การตรวจรับระบบ (UAT) ในงาน Evolution
+ยืนยันฟังก์ชันเดิม: ระบบคลังสินค้ายังคำนวณมูลค่าคงคลังถูกต้อง 100%
+ตรวจสอบฟังก์ชันใหม่: ยืนยันความพึงพอใจใน Barcode, Alert, และ CSV Export
+
+UAT ไม่ใช่การทดสอบย่อยระดับฟังก์ชัน แต่คือการจำลอง "วงจรการทำงานจริงของผู้ใช้ (End-to-End Flow)":
+Scenario 1: Inbound
+รับสินค้าเข้าคลัง สแกน Barcode ระบุจำนวนและ Reorder Point ตรวจสอบว่าบันทึกสำเร็จ
+Scenario 2: Operation
+ตัดสต็อกขายสินค้า ตรวจสอบว่าระบบแจ้งเตือน Alert เมื่อสต็อก $\le$ Reorder Point
+Scenario 3: Reporting
+สั่ง Export รายงานสินค้าสต็อกต่ำออกมาเป็นไฟล์ .csv และเปิดตรวจสอบใน Excel
+END-TO-END BUSINESS FLOW การออกแบบ UAT TEST SCENARIOS
+การออกแบบ UAT Test Scenarios
+
+Scenario ID
+User Role
+Action Steps & Inputs
+Expected Business Result
+UAT-SC01
+Inventory Manager
+เพิ่มสินค้าใหม่ Milk (885) สต็อก 10 ชิ้น Reorder Point = 5
+บันทึกข้อมูลเข้าฐานข้อมูลสำเร็จ ไร้ Crash 🟢
+UAT-SC02
+Store Cashier
+ตัดสต็อกสินค้า Milk ออก 6 ชิ้น (เหลือสต็อก 4 ชิ้น)
+ระบบขึ้นข้อความแจ้งเตือนสต็อกต่ำทันที 🟡
+UAT-SC03
+Purchasing Officer
+เลือกเมนู Export CSV และเปิดไฟล์ผลลัพธ์ใน Microsoft Excel
+มีคอลัมน์ Barcode และข้อมูลสินค้าสต็อกต่ำถูกต้อง 🟢
+ACCEPTANCE PROTOCOL SHEET โครงสร้างตาราง UAT TEST CASE
+โครงสร้างตาราง UAT Test Case
+
+1. UAT Defect (ข้อบกพร่องจริง)
+ระบบทำงานไม่ตรงตามสเปกเดิม (เช่น สต็อก $\le$ Reorder Point แต่ไม่ยอมแจ้งเตือน)
+➔ การจัดการ: เป็นบั๊กวิกฤต ต้องรีบแก้ไขบน Branch แก้ไขด่วนก่อน Merge
+2. New Scope (ความต้องการใหม่)
+ผู้ใช้ทดลองใช้แล้วอยากได้ฟังก์ชันเพิ่มเติม (เช่น "อยากให้ส่งอีเมลหาซัพพลายเออร์ด้วย")
+➔ การจัดการ: ห้ามทำในสัปดาห์นี้ ให้บันทึกลง Future Backlog (v3.0)
+DEFECT VS SCOPE CREEP UAT DEFECTS VS. NEW SCOPE
+UAT Defects vs. New Scope
+
+ขจัด Confirmation Bias
+ผู้พัฒนาจะมีอคติเชิงบวกและมักหลีกเลี่ยงการป้อนข้อมูลที่ทำให้ระบบตนเองพัง จึงจำเป็นต้องใช้การทดสอบข้ามกลุ่ม:
+กลุ่ม A ส่งมอบระบบคลังสินค้าให้ตัวแทนกลุ่ม B ทดสอบในฐานะ "ผู้ใช้งานจริง"
+ตัวแทนกลุ่ม B ป้อนข้อมูลตาม UAT Scenarios และลงผลตรวจอย่างเป็นกลาง
+PEER VERIFICATION MECHANISM กิจกรรม CROSS-TEAM TESTING
+กิจกรรม Cross-Team Testing
+
+FORMAL ACCEPTANCE CERTIFICATE ใบรับรองการตรวจรับงาน (UAT SIGN-OFF)
+ใบรับรองการตรวจรับงาน (UAT Sign-off)
+สรุปผลการทดสอบ (Total Scenarios Passed: 100%)
+ข้อความรับรองการอนุมัติปล่อยสู่ Production
+ลายเซ็นตัวแทนผู้ทดสอบและ Tech Lead
+
+Transition Process
+กระบวนการย้ายซอฟต์แวร์ที่ผ่านการทดสอบสมบูรณ์ (Validated Software) จาก Staging/Develop เข้าสู่สภาพแวดล้อมใช้งานจริง (Production Baseline)
+3 เงื่อนไขก่อนรวมสายเข้า main
+ใบรับรอง UAT Sign-off ผ่านการลงนามครบถ้วน
+Full Regression PyTest รันผ่านไฟเขียว 100%
+ได้รับการอนุมัติจาก Tech Lead บน Pull Request
+RELEASE MANAGEMENT PROTOCOL การส่งมอบสู่ PRODUCTION ISO 12207
+การส่งมอบสู่ Production ISO 12207
+
+Final Pull Request
+เปิด Pull Request จาก develop เข้าสู่สาขา main เพื่อรวมฟีเจอร์ Refactored Architecture + CR-01 + CR-02
+Gold Master Version
+เมื่อผ่าน CI/CD Checks และกด Confirm Merge สาขา main จะกลายเป็นเวอร์ชันทางการของโครงการ (Gold Master Release)
+GIT BRANCHING FINALIZATION สถาปัตยกรรม GITFLOW สู่ MAIN
+สถาปัตยกรรม GitFlow สู่ main
+
+STANDARD VERSION LABELING การปักหมุดเวอร์ชัน: SEMVER 2.0.0
+การปักหมุดเวอร์ชัน: SemVer 2.0.0
+จาก v1.0.0-baseline ขยับเป็น v2.0.0-evolution เพราะมีการเปลี่ยนสถาปัตยกรรมใหญ่และเพิ่มโมเดลข้อมูลทางธุรกิจใหม่
+
+# 1. สลับไปที่สาขา main และดึงโค้ดล่าสุด
+# 2. สร้าง Annotated Tag พร้อมข้อความกำกับ
+"Production Release v2.0.0: Refactored Repository Pattern, Barcode Support, Reorder Point Alerts, and CSV Reporting."
+# 3. ส่ง Tag ขึ้นสู่ GitHub Repository
+Immutable Milestone
+การใช้ -a (Annotated Tag) จะบันทึกชื่อผู้สร้าง วันเวลา และ Metadata ทางประวัติศาสตร์ไว้อย่างสมบูรณ์
+แท็กนี้จะกลายเป็นจุดอ้างอิงถาวรที่สามารถ Checkout กลับมาตรวจสอบได้ตลอดไป
+GIT ENGINE OPERATIONS คำสั่ง GIT สำหรับ ANNOTATED TAG
+คำสั่ง Git สำหรับ Annotated Tag
+
+GitHub Releases Page
+Source Code Assets
+ระบบ GitHub จะสร้างแพ็กเกจไฟล์ซอร์สโค้ด .zip และ .tar.gz ประจำเวอร์ชันให้โดยอัตโนมัติ พร้อมสำหรับการส่งมอบ
+Tag Name: v2.0.0-evolution
+Title: Mini Inventory System v2.0.0
+Badge: ป้ายสีเขียว Latest Release
+ARTIFACT VERIFICATION การตรวจ RELEASE บน GITHUB
+การตรวจ Release บน GitHub
+
+สรุปกิจกรรมการบำรุงรักษาทั้งหมดที่เกิดขึ้นในสัปดาห์ที่ 8 - 12 ครบทั้ง 3 มิติ:
+Preventive
+ผ่าตัดลบ global x ปรับสถาปัตยกรรมสู่ Repository Pattern เพื่อป้องกันข้อผิดพลาดอนาคต
+Corrective
+สืบสวนรากเหง้าปัญหา (RCA) และแก้ไขบั๊ก Legacy Data Schema ในสัปดาห์ที่ 10
+Perfective
+พัฒนาฟีเจอร์บาร์โค้ด (CR-01) และระบบออกรายงาน CSV (CR-02) ตามความต้องการใหม่
+ISO/IEC 14764 MAINTENANCE DOCUMENTATION ประวัติการบำรุงรักษา ISO 14764
+ประวัติการบำรุงรักษา ISO 14764
+
+Added & Changed
+Removed & Fixed
+Added: ฟังก์ชันใหม่ Barcode, Reorder Alert, CSV Export
+Changed: เปลี่ยนโครงสร้างสู่ Layered Architecture
+Removed: ลบตัวแปรสปาเก็ตตี global x
+Fixed: แก้ไขบั๊กแครชเมื่อเจอไฟล์ JSON ไร้บาร์โค้ด
+KEEP A CHANGELOG STANDARD โครงสร้างไฟล์ CHANGELOG.MD
+โครงสร้างไฟล์ CHANGELOG.md
+
+## [2.0.0-evolution] - 2026-08-31
+### Added
+### Changed
+### Removed
+### Fixed
+Documentation Transparency
+การจัดทำ CHANGELOG.md ที่ชัดเจน ช่วยให้ทีมงานในอนาคตเข้าใจประวัติการเปลี่ยนแปลงทั้งหมดอย่างรวดเร็ว
+เป็นหลักฐานทางวิศวกรรมที่สำคัญในการส่งมอบระบบบำรุงรักษา
+MARKDOWN RELEASE ARTIFACT ตัวอย่าง CHANGELOG.MD ฉบับจริง
+ตัวอย่าง CHANGELOG.md ฉบับจริง
+
+Workshop: "UAT Execution & Production Release v2.0"
+1. Cross-Team UAT
+สลับกลุ่มทดสอบระบบคลังสินค้า v2.0 ตาม 3 Scenarios
+2. UAT Sign-off
+บันทึกผลและลงลายเซ็นในเอกสาร UAT Sign-off Sheet
+3. Merge & Tag
+รวมสายเข้า main และสร้าง Git Tag v2.0.0-evolution
+4. CHANGELOG
+จัดทำและ Push ไฟล์ CHANGELOG.md ขึ้นสู่ GitHub
+PRACTICAL LAB ACTIVITY แนะนำกิจกรรม WORKSHOP วันนี้
+แนะนำกิจกรรม Workshop วันนี้
+
+ส่งมอบระบบทดสอบ
+กลุ่มเจ้าของระบบเปิดโปรแกรมคลังสินค้า v2.0 และยื่นแผ่น UAT Test Scenario Sheet ให้กลุ่มข้างเคียง
+ทดสอบ 3 Scenarios
+ผู้ทดสอบป้อนข้อมูลจริง: รับสินค้าบาร์โค้ด ➔ ตัดสต็อกให้เกิด Alert ➔ ออกรายงาน CSV และเปิดใน Excel
+WORKSHOP EXECUTION STEP 1 ขั้นตอน 1: รัน CROSS-TEAM UAT
+ขั้นตอน 1: รัน Cross-Team UAT
+
+ตรวจผลการทดสอบ
+ตรวจสอบว่าทุก Scenario มีสถานะเป็น Pass 100% ปราศจากบั๊กค้าง
+ลงนาม 2 ฝ่าย
+ตัวแทนผู้ทดสอบ (ลูกค้าสมมุติ) และ Tech Lead ลงลายเซ็นรับรองในเอกสาร UAT Sign-off Sheet
+WORKSHOP EXECUTION STEP 2 ขั้นตอน 2: ลงนาม UAT SIGN-OFF
+ขั้นตอน 2: ลงนาม UAT Sign-off
+
+Create PR to main
+เปิด Pull Request บน GitHub: base: main ← compare: develop
+Verify & Confirm Merge
+รอท่อ CI/CD รัน PyTest ผ่านไฟเขียว ➔ Tech Lead กดปุ่ม Confirm Merge
+WORKSHOP EXECUTION STEP 3 ขั้นตอน 3: รวมสายเข้าสู่ MAIN
+ขั้นตอน 3: รวมสายเข้าสู่ main
+
+"Release v2.0.0 with Refactored Architecture, Barcode, Reorder Point, and CSV Export"
+Production Tag Verification
+เปิดหน้าเว็บ GitHub แท็บ Releases ยืนยันว่ามีแท็ก v2.0.0-evolution ปรากฏขึ้นพร้อมป้ายสีเขียว Latest Release
+WORKSHOP EXECUTION STEP 4 ขั้นตอน 4: สร้าง RELEASE TAG
+ขั้นตอน 4: สร้าง Release Tag
+
+# บันทึกลง CHANGELOG.md ที่ root folder
+"docs: Update CHANGELOG.md for v2.0.0-evolution release"
+Historical Changelog Record
+บันทึกรายการเปลี่ยนแปลงครบถ้วนตามหมวด Added, Changed, Removed, Fixed แล้ว Push ขึ้นสาขา main
+WORKSHOP EXECUTION STEP 5 ขั้นตอน 5: จัดทำ CHANGELOG.MD
+ขั้นตอน 5: จัดทำ CHANGELOG.md
+
+ชิ้นงาน 1: เอกสารตรวจรับงานฉบับจริง (UAT Sign-off Sheet) ที่มีลายเซ็นครบถ้วน
+ชิ้นงาน 2: ลิงก์ GitHub Repository บนสาขา main ที่มี Git Tag: v2.0.0-evolution
+ชิ้นงาน 3: ไฟล์ CHANGELOG.md และรายงานประวัติการบำรุงรักษาตามมาตรฐาน ISO/IEC 14764
+ชิ้นงาน 4: ประวัติผลการรัน Full Suite PyTest CI/CD 100% Passed บนสาขา main
+PHASE 3 TECHNICAL DELIVERABLES เช็คลิสต์สิ่งส่งมอบปิดเฟส 3
+เช็คลิสต์สิ่งส่งมอบปิดเฟส 3
+
+ส่งมอบ UAT Sign-off ให้ PM
+ส่งมอบเอกสารรับรอง UAT ให้ Project Manager นำไปประกอบการขออนุมัติปิดโครงการจาก Sponsor (อาจารย์)
+Contract & EVM Close-out
+นำตัวเลขความสำเร็จไปทำ EVM Final Review และปิดสัญญาการจัดซื้อจัดจ้างเครื่องมือในวิชา ENGSE202 ช่วง 3 ชั่วโมงหลัง
+CROSS-COURSE ALIGNMENT สะพานส่งต่องานสู่วิชา ENGSE202
+สะพานส่งต่องานสู่วิชา ENGSE202
+
+User Validation
+การผ่าน Unit Test ไม่ได้รับประกันความสำเร็จ จนกว่าผู้ใช้จริงจะเซ็นรับรอง UAT
+Production Baseline
+การรวมสายเข้า main และสร้าง Git Tag v2.0.0 สร้างจุดอ้างอิงที่ย้อนรอยได้ถาวร
+ISO 14764 History
+การทำ CHANGELOG.md ครบ 3 มิติคือหัวใจของการส่งต่อระบบให้ทีมดูแลในอนาคต
+SESSION RECAP สรุปบทเรียนประจำสัปดาห์ที่ 12
+สรุปบทเรียนประจำสัปดาห์ที่ 12
+
+ISO/IEC/IEEE. (2017). Systems and software engineering — Software life cycle processes (ISO/IEC/IEEE Standard No. 12207:2017).
+ISO/IEC. (2006). Software Engineering — Software Life Cycle Processes — Maintenance (ISO/IEC Standard No. 14764:2006).
+ISO/IEC/IEEE. (2021). Software and systems engineering — Software testing — Part 4: Test techniques (ISO/IEC/IEEE Standard No. 29119-4:2021).
+Preston-Werner, T. (2013). Semantic Versioning 2.0.0 (semver.org).
+IEEE. (2012). IEEE Standard for Configuration Management in Systems and Software Engineering (IEEE Std 828-2012).
+SOFTWARE ENGINEERING BIBLIOGRAPHY เอกสารอ้างอิงทางวิชาการ
+เอกสารอ้างอิงทางวิชาการ
+
+http://googleusercontent.com/image_collection/image_retrieval/4122968037883972540_0
+Source: Software testing v-model validation verification diagram
+http://googleusercontent.com/image_collection/image_retrieval/8794069319075373887_0
+Source: Software development team cross testing verification
+http://googleusercontent.com/image_collection/image_retrieval/15493036569261154917_0
+Source: User acceptance testing sign off business approval checklist
+http://googleusercontent.com/image_collection/image_retrieval/9036307138089620697_0
+Source: Git tag release version semantic versioning branching
+Image Sources
+
+https://teachingagile.com/_next/image?url=%2Fblog%2Fenglish%2Fv-model.png&w=3840&q=75
+Source: teachingagile.com
+https://www.gisma.com/uploads/sites/5/2025/01/14-scaled.jpeg?w=1024
+Source: www.gisma.com
+https://www.inflectra.com/GraphicsViewer.aspx?url=~/Ideas/Topics/User-Acceptance-Testing.doc&name=wordml://03000001.png
+Source: www.inflectra.com
+https://www.sei.cmu.edu/media/images/Screenshot_2024-05-29_at_6.28.41AM.original.png
+Source: www.sei.cmu.edu
+Image Sources
