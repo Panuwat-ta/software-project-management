@@ -1,125 +1,171 @@
 <!DOCTYPE html>
 <html lang="th">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Week 7: Quality & SCM</title>
     <link rel="stylesheet" href="../shared-theme.css">
     <style>
-        .card { padding: 1.5rem; }
-        .card h3 { color: var(--indigo); border-bottom: 1px solid var(--rule); padding-bottom: 0.5rem; margin-bottom: 1rem; }
-        .card p { font-size: 0.95rem; line-height: 1.6; margin-bottom: 0.5rem; }
-        ul.slide-list { padding-left: 1.5rem; font-size: 0.95rem; line-height: 1.6; }
-        ul.slide-list li { margin-bottom: 0.5rem; }
+        .card {
+            padding: 1.5rem;
+        }
+
+        .card h3 {
+            color: var(--indigo);
+            border-bottom: 1px solid var(--rule);
+            padding-bottom: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .card p {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 0.5rem;
+        }
+
+        ul.slide-list {
+            padding-left: 1.5rem;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        ul.slide-list li {
+            margin-bottom: 0.5rem;
+        }
     </style>
 </head>
+
 <body>
-<div id="deck">
-    <div class="slide center-content">
-        <div class="badge">Week 7</div>
-        <h1>Quality & SCM</h1>
-        <h3>การควบคุมคุณภาพมาตรฐาน ISO/IEC 14598 และแผนงบประมาณ</h3>
-        <p style="margin-top: 2rem; max-width: 700px; color: var(--text-muted); font-size: 1.1rem; line-height: 1.6;">
-            เจาะลึกการใช้ตัวชี้วัดความซับซ้อนของโค้ด (Cyclomatic Complexity)<br>
-            การวางท่อส่งมอบ CI/CD อัตโนมัติ<br>
-            และการคำนวณขีดความสามารถ (Capacity) สำหรับรับงานใน Sprint 1
-        </p>
-    </div>
+    <div id="deck">
+        <div class="slide center-content">
+            <div class="badge">Week 7</div>
+            <h1>Quality & SCM</h1>
+            <h3>การควบคุมคุณภาพมาตรฐาน ISO/IEC 14598 และแผนงบประมาณ</h3>
+            <p
+                style="margin-top: 2rem; max-width: 700px; color: var(--text-muted); font-size: 1.1rem; line-height: 1.6;">
+                เจาะลึกการใช้ตัวชี้วัดความซับซ้อนของโค้ด (Cyclomatic Complexity)<br>
+                การวางท่อส่งมอบ CI/CD อัตโนมัติ<br>
+                และการคำนวณขีดความสามารถ (Capacity) สำหรับรับงานใน Sprint 1
+            </p>
+        </div>
 
-    <div class="slide">
-        <h2>1. การประเมินคุณภาพ (ISO/IEC 14598)</h2>
-        <p style="margin-bottom: 1rem; font-size: 1.05rem;">ตัวชี้วัดเชิงปริมาณ (Quantitative Metrics) เพื่อประกันความสำเร็จของการรีแฟกเตอร์:</p>
-        <div class="grid-2">
-            <div class="card">
-                <h3> Cyclomatic Complexity v(G)</h3>
-                <ul class="slide-list">
-                    <li><strong>ก่อนแก้ไข:</strong> `main()` มีการใช้ <code>if-elif-else</code> ซ้อนกันมากกว่า 20 ชั้น เสี่ยงต่อบั๊กแฝงสูงลิบ</li>
-                    <li><strong>เป้าหมายใหม่:</strong> บังคับให้ฟังก์ชันย่อยลง (Modular) จนมีค่า v(G) ≤ 8 เพื่อการดูแลรักษาที่ง่ายขึ้น</li>
-                </ul>
+        <div class="slide">
+            <h2>1. การประเมินคุณภาพ (ISO/IEC 14598)</h2>
+            <p style="margin-bottom: 1rem; font-size: 1.05rem;">ตัวชี้วัดเชิงปริมาณ (Quantitative Metrics)
+                เพื่อประกันความสำเร็จของการรีแฟกเตอร์:</p>
+            <div class="grid-2">
+                <div class="card">
+                    <h3> Cyclomatic Complexity v(G)</h3>
+                    <ul class="slide-list">
+                        <li><strong>ก่อนแก้ไข:</strong> `main()` มีการใช้ <code>if-elif-else</code> ซ้อนกันมากกว่า 20
+                            ชั้น เสี่ยงต่อบั๊กแฝงสูงลิบ</li>
+                        <li><strong>เป้าหมายใหม่:</strong> บังคับให้ฟังก์ชันย่อยลง (Modular) จนมีค่า v(G) ≤ 8
+                            เพื่อการดูแลรักษาที่ง่ายขึ้น</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3> Security & Reliability</h3>
+                    <ul class="slide-list">
+                        <li><strong>กำจัดตัวแปร Global:</strong> เลิกใช้ <code>global x</code> และผูกข้อมูลเข้ากับ Class
+                            (Encapsulation)</li>
+                        <li><strong>ป้องกัน SQL Injection:</strong> ห้ามต่อสตริง SQL สดๆ บังคับใช้ Parameterized Query
+                            ทุกคำสั่ง (Repository)</li>
+                    </ul>
+                </div>
             </div>
-            <div class="card">
-                <h3> Security & Reliability</h3>
-                <ul class="slide-list">
-                    <li><strong>กำจัดตัวแปร Global:</strong> เลิกใช้ <code>global x</code> และผูกข้อมูลเข้ากับ Class (Encapsulation)</li>
-                    <li><strong>ป้องกัน SQL Injection:</strong> ห้ามต่อสตริง SQL สดๆ บังคับใช้ Parameterized Query ทุกคำสั่ง (Repository)</li>
-                </ul>
+        </div>
+
+        <div class="slide">
+            <h2>2. ระบบควบคุมคุณภาพอัตโนมัติ (CI/CD Quality Gate)</h2>
+            <div class="grid-2" style="align-items: center;">
+                <div>
+                    <p style="font-size: 1.05rem; line-height: 1.6; margin-bottom: 1rem;">
+                        การพึ่งพามนุษย์ตรวจสอบโค้ดเพียงอย่างเดียวอาจมีข้อผิดพลาด (Human Error) เราจึงติดตั้ง
+                        <strong>GitHub Actions</strong> ผ่านไฟล์ <code>pytest.yml</code> ให้ทำหน้าที่เป็น
+                        <strong>"ยามรักษาการณ์อัตโนมัติ"</strong>:</p>
+                    <ul class="slide-list">
+                        <li>ทำงานทุกครั้งที่ Developer สั่ง Push หรือเปิด Pull Request เข้า <code>develop</code></li>
+                        <li>โหลด <code>requirements.txt</code> (เช่น pytest==8.0.2) และรัน <code>test_app.py</code></li>
+                        <li><strong>กฎเหล็ก:</strong> หากพบ Fail แม้แต่เคสเดียว ปุ่มรวมโค้ด (Merge)
+                            จะถูกปิดการใช้งานทันที ป้องกันโค้ดขยะหลุดขึ้นสู่เซิร์ฟเวอร์หลัก</li>
+                    </ul>
+                </div>
+                <div class="card" style="background: var(--ink-soft); color: var(--paper);">
+                    <h3 style="color: var(--amber); border-color: rgba(255,255,255,0.2);">Code Coverage Goal</h3>
+                    <div
+                        style="font-size: 3.5rem; font-weight: 700; color: var(--paper); text-align: center; margin: 1.5rem 0;">
+                        ≥ 85%</div>
+                    <p style="text-align: center; font-size: 0.9rem; color: rgba(255,255,255,0.7);">ของ Business Logic
+                        ทั้งหมด<br>ต้องถูกครอบคลุมโดยเทสต์</p>
+                </div>
             </div>
+        </div>
+
+        <div class="slide">
+            <h2>3. ต้นทุนงบประมาณ & แผนกำลังคน (Cost & Capacity Planning)</h2>
+            <p style="font-size: 1.05rem; line-height: 1.6; margin-bottom: 1.5rem;">
+                ภาพรวมโครงสร้างการเงินและการประเมินความพร้อมของทีมสำหรับ <strong>Sprint 1</strong> (เป้าหมาย: ย้ายไป
+                SQLite + สร้างระบบ Member):</p>
+            <table style="width: 100%; font-size: 0.95rem; margin-bottom: 1.5rem;">
+                <thead>
+                    <tr>
+                        <th style="width: 40%">ตัวชี้วัดความพร้อม (Metrics)</th>
+                        <th>รายละเอียดผลลัพธ์ (Outcomes)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Team Capacity (ขีดความสามารถการผลิต)</strong></td>
+                        <td>ทีม 3 คน × สละเวลา 6 ชม./สัปดาห์ × ระยะเวลา 2 สัปดาห์ = <strong>36 Man-Hours</strong>
+                            (จำกัดห้ามรับงานเกินนี้)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Direct Labor Cost (ต้นทุนตรง)</strong></td>
+                        <td>15,000 บาท (ค่าแรงสำหรับงาน Refactor และเทสต์ระบบ) + 1,000 บาท (Cloud/Tools)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Contingency Reserve (เงินสำรอง)</strong></td>
+                        <td>เตรียมไว้ 15% เผื่อฉุกเฉิน (เช่น แก้อาการบั๊กจาก Legacy Code) = <strong>2,823 บาท</strong>
+                        </td>
+                    </tr>
+                    <tr style="background: var(--paper-warm); font-weight: 600;">
+                        <td><strong>Total Approved Budget (งบอนุมัติ)</strong></td>
+                        <td style="color: var(--indigo-deep);">18,823 บาท ถ้วน</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 
-    <div class="slide">
-        <h2>2. ระบบควบคุมคุณภาพอัตโนมัติ (CI/CD Quality Gate)</h2>
-        <div class="grid-2" style="align-items: center;">
-            <div>
-                <p style="font-size: 1.05rem; line-height: 1.6; margin-bottom: 1rem;">การพึ่งพามนุษย์ตรวจสอบโค้ดเพียงอย่างเดียวอาจมีข้อผิดพลาด (Human Error) เราจึงติดตั้ง <strong>GitHub Actions</strong> ผ่านไฟล์ <code>pytest.yml</code> ให้ทำหน้าที่เป็น <strong>"ยามรักษาการณ์อัตโนมัติ"</strong>:</p>
-                <ul class="slide-list">
-                    <li>ทำงานทุกครั้งที่ Developer สั่ง Push หรือเปิด Pull Request เข้า <code>develop</code></li>
-                    <li>โหลด <code>requirements.txt</code> (เช่น pytest==8.0.2) และรัน <code>test_app.py</code></li>
-                    <li><strong>กฎเหล็ก:</strong> หากพบ Fail แม้แต่เคสเดียว ปุ่มรวมโค้ด (Merge) จะถูกปิดการใช้งานทันที ป้องกันโค้ดขยะหลุดขึ้นสู่เซิร์ฟเวอร์หลัก</li>
-                </ul>
-            </div>
-            <div class="card" style="background: var(--ink-soft); color: var(--paper);">
-                <h3 style="color: var(--amber); border-color: rgba(255,255,255,0.2);">Code Coverage Goal</h3>
-                <div style="font-size: 3.5rem; font-weight: 700; color: var(--paper); text-align: center; margin: 1.5rem 0;">≥ 85%</div>
-                <p style="text-align: center; font-size: 0.9rem; color: rgba(255,255,255,0.7);">ของ Business Logic ทั้งหมด<br>ต้องถูกครอบคลุมโดยเทสต์</p>
-            </div>
-        </div>
+    <div class="controls">
+        <button class="btn" id="prevBtn" onclick="prevSlide()" disabled>&#8592;</button>
+        <div class="counter"><span id="currentSlide">1</span> / <span id="totalSlides">4</span></div>
+        <button class="btn" id="nextBtn" onclick="nextSlide()">&#8594;</button>
     </div>
 
-    <div class="slide">
-        <h2>3. ต้นทุนงบประมาณ & แผนกำลังคน (Cost & Capacity Planning)</h2>
-        <p style="font-size: 1.05rem; line-height: 1.6; margin-bottom: 1.5rem;">ภาพรวมโครงสร้างการเงินและการประเมินความพร้อมของทีมสำหรับ <strong>Sprint 1</strong> (เป้าหมาย: ย้ายไป SQLite + สร้างระบบ Member):</p>
-        <table style="width: 100%; font-size: 0.95rem; margin-bottom: 1.5rem;">
-            <thead><tr><th style="width: 40%">ตัวชี้วัดความพร้อม (Metrics)</th><th>รายละเอียดผลลัพธ์ (Outcomes)</th></tr></thead>
-            <tbody>
-                <tr>
-                    <td><strong>Team Capacity (ขีดความสามารถการผลิต)</strong></td>
-                    <td>ทีม 3 คน × สละเวลา 6 ชม./สัปดาห์ × ระยะเวลา 2 สัปดาห์ = <strong>36 Man-Hours</strong> (จำกัดห้ามรับงานเกินนี้)</td>
-                </tr>
-                <tr>
-                    <td><strong>Direct Labor Cost (ต้นทุนตรง)</strong></td>
-                    <td>15,000 บาท (ค่าแรงสำหรับงาน Refactor และเทสต์ระบบ) + 1,000 บาท (Cloud/Tools)</td>
-                </tr>
-                <tr>
-                    <td><strong>Contingency Reserve (เงินสำรอง)</strong></td>
-                    <td>เตรียมไว้ 15% เผื่อฉุกเฉิน (เช่น แก้อาการบั๊กจาก Legacy Code) = <strong>2,823 บาท</strong></td>
-                </tr>
-                <tr style="background: var(--paper-warm); font-weight: 600;">
-                    <td><strong>Total Approved Budget (งบอนุมัติ)</strong></td>
-                    <td style="color: var(--indigo-deep);">18,823 บาท ถ้วน</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-</div>
+    <script>
+        const slides = document.querySelectorAll('.slide');
+        const total = slides.length;
+        let current = 0;
+        document.getElementById('totalSlides').textContent = total;
 
-<div class="controls">
-    <button class="btn" id="prevBtn" onclick="prevSlide()" disabled>&#8592;</button>
-    <div class="counter"><span id="currentSlide">1</span> / <span id="totalSlides">4</span></div>
-    <button class="btn" id="nextBtn" onclick="nextSlide()">&#8594;</button>
-</div>
+        function updateSlides() {
+            slides.forEach((slide, index) => {
+                slide.classList.remove('active', 'prev');
+                if (index === current) slide.classList.add('active');
+                else if (index < current) slide.classList.add('prev');
+            });
+            document.getElementById('currentSlide').textContent = current + 1;
+            document.getElementById('prevBtn').disabled = current === 0;
+            document.getElementById('nextBtn').disabled = current === total - 1;
+        }
 
-<script>
-    const slides = document.querySelectorAll('.slide');
-    const total = slides.length;
-    let current = 0;
-    document.getElementById('totalSlides').textContent = total;
-
-    function updateSlides() {
-        slides.forEach((slide, index) => {
-            slide.classList.remove('active', 'prev');
-            if (index === current) slide.classList.add('active');
-            else if (index < current) slide.classList.add('prev');
-        });
-        document.getElementById('currentSlide').textContent = current + 1;
-        document.getElementById('prevBtn').disabled = current === 0;
-        document.getElementById('nextBtn').disabled = current === total - 1;
-    }
-
-    function nextSlide() { if (current < total - 1) { current++; updateSlides(); } }
-    function prevSlide() { if (current > 0) { current--; updateSlides(); } }
-    document.addEventListener('keydown', (e) => { if (e.key === 'ArrowRight' || e.key === 'Space') nextSlide(); else if (e.key === 'ArrowLeft') prevSlide(); });
-    updateSlides();
-</script>
+        function nextSlide() { if (current < total - 1) { current++; updateSlides(); } }
+        function prevSlide() { if (current > 0) { current--; updateSlides(); } }
+        document.addEventListener('keydown', (e) => { if (e.key === 'ArrowRight' || e.key === 'Space') nextSlide(); else if (e.key === 'ArrowLeft') prevSlide(); });
+        updateSlides();
+    </script>
 </body>
+
 </html>

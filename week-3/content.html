@@ -172,9 +172,9 @@
     <div class="badge" data-od-id="week-3-label">Week 3 · Implementation</div>
     <h1 data-od-id="week-3-heading">Implementation & Discount Engine</h1>
     <p class="lede">พัฒนาระบบจ่ายสินค้า ตรรกะคำนวณส่วนลด และกำหนดบทบาทการทำงานในทีม (RACI)</p>
-    
+
     <div class="divider"></div>
-    
+
     <section class="summary" aria-label="เป้าหมายและบทบาท" data-od-id="week-3-summary">
       <article class="panel" data-od-id="project-facts">
         <h2>1. เป้าหมายสัปดาห์ที่ 3 (Phase 3)</h2>
@@ -185,7 +185,8 @@
           </div>
           <div>
             <dt>Checkout Process</dt>
-            <dd>ปรับปรุงฟังก์ชันการทำรายการขายให้สามารถแสดงรายละเอียดการคิดเงินก่อนหักสต็อก และยืนยันผลลัพธ์ที่ชัดเจน</dd>
+            <dd>ปรับปรุงฟังก์ชันการทำรายการขายให้สามารถแสดงรายละเอียดการคิดเงินก่อนหักสต็อก และยืนยันผลลัพธ์ที่ชัดเจน
+            </dd>
           </div>
           <div>
             <dt>Team Management</dt>
@@ -213,23 +214,28 @@
         <dl class="facts">
           <div>
             <dt>ภานุวัฒน์ (PM/Dev)</dt>
-            <dd><strong>Responsible (R) / Accountable (A):</strong> จัดทำ Project Charter, ร่างขอบเขตงาน, และพัฒนาฟีเจอร์หลัก (Discount Logic, Safe Save)</dd>
+            <dd><strong>Responsible (R) / Accountable (A):</strong> จัดทำ Project Charter, ร่างขอบเขตงาน,
+              และพัฒนาฟีเจอร์หลัก (Discount Logic, Safe Save)</dd>
           </div>
           <div>
             <dt>เอกพันธ์ (QA)</dt>
-            <dd><strong>Responsible (R):</strong> ออกแบบ Test Case และเขียน Unit Tests (PyTest) สำหรับระบบจัดการคลังและส่วนลด</dd>
+            <dd><strong>Responsible (R):</strong> ออกแบบ Test Case และเขียน Unit Tests (PyTest)
+              สำหรับระบบจัดการคลังและส่วนลด</dd>
           </div>
           <div>
             <dt>ณฐภาพ (Tech Lead)</dt>
-            <dd><strong>Consulted (C) / Accountable (A):</strong> ให้คำแนะนำด้านสถาปัตยกรรม (MVC) ตรวจรับ Approve โค้ด และดูแลเรื่อง Code Merging</dd>
+            <dd><strong>Consulted (C) / Accountable (A):</strong> ให้คำแนะนำด้านสถาปัตยกรรม (MVC) ตรวจรับ Approve โค้ด
+              และดูแลเรื่อง Code Merging</dd>
           </div>
         </dl>
       </article>
-      
+
       <article class="panel" data-od-id="discount-logic">
         <h2>4. โครงสร้างตรรกะการคิดส่วนลด (Discount Engine)</h2>
-        <p style="padding-top: 12px; color: var(--text-muted); font-size: 0.9rem; margin-bottom: 8px;">ตัวอย่างลำดับขั้นในการจ่ายเงินและคิดส่วนลด</p>
-        <pre style="background: var(--ink-soft); padding: 12px; border-radius: 8px; overflow-x: auto; font-family: 'IBM Plex Mono', monospace; font-size: 0.85rem; color: #fff;"><code># Discount Logic Flow
+        <p style="padding-top: 12px; color: var(--text-muted); font-size: 0.9rem; margin-bottom: 8px;">
+          ตัวอย่างลำดับขั้นในการจ่ายเงินและคิดส่วนลด</p>
+        <pre
+          style="background: var(--ink-soft); padding: 12px; border-radius: 8px; overflow-x: auto; font-family: 'IBM Plex Mono', monospace; font-size: 0.85rem; color: #fff;"><code># Discount Logic Flow
 1. รับรหัสสินค้า (Product ID) และจำนวนที่ต้องการซื้อ
 2. ตรวจสอบสต็อกคงเหลือ (if qty <= stock)
 3. ตรวจสอบรหัสสมาชิก (Member ID)
@@ -240,8 +246,8 @@
     </section>
   </main>
 
-  
-  
+
+
 
   <script src="https://cdn.jsdelivr.net/npm/svg-pan-zoom@3.6.1/dist/svg-pan-zoom.min.js"></script>
   <script>
@@ -250,11 +256,11 @@
       document.querySelectorAll('.mermaid-container').forEach(container => {
         // Remove old buttons if script runs twice
         container.querySelectorAll('.btn-expand-mermaid').forEach(b => b.remove());
-        
+
         const btn = document.createElement('button');
         btn.className = 'btn-expand-mermaid';
         btn.innerHTML = ' Fullscreen';
-        
+
         btn.onclick = () => {
           const originalSvg = container.querySelector('svg');
           if (!originalSvg) return;
@@ -271,7 +277,7 @@
           overlay.style.display = 'flex';
           overlay.style.alignItems = 'center';
           overlay.style.justifyContent = 'center';
-          
+
           // Create Close button
           const closeBtn = document.createElement('button');
           closeBtn.innerHTML = ' Close';
@@ -288,7 +294,7 @@
           closeBtn.style.borderRadius = '8px';
           closeBtn.style.zIndex = '1000000';
           closeBtn.style.boxShadow = '0 4px 12px rgba(0,0,0,0.2)';
-          
+
           closeBtn.onmouseover = () => closeBtn.style.backgroundColor = '#e60000';
           closeBtn.onmouseout = () => closeBtn.style.backgroundColor = '#ff4d4d';
 
@@ -298,7 +304,7 @@
           clonedSvg.style.height = '100%';
           clonedSvg.style.maxWidth = '100vw';
           clonedSvg.style.maxHeight = '100vh';
-          
+
           overlay.appendChild(clonedSvg);
           overlay.appendChild(closeBtn);
           document.body.appendChild(overlay);
@@ -329,10 +335,10 @@
     });
   </script>
 
-<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
-    <script>
-        mermaid.initialize({ startOnLoad: true, theme: 'base', themeVariables: { primaryColor: '#EFE9DA', primaryTextColor: '#1B1F2B', primaryBorderColor: '#3D4B94', lineColor: '#3D4B94', secondaryColor: '#F6F4EE', tertiaryColor: '#F6F4EE' } });
-    </script>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+  <script>
+    mermaid.initialize({ startOnLoad: true, theme: 'base', themeVariables: { primaryColor: '#EFE9DA', primaryTextColor: '#1B1F2B', primaryBorderColor: '#3D4B94', lineColor: '#3D4B94', secondaryColor: '#F6F4EE', tertiaryColor: '#F6F4EE' } });
+  </script>
 </body>
 
 </html>

@@ -171,21 +171,24 @@
     <p class="file-path" data-od-id="source-path">/week-5/content.html</p>
     <div class="badge" data-od-id="week-5-label">Week 5 · Project Finalization</div>
     <h1 data-od-id="week-5-heading">Quality, Architecture & Budget</h1>
-    <p class="lede">สรุปปิดโครงการ นำเสนอสถาปัตยกรรมเปรียบเทียบ งบประมาณ และการประเมินคุณภาพซอฟต์แวร์ตามมาตรฐานสากล ISO/IEC 25010</p>
-    
+    <p class="lede">สรุปปิดโครงการ นำเสนอสถาปัตยกรรมเปรียบเทียบ งบประมาณ และการประเมินคุณภาพซอฟต์แวร์ตามมาตรฐานสากล
+      ISO/IEC 25010</p>
+
     <div class="divider"></div>
-    
+
     <section class="summary" aria-label="สรุปคุณภาพซอฟต์แวร์" data-od-id="week-5-summary">
       <article class="panel" data-od-id="project-facts">
         <h2>1. สถาปัตยกรรมและงบประมาณ (Architecture & Cost)</h2>
         <dl class="facts">
           <div>
             <dt>As-is vs To-be</dt>
-            <dd>ยกระดับจาก <strong>Monolithic Script (JSON)</strong> แบบดั้งเดิมที่ผูกติดกับ Global State ไปสู่ <strong>MVC Architecture</strong> ที่แยกชั้น Presentation, Business Logic และ Data Access อย่างชัดเจน</dd>
+            <dd>ยกระดับจาก <strong>Monolithic Script (JSON)</strong> แบบดั้งเดิมที่ผูกติดกับ Global State ไปสู่
+              <strong>MVC Architecture</strong> ที่แยกชั้น Presentation, Business Logic และ Data Access อย่างชัดเจน</dd>
           </div>
           <div>
             <dt>Budget Breakdown</dt>
-            <dd>งบประมาณตลอดโครงการครอบคลุมค่าแรงพัฒนา (40 Man-hours = 31,000 THB), ค่าโครงสร้างพื้นฐาน (3,000 THB) และเงินสำรองฉุกเฉิน (Contingency 10% = 3,400 THB)</dd>
+            <dd>งบประมาณตลอดโครงการครอบคลุมค่าแรงพัฒนา (40 Man-hours = 31,000 THB), ค่าโครงสร้างพื้นฐาน (3,000 THB)
+              และเงินสำรองฉุกเฉิน (Contingency 10% = 3,400 THB)</dd>
           </div>
           <div>
             <dt>Total Cost</dt>
@@ -197,10 +200,14 @@
       <article class="panel" data-od-id="quality-iso25010">
         <h2>2. การประเมินคุณภาพ (ISO/IEC 25010)</h2>
         <ol class="steps">
-          <li><strong>Functional Suitability:</strong> ระบบมีความสมบูรณ์เชิงฟังก์ชัน สามารถตัดสต็อกได้อย่างแม่นยำ และมีระบบสมาชิกรองรับส่วนลดตาม Tier อย่างครบถ้วน</li>
-          <li><strong>Reliability:</strong> ระบบมีความทนทาน (Fault Tolerance) สูงขึ้น ป้องกันปัญหาแครชและข้อมูลสูญหายจากการบันทึกด้วยเทคนิค Atomic Save</li>
-          <li><strong>Usability:</strong> ถึงแม้จะเป็น CLI แต่มีกลไกดักจับ Input ผิดพลาดพร้อมข้อความแจ้งเตือนที่ชัดเจน เพื่อแนะนำให้ผู้ใช้กรอกข้อมูลได้ถูกต้อง</li>
-          <li><strong>Maintainability:</strong> โครงสร้างโค้ดแบบใหม่ (Modular) และชุดทดสอบ (Automated PyTest) ช่วยให้นักพัฒนารุ่นต่อไปสามารถปรับปรุงหรือขยายระบบได้ง่ายโดยไม่ต้องกลัวบั๊กเก่ากำเริบ</li>
+          <li><strong>Functional Suitability:</strong> ระบบมีความสมบูรณ์เชิงฟังก์ชัน สามารถตัดสต็อกได้อย่างแม่นยำ
+            และมีระบบสมาชิกรองรับส่วนลดตาม Tier อย่างครบถ้วน</li>
+          <li><strong>Reliability:</strong> ระบบมีความทนทาน (Fault Tolerance) สูงขึ้น
+            ป้องกันปัญหาแครชและข้อมูลสูญหายจากการบันทึกด้วยเทคนิค Atomic Save</li>
+          <li><strong>Usability:</strong> ถึงแม้จะเป็น CLI แต่มีกลไกดักจับ Input ผิดพลาดพร้อมข้อความแจ้งเตือนที่ชัดเจน
+            เพื่อแนะนำให้ผู้ใช้กรอกข้อมูลได้ถูกต้อง</li>
+          <li><strong>Maintainability:</strong> โครงสร้างโค้ดแบบใหม่ (Modular) และชุดทดสอบ (Automated PyTest)
+            ช่วยให้นักพัฒนารุ่นต่อไปสามารถปรับปรุงหรือขยายระบบได้ง่ายโดยไม่ต้องกลัวบั๊กเก่ากำเริบ</li>
         </ol>
       </article>
     </section>
@@ -211,19 +218,21 @@
       <article class="panel" data-od-id="delivery-plan">
         <h2>3. สรุปผลการส่งมอบโครงการ (Project Handover)</h2>
         <div style="margin-top: 15px; font-size: 0.95rem; line-height: 1.6; color: var(--text-main);">
-          <p>โครงการปรับปรุง CLI Inventory Management System ได้สำเร็จลุล่วงตามวัตถุประสงค์ (Project Objectives) ที่ตั้งไว้ในสัปดาห์ที่ 1 อย่างครบถ้วนสมบูรณ์:</p>
+          <p>โครงการปรับปรุง CLI Inventory Management System ได้สำเร็จลุล่วงตามวัตถุประสงค์ (Project Objectives)
+            ที่ตั้งไว้ในสัปดาห์ที่ 1 อย่างครบถ้วนสมบูรณ์:</p>
           <ul style="padding-left: 20px;">
             <li>ปัญหา <strong>Spaghetti Code</strong> ได้รับการแก้ไขเป็นที่เรียบร้อย</li>
             <li>ผ่านการประเมินคุณภาพโดย <strong>QA Team</strong> ด้วยความสำเร็จระดับ 100% (No Error)</li>
-            <li>เอกสารประกอบทั้งหมด รวมถึง Integrated Planning Proposal และ Source Code ฉบับสมบูรณ์ ได้รับการส่งมอบเข้าสู่สายการผลิตจริง (Production Ready)</li>
+            <li>เอกสารประกอบทั้งหมด รวมถึง Integrated Planning Proposal และ Source Code ฉบับสมบูรณ์
+              ได้รับการส่งมอบเข้าสู่สายการผลิตจริง (Production Ready)</li>
           </ul>
         </div>
       </article>
     </section>
   </main>
 
-  
-  
+
+
 
   <script src="https://cdn.jsdelivr.net/npm/svg-pan-zoom@3.6.1/dist/svg-pan-zoom.min.js"></script>
   <script>
@@ -232,11 +241,11 @@
       document.querySelectorAll('.mermaid-container').forEach(container => {
         // Remove old buttons if script runs twice
         container.querySelectorAll('.btn-expand-mermaid').forEach(b => b.remove());
-        
+
         const btn = document.createElement('button');
         btn.className = 'btn-expand-mermaid';
         btn.innerHTML = ' Fullscreen';
-        
+
         btn.onclick = () => {
           const originalSvg = container.querySelector('svg');
           if (!originalSvg) return;
@@ -253,7 +262,7 @@
           overlay.style.display = 'flex';
           overlay.style.alignItems = 'center';
           overlay.style.justifyContent = 'center';
-          
+
           // Create Close button
           const closeBtn = document.createElement('button');
           closeBtn.innerHTML = ' Close';
@@ -270,7 +279,7 @@
           closeBtn.style.borderRadius = '8px';
           closeBtn.style.zIndex = '1000000';
           closeBtn.style.boxShadow = '0 4px 12px rgba(0,0,0,0.2)';
-          
+
           closeBtn.onmouseover = () => closeBtn.style.backgroundColor = '#e60000';
           closeBtn.onmouseout = () => closeBtn.style.backgroundColor = '#ff4d4d';
 
@@ -280,7 +289,7 @@
           clonedSvg.style.height = '100%';
           clonedSvg.style.maxWidth = '100vw';
           clonedSvg.style.maxHeight = '100vh';
-          
+
           overlay.appendChild(clonedSvg);
           overlay.appendChild(closeBtn);
           document.body.appendChild(overlay);
@@ -311,10 +320,10 @@
     });
   </script>
 
-<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
-    <script>
-        mermaid.initialize({ startOnLoad: true, theme: 'base', themeVariables: { primaryColor: '#EFE9DA', primaryTextColor: '#1B1F2B', primaryBorderColor: '#3D4B94', lineColor: '#3D4B94', secondaryColor: '#F6F4EE', tertiaryColor: '#F6F4EE' } });
-    </script>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+  <script>
+    mermaid.initialize({ startOnLoad: true, theme: 'base', themeVariables: { primaryColor: '#EFE9DA', primaryTextColor: '#1B1F2B', primaryBorderColor: '#3D4B94', lineColor: '#3D4B94', secondaryColor: '#F6F4EE', tertiaryColor: '#F6F4EE' } });
+  </script>
 </body>
 
 </html>

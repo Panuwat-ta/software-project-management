@@ -123,7 +123,8 @@
       line-height: 1.65 !important;
     }
 
-    ul, ol {
+    ul,
+    ol {
       margin: 8px 0 16px 20px;
       padding-left: 10px;
     }
@@ -140,7 +141,8 @@
       border: 1px solid var(--border);
     }
 
-    th, td {
+    th,
+    td {
       padding: 10px 12px;
       text-align: left;
       vertical-align: top;
@@ -149,7 +151,8 @@
       font-size: 0.9rem;
     }
 
-    th:last-child, td:last-child {
+    th:last-child,
+    td:last-child {
       border-right: none;
     }
 
@@ -197,6 +200,7 @@
         grid-template-columns: 1fr;
         gap: 4px;
       }
+
       table {
         display: block;
         overflow-x: auto;
@@ -210,7 +214,8 @@
     <p class="file-path">/week-12/content.html</p>
     <div class="badge">Week 12 · UAT, Release &amp; Close-out</div>
     <h1>UAT Sign-off, Release Checklist, CHANGELOG &amp; Final EVM — ปิดโครงการ v2.0.0-evolution</h1>
-    <p class="lede">สรุปเอกสารการดำเนินงานสัปดาห์ที่ 12: แบบฟอร์มลงนามยอมรับผลการทดสอบ UAT, รายการตรวจสอบก่อนปล่อยรีลีส, บันทึกการเปลี่ยนแปลง และรายงาน EVM ฉบับสุดท้าย</p>
+    <p class="lede">สรุปเอกสารการดำเนินงานสัปดาห์ที่ 12: แบบฟอร์มลงนามยอมรับผลการทดสอบ UAT, รายการตรวจสอบก่อนปล่อยรีลีส,
+      บันทึกการเปลี่ยนแปลง และรายงาน EVM ฉบับสุดท้าย</p>
 
     <div class="nav-portal">
       <a href="../index.html">← กลับสู่หน้าหลัก Project Ledger (Documentation Portal)</a>
@@ -223,13 +228,13 @@
       <article class="panel">
         <h2>แบบฟอร์มลงนามยอมรับผลการทดสอบ UAT — ระบบสินค้าคงคลัง v2.0.0-evolution (สัปดาห์ที่ 12)</h2>
         <p>อ้างอิง: ENGSE225 Week 12 (UAT &amp; Production Release) และ ENGSE202 Week 12 (Final EVM &amp; Close-out)<br>
-        ตัวเลขและข้อมูลทั้งหมดในเอกสารนี้เป็นข้อมูลสมมติเพื่อใช้ในการเรียนเท่านั้น</p>
+          ตัวเลขและข้อมูลทั้งหมดในเอกสารนี้เป็นข้อมูลสมมติเพื่อใช้ในการเรียนเท่านั้น</p>
 
         <h3>1. ขอบเขต</h3>
         <p>การทดสอบยอมรับของผู้ใช้ (UAT) สำหรับระบบสินค้าคงคลัง (<code>week-12/app.py</code>):<br>
-        ยืนยันฟังก์ชันเดิม (คำนวณมูลค่าคงคลังถูกต้อง 100%) และฟังก์ชันใหม่<br>
-        Barcode (CR-01), Reorder Alert (CR-02), CSV Export (CR-02)<br>
-        UAT คือการจำลองวงจรการทำงานจริงของผู้ใช้แบบ End-to-End (ไม่ใช่ทดสอบย่อยระดับฟังก์ชัน)</p>
+          ยืนยันฟังก์ชันเดิม (คำนวณมูลค่าคงคลังถูกต้อง 100%) และฟังก์ชันใหม่<br>
+          Barcode (CR-01), Reorder Alert (CR-02), CSV Export (CR-02)<br>
+          UAT คือการจำลองวงจรการทำงานจริงของผู้ใช้แบบ End-to-End (ไม่ใช่ทดสอบย่อยระดับฟังก์ชัน)</p>
 
         <h3>2. สถานการณ์ทดสอบ (UAT-SC01–SC03 ตามบทเรียน)</h3>
         <table>
@@ -248,25 +253,25 @@
               <td>Inventory Manager</td>
               <td>รับสินค้าเข้าคลัง: เพิ่มสินค้าใหม่ Milk (885) สต็อก 10 ชิ้น Reorder Point = 5</td>
               <td>บันทึกข้อมูลเข้าฐานข้อมูลสำเร็จ ไร้ Crash </td>
-              <td> ผ่าน /  ไม่ผ่าน</td>
+              <td> ผ่าน / ไม่ผ่าน</td>
             </tr>
             <tr>
               <td>UAT-SC02</td>
               <td>Store Cashier</td>
               <td>ตัดสต็อกขาย: ตัดสต็อกสินค้า Milk ออก 6 ชิ้น (เหลือสต็อก 4 ชิ้น)</td>
               <td>ระบบขึ้นข้อความแจ้งเตือนสต็อกต่ำทันที (สต็อก ≤ Reorder Point) </td>
-              <td> ผ่าน /  ไม่ผ่าน</td>
+              <td> ผ่าน / ไม่ผ่าน</td>
             </tr>
             <tr>
               <td>UAT-SC03</td>
               <td>Purchasing Officer</td>
               <td>รายงาน: เลือกเมนู Export CSV และเปิดไฟล์ผลลัพธ์ใน Microsoft Excel</td>
               <td>มีคอลัมน์ Barcode และข้อมูลสินค้าสต็อกต่ำถูกต้อง </td>
-              <td> ผ่าน /  ไม่ผ่าน</td>
+              <td> ผ่าน / ไม่ผ่าน</td>
             </tr>
           </tbody>
         </table>
-        <p>สรุปผลการทดสอบ (Total Scenarios Passed):  100% (3/3) /  ไม่ครบ (ระบุหมายเหตุ)</p>
+        <p>สรุปผลการทดสอบ (Total Scenarios Passed): 100% (3/3) / ไม่ครบ (ระบุหมายเหตุ)</p>
 
         <h3>3. การคัดแยกข้อบกพร่องกับขอบเขตงานใหม่ (Defect vs New Scope)</h3>
         <p>ประเด็นที่พบระหว่าง UAT จะถูกคัดแยกก่อนลงนาม ตามบทเรียน ENGSE225 Week 12:</p>
@@ -274,7 +279,8 @@
           <li><strong>UAT Defect (ข้อบกพร่องจริง — ต้องแก้ก่อน Merge):</strong> ระบบทำงานไม่ตรงตามสเปกเดิม<br>
             เช่น สต็อก ≤ Reorder Point แต่ไม่ยอมแจ้งเตือน<br>
             → การจัดการ: เป็นบั๊กวิกฤต ต้องรีบแก้ไขบน Branch แก้ไขด่วนก่อน Merge เข้า main</li>
-          <li><strong>New Scope (ความต้องการใหม่ — ห้ามทำสัปดาห์นี้):</strong> ผู้ใช้ทดลองใช้แล้วอยากได้ฟังก์ชันเพิ่มเติม<br>
+          <li><strong>New Scope (ความต้องการใหม่ — ห้ามทำสัปดาห์นี้):</strong>
+            ผู้ใช้ทดลองใช้แล้วอยากได้ฟังก์ชันเพิ่มเติม<br>
             เช่น "อยากให้ส่งอีเมลหาซัพพลายเออร์ด้วย"<br>
             → การจัดการ: ห้ามทำในสัปดาห์นี้ ให้บันทึกลง Future Backlog (v3.0)</li>
         </ul>
@@ -289,7 +295,7 @@
 
         <h3>5. การลงนาม (Formal Acceptance Certificate)</h3>
         <p>ข้อความรับรอง: อนุมัติปล่อยสู่ Production — ระบบที่ผ่านการทดสอบสมบูรณ์ (Validated Software)<br>
-        พร้อมย้ายจาก Staging/Develop เข้าสู่ Production Baseline (v2.0.0-evolution)</p>
+          พร้อมย้ายจาก Staging/Develop เข้าสู่ Production Baseline (v2.0.0-evolution)</p>
         <table>
           <thead>
             <tr>
@@ -306,24 +312,26 @@
               <td></td>
               <td></td>
               <td></td>
-              <td> ยอมรับ  ไม่ยอมรับ</td>
+              <td> ยอมรับ ไม่ยอมรับ</td>
             </tr>
             <tr>
               <td>Tech Lead</td>
               <td></td>
               <td></td>
               <td></td>
-              <td> ยอมรับ  ไม่ยอมรับ</td>
+              <td> ยอมรับ ไม่ยอมรับ</td>
             </tr>
           </tbody>
         </table>
         <p><strong>3 เงื่อนไขก่อนรวมสายเข้า main (ครบแล้วจึงลงนาม):</strong></p>
         <ul>
           <li>[ ] ใบรับรอง UAT Sign-off ฉบับนี้ผ่านการลงนามครบถ้วน</li>
-          <li>[ ] Full Regression PyTest 25 tests รันผ่านไฟเขียว 100% (<code>python -m pytest week-12/test_app.py -q</code> รหัสออก 0)</li>
+          <li>[ ] Full Regression PyTest 25 tests รันผ่านไฟเขียว 100%
+            (<code>python -m pytest week-12/test_app.py -q</code> รหัสออก 0)</li>
           <li>[ ] ได้รับการอนุมัติจาก Tech Lead บน Pull Request (develop → main)</li>
         </ul>
-        <p><strong>การตัดสินใจปล่อย:</strong>  อนุมัติให้ Merge เข้า main และติดแท็ก v2.0.0-evolution  ไม่อนุมัติ (ดูหมายเหตุ)</p>
+        <p><strong>การตัดสินใจปล่อย:</strong> อนุมัติให้ Merge เข้า main และติดแท็ก v2.0.0-evolution ไม่อนุมัติ
+          (ดูหมายเหตุ)</p>
         <p><strong>หมายเหตุ:</strong></p>
       </article>
 
@@ -331,61 +339,81 @@
       <article class="panel">
         <h2>รายการตรวจสอบก่อนปล่อย — v2.0.0-evolution (สัปดาห์ที่ 12)</h2>
         <p>อ้างอิง: ENGSE225 Week 12 (Release ISO 12207, SemVer 2.0.0, ISO 14764) และ ENGSE202 Week 12 (Final EVM)<br>
-        ตัวเลขและข้อมูลทั้งหมดในเอกสารนี้เป็นข้อมูลสมมติเพื่อใช้ในการเรียนเท่านั้น</p>
+          ตัวเลขและข้อมูลทั้งหมดในเอกสารนี้เป็นข้อมูลสมมติเพื่อใช้ในการเรียนเท่านั้น</p>
 
         <h3>ด่านที่ 1 — UAT ผ่านและลงนามแล้ว</h3>
         <ul>
-          <li>[ ] ดำเนิน Cross-Team UAT ตาม 3 Scenarios แล้ว (UAT-SC01 รับเข้า Milk 885/10 ชิ้น/ROP 5, UAT-SC02 ตัด 6 เหลือ 4 เกิด Alert, UAT-SC03 Export CSV เปิดใน Excel)</li>
-          <li>[ ] <code>UAT_Sign_Off_Sheet.md</code> สรุป Total Scenarios Passed 100% และลงนามครบ 2 ฝ่าย (ตัวแทนผู้ทดสอบ + Tech Lead)</li>
-          <li>[ ] ประเด็น UAT ถูกคัดแยกแล้ว: Defect (ไม่ตรงสเปกเดิม เช่น ≤ ROP แต่ไม่ Alert → แก้ด่วนก่อน Merge) กับ New Scope (เช่น ขอส่งอีเมลหาซัพพลายเออร์ → บันทึก Future Backlog v3.0 ห้ามทำสัปดาห์นี้)</li>
+          <li>[ ] ดำเนิน Cross-Team UAT ตาม 3 Scenarios แล้ว (UAT-SC01 รับเข้า Milk 885/10 ชิ้น/ROP 5, UAT-SC02 ตัด 6
+            เหลือ 4 เกิด Alert, UAT-SC03 Export CSV เปิดใน Excel)</li>
+          <li>[ ] <code>UAT_Sign_Off_Sheet.md</code> สรุป Total Scenarios Passed 100% และลงนามครบ 2 ฝ่าย (ตัวแทนผู้ทดสอบ
+            + Tech Lead)</li>
+          <li>[ ] ประเด็น UAT ถูกคัดแยกแล้ว: Defect (ไม่ตรงสเปกเดิม เช่น ≤ ROP แต่ไม่ Alert → แก้ด่วนก่อน Merge) กับ New
+            Scope (เช่น ขอส่งอีเมลหาซัพพลายเออร์ → บันทึก Future Backlog v3.0 ห้ามทำสัปดาห์นี้)</li>
         </ul>
 
         <h3>ด่านที่ 2 — Regression ผ่านและ Tech Lead อนุมัติแล้ว</h3>
         <ul>
-          <li>[ ] <code>python -m pytest week-12/test_app.py -q</code> จบด้วยรหัส 0 (25 tests ผ่าน 100%: baseline 5 + CR-01 4 + CR-02 6 + BUG-101 4 + CLI 3 + integration 3)</li>
-          <li>[ ] เปิด Pull Request บน GitHub: base <code>main</code> ← compare <code>develop</code> (รวม Refactored Architecture + CR-01 + CR-02)</li>
-          <li>[ ] รอท่อ CI/CD รัน PyTest ผ่านไฟเขียว แล้ว Tech Lead กดปุ่ม Confirm Merge (สาขา main กลายเป็น Gold Master Release)</li>
+          <li>[ ] <code>python -m pytest week-12/test_app.py -q</code> จบด้วยรหัส 0 (25 tests ผ่าน 100%: baseline 5 +
+            CR-01 4 + CR-02 6 + BUG-101 4 + CLI 3 + integration 3)</li>
+          <li>[ ] เปิด Pull Request บน GitHub: base <code>main</code> ← compare <code>develop</code> (รวม Refactored
+            Architecture + CR-01 + CR-02)</li>
+          <li>[ ] รอท่อ CI/CD รัน PyTest ผ่านไฟเขียว แล้ว Tech Lead กดปุ่ม Confirm Merge (สาขา main กลายเป็น Gold Master
+            Release)</li>
         </ul>
 
         <h3>ด่านที่ 3 — Merge, Tag, CHANGELOG แล้ว</h3>
         <ul>
           <li>[ ] รวมสายเข้า main แล้ว (สาขา main คือเวอร์ชันทางการของโครงการ)</li>
-          <li>[ ] สลับไป main ดึงล่าสุด แล้วสร้าง Annotated Tag ตาม SemVer 2.0.0 (จาก v1.0.0-baseline ขยับเป็น v2.0.0-evolution เพราะเปลี่ยนสถาปัตยกรรมใหญ่ และเพิ่มโมเดลข้อมูลธุรกิจใหม่):</li>
+          <li>[ ] สลับไป main ดึงล่าสุด แล้วสร้าง Annotated Tag ตาม SemVer 2.0.0 (จาก v1.0.0-baseline ขยับเป็น
+            v2.0.0-evolution เพราะเปลี่ยนสถาปัตยกรรมใหญ่ และเพิ่มโมเดลข้อมูลธุรกิจใหม่):</li>
         </ul>
         <pre><code>git checkout main
 git pull origin main
 git tag -a v2.0.0-evolution -m "Production Release v2.0.0: Refactored Repository Pattern, Barcode Support, Reorder Point Alerts, and CSV Reporting."
 git push origin v2.0.0-evolution</code></pre>
         <ul>
-          <li>[ ] ตรวจหน้า GitHub Releases: มีแท็ก <code>v2.0.0-evolution</code> ชื่อ <code>Mini Inventory System v2.0.0</code> พร้อมป้ายสีเขียว Latest Release (GitHub สร้าง .zip/.tar.gz ให้อัตโนมัติ)</li>
-          <li>[ ] <code>CHANGELOG.md</code> มีหัวข้อ <code>## [2.0.0-evolution] - 2026-08-31</code> ครบหมวด Added / Changed / Removed / Fixed และมิติ ISO 14764 ครบแล้ว Push ขึ้น main แล้ว</li>
-          <li>[ ] ตัวเลขใน <code>Final_EVM.md</code> กระทบยอดแล้ว (PV 15,525 / EV 15,525 / AC 16,100 / SPI 1.00 / CPI 0.96 / CV −575) พร้อมตาราง Procurement และ Contingency</li>
+          <li>[ ] ตรวจหน้า GitHub Releases: มีแท็ก <code>v2.0.0-evolution</code> ชื่อ
+            <code>Mini Inventory System v2.0.0</code> พร้อมป้ายสีเขียว Latest Release (GitHub สร้าง .zip/.tar.gz
+            ให้อัตโนมัติ)</li>
+          <li>[ ] <code>CHANGELOG.md</code> มีหัวข้อ <code>## [2.0.0-evolution] - 2026-08-31</code> ครบหมวด Added /
+            Changed / Removed / Fixed และมิติ ISO 14764 ครบแล้ว Push ขึ้น main แล้ว</li>
+          <li>[ ] ตัวเลขใน <code>Final_EVM.md</code> กระทบยอดแล้ว (PV 15,525 / EV 15,525 / AC 16,100 / SPI 1.00 / CPI
+            0.96 / CV −575) พร้อมตาราง Procurement และ Contingency</li>
         </ul>
 
         <h3>หมายเหตุการย้อนกลับ</h3>
-        <p>หากพบตัวขัดขวางหลังติดแท็ก: ลบแท็กในเครื่องด้วย <code>git tag -d v2.0.0-evolution</code>, ลบแท็กระยะไกลด้วย <code>git push origin :refs/tags/v2.0.0-evolution</code> หากพุชไปแล้ว, แก้ไขบน <code>phase2</code> รันทั้ง 3 ด่านใหม่ แล้วติดแท็กใหม่เป็น <code>v2.0.1-evolution</code> ห้าม force-push ประวัติ <code>phase2</code> ที่ใช้ร่วมกับทีม</p>
+        <p>หากพบตัวขัดขวางหลังติดแท็ก: ลบแท็กในเครื่องด้วย <code>git tag -d v2.0.0-evolution</code>, ลบแท็กระยะไกลด้วย
+          <code>git push origin :refs/tags/v2.0.0-evolution</code> หากพุชไปแล้ว, แก้ไขบน <code>phase2</code> รันทั้ง 3
+          ด่านใหม่ แล้วติดแท็กใหม่เป็น <code>v2.0.1-evolution</code> ห้าม force-push ประวัติ <code>phase2</code>
+          ที่ใช้ร่วมกับทีม</p>
       </article>
 
       <!-- DOCUMENT 3: CHANGELOG.md -->
       <article class="panel">
         <h2>บันทึกการเปลี่ยนแปลง — ระบบสินค้าคงคลัง (วิวัฒนาการสัปดาห์ที่ 12)</h2>
         <p>อ้างอิง: ENGSE225 Week 12 (SemVer 2.0.0, ISO/IEC 14764, Keep a Changelog)<br>
-        รายการทั้งหมดเป็นข้อมูลสมมติเพื่อใช้ในการเรียน ปฏิบัติตาม SemVer<br>
-        จาก v1.0.0-baseline ขยับเป็น v2.0.0-evolution เพราะมีการเปลี่ยนสถาปัตยกรรมใหญ่<br>
-        และเพิ่มโมเดลข้อมูลทางธุรกิจใหม่</p>
+          รายการทั้งหมดเป็นข้อมูลสมมติเพื่อใช้ในการเรียน ปฏิบัติตาม SemVer<br>
+          จาก v1.0.0-baseline ขยับเป็น v2.0.0-evolution เพราะมีการเปลี่ยนสถาปัตยกรรมใหญ่<br>
+          และเพิ่มโมเดลข้อมูลทางธุรกิจใหม่</p>
 
         <h3>[2.0.0-evolution] - 2026-08-31</h3>
 
         <h3>Added</h3>
         <ul>
-          <li>ฟังก์ชันใหม่ Barcode (CR-01): <code>Product.barcode</code> (ค่าเริ่มต้น <code>""</code>) รับค่าผ่านขั้นตอนเพิ่ม/อัปเดตใน CLI รวมอยู่ในการจัดเก็บ JSON และรายงาน CSV</li>
-          <li>ฟังก์ชันใหม่ Reorder Alert (CR-02): <code>Product.reorder_point</code> (ค่าเริ่มต้น <code>5</code>), <code>is_low_stock</code> (<code>quantity &lt;= reorder_point</code>) และ <code>InventoryManager.get_low_stock_alerts()</code></li>
-          <li>ฟังก์ชันใหม่ CSV Export (CR-02): <code>CsvReportExporter</code> พร้อมหัวตาราง <code>ProductID,ProductName,Barcode,Quantity,ReorderPoint,Price</code> และเมนู CLI 5 (ส่งออกรายงาน CSV)</li>
+          <li>ฟังก์ชันใหม่ Barcode (CR-01): <code>Product.barcode</code> (ค่าเริ่มต้น <code>""</code>)
+            รับค่าผ่านขั้นตอนเพิ่ม/อัปเดตใน CLI รวมอยู่ในการจัดเก็บ JSON และรายงาน CSV</li>
+          <li>ฟังก์ชันใหม่ Reorder Alert (CR-02): <code>Product.reorder_point</code> (ค่าเริ่มต้น <code>5</code>),
+            <code>is_low_stock</code> (<code>quantity &lt;= reorder_point</code>) และ
+            <code>InventoryManager.get_low_stock_alerts()</code></li>
+          <li>ฟังก์ชันใหม่ CSV Export (CR-02): <code>CsvReportExporter</code> พร้อมหัวตาราง
+            <code>ProductID,ProductName,Barcode,Quantity,ReorderPoint,Price</code> และเมนู CLI 5 (ส่งออกรายงาน CSV)</li>
         </ul>
 
         <h3>Changed</h3>
         <ul>
-          <li>เปลี่ยนโครงสร้างสู่ Layered Architecture (Repository Pattern): ขยายสกีมา <code>Product.to_dict</code> / <code>from_dict</code> ด้วย <code>barcode</code> และ <code>reorder_point</code>, จัดเลขเมนู CLI ใหม่ (ทางออกย้ายจาก 5 → 6), คำเตือนสินค้าใกล้หมดอ้างอิงจุดสั่งซื้อซ้ำของแต่ละสินค้า</li>
+          <li>เปลี่ยนโครงสร้างสู่ Layered Architecture (Repository Pattern): ขยายสกีมา <code>Product.to_dict</code> /
+            <code>from_dict</code> ด้วย <code>barcode</code> และ <code>reorder_point</code>, จัดเลขเมนู CLI ใหม่
+            (ทางออกย้ายจาก 5 → 6), คำเตือนสินค้าใกล้หมดอ้างอิงจุดสั่งซื้อซ้ำของแต่ละสินค้า</li>
         </ul>
 
         <h3>Removed</h3>
@@ -395,24 +423,30 @@ git push origin v2.0.0-evolution</code></pre>
 
         <h3>Fixed</h3>
         <ul>
-          <li>แก้ไขบั๊กแครชเมื่อเจอไฟล์ JSON ไร้บาร์โค้ด (BUG-101): <code>from_dict</code> รองรับคีย์สั้นแบบเดิม (<code>n</code>/<code>q</code>/<code>p</code>/<code>c</code>) และ กำหนดค่าเริ่มต้น <code>barcode</code>/<code>reorder_point</code> ที่ขาดหายเป็น <code>""</code>/<code>5</code></li>
+          <li>แก้ไขบั๊กแครชเมื่อเจอไฟล์ JSON ไร้บาร์โค้ด (BUG-101): <code>from_dict</code> รองรับคีย์สั้นแบบเดิม
+            (<code>n</code>/<code>q</code>/<code>p</code>/<code>c</code>) และ กำหนดค่าเริ่มต้น
+            <code>barcode</code>/<code>reorder_point</code> ที่ขาดหายเป็น <code>""</code>/<code>5</code></li>
         </ul>
 
         <h3>ประวัติการบำรุงรักษา (ISO/IEC 14764 — ครบ 3 มิติ)</h3>
         <ul>
-          <li><strong>Preventive:</strong> ผ่าตัดลบ global x ปรับสถาปัตยกรรมสู่ Repository Pattern เพื่อป้องกันข้อผิดพลาดอนาคต</li>
+          <li><strong>Preventive:</strong> ผ่าตัดลบ global x ปรับสถาปัตยกรรมสู่ Repository Pattern
+            เพื่อป้องกันข้อผิดพลาดอนาคต</li>
           <li><strong>Corrective:</strong> สืบสวนรากเหง้าปัญหา (RCA) และแก้ไขบั๊ก Legacy Data Schema (BUG-101)</li>
-          <li><strong>Perfective:</strong> พัฒนาฟีเจอร์บาร์โค้ด (CR-01) และระบบออกรายงาน CSV (CR-02) ตามความต้องการใหม่</li>
+          <li><strong>Perfective:</strong> พัฒนาฟีเจอร์บาร์โค้ด (CR-01) และระบบออกรายงาน CSV (CR-02) ตามความต้องการใหม่
+          </li>
         </ul>
-        <p>หลักฐานปล่อย: UAT 3 Scenarios ผ่าน 100% (ลงนามครบ), Full Suite PyTest 25 tests ผ่าน 100% บนสาขา main, Git Tag <code>v2.0.0-evolution</code> (Annotated Tag พร้อมชื่อผู้สร้าง วันเวลา Metadata)</p>
+        <p>หลักฐานปล่อย: UAT 3 Scenarios ผ่าน 100% (ลงนามครบ), Full Suite PyTest 25 tests ผ่าน 100% บนสาขา main, Git Tag
+          <code>v2.0.0-evolution</code> (Annotated Tag พร้อมชื่อผู้สร้าง วันเวลา Metadata)</p>
       </article>
 
       <!-- DOCUMENT 4: Final_EVM.md -->
       <article class="panel">
         <h2>รายงาน EVM ฉบับสุดท้าย — ระบบสินค้าคงคลัง (สัปดาห์ที่ 12 ข้อมูลสมมติเพื่อการเรียน)</h2>
         <p>อ้างอิง: ENGSE202 Week 12 (PMBOK 7th, EVM, Procurement Close-out)<br>
-        ตัวเลขทั้งหมดด้านล่างเป็นตัวเลขสมมติเพื่อใช้ในการเรียน ไม่ใช่ต้นทุนโครงการจริง<br>
-        กรอบ: เฟสพัฒนา Sprint 1–3 (S1: Refactoring + Velocity ตั้งต้น, S2: CR-01/CR-02 + CCB, S3: Hardening + Cross-Team UAT + Final Docs)</p>
+          ตัวเลขทั้งหมดด้านล่างเป็นตัวเลขสมมติเพื่อใช้ในการเรียน ไม่ใช่ต้นทุนโครงการจริง<br>
+          กรอบ: เฟสพัฒนา Sprint 1–3 (S1: Refactoring + Velocity ตั้งต้น, S2: CR-01/CR-02 + CCB, S3: Hardening +
+          Cross-Team UAT + Final Docs)</p>
 
         <h3>1. ตัวเลขสุดท้าย (Final EVM รวม 3 Sprints)</h3>
         <table>
@@ -464,8 +498,10 @@ git push origin v2.0.0-evolution</code></pre>
 
         <h3>2. การตีความ</h3>
         <ul>
-          <li><strong>ด้านกำหนดการ:</strong> SPI 1.00 (SPI ≥ 1.0 = เร็วกว่าหรือตรงตามแผน ) — ส่งมอบตรงตามกำหนด 100% UAT SC01–SC03 ปิดครบในสัปดาห์ที่ 12</li>
-          <li><strong>ด้านต้นทุน:</strong> CPI 0.96 (CPI &lt; 1.0 = ใช้เงินเกินงบ /) — เกินงบ 3.7% ชดเชยด้วยงบสำรอง Contingency Reserve ตามเกณฑ์อนุมัติ (เบิกค่าแรงส่วนเกิน Refactoring 575 THB)</li>
+          <li><strong>ด้านกำหนดการ:</strong> SPI 1.00 (SPI ≥ 1.0 = เร็วกว่าหรือตรงตามแผน ) — ส่งมอบตรงตามกำหนด 100% UAT
+            SC01–SC03 ปิดครบในสัปดาห์ที่ 12</li>
+          <li><strong>ด้านต้นทุน:</strong> CPI 0.96 (CPI &lt; 1.0 = ใช้เงินเกินงบ /) — เกินงบ 3.7% ชดเชยด้วยงบสำรอง
+            Contingency Reserve ตามเกณฑ์อนุมัติ (เบิกค่าแรงส่วนเกิน Refactoring 575 THB)</li>
         </ul>
 
         <h3>3. แนวโน้มความเร็ว (Velocity Trend — story points / sprint)</h3>
@@ -495,7 +531,8 @@ git push origin v2.0.0-evolution</code></pre>
             </tr>
           </tbody>
         </table>
-        <p>Epic Burndown: การ์ดงานย่อยทั้งหมดถูก Burned down แตะระดับ 0 ไร้งานคั่งค้าง — Epic 1 (Refactoring) ปิดงานโครงสร้างคลาส 100%, Epic 2 (Evolution) ปิดงาน Barcode, Alert, CSV</p>
+        <p>Epic Burndown: การ์ดงานย่อยทั้งหมดถูก Burned down แตะระดับ 0 ไร้งานคั่งค้าง — Epic 1 (Refactoring)
+          ปิดงานโครงสร้างคลาส 100%, Epic 2 (Evolution) ปิดงาน Barcode, Alert, CSV</p>
 
         <h3>4. การปิดงานจัดซื้อจัดจ้าง (Procurement Close-out)</h3>
 
@@ -566,9 +603,12 @@ git push origin v2.0.0-evolution</code></pre>
 
         <h3>5. การปิด Sprint 3 และการขอ Sign-off</h3>
         <ol>
-          <li>ตรวจว่าการ์ด TASK-301 (UAT), TASK-302 (Security), TASK-303 (Docs) อยู่ช่อง Done ครบ แล้วกด Complete Sprint 3 บน Jira</li>
+          <li>ตรวจว่าการ์ด TASK-301 (UAT), TASK-302 (Security), TASK-303 (Docs) อยู่ช่อง Done ครบ แล้วกด Complete Sprint
+            3 บน Jira</li>
           <li>ดึงหลักฐาน Velocity Chart (Commitment vs Completed 3 Sprints) และ Epic Burndown (แตะ 0) ใส่เล่มรายงาน</li>
-          <li>PM นำเล่ม Final EVM + Velocity + Procurement Sheet + ใบรับรอง UAT เข้าพบอาจารย์ (Sponsor) ลงนาม Phase 3 Completion Certificate (Deliverables: Refactored Layered Architecture, Barcode, Reorder Alerts, CSV Export, Full CI/CD — 25 tests ผ่าน 100%, Tag v2.0.0-evolution)</li>
+          <li>PM นำเล่ม Final EVM + Velocity + Procurement Sheet + ใบรับรอง UAT เข้าพบอาจารย์ (Sponsor) ลงนาม Phase 3
+            Completion Certificate (Deliverables: Refactored Layered Architecture, Barcode, Reorder Alerts, CSV Export,
+            Full CI/CD — 25 tests ผ่าน 100%, Tag v2.0.0-evolution)</li>
         </ol>
       </article>
     </section>

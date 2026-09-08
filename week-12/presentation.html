@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="th">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,6 +13,7 @@
             border: 1px solid var(--border);
             border-radius: 12px;
         }
+
         .card h3 {
             color: var(--ink-soft);
             border-bottom: 1px solid var(--border);
@@ -19,25 +21,32 @@
             margin-bottom: 0.8rem;
             font-size: 1.15rem;
         }
+
         .card p {
             font-size: 0.92rem;
             line-height: 1.6;
             margin-bottom: 0.5rem;
             color: var(--text-main);
         }
-        ul.slide-list, ol.slide-list {
+
+        ul.slide-list,
+        ol.slide-list {
             padding-left: 1.3rem;
             font-size: 0.92rem;
             line-height: 1.6;
             margin: 0.4rem 0 0.8rem;
         }
-        ul.slide-list li, ol.slide-list li {
+
+        ul.slide-list li,
+        ol.slide-list li {
             margin-bottom: 0.45rem;
             color: var(--text-main);
         }
+
         li::marker {
             color: var(--amber);
         }
+
         table.slide-table {
             width: 100%;
             font-size: 0.88rem;
@@ -46,21 +55,27 @@
             background: var(--paper);
             border: 1px solid var(--border);
         }
-        table.slide-table th, table.slide-table td {
+
+        table.slide-table th,
+        table.slide-table td {
             padding: 8px 10px;
             border-bottom: 1px solid var(--border);
             border-right: 1px solid var(--border);
             text-align: left;
             vertical-align: top;
         }
-        table.slide-table th:last-child, table.slide-table td:last-child {
+
+        table.slide-table th:last-child,
+        table.slide-table td:last-child {
             border-right: none;
         }
+
         table.slide-table th {
             background: var(--paper-warm);
             color: var(--ink);
             font-weight: 600;
         }
+
         .note-box {
             background: var(--paper-warm);
             border-left: 4px solid var(--amber);
@@ -70,6 +85,7 @@
             color: var(--text-muted);
             border-radius: 4px;
         }
+
         code {
             font-family: 'IBM Plex Mono', monospace;
             color: var(--accent);
@@ -77,6 +93,7 @@
             padding: 1px 4px;
             border-radius: 4px;
         }
+
         pre.slide-code {
             margin: 0.6rem 0;
             padding: 12px 14px;
@@ -86,10 +103,12 @@
             border-radius: 8px;
             font-size: 0.85rem;
         }
+
         pre.slide-code code {
             background: none;
             padding: 0;
         }
+
         .nav-home-btn {
             position: absolute;
             top: 18px;
@@ -103,268 +122,438 @@
         }
     </style>
 </head>
+
 <body>
-<div id="deck">
-    <a href="../index.html" class="nav-home-btn">← Portal</a>
+    <div id="deck">
+        <a href="../index.html" class="nav-home-btn">← Portal</a>
 
-    <!-- SLIDE 1: Cover -->
-    <div class="slide center-content">
-        <div class="badge">Week 12 · UAT, Release &amp; Close-out</div>
-        <h1>UAT &amp; Production Release</h1>
-        <h3>ลงนามยอมรับ UAT รายการตรวจสอบก่อนปล่อย CHANGELOG และ EVM ฉบับสุดท้าย — v2.0.0-evolution</h3>
-        <p style="margin-top: 1.5rem; max-width: 760px; color: var(--text-muted); font-size: 1.05rem; line-height: 1.6;">
-            รวบรวมเนื้อหาครบถ้วนจากเอกสารสัปดาห์ที่ 12: UAT Sign-Off Sheet (SC01–SC03), Release Checklist (3 ด่าน), CHANGELOG (SemVer + ISO 14764) และ Final EVM (SPI 1.00 / CPI 0.96)
-        </p>
-    </div>
-
-    <!-- SLIDE 2: UAT scope + scenarios -->
-    <div class="slide">
-        <h2>1. ขอบเขต UAT &amp; สถานการณ์ทดสอบ SC01–SC03</h2>
-        <div class="card">
-            <h3>ขอบเขต — ระบบสินค้าคงคลัง (<code>week-12/app.py</code>)</h3>
-            <p>ยืนยันฟังก์ชันเดิม (คำนวณมูลค่าคงคลังถูกต้อง 100%) และฟังก์ชันใหม่ Barcode (CR-01), Reorder Alert (CR-02), CSV Export (CR-02)<br>
-            UAT คือการจำลองวงจรการทำงานจริงของผู้ใช้แบบ End-to-End (ไม่ใช่ทดสอบย่อยระดับฟังก์ชัน)</p>
+        <!-- SLIDE 1: Cover -->
+        <div class="slide center-content">
+            <div class="badge">Week 12 · UAT, Release &amp; Close-out</div>
+            <h1>UAT &amp; Production Release</h1>
+            <h3>ลงนามยอมรับ UAT รายการตรวจสอบก่อนปล่อย CHANGELOG และ EVM ฉบับสุดท้าย — v2.0.0-evolution</h3>
+            <p
+                style="margin-top: 1.5rem; max-width: 760px; color: var(--text-muted); font-size: 1.05rem; line-height: 1.6;">
+                รวบรวมเนื้อหาครบถ้วนจากเอกสารสัปดาห์ที่ 12: UAT Sign-Off Sheet (SC01–SC03), Release Checklist (3 ด่าน),
+                CHANGELOG (SemVer + ISO 14764) และ Final EVM (SPI 1.00 / CPI 0.96)
+            </p>
         </div>
-        <table class="slide-table">
-            <thead>
-                <tr><th>ID</th><th>บทบาทผู้ใช้</th><th>ขั้นตอน &amp; ข้อมูลนำเข้า</th><th>ผลลัพธ์ทางธุรกิจที่คาดหวัง</th><th>ผลจริง / สถานะ</th></tr>
-            </thead>
-            <tbody>
-                <tr><td>UAT-SC01</td><td>Inventory Manager</td><td>รับสินค้าเข้าคลัง: เพิ่มสินค้าใหม่ Milk (885) สต็อก 10 ชิ้น Reorder Point = 5</td><td>บันทึกเข้าฐานข้อมูลสำเร็จ ไร้ Crash </td><td> ผ่าน /  ไม่ผ่าน</td></tr>
-                <tr><td>UAT-SC02</td><td>Store Cashier</td><td>ตัดสต็อกขาย: ตัด Milk ออก 6 ชิ้น (เหลือ 4 ชิ้น)</td><td>แจ้งเตือนสต็อกต่ำทันที (≤ Reorder Point) </td><td> ผ่าน /  ไม่ผ่าน</td></tr>
-                <tr><td>UAT-SC03</td><td>Purchasing Officer</td><td>รายงาน: Export CSV เปิดไฟล์ใน Microsoft Excel</td><td>มีคอลัมน์ Barcode ข้อมูลสต็อกต่ำถูกต้อง </td><td> ผ่าน /  ไม่ผ่าน</td></tr>
-            </tbody>
-        </table>
-        <p style="font-size: 0.85rem;">สรุปผล (Total Scenarios Passed):  100% (3/3) /  ไม่ครบ (ระบุหมายเหตุ)</p>
-    </div>
 
-    <!-- SLIDE 3: Defect vs Scope + cross-team + sign-off -->
-    <div class="slide">
-        <h2>2. Defect vs New Scope, Cross-Team &amp; ลงนาม</h2>
-        <div class="grid-2">
+        <!-- SLIDE 2: UAT scope + scenarios -->
+        <div class="slide">
+            <h2>1. ขอบเขต UAT &amp; สถานการณ์ทดสอบ SC01–SC03</h2>
             <div class="card">
-                <h3>3. คัดแยก Defect vs New Scope (ENGSE225)</h3>
-                <ul class="slide-list">
-                    <li><strong>UAT Defect (ต้องแก้ก่อน Merge):</strong> ระบบทำงานไม่ตรงสเปกเดิม เช่น สต็อก ≤ Reorder Point แต่ไม่แจ้งเตือน → บั๊กวิกฤต รีบแก้บน Branch แก้ไขด่วนก่อน Merge เข้า main</li>
-                    <li><strong>New Scope (ห้ามทำสัปดาห์นี้):</strong> ผู้ใช้อยากได้ฟังก์ชันเพิ่ม เช่น "อยากให้ส่งอีเมลหาซัพพลายเออร์ด้วย" → บันทึกลง Future Backlog (v3.0)</li>
-                </ul>
-                <h3>4. ทดสอบข้ามกลุ่ม (Cross-Team)</h3>
-                <ol class="slide-list">
-                    <li>กลุ่ม A ส่งมอบระบบให้ตัวแทนกลุ่ม B ทดสอบในฐานะ "ผู้ใช้งานจริง"</li>
-                    <li>ตัวแทนกลุ่ม B ป้อนข้อมูลตาม 3 Scenarios ลงผลอย่างเป็นกลาง (ขจัด Confirmation Bias)</li>
-                </ol>
-                <p style="font-size: 0.85rem;">ผู้ทดสอบข้ามกลุ่ม: กลุ่ม ________ ทดสอบระบบของกลุ่ม ________</p>
+                <h3>ขอบเขต — ระบบสินค้าคงคลัง (<code>week-12/app.py</code>)</h3>
+                <p>ยืนยันฟังก์ชันเดิม (คำนวณมูลค่าคงคลังถูกต้อง 100%) และฟังก์ชันใหม่ Barcode (CR-01), Reorder Alert
+                    (CR-02), CSV Export (CR-02)<br>
+                    UAT คือการจำลองวงจรการทำงานจริงของผู้ใช้แบบ End-to-End (ไม่ใช่ทดสอบย่อยระดับฟังก์ชัน)</p>
             </div>
-            <div class="card">
-                <h3>5. ลงนาม (Formal Acceptance Certificate)</h3>
-                <p>อนุมัติปล่อยสู่ Production — Validated Software พร้อมย้ายจาก Staging/Develop สู่ Production Baseline (v2.0.0-evolution)</p>
-                <table class="slide-table">
-                    <thead><tr><th>บทบาท</th><th>ชื่อ/ลายเซ็น/วันที่</th><th>การตัดสินใจ</th></tr></thead>
-                    <tbody>
-                        <tr><td>ตัวแทนผู้ทดสอบ (ลูกค้าสมมุติ)</td><td>&nbsp;</td><td> ยอมรับ  ไม่ยอมรับ</td></tr>
-                        <tr><td>Tech Lead</td><td>&nbsp;</td><td> ยอมรับ  ไม่ยอมรับ</td></tr>
-                    </tbody>
-                </table>
-                <p style="font-size: 0.85rem;"><strong>3 เงื่อนไขก่อน Merge เข้า main:</strong></p>
-                <ul class="slide-list">
-                    <li>[ ] UAT Sign-off ลงนามครบถ้วน</li>
-                    <li>[ ] PyTest 25 tests ไฟเขียว 100% (<code>python -m pytest week-12/test_app.py -q</code> รหัสออก 0)</li>
-                    <li>[ ] Tech Lead อนุมัติบน PR (develop → main)</li>
-                </ul>
-                <p style="font-size: 0.85rem;"><strong>การตัดสินใจปล่อย:</strong>  อนุมัติ Merge + ติดแท็ก v2.0.0-evolution  ไม่อนุมัติ (ดูหมายเหตุ)</p>
+            <table class="slide-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>บทบาทผู้ใช้</th>
+                        <th>ขั้นตอน &amp; ข้อมูลนำเข้า</th>
+                        <th>ผลลัพธ์ทางธุรกิจที่คาดหวัง</th>
+                        <th>ผลจริง / สถานะ</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>UAT-SC01</td>
+                        <td>Inventory Manager</td>
+                        <td>รับสินค้าเข้าคลัง: เพิ่มสินค้าใหม่ Milk (885) สต็อก 10 ชิ้น Reorder Point = 5</td>
+                        <td>บันทึกเข้าฐานข้อมูลสำเร็จ ไร้ Crash </td>
+                        <td> ผ่าน / ไม่ผ่าน</td>
+                    </tr>
+                    <tr>
+                        <td>UAT-SC02</td>
+                        <td>Store Cashier</td>
+                        <td>ตัดสต็อกขาย: ตัด Milk ออก 6 ชิ้น (เหลือ 4 ชิ้น)</td>
+                        <td>แจ้งเตือนสต็อกต่ำทันที (≤ Reorder Point) </td>
+                        <td> ผ่าน / ไม่ผ่าน</td>
+                    </tr>
+                    <tr>
+                        <td>UAT-SC03</td>
+                        <td>Purchasing Officer</td>
+                        <td>รายงาน: Export CSV เปิดไฟล์ใน Microsoft Excel</td>
+                        <td>มีคอลัมน์ Barcode ข้อมูลสต็อกต่ำถูกต้อง </td>
+                        <td> ผ่าน / ไม่ผ่าน</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p style="font-size: 0.85rem;">สรุปผล (Total Scenarios Passed): 100% (3/3) / ไม่ครบ (ระบุหมายเหตุ)</p>
+        </div>
+
+        <!-- SLIDE 3: Defect vs Scope + cross-team + sign-off -->
+        <div class="slide">
+            <h2>2. Defect vs New Scope, Cross-Team &amp; ลงนาม</h2>
+            <div class="grid-2">
+                <div class="card">
+                    <h3>3. คัดแยก Defect vs New Scope (ENGSE225)</h3>
+                    <ul class="slide-list">
+                        <li><strong>UAT Defect (ต้องแก้ก่อน Merge):</strong> ระบบทำงานไม่ตรงสเปกเดิม เช่น สต็อก ≤
+                            Reorder Point แต่ไม่แจ้งเตือน → บั๊กวิกฤต รีบแก้บน Branch แก้ไขด่วนก่อน Merge เข้า main</li>
+                        <li><strong>New Scope (ห้ามทำสัปดาห์นี้):</strong> ผู้ใช้อยากได้ฟังก์ชันเพิ่ม เช่น
+                            "อยากให้ส่งอีเมลหาซัพพลายเออร์ด้วย" → บันทึกลง Future Backlog (v3.0)</li>
+                    </ul>
+                    <h3>4. ทดสอบข้ามกลุ่ม (Cross-Team)</h3>
+                    <ol class="slide-list">
+                        <li>กลุ่ม A ส่งมอบระบบให้ตัวแทนกลุ่ม B ทดสอบในฐานะ "ผู้ใช้งานจริง"</li>
+                        <li>ตัวแทนกลุ่ม B ป้อนข้อมูลตาม 3 Scenarios ลงผลอย่างเป็นกลาง (ขจัด Confirmation Bias)</li>
+                    </ol>
+                    <p style="font-size: 0.85rem;">ผู้ทดสอบข้ามกลุ่ม: กลุ่ม ________ ทดสอบระบบของกลุ่ม ________</p>
+                </div>
+                <div class="card">
+                    <h3>5. ลงนาม (Formal Acceptance Certificate)</h3>
+                    <p>อนุมัติปล่อยสู่ Production — Validated Software พร้อมย้ายจาก Staging/Develop สู่ Production
+                        Baseline (v2.0.0-evolution)</p>
+                    <table class="slide-table">
+                        <thead>
+                            <tr>
+                                <th>บทบาท</th>
+                                <th>ชื่อ/ลายเซ็น/วันที่</th>
+                                <th>การตัดสินใจ</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>ตัวแทนผู้ทดสอบ (ลูกค้าสมมุติ)</td>
+                                <td>&nbsp;</td>
+                                <td> ยอมรับ ไม่ยอมรับ</td>
+                            </tr>
+                            <tr>
+                                <td>Tech Lead</td>
+                                <td>&nbsp;</td>
+                                <td> ยอมรับ ไม่ยอมรับ</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p style="font-size: 0.85rem;"><strong>3 เงื่อนไขก่อน Merge เข้า main:</strong></p>
+                    <ul class="slide-list">
+                        <li>[ ] UAT Sign-off ลงนามครบถ้วน</li>
+                        <li>[ ] PyTest 25 tests ไฟเขียว 100% (<code>python -m pytest week-12/test_app.py -q</code>
+                            รหัสออก 0)</li>
+                        <li>[ ] Tech Lead อนุมัติบน PR (develop → main)</li>
+                    </ul>
+                    <p style="font-size: 0.85rem;"><strong>การตัดสินใจปล่อย:</strong> อนุมัติ Merge + ติดแท็ก
+                        v2.0.0-evolution ไม่อนุมัติ (ดูหมายเหตุ)</p>
+                </div>
             </div>
         </div>
-    </div>
 
-    <!-- SLIDE 4: Release gates 1-2 -->
-    <div class="slide">
-        <h2>3. Release Checklist — ด่านที่ 1 &amp; 2</h2>
-        <div class="grid-2">
-            <div class="card">
-                <h3>ด่านที่ 1 — UAT ผ่านและลงนามแล้ว</h3>
-                <ul class="slide-list">
-                    <li>[ ] Cross-Team UAT ครบ 3 Scenarios (SC01 รับเข้า Milk 885/10 ชิ้น/ROP 5, SC02 ตัด 6 เหลือ 4 เกิด Alert, SC03 Export CSV เปิดใน Excel)</li>
-                    <li>[ ] <code>UAT_Sign_Off_Sheet.md</code> สรุป Passed 100% ลงนามครบ 2 ฝ่าย (ผู้ทดสอบ + Tech Lead)</li>
-                    <li>[ ] คัดแยกแล้ว: Defect (≤ ROP แต่ไม่ Alert → แก้ด่วนก่อน Merge) กับ New Scope (ขอส่งอีเมล → Future Backlog v3.0 ห้ามทำสัปดาห์นี้)</li>
-                </ul>
-            </div>
-            <div class="card">
-                <h3>ด่านที่ 2 — Regression + Tech Lead อนุมัติ</h3>
-                <ul class="slide-list">
-                    <li>[ ] <code>python -m pytest week-12/test_app.py -q</code> รหัส 0 (25 tests 100%: baseline 5 + CR-01 4 + CR-02 6 + BUG-101 4 + CLI 3 + integration 3)</li>
-                    <li>[ ] เปิด PR บน GitHub: base <code>main</code> ← compare <code>develop</code> (Refactored Architecture + CR-01 + CR-02)</li>
-                    <li>[ ] CI/CD รัน PyTest ไฟเขียว Tech Lead กด Confirm Merge (main กลายเป็น Gold Master Release)</li>
-                </ul>
+        <!-- SLIDE 4: Release gates 1-2 -->
+        <div class="slide">
+            <h2>3. Release Checklist — ด่านที่ 1 &amp; 2</h2>
+            <div class="grid-2">
+                <div class="card">
+                    <h3>ด่านที่ 1 — UAT ผ่านและลงนามแล้ว</h3>
+                    <ul class="slide-list">
+                        <li>[ ] Cross-Team UAT ครบ 3 Scenarios (SC01 รับเข้า Milk 885/10 ชิ้น/ROP 5, SC02 ตัด 6 เหลือ 4
+                            เกิด Alert, SC03 Export CSV เปิดใน Excel)</li>
+                        <li>[ ] <code>UAT_Sign_Off_Sheet.md</code> สรุป Passed 100% ลงนามครบ 2 ฝ่าย (ผู้ทดสอบ + Tech
+                            Lead)</li>
+                        <li>[ ] คัดแยกแล้ว: Defect (≤ ROP แต่ไม่ Alert → แก้ด่วนก่อน Merge) กับ New Scope (ขอส่งอีเมล →
+                            Future Backlog v3.0 ห้ามทำสัปดาห์นี้)</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>ด่านที่ 2 — Regression + Tech Lead อนุมัติ</h3>
+                    <ul class="slide-list">
+                        <li>[ ] <code>python -m pytest week-12/test_app.py -q</code> รหัส 0 (25 tests 100%: baseline 5 +
+                            CR-01 4 + CR-02 6 + BUG-101 4 + CLI 3 + integration 3)</li>
+                        <li>[ ] เปิด PR บน GitHub: base <code>main</code> ← compare <code>develop</code> (Refactored
+                            Architecture + CR-01 + CR-02)</li>
+                        <li>[ ] CI/CD รัน PyTest ไฟเขียว Tech Lead กด Confirm Merge (main กลายเป็น Gold Master Release)
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
-    </div>
 
-    <!-- SLIDE 5: Release gate 3 + rollback -->
-    <div class="slide">
-        <h2>4. Release Checklist — ด่านที่ 3 &amp; ย้อนกลับ</h2>
-        <div class="card">
-            <h3>ด่านที่ 3 — Merge, Tag, CHANGELOG แล้ว</h3>
-            <ul class="slide-list">
-                <li>[ ] รวมสายเข้า main แล้ว (main คือเวอร์ชันทางการ)</li>
-                <li>[ ] สร้าง Annotated Tag ตาม SemVer 2.0.0 (v1.0.0-baseline → v2.0.0-evolution: เปลี่ยนสถาปัตยกรรมใหญ่ + โมเดลข้อมูลธุรกิจใหม่):</li>
-            </ul>
-            <pre class="slide-code"><code>git checkout main
+        <!-- SLIDE 5: Release gate 3 + rollback -->
+        <div class="slide">
+            <h2>4. Release Checklist — ด่านที่ 3 &amp; ย้อนกลับ</h2>
+            <div class="card">
+                <h3>ด่านที่ 3 — Merge, Tag, CHANGELOG แล้ว</h3>
+                <ul class="slide-list">
+                    <li>[ ] รวมสายเข้า main แล้ว (main คือเวอร์ชันทางการ)</li>
+                    <li>[ ] สร้าง Annotated Tag ตาม SemVer 2.0.0 (v1.0.0-baseline → v2.0.0-evolution:
+                        เปลี่ยนสถาปัตยกรรมใหญ่ + โมเดลข้อมูลธุรกิจใหม่):</li>
+                </ul>
+                <pre class="slide-code"><code>git checkout main
 git pull origin main
 git tag -a v2.0.0-evolution -m "Production Release v2.0.0: Refactored Repository Pattern, Barcode Support, Reorder Point Alerts, and CSV Reporting."
 git push origin v2.0.0-evolution</code></pre>
-            <ul class="slide-list">
-                <li>[ ] GitHub Releases มีแท็ก <code>v2.0.0-evolution</code> ชื่อ <code>Mini Inventory System v2.0.0</code> ป้ายเขียว Latest Release (.zip/.tar.gz อัตโนมัติ)</li>
-                <li>[ ] <code>CHANGELOG.md</code> มี <code>## [2.0.0-evolution] - 2026-08-31</code> ครบ Added/Changed/Removed/Fixed + ISO 14764 Push ขึ้น main แล้ว</li>
-                <li>[ ] <code>Final_EVM.md</code> กระทบยอดแล้ว (PV 15,525 / EV 15,525 / AC 16,100 / SPI 1.00 / CPI 0.96 / CV −575)</li>
-            </ul>
+                <ul class="slide-list">
+                    <li>[ ] GitHub Releases มีแท็ก <code>v2.0.0-evolution</code> ชื่อ
+                        <code>Mini Inventory System v2.0.0</code> ป้ายเขียว Latest Release (.zip/.tar.gz อัตโนมัติ)</li>
+                    <li>[ ] <code>CHANGELOG.md</code> มี <code>## [2.0.0-evolution] - 2026-08-31</code> ครบ
+                        Added/Changed/Removed/Fixed + ISO 14764 Push ขึ้น main แล้ว</li>
+                    <li>[ ] <code>Final_EVM.md</code> กระทบยอดแล้ว (PV 15,525 / EV 15,525 / AC 16,100 / SPI 1.00 / CPI
+                        0.96 / CV −575)</li>
+                </ul>
+            </div>
+            <div class="note-box"><strong>หมายเหตุการย้อนกลับ:</strong> หากพบตัวขัดขวางหลังติดแท็ก:
+                <code>git tag -d v2.0.0-evolution</code>, <code>git push origin :refs/tags/v2.0.0-evolution</code>
+                หากพุชแล้ว, แก้ไขบน <code>phase2</code> รันทั้ง 3 ด่านใหม่ ติดแท็กใหม่ <code>v2.0.1-evolution</code>
+                ห้าม force-push ประวัติ <code>phase2</code> ที่ใช้ร่วมกับทีม</div>
         </div>
-        <div class="note-box"><strong>หมายเหตุการย้อนกลับ:</strong> หากพบตัวขัดขวางหลังติดแท็ก: <code>git tag -d v2.0.0-evolution</code>, <code>git push origin :refs/tags/v2.0.0-evolution</code> หากพุชแล้ว, แก้ไขบน <code>phase2</code> รันทั้ง 3 ด่านใหม่ ติดแท็กใหม่ <code>v2.0.1-evolution</code> ห้าม force-push ประวัติ <code>phase2</code> ที่ใช้ร่วมกับทีม</div>
-    </div>
 
-    <!-- SLIDE 6: CHANGELOG -->
-    <div class="slide">
-        <h2>5. CHANGELOG — [2.0.0-evolution] - 2026-08-31</h2>
-        <p style="font-size: 0.85rem;">SemVer 2.0.0, ISO/IEC 14764, Keep a Changelog — v1.0.0-baseline → v2.0.0-evolution (เปลี่ยนสถาปัตยกรรมใหญ่ + โมเดลข้อมูลธุรกิจใหม่)</p>
-        <div class="grid-2">
-            <div class="card">
-                <h3>Added</h3>
-                <ul class="slide-list">
-                    <li>Barcode (CR-01): <code>Product.barcode</code> (เริ่มต้น <code>""</code>) รับค่าผ่าน CLI เก็บใน JSON และรายงาน CSV</li>
-                    <li>Reorder Alert (CR-02): <code>Product.reorder_point</code> (เริ่มต้น <code>5</code>), <code>is_low_stock</code> (<code>quantity &lt;= reorder_point</code>), <code>InventoryManager.get_low_stock_alerts()</code></li>
-                    <li>CSV Export (CR-02): <code>CsvReportExporter</code> หัวตาราง <code>ProductID,ProductName,Barcode,Quantity,ReorderPoint,Price</code> + เมนู CLI 5</li>
-                </ul>
-                <h3>Changed</h3>
-                <ul class="slide-list">
-                    <li>สู่ Layered Architecture (Repository Pattern): ขยาย <code>to_dict</code>/<code>from_dict</code> ด้วย <code>barcode</code>/<code>reorder_point</code>, จัดเลขเมนู CLI ใหม่ (ออก 5 → 6), เตือนใกล้หมดอ้างอิงจุดสั่งซื้อซ้ำรายสินค้า</li>
-                </ul>
-            </div>
-            <div class="card">
-                <h3>Removed</h3>
-                <ul class="slide-list">
-                    <li>ลบตัวแปรสปาเก็ตตี global x (ผ่าตัด Refactoring ป้องกันข้อผิดพลาดอนาคต)</li>
-                </ul>
-                <h3>Fixed</h3>
-                <ul class="slide-list">
-                    <li>บั๊กแครชไฟล์ JSON ไร้บาร์โค้ด (BUG-101): <code>from_dict</code> รองรับคีย์สั้นเดิม (<code>n</code>/<code>q</code>/<code>p</code>/<code>c</code>) ค่าเริ่มต้น <code>barcode</code>/<code>reorder_point</code> = <code>""</code>/<code>5</code></li>
-                </ul>
-                <h3>ISO/IEC 14764 — ครบ 3 มิติ</h3>
-                <ul class="slide-list">
-                    <li><strong>Preventive:</strong> ลบ global x สู่ Repository Pattern ป้องกันข้อผิดพลาดอนาคต</li>
-                    <li><strong>Corrective:</strong> RCA + แก้บั๊ก Legacy Data Schema (BUG-101)</li>
-                    <li><strong>Perfective:</strong> บาร์โค้ด (CR-01) + CSV (CR-02) ตามความต้องการใหม่</li>
-                </ul>
-                <div class="note-box">หลักฐานปล่อย: UAT 3 Scenarios 100% (ลงนามครบ), PyTest 25 tests 100% บน main, Tag <code>v2.0.0-evolution</code> (Annotated + Metadata)</div>
-            </div>
-        </div>
-    </div>
-
-    <!-- SLIDE 7: Final EVM numbers -->
-    <div class="slide">
-        <h2>6. Final EVM — ตัวเลขสุดท้าย &amp; การตีความ</h2>
-        <table class="slide-table">
-            <thead><tr><th>ตัวแปร EVM</th><th>รายละเอียด</th><th>มูลค่า / ดัชนีสรุป</th></tr></thead>
-            <tbody>
-                <tr><td>PV</td><td>งบแผนรวมทั้งหมด (รวม CR-02)</td><td>15,525 THB</td></tr>
-                <tr><td>EV</td><td>งานผ่าน DoD &amp; UAT ครบ 100%</td><td>15,525 THB</td></tr>
-                <tr><td>AC</td><td>ค่าแรงจริง + เครื่องมือจริง</td><td>16,100 THB</td></tr>
-                <tr><td>SPI (15,525/15,525)</td><td>ตรงตามแผน</td><td>1.00 (On-Time 100% )</td></tr>
-                <tr><td>CPI (15,525/16,100)</td><td>เกินงบ</td><td>0.96 (Over 3.7% )</td></tr>
-                <tr><td>CV (EV − AC)</td><td>ชดเชยงบสำรอง</td><td>−575 THB</td></tr>
-                <tr><td>SV (EV − PV)</td><td>ตรงเวลา</td><td>0</td></tr>
-            </tbody>
-        </table>
-        <div class="grid-2">
-            <div class="card">
-                <h3>การตีความ</h3>
-                <ul class="slide-list">
-                    <li><strong>กำหนดการ:</strong> SPI 1.00 (≥ 1.0 = เร็ว/ตรงแผน ) — ส่งมอบตรงกำหนด 100% UAT SC01–SC03 ปิดครบสัปดาห์ที่ 12</li>
-                    <li><strong>ต้นทุน:</strong> CPI 0.96 (&lt; 1.0 = เกินงบ /) — เกิน 3.7% ชดเชยด้วย Contingency Reserve (เบิกค่าแรงส่วนเกิน Refactoring 575 THB)</li>
-                </ul>
-            </div>
-            <div class="card">
-                <h3>Velocity Trend (points/sprint)</h3>
-                <table class="slide-table">
-                    <thead><tr><th>Sprint</th><th>Velocity</th><th>ช่วงงาน</th></tr></thead>
-                    <tbody>
-                        <tr><td>S1</td><td>15</td><td>ผ่าตัดโค้ดเดิม (Refactoring)</td></tr>
-                        <tr><td>S2</td><td>22</td><td>เร็วสูงสุด (CR-01/CR-02)</td></tr>
-                        <tr><td>S3</td><td>12</td><td>Hardening &amp; UAT</td></tr>
-                    </tbody>
-                </table>
-                <p style="font-size: 0.85rem;">Epic Burndown แตะ 0 ไร้งานค้าง — Epic 1 ปิดโครงสร้างคลาส 100%, Epic 2 ปิด Barcode/Alert/CSV</p>
+        <!-- SLIDE 6: CHANGELOG -->
+        <div class="slide">
+            <h2>5. CHANGELOG — [2.0.0-evolution] - 2026-08-31</h2>
+            <p style="font-size: 0.85rem;">SemVer 2.0.0, ISO/IEC 14764, Keep a Changelog — v1.0.0-baseline →
+                v2.0.0-evolution (เปลี่ยนสถาปัตยกรรมใหญ่ + โมเดลข้อมูลธุรกิจใหม่)</p>
+            <div class="grid-2">
+                <div class="card">
+                    <h3>Added</h3>
+                    <ul class="slide-list">
+                        <li>Barcode (CR-01): <code>Product.barcode</code> (เริ่มต้น <code>""</code>) รับค่าผ่าน CLI
+                            เก็บใน JSON และรายงาน CSV</li>
+                        <li>Reorder Alert (CR-02): <code>Product.reorder_point</code> (เริ่มต้น <code>5</code>),
+                            <code>is_low_stock</code> (<code>quantity &lt;= reorder_point</code>),
+                            <code>InventoryManager.get_low_stock_alerts()</code></li>
+                        <li>CSV Export (CR-02): <code>CsvReportExporter</code> หัวตาราง
+                            <code>ProductID,ProductName,Barcode,Quantity,ReorderPoint,Price</code> + เมนู CLI 5</li>
+                    </ul>
+                    <h3>Changed</h3>
+                    <ul class="slide-list">
+                        <li>สู่ Layered Architecture (Repository Pattern): ขยาย
+                            <code>to_dict</code>/<code>from_dict</code> ด้วย
+                            <code>barcode</code>/<code>reorder_point</code>, จัดเลขเมนู CLI ใหม่ (ออก 5 → 6),
+                            เตือนใกล้หมดอ้างอิงจุดสั่งซื้อซ้ำรายสินค้า</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>Removed</h3>
+                    <ul class="slide-list">
+                        <li>ลบตัวแปรสปาเก็ตตี global x (ผ่าตัด Refactoring ป้องกันข้อผิดพลาดอนาคต)</li>
+                    </ul>
+                    <h3>Fixed</h3>
+                    <ul class="slide-list">
+                        <li>บั๊กแครชไฟล์ JSON ไร้บาร์โค้ด (BUG-101): <code>from_dict</code> รองรับคีย์สั้นเดิม
+                            (<code>n</code>/<code>q</code>/<code>p</code>/<code>c</code>) ค่าเริ่มต้น
+                            <code>barcode</code>/<code>reorder_point</code> = <code>""</code>/<code>5</code></li>
+                    </ul>
+                    <h3>ISO/IEC 14764 — ครบ 3 มิติ</h3>
+                    <ul class="slide-list">
+                        <li><strong>Preventive:</strong> ลบ global x สู่ Repository Pattern ป้องกันข้อผิดพลาดอนาคต</li>
+                        <li><strong>Corrective:</strong> RCA + แก้บั๊ก Legacy Data Schema (BUG-101)</li>
+                        <li><strong>Perfective:</strong> บาร์โค้ด (CR-01) + CSV (CR-02) ตามความต้องการใหม่</li>
+                    </ul>
+                    <div class="note-box">หลักฐานปล่อย: UAT 3 Scenarios 100% (ลงนามครบ), PyTest 25 tests 100% บน main,
+                        Tag <code>v2.0.0-evolution</code> (Annotated + Metadata)</div>
+                </div>
             </div>
         </div>
-    </div>
 
-    <!-- SLIDE 8: Procurement close-out + sprint close -->
-    <div class="slide">
-        <h2>7. Procurement Close-out &amp; ปิด Sprint 3</h2>
-        <table class="slide-table">
-            <thead><tr><th>Tool / Service Item</th><th>Budget</th><th>Actual</th><th>Variance</th><th>Contract Status</th></tr></thead>
-            <tbody>
-                <tr><td>Jira Software (Cloud)</td><td>0 THB</td><td>0 THB</td><td>0 THB</td><td>Free Tier / Closed</td></tr>
-                <tr><td>GitHub Actions Mins</td><td>0 THB</td><td>0 THB</td><td>0 THB</td><td>1,420 / 2,000 Mins (Free)</td></tr>
-                <tr><td>Cloud Server Hosting</td><td>500 THB</td><td>480 THB</td><td>+20 THB </td><td>Active / Decommissioned</td></tr>
-                <tr><td>SSL &amp; Domain Cert</td><td>300 THB</td><td>300 THB</td><td>0 THB</td><td>Paid &amp; Settled</td></tr>
-                <tr><td>รวมยอดค่าเครื่องมือจริง</td><td>800 THB</td><td>780 THB</td><td>+20 THB </td><td>ปิดสัญญาสมบูรณ์ </td></tr>
-            </tbody>
-        </table>
-        <div class="grid-2">
-            <div class="card">
-                <h3>Contingency Settlement</h3>
-                <ul class="slide-list">
-                    <li>ตั้งต้น (Week 7): +2,823 THB</li>
-                    <li>เบิก CR-02 (Week 10): −1,350 THB</li>
-                    <li>เบิกค่าแรง Refactoring (W12): −575 THB</li>
-                    <li>คงเหลือสุทธิ = 898 THB (0.00 Deficit ) — ในกรอบอนุมัติ 100% ไม่ขอเงินเพิ่ม</li>
-                </ul>
-                <h3>Decommissioning</h3>
-                <ul class="slide-list">
-                    <li>ปิดฐานข้อมูลทดสอบชั่วคราว + Mock Server รัน PyTest — คงไว้เฉพาะ Production Server และ GitHub หลัก</li>
-                </ul>
+        <!-- SLIDE 7: Final EVM numbers -->
+        <div class="slide">
+            <h2>6. Final EVM — ตัวเลขสุดท้าย &amp; การตีความ</h2>
+            <table class="slide-table">
+                <thead>
+                    <tr>
+                        <th>ตัวแปร EVM</th>
+                        <th>รายละเอียด</th>
+                        <th>มูลค่า / ดัชนีสรุป</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>PV</td>
+                        <td>งบแผนรวมทั้งหมด (รวม CR-02)</td>
+                        <td>15,525 THB</td>
+                    </tr>
+                    <tr>
+                        <td>EV</td>
+                        <td>งานผ่าน DoD &amp; UAT ครบ 100%</td>
+                        <td>15,525 THB</td>
+                    </tr>
+                    <tr>
+                        <td>AC</td>
+                        <td>ค่าแรงจริง + เครื่องมือจริง</td>
+                        <td>16,100 THB</td>
+                    </tr>
+                    <tr>
+                        <td>SPI (15,525/15,525)</td>
+                        <td>ตรงตามแผน</td>
+                        <td>1.00 (On-Time 100% )</td>
+                    </tr>
+                    <tr>
+                        <td>CPI (15,525/16,100)</td>
+                        <td>เกินงบ</td>
+                        <td>0.96 (Over 3.7% )</td>
+                    </tr>
+                    <tr>
+                        <td>CV (EV − AC)</td>
+                        <td>ชดเชยงบสำรอง</td>
+                        <td>−575 THB</td>
+                    </tr>
+                    <tr>
+                        <td>SV (EV − PV)</td>
+                        <td>ตรงเวลา</td>
+                        <td>0</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="grid-2">
+                <div class="card">
+                    <h3>การตีความ</h3>
+                    <ul class="slide-list">
+                        <li><strong>กำหนดการ:</strong> SPI 1.00 (≥ 1.0 = เร็ว/ตรงแผน ) — ส่งมอบตรงกำหนด 100% UAT
+                            SC01–SC03 ปิดครบสัปดาห์ที่ 12</li>
+                        <li><strong>ต้นทุน:</strong> CPI 0.96 (&lt; 1.0 = เกินงบ /) — เกิน 3.7% ชดเชยด้วย Contingency
+                            Reserve (เบิกค่าแรงส่วนเกิน Refactoring 575 THB)</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>Velocity Trend (points/sprint)</h3>
+                    <table class="slide-table">
+                        <thead>
+                            <tr>
+                                <th>Sprint</th>
+                                <th>Velocity</th>
+                                <th>ช่วงงาน</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>S1</td>
+                                <td>15</td>
+                                <td>ผ่าตัดโค้ดเดิม (Refactoring)</td>
+                            </tr>
+                            <tr>
+                                <td>S2</td>
+                                <td>22</td>
+                                <td>เร็วสูงสุด (CR-01/CR-02)</td>
+                            </tr>
+                            <tr>
+                                <td>S3</td>
+                                <td>12</td>
+                                <td>Hardening &amp; UAT</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p style="font-size: 0.85rem;">Epic Burndown แตะ 0 ไร้งานค้าง — Epic 1 ปิดโครงสร้างคลาส 100%, Epic 2
+                        ปิด Barcode/Alert/CSV</p>
+                </div>
             </div>
-            <div class="card">
-                <h3>ปิด Sprint 3 &amp; ขอ Sign-off</h3>
-                <ol class="slide-list">
-                    <li>ตรวจ TASK-301 (UAT), TASK-302 (Security), TASK-303 (Docs) ช่อง Done ครบ กด Complete Sprint 3 บน Jira</li>
-                    <li>ดึง Velocity Chart (Commitment vs Completed 3 Sprints) + Epic Burndown (แตะ 0) ใส่เล่มรายงาน</li>
-                    <li>PM นำ Final EVM + Velocity + Procurement Sheet + ใบรับรอง UAT พบอาจารย์ (Sponsor) ลงนาม Phase 3 Completion Certificate (Layered Architecture, Barcode, Reorder Alerts, CSV Export, CI/CD 25 tests 100%, Tag v2.0.0-evolution)</li>
-                </ol>
+        </div>
+
+        <!-- SLIDE 8: Procurement close-out + sprint close -->
+        <div class="slide">
+            <h2>7. Procurement Close-out &amp; ปิด Sprint 3</h2>
+            <table class="slide-table">
+                <thead>
+                    <tr>
+                        <th>Tool / Service Item</th>
+                        <th>Budget</th>
+                        <th>Actual</th>
+                        <th>Variance</th>
+                        <th>Contract Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Jira Software (Cloud)</td>
+                        <td>0 THB</td>
+                        <td>0 THB</td>
+                        <td>0 THB</td>
+                        <td>Free Tier / Closed</td>
+                    </tr>
+                    <tr>
+                        <td>GitHub Actions Mins</td>
+                        <td>0 THB</td>
+                        <td>0 THB</td>
+                        <td>0 THB</td>
+                        <td>1,420 / 2,000 Mins (Free)</td>
+                    </tr>
+                    <tr>
+                        <td>Cloud Server Hosting</td>
+                        <td>500 THB</td>
+                        <td>480 THB</td>
+                        <td>+20 THB </td>
+                        <td>Active / Decommissioned</td>
+                    </tr>
+                    <tr>
+                        <td>SSL &amp; Domain Cert</td>
+                        <td>300 THB</td>
+                        <td>300 THB</td>
+                        <td>0 THB</td>
+                        <td>Paid &amp; Settled</td>
+                    </tr>
+                    <tr>
+                        <td>รวมยอดค่าเครื่องมือจริง</td>
+                        <td>800 THB</td>
+                        <td>780 THB</td>
+                        <td>+20 THB </td>
+                        <td>ปิดสัญญาสมบูรณ์ </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="grid-2">
+                <div class="card">
+                    <h3>Contingency Settlement</h3>
+                    <ul class="slide-list">
+                        <li>ตั้งต้น (Week 7): +2,823 THB</li>
+                        <li>เบิก CR-02 (Week 10): −1,350 THB</li>
+                        <li>เบิกค่าแรง Refactoring (W12): −575 THB</li>
+                        <li>คงเหลือสุทธิ = 898 THB (0.00 Deficit ) — ในกรอบอนุมัติ 100% ไม่ขอเงินเพิ่ม</li>
+                    </ul>
+                    <h3>Decommissioning</h3>
+                    <ul class="slide-list">
+                        <li>ปิดฐานข้อมูลทดสอบชั่วคราว + Mock Server รัน PyTest — คงไว้เฉพาะ Production Server และ GitHub
+                            หลัก</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>ปิด Sprint 3 &amp; ขอ Sign-off</h3>
+                    <ol class="slide-list">
+                        <li>ตรวจ TASK-301 (UAT), TASK-302 (Security), TASK-303 (Docs) ช่อง Done ครบ กด Complete Sprint 3
+                            บน Jira</li>
+                        <li>ดึง Velocity Chart (Commitment vs Completed 3 Sprints) + Epic Burndown (แตะ 0) ใส่เล่มรายงาน
+                        </li>
+                        <li>PM นำ Final EVM + Velocity + Procurement Sheet + ใบรับรอง UAT พบอาจารย์ (Sponsor) ลงนาม
+                            Phase 3 Completion Certificate (Layered Architecture, Barcode, Reorder Alerts, CSV Export,
+                            CI/CD 25 tests 100%, Tag v2.0.0-evolution)</li>
+                    </ol>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-<div class="controls">
-    <button class="btn" id="prevBtn" onclick="prevSlide()" disabled>&#8592;</button>
-    <div class="counter"><span id="currentSlide">1</span> / <span id="totalSlides">8</span></div>
-    <button class="btn" id="nextBtn" onclick="nextSlide()">&#8594;</button>
-</div>
+    <div class="controls">
+        <button class="btn" id="prevBtn" onclick="prevSlide()" disabled>&#8592;</button>
+        <div class="counter"><span id="currentSlide">1</span> / <span id="totalSlides">8</span></div>
+        <button class="btn" id="nextBtn" onclick="nextSlide()">&#8594;</button>
+    </div>
 
-<script>
-    const slides = document.querySelectorAll('.slide');
-    const total = slides.length;
-    let current = 0;
-    document.getElementById('totalSlides').textContent = total;
+    <script>
+        const slides = document.querySelectorAll('.slide');
+        const total = slides.length;
+        let current = 0;
+        document.getElementById('totalSlides').textContent = total;
 
-    function updateSlides() {
-        slides.forEach((slide, index) => {
-            slide.classList.remove('active', 'prev');
-            if (index === current) slide.classList.add('active');
-            else if (index < current) slide.classList.add('prev');
+        function updateSlides() {
+            slides.forEach((slide, index) => {
+                slide.classList.remove('active', 'prev');
+                if (index === current) slide.classList.add('active');
+                else if (index < current) slide.classList.add('prev');
+            });
+            document.getElementById('currentSlide').textContent = current + 1;
+            document.getElementById('prevBtn').disabled = current === 0;
+            document.getElementById('nextBtn').disabled = current === total - 1;
+        }
+
+        function nextSlide() { if (current < total - 1) { current++; updateSlides(); } }
+        function prevSlide() { if (current > 0) { current--; updateSlides(); } }
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === 'Space') nextSlide();
+            else if (e.key === 'ArrowLeft') prevSlide();
         });
-        document.getElementById('currentSlide').textContent = current + 1;
-        document.getElementById('prevBtn').disabled = current === 0;
-        document.getElementById('nextBtn').disabled = current === total - 1;
-    }
-
-    function nextSlide() { if (current < total - 1) { current++; updateSlides(); } }
-    function prevSlide() { if (current > 0) { current--; updateSlides(); } }
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'ArrowRight' || e.key === 'Space') nextSlide();
-        else if (e.key === 'ArrowLeft') prevSlide();
-    });
-    updateSlides();
-</script>
+        updateSlides();
+    </script>
 </body>
+
 </html>

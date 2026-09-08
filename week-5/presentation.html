@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="th">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,10 +9,11 @@
     <link rel="stylesheet" href="../shared-theme.css">
     <!-- Code Highlight -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
-    
+
 </head>
+
 <body>
-<div id="deck">
+    <div id="deck">
         <div class="slide center-content">
             <div class="badge">Week 5</div>
             <h1>Quality, Architecture & Budget</h1>
@@ -27,7 +29,8 @@
             <div class="grid-2">
                 <div class="card">
                     <h3> Functional Suitability</h3>
-                    <p style="font-size: 0.9rem;">ระบบตัดสต็อกได้ถูกต้อง 100% เพิ่มฟีเจอร์สมาชิกและส่วนลดตาม Tier ได้สมบูรณ์</p>
+                    <p style="font-size: 0.9rem;">ระบบตัดสต็อกได้ถูกต้อง 100% เพิ่มฟีเจอร์สมาชิกและส่วนลดตาม Tier
+                        ได้สมบูรณ์</p>
                 </div>
                 <div class="card">
                     <h3> Reliability (ความทนทาน)</h3>
@@ -35,11 +38,13 @@
                 </div>
                 <div class="card">
                     <h3> Usability (การใช้งาน)</h3>
-                    <p style="font-size: 0.9rem;">มีการแจ้งเตือน (Error Message) ชัดเจนทุกครั้งที่ผู้ใช้งานกรอกข้อมูลผิดพลาด</p>
+                    <p style="font-size: 0.9rem;">มีการแจ้งเตือน (Error Message)
+                        ชัดเจนทุกครั้งที่ผู้ใช้งานกรอกข้อมูลผิดพลาด</p>
                 </div>
                 <div class="card">
                     <h3> Maintainability (การบำรุงรักษา)</h3>
-                    <p style="font-size: 0.9rem;">เปลี่ยนจาก Monolithic เป็น OOP/MVC ทำให้นักพัฒนารุ่นต่อไปสานงานต่อได้ง่าย</p>
+                    <p style="font-size: 0.9rem;">เปลี่ยนจาก Monolithic เป็น OOP/MVC
+                        ทำให้นักพัฒนารุ่นต่อไปสานงานต่อได้ง่าย</p>
                 </div>
             </div>
         </div>
@@ -47,11 +52,28 @@
         <div class="slide">
             <h2>2. โครงสร้างและเวลาทำงาน (Time & Architecture)</h2>
             <table>
-                <thead><tr><th>มิติการประเมิน</th><th>ก่อนทำ (As-is)</th><th>หลังทำ (To-be)</th></tr></thead>
+                <thead>
+                    <tr>
+                        <th>มิติการประเมิน</th>
+                        <th>ก่อนทำ (As-is)</th>
+                        <th>หลังทำ (To-be)</th>
+                    </tr>
+                </thead>
                 <tbody>
-                    <tr><td><strong>Architecture</strong></td><td>Monolithic Script (ไฟล์เดียว)</td><td>MVC (Separation of Concerns)</td></tr>
-                    <tr><td><strong>State Management</strong></td><td>Global Variable (x)</td><td>Class Attributes & DB Managers</td></tr>
-                    <tr><td><strong>Man-hours</strong></td><td colspan="2" style="text-align: center;">40 ชั่วโมงทำงานรวมตลอด 4 เฟสหลัก</td></tr>
+                    <tr>
+                        <td><strong>Architecture</strong></td>
+                        <td>Monolithic Script (ไฟล์เดียว)</td>
+                        <td>MVC (Separation of Concerns)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>State Management</strong></td>
+                        <td>Global Variable (x)</td>
+                        <td>Class Attributes & DB Managers</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Man-hours</strong></td>
+                        <td colspan="2" style="text-align: center;">40 ชั่วโมงทำงานรวมตลอด 4 เฟสหลัก</td>
+                    </tr>
                 </tbody>
             </table>
         </div>
@@ -62,7 +84,8 @@
                 <div class="card">
                     <h3>ต้นทุนการพัฒนา</h3>
                     <ul style="font-size: 0.9rem;">
-                        <li><strong>ค่าแรง (Labor Cost):</strong> ประมาณ 31,000 THB สำหรับการวิเคราะห์ เขียนโค้ด และทดสอบ (40 ชม.)</li>
+                        <li><strong>ค่าแรง (Labor Cost):</strong> ประมาณ 31,000 THB สำหรับการวิเคราะห์ เขียนโค้ด
+                            และทดสอบ (40 ชม.)</li>
                         <li><strong>ค่าเครื่องมือ (Infra):</strong> ประมาณ 3,000 THB</li>
                     </ul>
                 </div>
@@ -70,7 +93,8 @@
                     <h3>ยอดรวมเบ็ดเสร็จ</h3>
                     <ul style="font-size: 0.9rem;">
                         <li><strong>เงินสำรอง (Contingency):</strong> 10% ของยอด (3,400 THB)</li>
-                        <li><strong>Grand Total:</strong> ประมาณ <strong>37,400 THB</strong> ตลอดระยะเวลาดำเนินงานโครงการ</li>
+                        <li><strong>Grand Total:</strong> ประมาณ <strong>37,400 THB</strong>
+                            ตลอดระยะเวลาดำเนินงานโครงการ</li>
                     </ul>
                 </div>
             </div>
@@ -78,7 +102,10 @@
 
         <div class="slide">
             <h2>4. สรุปผลการส่งมอบ (Project Handover)</h2>
-            <p style="font-size: 1.05rem; line-height: 1.6;">โครงการแก้ไขระบบ CLI Inventory Management System ประสบความสำเร็จตามเป้าประสงค์ (Project Charter) ครบถ้วน ทีมพัฒนาได้ปิดจุดอ่อนสำคัญ (Hotspots) และเสริมเกราะด้วยชุดทดสอบอัตโนมัติ ทำให้ระบบสามารถใช้งานจริงบนโปรดักชันได้อย่างมีประสิทธิภาพและเสถียรภาพสูงสุด</p>
+            <p style="font-size: 1.05rem; line-height: 1.6;">โครงการแก้ไขระบบ CLI Inventory Management System
+                ประสบความสำเร็จตามเป้าประสงค์ (Project Charter) ครบถ้วน ทีมพัฒนาได้ปิดจุดอ่อนสำคัญ (Hotspots)
+                และเสริมเกราะด้วยชุดทดสอบอัตโนมัติ
+                ทำให้ระบบสามารถใช้งานจริงบนโปรดักชันได้อย่างมีประสิทธิภาพและเสถียรภาพสูงสุด</p>
         </div>
     </div>
 
@@ -146,94 +173,95 @@
         updateSlides();
     </script>
 
-  
-  
 
-  <script src="https://cdn.jsdelivr.net/npm/svg-pan-zoom@3.6.1/dist/svg-pan-zoom.min.js"></script>
-  <script>
-    // Bulletproof Fullscreen Mermaid logic (with Pan & Zoom)
-    document.addEventListener("DOMContentLoaded", () => {
-      document.querySelectorAll('.mermaid-container').forEach(container => {
-        // Remove old buttons if script runs twice
-        container.querySelectorAll('.btn-expand-mermaid').forEach(b => b.remove());
-        
-        const btn = document.createElement('button');
-        btn.className = 'btn-expand-mermaid';
-        btn.innerHTML = ' Fullscreen';
-        
-        btn.onclick = () => {
-          const originalSvg = container.querySelector('svg');
-          if (!originalSvg) return;
 
-          // Create a true viewport-fixed overlay attached to body
-          const overlay = document.createElement('div');
-          overlay.style.position = 'fixed';
-          overlay.style.top = '0';
-          overlay.style.left = '0';
-          overlay.style.width = '100vw';
-          overlay.style.height = '100vh';
-          overlay.style.backgroundColor = 'var(--paper, #F6F4EE)';
-          overlay.style.zIndex = '999999';
-          overlay.style.display = 'flex';
-          overlay.style.alignItems = 'center';
-          overlay.style.justifyContent = 'center';
-          
-          // Create Close button
-          const closeBtn = document.createElement('button');
-          closeBtn.innerHTML = ' Close';
-          closeBtn.style.position = 'absolute';
-          closeBtn.style.top = '20px';
-          closeBtn.style.right = '20px';
-          closeBtn.style.padding = '8px 16px';
-          closeBtn.style.fontSize = '1rem';
-          closeBtn.style.fontWeight = 'bold';
-          closeBtn.style.cursor = 'pointer';
-          closeBtn.style.backgroundColor = '#ff4d4d';
-          closeBtn.style.color = '#fff';
-          closeBtn.style.border = 'none';
-          closeBtn.style.borderRadius = '8px';
-          closeBtn.style.zIndex = '1000000';
-          closeBtn.style.boxShadow = '0 4px 12px rgba(0,0,0,0.2)';
-          
-          closeBtn.onmouseover = () => closeBtn.style.backgroundColor = '#e60000';
-          closeBtn.onmouseout = () => closeBtn.style.backgroundColor = '#ff4d4d';
 
-          // Clone the SVG so we don't mess up the original layout
-          const clonedSvg = originalSvg.cloneNode(true);
-          clonedSvg.style.width = '100%';
-          clonedSvg.style.height = '100%';
-          clonedSvg.style.maxWidth = '100vw';
-          clonedSvg.style.maxHeight = '100vh';
-          
-          overlay.appendChild(clonedSvg);
-          overlay.appendChild(closeBtn);
-          document.body.appendChild(overlay);
+    <script src="https://cdn.jsdelivr.net/npm/svg-pan-zoom@3.6.1/dist/svg-pan-zoom.min.js"></script>
+    <script>
+        // Bulletproof Fullscreen Mermaid logic (with Pan & Zoom)
+        document.addEventListener("DOMContentLoaded", () => {
+            document.querySelectorAll('.mermaid-container').forEach(container => {
+                // Remove old buttons if script runs twice
+                container.querySelectorAll('.btn-expand-mermaid').forEach(b => b.remove());
 
-          // Disable scrolling on body
-          const oldOverflow = document.body.style.overflow;
-          document.body.style.overflow = 'hidden';
+                const btn = document.createElement('button');
+                btn.className = 'btn-expand-mermaid';
+                btn.innerHTML = ' Fullscreen';
 
-          // Initialize pan-zoom on clone
-          const panZoomInstance = svgPanZoom(clonedSvg, {
-            zoomEnabled: true,
-            controlIconsEnabled: true,
-            fit: true,
-            center: true,
-            minZoom: 0.5,
-            maxZoom: 10,
-            mouseWheelZoomEnabled: true
-          });
+                btn.onclick = () => {
+                    const originalSvg = container.querySelector('svg');
+                    if (!originalSvg) return;
 
-          closeBtn.onclick = () => {
-            panZoomInstance.destroy();
-            document.body.removeChild(overlay);
-            document.body.style.overflow = oldOverflow;
-          };
-        };
-        container.appendChild(btn);
-      });
-    });
-  </script>
+                    // Create a true viewport-fixed overlay attached to body
+                    const overlay = document.createElement('div');
+                    overlay.style.position = 'fixed';
+                    overlay.style.top = '0';
+                    overlay.style.left = '0';
+                    overlay.style.width = '100vw';
+                    overlay.style.height = '100vh';
+                    overlay.style.backgroundColor = 'var(--paper, #F6F4EE)';
+                    overlay.style.zIndex = '999999';
+                    overlay.style.display = 'flex';
+                    overlay.style.alignItems = 'center';
+                    overlay.style.justifyContent = 'center';
+
+                    // Create Close button
+                    const closeBtn = document.createElement('button');
+                    closeBtn.innerHTML = ' Close';
+                    closeBtn.style.position = 'absolute';
+                    closeBtn.style.top = '20px';
+                    closeBtn.style.right = '20px';
+                    closeBtn.style.padding = '8px 16px';
+                    closeBtn.style.fontSize = '1rem';
+                    closeBtn.style.fontWeight = 'bold';
+                    closeBtn.style.cursor = 'pointer';
+                    closeBtn.style.backgroundColor = '#ff4d4d';
+                    closeBtn.style.color = '#fff';
+                    closeBtn.style.border = 'none';
+                    closeBtn.style.borderRadius = '8px';
+                    closeBtn.style.zIndex = '1000000';
+                    closeBtn.style.boxShadow = '0 4px 12px rgba(0,0,0,0.2)';
+
+                    closeBtn.onmouseover = () => closeBtn.style.backgroundColor = '#e60000';
+                    closeBtn.onmouseout = () => closeBtn.style.backgroundColor = '#ff4d4d';
+
+                    // Clone the SVG so we don't mess up the original layout
+                    const clonedSvg = originalSvg.cloneNode(true);
+                    clonedSvg.style.width = '100%';
+                    clonedSvg.style.height = '100%';
+                    clonedSvg.style.maxWidth = '100vw';
+                    clonedSvg.style.maxHeight = '100vh';
+
+                    overlay.appendChild(clonedSvg);
+                    overlay.appendChild(closeBtn);
+                    document.body.appendChild(overlay);
+
+                    // Disable scrolling on body
+                    const oldOverflow = document.body.style.overflow;
+                    document.body.style.overflow = 'hidden';
+
+                    // Initialize pan-zoom on clone
+                    const panZoomInstance = svgPanZoom(clonedSvg, {
+                        zoomEnabled: true,
+                        controlIconsEnabled: true,
+                        fit: true,
+                        center: true,
+                        minZoom: 0.5,
+                        maxZoom: 10,
+                        mouseWheelZoomEnabled: true
+                    });
+
+                    closeBtn.onclick = () => {
+                        panZoomInstance.destroy();
+                        document.body.removeChild(overlay);
+                        document.body.style.overflow = oldOverflow;
+                    };
+                };
+                container.appendChild(btn);
+            });
+        });
+    </script>
 
 </body>
+
 </html>

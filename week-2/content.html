@@ -174,16 +174,17 @@
     <div class="badge" data-od-id="week-2-label">Week 2 · Design</div>
     <h1 data-od-id="week-2-heading">Evolution & Refactoring Design</h1>
     <p class="lede">ออกแบบ Data Flow Diagram (DFD) ใหม่ เตรียมแผนสำหรับฐานข้อมูล และออกแบบสถาปัตยกรรมระบบสมาชิก</p>
-    
+
     <div class="divider"></div>
-    
+
     <section class="summary" aria-label="สรุปการออกแบบ" data-od-id="week-2-summary">
       <article class="panel" data-od-id="project-facts">
         <h2>1. การจัดการฐานข้อมูลสมาชิก (Member Integration)</h2>
         <dl class="facts">
           <div>
             <dt>Data Separation</dt>
-            <dd>แยกไฟล์จัดเก็บข้อมูลอย่างชัดเจน: <code>data.json</code> สำหรับคลังสินค้า และ <code>members.json</code> สำหรับข้อมูลสมาชิกระบบ</dd>
+            <dd>แยกไฟล์จัดเก็บข้อมูลอย่างชัดเจน: <code>data.json</code> สำหรับคลังสินค้า และ <code>members.json</code>
+              สำหรับข้อมูลสมาชิกระบบ</dd>
           </div>
           <div>
             <dt>Data Model</dt>
@@ -191,7 +192,8 @@
           </div>
           <div>
             <dt>Methodology</dt>
-            <dd>สร้างเมธอดเฉพาะสำหรับการเพิ่มสมาชิก ค้นหา และบันทึกข้อมูล (LOAD/SAVE) เพื่อลดความซ้ำซ้อนของการอ่านเขียนไฟล์</dd>
+            <dd>สร้างเมธอดเฉพาะสำหรับการเพิ่มสมาชิก ค้นหา และบันทึกข้อมูล (LOAD/SAVE)
+              เพื่อลดความซ้ำซ้อนของการอ่านเขียนไฟล์</dd>
           </div>
         </dl>
       </article>
@@ -199,10 +201,12 @@
       <article class="panel" data-od-id="hotspot-analysis">
         <h2>2. ปัญหาเชิงสถาปัตยกรรมที่ค้นพบ</h2>
         <ol class="steps">
-          <li><strong>Global State (x):</strong> การประกาศตัวแปรนอกฟังก์ชัน ทำให้เกิด Tight Coupling การแก้ไขระบบทำได้ยากและสุ่มเสี่ยง</li>
+          <li><strong>Global State (x):</strong> การประกาศตัวแปรนอกฟังก์ชัน ทำให้เกิด Tight Coupling
+            การแก้ไขระบบทำได้ยากและสุ่มเสี่ยง</li>
           <li><strong>Monolithic Design:</strong> UI, Business Logic และ Data Access ปนกันในฟังก์ชันเดียว</li>
           <li><strong>Cryptic Naming:</strong> ตัวแปร n, q, p ทำให้อ่านและทำความเข้าใจยาก</li>
-          <li><strong>Risk of Data Corruption:</strong> การเซฟทับไฟล์ดั้งเดิม หากเกิดแครชกลางคันจะทำให้ฐานข้อมูลว่างเปล่า (Empty File)</li>
+          <li><strong>Risk of Data Corruption:</strong> การเซฟทับไฟล์ดั้งเดิม
+            หากเกิดแครชกลางคันจะทำให้ฐานข้อมูลว่างเปล่า (Empty File)</li>
         </ol>
       </article>
     </section>
@@ -216,17 +220,24 @@
           <p>แบ่งเลเยอร์ตามหลักการ Separation of Concerns เพื่อรองรับระบบส่วนลดและจัดการข้อผิดพลาด:
           </p>
           <ul style="padding-left: 20px;">
-            <li><strong>Presentation (CLI View):</strong> รับ Input จากผู้ใช้งาน, ทำ String Validation, ดักจับ Value Error ล่วงหน้า และแสดงผลลัพธ์ผ่านหน้าจอ</li>
-            <li><strong>Business Logic (Controllers):</strong> <code>InventoryManager</code> และ <code>MemberManager</code> ซึ่งทำหน้าที่ตรวจสอบเงื่อนไขสินค้าคงคลัง คิดคำนวณส่วนลด และแก้ไขสถานะข้อมูลภายใน Memory</li>
-            <li><strong>Data Access (Storage Model):</strong> <code>Storage</code> Class จัดการเรื่องการเซฟไฟล์ด้วยเทคนิค Safe Atomic Write (เขียนข้อมูลลงไฟล์สำรองก่อนย้ายไปทับไฟล์จริง) ป้องกัน Data Corruption</li>
+            <li><strong>Presentation (CLI View):</strong> รับ Input จากผู้ใช้งาน, ทำ String Validation, ดักจับ Value
+              Error ล่วงหน้า และแสดงผลลัพธ์ผ่านหน้าจอ</li>
+            <li><strong>Business Logic (Controllers):</strong> <code>InventoryManager</code> และ
+              <code>MemberManager</code> ซึ่งทำหน้าที่ตรวจสอบเงื่อนไขสินค้าคงคลัง คิดคำนวณส่วนลด
+              และแก้ไขสถานะข้อมูลภายใน Memory</li>
+            <li><strong>Data Access (Storage Model):</strong> <code>Storage</code> Class
+              จัดการเรื่องการเซฟไฟล์ด้วยเทคนิค Safe Atomic Write (เขียนข้อมูลลงไฟล์สำรองก่อนย้ายไปทับไฟล์จริง) ป้องกัน
+              Data Corruption</li>
           </ul>
         </div>
       </article>
-      
+
       <article class="panel" data-od-id="blueprint-dfd">
         <h2>4. แผนภาพข้อมูลระดับบริบท (DFD Level 1)</h2>
-        <p style="padding-top: 12px; color: var(--text-muted); font-size: 0.9rem; margin-bottom: 8px;">ภาพรวมเส้นทางของข้อมูลเมื่อโหลดและบันทึกหลัง Refactor</p>
-        <pre style="background: var(--paper-warm); padding: 12px; border-radius: 8px; overflow-x: auto; font-family: 'IBM Plex Mono', monospace; font-size: 0.85rem; color: var(--ink);"><code>User -> (CLI Request) -> Controller 
+        <p style="padding-top: 12px; color: var(--text-muted); font-size: 0.9rem; margin-bottom: 8px;">
+          ภาพรวมเส้นทางของข้อมูลเมื่อโหลดและบันทึกหลัง Refactor</p>
+        <pre
+          style="background: var(--paper-warm); padding: 12px; border-radius: 8px; overflow-x: auto; font-family: 'IBM Plex Mono', monospace; font-size: 0.85rem; color: var(--ink);"><code>User -> (CLI Request) -> Controller 
 Controller -> (Verify/Calculate) -> In-Memory Store
 In-Memory Store -> (Trigger Save) -> Safe Atomic Writer
 Safe Atomic Writer -> Temp File -> JSON File (Disk)</code></pre>
@@ -234,8 +245,8 @@ Safe Atomic Writer -> Temp File -> JSON File (Disk)</code></pre>
     </section>
   </main>
 
-  
-  
+
+
 
   <script src="https://cdn.jsdelivr.net/npm/svg-pan-zoom@3.6.1/dist/svg-pan-zoom.min.js"></script>
   <script>
@@ -244,11 +255,11 @@ Safe Atomic Writer -> Temp File -> JSON File (Disk)</code></pre>
       document.querySelectorAll('.mermaid-container').forEach(container => {
         // Remove old buttons if script runs twice
         container.querySelectorAll('.btn-expand-mermaid').forEach(b => b.remove());
-        
+
         const btn = document.createElement('button');
         btn.className = 'btn-expand-mermaid';
         btn.innerHTML = ' Fullscreen';
-        
+
         btn.onclick = () => {
           const originalSvg = container.querySelector('svg');
           if (!originalSvg) return;
@@ -265,7 +276,7 @@ Safe Atomic Writer -> Temp File -> JSON File (Disk)</code></pre>
           overlay.style.display = 'flex';
           overlay.style.alignItems = 'center';
           overlay.style.justifyContent = 'center';
-          
+
           // Create Close button
           const closeBtn = document.createElement('button');
           closeBtn.innerHTML = ' Close';
@@ -282,7 +293,7 @@ Safe Atomic Writer -> Temp File -> JSON File (Disk)</code></pre>
           closeBtn.style.borderRadius = '8px';
           closeBtn.style.zIndex = '1000000';
           closeBtn.style.boxShadow = '0 4px 12px rgba(0,0,0,0.2)';
-          
+
           closeBtn.onmouseover = () => closeBtn.style.backgroundColor = '#e60000';
           closeBtn.onmouseout = () => closeBtn.style.backgroundColor = '#ff4d4d';
 
@@ -292,7 +303,7 @@ Safe Atomic Writer -> Temp File -> JSON File (Disk)</code></pre>
           clonedSvg.style.height = '100%';
           clonedSvg.style.maxWidth = '100vw';
           clonedSvg.style.maxHeight = '100vh';
-          
+
           overlay.appendChild(clonedSvg);
           overlay.appendChild(closeBtn);
           document.body.appendChild(overlay);
@@ -323,10 +334,10 @@ Safe Atomic Writer -> Temp File -> JSON File (Disk)</code></pre>
     });
   </script>
 
-<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
-    <script>
-        mermaid.initialize({ startOnLoad: true, theme: 'base', themeVariables: { primaryColor: '#EFE9DA', primaryTextColor: '#1B1F2B', primaryBorderColor: '#3D4B94', lineColor: '#3D4B94', secondaryColor: '#F6F4EE', tertiaryColor: '#F6F4EE' } });
-    </script>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+  <script>
+    mermaid.initialize({ startOnLoad: true, theme: 'base', themeVariables: { primaryColor: '#EFE9DA', primaryTextColor: '#1B1F2B', primaryBorderColor: '#3D4B94', lineColor: '#3D4B94', secondaryColor: '#F6F4EE', tertiaryColor: '#F6F4EE' } });
+  </script>
 </body>
 
 </html>

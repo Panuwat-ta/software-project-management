@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="th">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,17 +9,21 @@
     <link rel="stylesheet" href="../shared-theme.css">
     <!-- Code Highlight -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
-    
+
 </head>
+
 <body>
-<div id="deck">
+    <div id="deck">
         <!-- Slide 1: Cover -->
         <div class="slide center-content">
             <div class="badge">Integrated Planning Proposal</div>
             <h1>รายงานข้อเสนอโครงการฉบับสมบูรณ์</h1>
             <h3>ระบบ: CLI Inventory Management System</h3>
             <p>รายวิชา: Software Project Management</p>
-            <p><strong>GitHub:</strong> <a href="https://github.com/Panuwat-ta/software-project-management" target="_blank" style="color: var(--indigo); text-decoration: none; border-bottom: 1px dashed var(--indigo);">GitHub รายวิชา</a></p>
+            <p><strong>GitHub:</strong> <a href="https://github.com/Panuwat-ta/software-project-management"
+                    target="_blank"
+                    style="color: var(--indigo); text-decoration: none; border-bottom: 1px dashed var(--indigo);">GitHub
+                    รายวิชา</a></p>
             <p style="margin-top: 2rem; max-width: 600px; color: var(--text-muted);">
                 รวบรวมงานและแผนการดำเนินงานจากสัปดาห์ที่ 1 ถึงสัปดาห์ที่ 4 <br>
                 ในการปรับปรุงและบำรุงรักษาซอฟต์แวร์ระบบจัดการคลังสินค้า
@@ -31,7 +36,8 @@
             <div class="grid-2" style="margin-top: 3rem;">
                 <div class="card">
                     <h3> ปรับปรุงเสถียรภาพ (Stability)</h3>
-                    <p>ทำให้ระบบจัดการสินค้ามีความทนทานต่อข้อผิดพลาด ไม่หยุดทำงานจากการรับข้อมูลที่ไม่ถูกต้อง (Crash Prevention)</p>
+                    <p>ทำให้ระบบจัดการสินค้ามีความทนทานต่อข้อผิดพลาด ไม่หยุดทำงานจากการรับข้อมูลที่ไม่ถูกต้อง (Crash
+                        Prevention)</p>
                 </div>
                 <div class="card">
                     <h3> โครงสร้างโค้ด (Refactoring)</h3>
@@ -43,7 +49,8 @@
                 </div>
                 <div class="card">
                     <h3> ระบบทดสอบ (Automated Testing)</h3>
-                    <p>จัดทำชุดทดสอบเพื่อให้มั่นใจว่าการปรับปรุงจะไม่ส่งผลเสียต่อการทำงานที่มีอยู่ (Regression Testing)</p>
+                    <p>จัดทำชุดทดสอบเพื่อให้มั่นใจว่าการปรับปรุงจะไม่ส่งผลเสียต่อการทำงานที่มีอยู่ (Regression Testing)
+                    </p>
                 </div>
             </div>
         </div>
@@ -173,34 +180,34 @@
             <div class="mermaid-container">
                 <div class="mermaid">
                     graph TD
-                        User["ผู้ใช้งาน (User)"]
-                        
-                        Var_X[("ตัวแปรโกลบอล x<br>In-Memory Store")]
-                        JSONFile[("ไฟล์ data.json<br>Disk Store")]
-                    
-                        P_Load["P1: load<br>โหลดข้อมูลคลังสินค้า"]
-                        P_Show["P2: show_all<br>แสดงสินค้าทั้งหมด"]
-                        P_AddUpdate["P3: add_update<br>เพิ่มหรือแก้ไขสินค้า"]
-                        P_CutStock["P4: cut_stock<br>ตัดสต็อกสินค้า"]
-                        P_Summary["P5: check_check<br>สรุปรายงานคลัง"]
-                        P_Save["P6: save<br>เขียนไฟล์ลงดิสก์ (Safe Save)"]
-                    
-                        JSONFile -->|1. อ่าน| P_Load
-                        P_Load -->|2. โหลดลง| Var_X
-                        Var_X -->|3. อ่าน| P_Show
-                        P_Show -->|4. แสดง| User
-                        User -->|5. ป้อนข้อมูล| P_AddUpdate
-                        P_AddUpdate -->|6. อัปเดต| Var_X
-                        P_AddUpdate -->|7. สั่งบันทึก| P_Save
-                        User -->|8. ระบุรหัส/จำนวน| P_CutStock
-                        Var_X -->|9. ตรวจเช็ค| P_CutStock
-                        P_CutStock -->|10. อัปเดตลด| Var_X
-                        P_CutStock -->|11. สั่งบันทึก| P_Save
-                        P_CutStock -->|12. แจ้งผล| User
-                        Var_X -->|13. อ่านข้อมูล| P_Summary
-                        P_Summary -->|14. สรุป| User
-                        Var_X -->|15. ดึงสถานะ| P_Save
-                        P_Save -->|16. เขียนทับปลอดภัย| JSONFile
+                    User["ผู้ใช้งาน (User)"]
+
+                    Var_X[("ตัวแปรโกลบอล x<br>In-Memory Store")]
+                    JSONFile[("ไฟล์ data.json<br>Disk Store")]
+
+                    P_Load["P1: load<br>โหลดข้อมูลคลังสินค้า"]
+                    P_Show["P2: show_all<br>แสดงสินค้าทั้งหมด"]
+                    P_AddUpdate["P3: add_update<br>เพิ่มหรือแก้ไขสินค้า"]
+                    P_CutStock["P4: cut_stock<br>ตัดสต็อกสินค้า"]
+                    P_Summary["P5: check_check<br>สรุปรายงานคลัง"]
+                    P_Save["P6: save<br>เขียนไฟล์ลงดิสก์ (Safe Save)"]
+
+                    JSONFile -->|1. อ่าน| P_Load
+                    P_Load -->|2. โหลดลง| Var_X
+                    Var_X -->|3. อ่าน| P_Show
+                    P_Show -->|4. แสดง| User
+                    User -->|5. ป้อนข้อมูล| P_AddUpdate
+                    P_AddUpdate -->|6. อัปเดต| Var_X
+                    P_AddUpdate -->|7. สั่งบันทึก| P_Save
+                    User -->|8. ระบุรหัส/จำนวน| P_CutStock
+                    Var_X -->|9. ตรวจเช็ค| P_CutStock
+                    P_CutStock -->|10. อัปเดตลด| Var_X
+                    P_CutStock -->|11. สั่งบันทึก| P_Save
+                    P_CutStock -->|12. แจ้งผล| User
+                    Var_X -->|13. อ่านข้อมูล| P_Summary
+                    P_Summary -->|14. สรุป| User
+                    Var_X -->|15. ดึงสถานะ| P_Save
+                    P_Save -->|16. เขียนทับปลอดภัย| JSONFile
                 </div>
             </div>
         </div>
@@ -297,94 +304,95 @@ def test_cut_stock_not_found(manager):
         updateSlides();
     </script>
 
-  
-  
 
-  <script src="https://cdn.jsdelivr.net/npm/svg-pan-zoom@3.6.1/dist/svg-pan-zoom.min.js"></script>
-  <script>
-    // Bulletproof Fullscreen Mermaid logic (with Pan & Zoom)
-    document.addEventListener("DOMContentLoaded", () => {
-      document.querySelectorAll('.mermaid-container').forEach(container => {
-        // Remove old buttons if script runs twice
-        container.querySelectorAll('.btn-expand-mermaid').forEach(b => b.remove());
-        
-        const btn = document.createElement('button');
-        btn.className = 'btn-expand-mermaid';
-        btn.innerHTML = ' Fullscreen';
-        
-        btn.onclick = () => {
-          const originalSvg = container.querySelector('svg');
-          if (!originalSvg) return;
 
-          // Create a true viewport-fixed overlay attached to body
-          const overlay = document.createElement('div');
-          overlay.style.position = 'fixed';
-          overlay.style.top = '0';
-          overlay.style.left = '0';
-          overlay.style.width = '100vw';
-          overlay.style.height = '100vh';
-          overlay.style.backgroundColor = 'var(--paper, #F6F4EE)';
-          overlay.style.zIndex = '999999';
-          overlay.style.display = 'flex';
-          overlay.style.alignItems = 'center';
-          overlay.style.justifyContent = 'center';
-          
-          // Create Close button
-          const closeBtn = document.createElement('button');
-          closeBtn.innerHTML = ' Close';
-          closeBtn.style.position = 'absolute';
-          closeBtn.style.top = '20px';
-          closeBtn.style.right = '20px';
-          closeBtn.style.padding = '8px 16px';
-          closeBtn.style.fontSize = '1rem';
-          closeBtn.style.fontWeight = 'bold';
-          closeBtn.style.cursor = 'pointer';
-          closeBtn.style.backgroundColor = '#ff4d4d';
-          closeBtn.style.color = '#fff';
-          closeBtn.style.border = 'none';
-          closeBtn.style.borderRadius = '8px';
-          closeBtn.style.zIndex = '1000000';
-          closeBtn.style.boxShadow = '0 4px 12px rgba(0,0,0,0.2)';
-          
-          closeBtn.onmouseover = () => closeBtn.style.backgroundColor = '#e60000';
-          closeBtn.onmouseout = () => closeBtn.style.backgroundColor = '#ff4d4d';
 
-          // Clone the SVG so we don't mess up the original layout
-          const clonedSvg = originalSvg.cloneNode(true);
-          clonedSvg.style.width = '100%';
-          clonedSvg.style.height = '100%';
-          clonedSvg.style.maxWidth = '100vw';
-          clonedSvg.style.maxHeight = '100vh';
-          
-          overlay.appendChild(clonedSvg);
-          overlay.appendChild(closeBtn);
-          document.body.appendChild(overlay);
+    <script src="https://cdn.jsdelivr.net/npm/svg-pan-zoom@3.6.1/dist/svg-pan-zoom.min.js"></script>
+    <script>
+        // Bulletproof Fullscreen Mermaid logic (with Pan & Zoom)
+        document.addEventListener("DOMContentLoaded", () => {
+            document.querySelectorAll('.mermaid-container').forEach(container => {
+                // Remove old buttons if script runs twice
+                container.querySelectorAll('.btn-expand-mermaid').forEach(b => b.remove());
 
-          // Disable scrolling on body
-          const oldOverflow = document.body.style.overflow;
-          document.body.style.overflow = 'hidden';
+                const btn = document.createElement('button');
+                btn.className = 'btn-expand-mermaid';
+                btn.innerHTML = ' Fullscreen';
 
-          // Initialize pan-zoom on clone
-          const panZoomInstance = svgPanZoom(clonedSvg, {
-            zoomEnabled: true,
-            controlIconsEnabled: true,
-            fit: true,
-            center: true,
-            minZoom: 0.5,
-            maxZoom: 10,
-            mouseWheelZoomEnabled: true
-          });
+                btn.onclick = () => {
+                    const originalSvg = container.querySelector('svg');
+                    if (!originalSvg) return;
 
-          closeBtn.onclick = () => {
-            panZoomInstance.destroy();
-            document.body.removeChild(overlay);
-            document.body.style.overflow = oldOverflow;
-          };
-        };
-        container.appendChild(btn);
-      });
-    });
-  </script>
+                    // Create a true viewport-fixed overlay attached to body
+                    const overlay = document.createElement('div');
+                    overlay.style.position = 'fixed';
+                    overlay.style.top = '0';
+                    overlay.style.left = '0';
+                    overlay.style.width = '100vw';
+                    overlay.style.height = '100vh';
+                    overlay.style.backgroundColor = 'var(--paper, #F6F4EE)';
+                    overlay.style.zIndex = '999999';
+                    overlay.style.display = 'flex';
+                    overlay.style.alignItems = 'center';
+                    overlay.style.justifyContent = 'center';
+
+                    // Create Close button
+                    const closeBtn = document.createElement('button');
+                    closeBtn.innerHTML = ' Close';
+                    closeBtn.style.position = 'absolute';
+                    closeBtn.style.top = '20px';
+                    closeBtn.style.right = '20px';
+                    closeBtn.style.padding = '8px 16px';
+                    closeBtn.style.fontSize = '1rem';
+                    closeBtn.style.fontWeight = 'bold';
+                    closeBtn.style.cursor = 'pointer';
+                    closeBtn.style.backgroundColor = '#ff4d4d';
+                    closeBtn.style.color = '#fff';
+                    closeBtn.style.border = 'none';
+                    closeBtn.style.borderRadius = '8px';
+                    closeBtn.style.zIndex = '1000000';
+                    closeBtn.style.boxShadow = '0 4px 12px rgba(0,0,0,0.2)';
+
+                    closeBtn.onmouseover = () => closeBtn.style.backgroundColor = '#e60000';
+                    closeBtn.onmouseout = () => closeBtn.style.backgroundColor = '#ff4d4d';
+
+                    // Clone the SVG so we don't mess up the original layout
+                    const clonedSvg = originalSvg.cloneNode(true);
+                    clonedSvg.style.width = '100%';
+                    clonedSvg.style.height = '100%';
+                    clonedSvg.style.maxWidth = '100vw';
+                    clonedSvg.style.maxHeight = '100vh';
+
+                    overlay.appendChild(clonedSvg);
+                    overlay.appendChild(closeBtn);
+                    document.body.appendChild(overlay);
+
+                    // Disable scrolling on body
+                    const oldOverflow = document.body.style.overflow;
+                    document.body.style.overflow = 'hidden';
+
+                    // Initialize pan-zoom on clone
+                    const panZoomInstance = svgPanZoom(clonedSvg, {
+                        zoomEnabled: true,
+                        controlIconsEnabled: true,
+                        fit: true,
+                        center: true,
+                        minZoom: 0.5,
+                        maxZoom: 10,
+                        mouseWheelZoomEnabled: true
+                    });
+
+                    closeBtn.onclick = () => {
+                        panZoomInstance.destroy();
+                        document.body.removeChild(overlay);
+                        document.body.style.overflow = oldOverflow;
+                    };
+                };
+                container.appendChild(btn);
+            });
+        });
+    </script>
 
 </body>
+
 </html>

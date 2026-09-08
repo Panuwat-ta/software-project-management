@@ -171,25 +171,29 @@
     <p class="file-path" data-od-id="source-path">/week-4/content.html</p>
     <div class="badge" data-od-id="week-4-label">Week 4 · QA & Refinement</div>
     <h1 data-od-id="week-4-heading">Exception Handling & QA</h1>
-    <p class="lede">เพิ่มระบบดักข้อผิดพลาดเชิงลึก ทดสอบระบบด้วย Automated Tests และจัดการความเสียหายของฐานข้อมูล (Graceful Degradation)</p>
-    
+    <p class="lede">เพิ่มระบบดักข้อผิดพลาดเชิงลึก ทดสอบระบบด้วย Automated Tests และจัดการความเสียหายของฐานข้อมูล
+      (Graceful Degradation)</p>
+
     <div class="divider"></div>
-    
+
     <section class="summary" aria-label="เป้าหมายของสัปดาห์นี้" data-od-id="week-4-summary">
       <article class="panel" data-od-id="project-facts">
         <h2>1. เป้าหมายสัปดาห์ที่ 4 (Phase 4)</h2>
         <dl class="facts">
           <div>
             <dt>Exception Handling</dt>
-            <dd>เขียนโค้ดดักจับประเภทข้อมูลนำเข้าที่ผิดแปลก เช่น การกรอกตัวอักษรแทนตัวเลข การส่งค่าว่าง หรือค่าติดลบที่ไม่ควรเกิดขึ้น (Input Validation)</dd>
+            <dd>เขียนโค้ดดักจับประเภทข้อมูลนำเข้าที่ผิดแปลก เช่น การกรอกตัวอักษรแทนตัวเลข การส่งค่าว่าง
+              หรือค่าติดลบที่ไม่ควรเกิดขึ้น (Input Validation)</dd>
           </div>
           <div>
             <dt>Graceful Degradation</dt>
-            <dd>ออกแบบให้ระบบสามารถทำงานต่อไปได้หรือแจ้งเตือนอย่างเหมาะสมหากฐานข้อมูลได้รับความเสียหายบางส่วน แทนที่จะแครชไปเลย</dd>
+            <dd>ออกแบบให้ระบบสามารถทำงานต่อไปได้หรือแจ้งเตือนอย่างเหมาะสมหากฐานข้อมูลได้รับความเสียหายบางส่วน
+              แทนที่จะแครชไปเลย</dd>
           </div>
           <div>
             <dt>Quality Assurance (QA)</dt>
-            <dd>พัฒนา Unit Tests ด้วย PyTest ให้ครอบคลุมทุก Use Case สำคัญ โดยเฉพาะส่วนที่เกี่ยวกับการคิดเงินและจัดการสต็อก</dd>
+            <dd>พัฒนา Unit Tests ด้วย PyTest ให้ครอบคลุมทุก Use Case สำคัญ
+              โดยเฉพาะส่วนที่เกี่ยวกับการคิดเงินและจัดการสต็อก</dd>
           </div>
         </dl>
       </article>
@@ -198,8 +202,10 @@
         <h2>2. ขอบเขตการทดสอบ (Automated Test Coverage)</h2>
         <ol class="steps">
           <li><strong>Happy Path:</strong> ทดสอบการทำงานปกติ เช่น <code>test_cut_stock_success</code></li>
-          <li><strong>Edge Cases:</strong> ทดสอบการสั่งตัดสต็อกมากกว่าที่มีอยู่ (<code>test_cut_stock_not_enough</code>) และรหัสสินค้าที่ไม่มีในระบบ (<code>test_cut_stock_not_found</code>)</li>
-          <li><strong>Data Integrity:</strong> ทดสอบระบบ Atomic Save จำลองว่าหากเซฟไฟล์ไม่เสร็จ ไฟล์เดิมต้องไม่พัง (รันผ่าน <code>tempfile</code> fixtures)</li>
+          <li><strong>Edge Cases:</strong> ทดสอบการสั่งตัดสต็อกมากกว่าที่มีอยู่ (<code>test_cut_stock_not_enough</code>)
+            และรหัสสินค้าที่ไม่มีในระบบ (<code>test_cut_stock_not_found</code>)</li>
+          <li><strong>Data Integrity:</strong> ทดสอบระบบ Atomic Save จำลองว่าหากเซฟไฟล์ไม่เสร็จ ไฟล์เดิมต้องไม่พัง
+            (รันผ่าน <code>tempfile</code> fixtures)</li>
         </ol>
       </article>
     </section>
@@ -212,17 +218,20 @@
         <div style="margin-top: 15px; font-size: 0.95rem; line-height: 1.6; color: var(--text-main);">
           <p>หลังจากพัฒนาจนครบ 4 สัปดาห์ ระบบ CLI Inventory Management System มีความเสถียรขึ้นอย่างมาก:</p>
           <ul style="padding-left: 20px;">
-            <li><strong>Regression Proof:</strong> ชุดทดสอบ PyTest ทำให้มั่นใจว่าหากอนาคตมีนักพัฒนาท่านอื่นมาแก้โค้ด จะไม่ทำให้ฟีเจอร์สำคัญพังโดยไม่รู้ตัว</li>
-            <li><strong>Fail-Safe Mechanism:</strong> ข้อมูลสูญหายจากการบันทึกทับไม่เกิดขึ้นอีกแล้วด้วยระบบ Safe Atomic Write</li>
-            <li><strong>Delivery:</strong> ทีมได้ส่งมอบผลงานเป็น Integrated Planning Proposal ที่สรุปแผน แผนภาพโครงสร้าง ขอบเขตความรับผิดชอบ และแนวทางการป้องกันความเสี่ยงครบถ้วนสมบูรณ์</li>
+            <li><strong>Regression Proof:</strong> ชุดทดสอบ PyTest ทำให้มั่นใจว่าหากอนาคตมีนักพัฒนาท่านอื่นมาแก้โค้ด
+              จะไม่ทำให้ฟีเจอร์สำคัญพังโดยไม่รู้ตัว</li>
+            <li><strong>Fail-Safe Mechanism:</strong> ข้อมูลสูญหายจากการบันทึกทับไม่เกิดขึ้นอีกแล้วด้วยระบบ Safe Atomic
+              Write</li>
+            <li><strong>Delivery:</strong> ทีมได้ส่งมอบผลงานเป็น Integrated Planning Proposal ที่สรุปแผน แผนภาพโครงสร้าง
+              ขอบเขตความรับผิดชอบ และแนวทางการป้องกันความเสี่ยงครบถ้วนสมบูรณ์</li>
           </ul>
         </div>
       </article>
     </section>
   </main>
 
-  
-  
+
+
 
   <script src="https://cdn.jsdelivr.net/npm/svg-pan-zoom@3.6.1/dist/svg-pan-zoom.min.js"></script>
   <script>
@@ -231,11 +240,11 @@
       document.querySelectorAll('.mermaid-container').forEach(container => {
         // Remove old buttons if script runs twice
         container.querySelectorAll('.btn-expand-mermaid').forEach(b => b.remove());
-        
+
         const btn = document.createElement('button');
         btn.className = 'btn-expand-mermaid';
         btn.innerHTML = ' Fullscreen';
-        
+
         btn.onclick = () => {
           const originalSvg = container.querySelector('svg');
           if (!originalSvg) return;
@@ -252,7 +261,7 @@
           overlay.style.display = 'flex';
           overlay.style.alignItems = 'center';
           overlay.style.justifyContent = 'center';
-          
+
           // Create Close button
           const closeBtn = document.createElement('button');
           closeBtn.innerHTML = ' Close';
@@ -269,7 +278,7 @@
           closeBtn.style.borderRadius = '8px';
           closeBtn.style.zIndex = '1000000';
           closeBtn.style.boxShadow = '0 4px 12px rgba(0,0,0,0.2)';
-          
+
           closeBtn.onmouseover = () => closeBtn.style.backgroundColor = '#e60000';
           closeBtn.onmouseout = () => closeBtn.style.backgroundColor = '#ff4d4d';
 
@@ -279,7 +288,7 @@
           clonedSvg.style.height = '100%';
           clonedSvg.style.maxWidth = '100vw';
           clonedSvg.style.maxHeight = '100vh';
-          
+
           overlay.appendChild(clonedSvg);
           overlay.appendChild(closeBtn);
           document.body.appendChild(overlay);
@@ -310,10 +319,10 @@
     });
   </script>
 
-<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
-    <script>
-        mermaid.initialize({ startOnLoad: true, theme: 'base', themeVariables: { primaryColor: '#EFE9DA', primaryTextColor: '#1B1F2B', primaryBorderColor: '#3D4B94', lineColor: '#3D4B94', secondaryColor: '#F6F4EE', tertiaryColor: '#F6F4EE' } });
-    </script>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+  <script>
+    mermaid.initialize({ startOnLoad: true, theme: 'base', themeVariables: { primaryColor: '#EFE9DA', primaryTextColor: '#1B1F2B', primaryBorderColor: '#3D4B94', lineColor: '#3D4B94', secondaryColor: '#F6F4EE', tertiaryColor: '#F6F4EE' } });
+  </script>
 </body>
 
 </html>

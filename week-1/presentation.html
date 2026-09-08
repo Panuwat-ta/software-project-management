@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="th">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,10 +9,11 @@
     <link rel="stylesheet" href="../shared-theme.css">
     <!-- Code Highlight -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
-    
+
 </head>
+
 <body>
-<div id="deck">
+    <div id="deck">
         <div class="slide center-content">
             <div class="badge">Week 1</div>
             <h1>Planning & Legacy Code Review</h1>
@@ -21,7 +23,7 @@
                 ร่าง Project Charter และ Scope การทำงาน
             </p>
         </div>
-            
+
         <div class="slide">
             <h2>1. กฎบัตรโครงการ (Project Charter)</h2>
             <div class="grid-2" style="margin-top: 2rem;">
@@ -43,17 +45,34 @@
                 </div>
             </div>
         </div>
-            
+
         <div class="slide">
             <h2>2. โค้ดดั้งเดิม (Legacy Code) และปัญหา</h2>
             <p>ระบบเดิมเป็น CLI แบบ Monolithic และใช้ไฟล์ JSON ผูกกับตัวแปร Global</p>
             <table>
-                <thead><tr><th>ปัญหาที่พบ (Code Smells)</th><th>ผลกระทบที่มีต่อระบบ</th></tr></thead>
+                <thead>
+                    <tr>
+                        <th>ปัญหาที่พบ (Code Smells)</th>
+                        <th>ผลกระทบที่มีต่อระบบ</th>
+                    </tr>
+                </thead>
                 <tbody>
-                    <tr><td>ใช้ <code>global x</code> ในทุกฟังก์ชัน</td><td>เสี่ยงค่าขัดแย้งกัน ทำ Unit Test ยาก</td></tr>
-                    <tr><td>ใช้ <code>json.dump()</code> ตรงๆ</td><td>หากไฟดับกลางคัน ข้อมูลหาย (Data Corruption)</td></tr>
-                    <tr><td>ไม่มี <code>Input Validation</code></td><td>ผู้ใช้พิมพ์ตัวอักษรแทนตัวเลข โปรแกรมจะ Error ทันที</td></tr>
-                    <tr><td>ตรรกะกองรวมกัน (Monolithic)</td><td>การแก้ไขส่วนใดส่วนหนึ่งอาจกระทบส่วนอื่นได้ง่าย</td></tr>
+                    <tr>
+                        <td>ใช้ <code>global x</code> ในทุกฟังก์ชัน</td>
+                        <td>เสี่ยงค่าขัดแย้งกัน ทำ Unit Test ยาก</td>
+                    </tr>
+                    <tr>
+                        <td>ใช้ <code>json.dump()</code> ตรงๆ</td>
+                        <td>หากไฟดับกลางคัน ข้อมูลหาย (Data Corruption)</td>
+                    </tr>
+                    <tr>
+                        <td>ไม่มี <code>Input Validation</code></td>
+                        <td>ผู้ใช้พิมพ์ตัวอักษรแทนตัวเลข โปรแกรมจะ Error ทันที</td>
+                    </tr>
+                    <tr>
+                        <td>ตรรกะกองรวมกัน (Monolithic)</td>
+                        <td>การแก้ไขส่วนใดส่วนหนึ่งอาจกระทบส่วนอื่นได้ง่าย</td>
+                    </tr>
                 </tbody>
             </table>
         </div>
@@ -84,12 +103,29 @@
         <div class="slide">
             <h2>4. ความเสี่ยงและแนวทางรับมือ (Risk Mitigation)</h2>
             <table>
-                <thead><tr><th>ความเสี่ยงหลัก (Critical Risk)</th><th>แนวทางป้องกัน (Mitigation)</th></tr></thead>
+                <thead>
+                    <tr>
+                        <th>ความเสี่ยงหลัก (Critical Risk)</th>
+                        <th>แนวทางป้องกัน (Mitigation)</th>
+                    </tr>
+                </thead>
                 <tbody>
-                    <tr><td>Global State Conflict</td><td><strong>แปลงระบบเป็น OOP</strong> แยกเป็น Manager Classes</td></tr>
-                    <tr><td>Data Corruption ตอนเซฟ</td><td><strong>ใช้ Safe Atomic Write</strong> ผ่าน Temp File</td></tr>
-                    <tr><td>Input Type Mismatch (ValueError)</td><td><strong>ดักจับด้วย try-except</strong> ล่วงหน้าก่อนเข้า Business Logic</td></tr>
-                    <tr><td>Encoding Risk (ภาษาไทยเพี้ยน)</td><td><strong>บังคับ <code>encoding='utf-8'</code></strong> ทุกครั้งที่มีการ I/O</td></tr>
+                    <tr>
+                        <td>Global State Conflict</td>
+                        <td><strong>แปลงระบบเป็น OOP</strong> แยกเป็น Manager Classes</td>
+                    </tr>
+                    <tr>
+                        <td>Data Corruption ตอนเซฟ</td>
+                        <td><strong>ใช้ Safe Atomic Write</strong> ผ่าน Temp File</td>
+                    </tr>
+                    <tr>
+                        <td>Input Type Mismatch (ValueError)</td>
+                        <td><strong>ดักจับด้วย try-except</strong> ล่วงหน้าก่อนเข้า Business Logic</td>
+                    </tr>
+                    <tr>
+                        <td>Encoding Risk (ภาษาไทยเพี้ยน)</td>
+                        <td><strong>บังคับ <code>encoding='utf-8'</code></strong> ทุกครั้งที่มีการ I/O</td>
+                    </tr>
                 </tbody>
             </table>
         </div>
@@ -159,94 +195,95 @@
         updateSlides();
     </script>
 
-  
-  
 
-  <script src="https://cdn.jsdelivr.net/npm/svg-pan-zoom@3.6.1/dist/svg-pan-zoom.min.js"></script>
-  <script>
-    // Bulletproof Fullscreen Mermaid logic (with Pan & Zoom)
-    document.addEventListener("DOMContentLoaded", () => {
-      document.querySelectorAll('.mermaid-container').forEach(container => {
-        // Remove old buttons if script runs twice
-        container.querySelectorAll('.btn-expand-mermaid').forEach(b => b.remove());
-        
-        const btn = document.createElement('button');
-        btn.className = 'btn-expand-mermaid';
-        btn.innerHTML = ' Fullscreen';
-        
-        btn.onclick = () => {
-          const originalSvg = container.querySelector('svg');
-          if (!originalSvg) return;
 
-          // Create a true viewport-fixed overlay attached to body
-          const overlay = document.createElement('div');
-          overlay.style.position = 'fixed';
-          overlay.style.top = '0';
-          overlay.style.left = '0';
-          overlay.style.width = '100vw';
-          overlay.style.height = '100vh';
-          overlay.style.backgroundColor = 'var(--paper, #F6F4EE)';
-          overlay.style.zIndex = '999999';
-          overlay.style.display = 'flex';
-          overlay.style.alignItems = 'center';
-          overlay.style.justifyContent = 'center';
-          
-          // Create Close button
-          const closeBtn = document.createElement('button');
-          closeBtn.innerHTML = ' Close';
-          closeBtn.style.position = 'absolute';
-          closeBtn.style.top = '20px';
-          closeBtn.style.right = '20px';
-          closeBtn.style.padding = '8px 16px';
-          closeBtn.style.fontSize = '1rem';
-          closeBtn.style.fontWeight = 'bold';
-          closeBtn.style.cursor = 'pointer';
-          closeBtn.style.backgroundColor = '#ff4d4d';
-          closeBtn.style.color = '#fff';
-          closeBtn.style.border = 'none';
-          closeBtn.style.borderRadius = '8px';
-          closeBtn.style.zIndex = '1000000';
-          closeBtn.style.boxShadow = '0 4px 12px rgba(0,0,0,0.2)';
-          
-          closeBtn.onmouseover = () => closeBtn.style.backgroundColor = '#e60000';
-          closeBtn.onmouseout = () => closeBtn.style.backgroundColor = '#ff4d4d';
 
-          // Clone the SVG so we don't mess up the original layout
-          const clonedSvg = originalSvg.cloneNode(true);
-          clonedSvg.style.width = '100%';
-          clonedSvg.style.height = '100%';
-          clonedSvg.style.maxWidth = '100vw';
-          clonedSvg.style.maxHeight = '100vh';
-          
-          overlay.appendChild(clonedSvg);
-          overlay.appendChild(closeBtn);
-          document.body.appendChild(overlay);
+    <script src="https://cdn.jsdelivr.net/npm/svg-pan-zoom@3.6.1/dist/svg-pan-zoom.min.js"></script>
+    <script>
+        // Bulletproof Fullscreen Mermaid logic (with Pan & Zoom)
+        document.addEventListener("DOMContentLoaded", () => {
+            document.querySelectorAll('.mermaid-container').forEach(container => {
+                // Remove old buttons if script runs twice
+                container.querySelectorAll('.btn-expand-mermaid').forEach(b => b.remove());
 
-          // Disable scrolling on body
-          const oldOverflow = document.body.style.overflow;
-          document.body.style.overflow = 'hidden';
+                const btn = document.createElement('button');
+                btn.className = 'btn-expand-mermaid';
+                btn.innerHTML = ' Fullscreen';
 
-          // Initialize pan-zoom on clone
-          const panZoomInstance = svgPanZoom(clonedSvg, {
-            zoomEnabled: true,
-            controlIconsEnabled: true,
-            fit: true,
-            center: true,
-            minZoom: 0.5,
-            maxZoom: 10,
-            mouseWheelZoomEnabled: true
-          });
+                btn.onclick = () => {
+                    const originalSvg = container.querySelector('svg');
+                    if (!originalSvg) return;
 
-          closeBtn.onclick = () => {
-            panZoomInstance.destroy();
-            document.body.removeChild(overlay);
-            document.body.style.overflow = oldOverflow;
-          };
-        };
-        container.appendChild(btn);
-      });
-    });
-  </script>
+                    // Create a true viewport-fixed overlay attached to body
+                    const overlay = document.createElement('div');
+                    overlay.style.position = 'fixed';
+                    overlay.style.top = '0';
+                    overlay.style.left = '0';
+                    overlay.style.width = '100vw';
+                    overlay.style.height = '100vh';
+                    overlay.style.backgroundColor = 'var(--paper, #F6F4EE)';
+                    overlay.style.zIndex = '999999';
+                    overlay.style.display = 'flex';
+                    overlay.style.alignItems = 'center';
+                    overlay.style.justifyContent = 'center';
+
+                    // Create Close button
+                    const closeBtn = document.createElement('button');
+                    closeBtn.innerHTML = ' Close';
+                    closeBtn.style.position = 'absolute';
+                    closeBtn.style.top = '20px';
+                    closeBtn.style.right = '20px';
+                    closeBtn.style.padding = '8px 16px';
+                    closeBtn.style.fontSize = '1rem';
+                    closeBtn.style.fontWeight = 'bold';
+                    closeBtn.style.cursor = 'pointer';
+                    closeBtn.style.backgroundColor = '#ff4d4d';
+                    closeBtn.style.color = '#fff';
+                    closeBtn.style.border = 'none';
+                    closeBtn.style.borderRadius = '8px';
+                    closeBtn.style.zIndex = '1000000';
+                    closeBtn.style.boxShadow = '0 4px 12px rgba(0,0,0,0.2)';
+
+                    closeBtn.onmouseover = () => closeBtn.style.backgroundColor = '#e60000';
+                    closeBtn.onmouseout = () => closeBtn.style.backgroundColor = '#ff4d4d';
+
+                    // Clone the SVG so we don't mess up the original layout
+                    const clonedSvg = originalSvg.cloneNode(true);
+                    clonedSvg.style.width = '100%';
+                    clonedSvg.style.height = '100%';
+                    clonedSvg.style.maxWidth = '100vw';
+                    clonedSvg.style.maxHeight = '100vh';
+
+                    overlay.appendChild(clonedSvg);
+                    overlay.appendChild(closeBtn);
+                    document.body.appendChild(overlay);
+
+                    // Disable scrolling on body
+                    const oldOverflow = document.body.style.overflow;
+                    document.body.style.overflow = 'hidden';
+
+                    // Initialize pan-zoom on clone
+                    const panZoomInstance = svgPanZoom(clonedSvg, {
+                        zoomEnabled: true,
+                        controlIconsEnabled: true,
+                        fit: true,
+                        center: true,
+                        minZoom: 0.5,
+                        maxZoom: 10,
+                        mouseWheelZoomEnabled: true
+                    });
+
+                    closeBtn.onclick = () => {
+                        panZoomInstance.destroy();
+                        document.body.removeChild(overlay);
+                        document.body.style.overflow = oldOverflow;
+                    };
+                };
+                container.appendChild(btn);
+            });
+        });
+    </script>
 
 </body>
+
 </html>

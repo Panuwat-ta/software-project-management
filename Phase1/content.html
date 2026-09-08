@@ -173,29 +173,35 @@
     <p class="file-path" data-od-id="source-path">/Phase1/Integrated_Planning_Proposal.md</p>
     <div class="badge" data-od-id="phase-1-label">Phase 1 · Project Proposal</div>
     <h1 data-od-id="phase-1-heading">Integrated Planning Proposal</h1>
-    <p class="lede">ข้อเสนอโครงการฉบับสมบูรณ์ สำหรับปรับปรุงและบำรุงรักษาซอฟต์แวร์ CLI Inventory Management System โดยมุ่งเน้นที่เสถียรภาพ การวางโครงสร้างโค้ด และระบบทดสอบอัตโนมัติ</p>
-    
+    <p class="lede">ข้อเสนอโครงการฉบับสมบูรณ์ สำหรับปรับปรุงและบำรุงรักษาซอฟต์แวร์ CLI Inventory Management System
+      โดยมุ่งเน้นที่เสถียรภาพ การวางโครงสร้างโค้ด และระบบทดสอบอัตโนมัติ</p>
+
     <div class="divider"></div>
-    
-    <section class="summary" aria-label="สรุปเป้าหมายโครงการ" data-od-id="phase-1-objectives" style="grid-template-columns: 1fr;">
+
+    <section class="summary" aria-label="สรุปเป้าหมายโครงการ" data-od-id="phase-1-objectives"
+      style="grid-template-columns: 1fr;">
       <article class="panel" data-od-id="project-objectives">
         <h2>1. เป้าหมายโครงการ (Project Objectives)</h2>
         <dl class="facts">
           <div>
             <dt>Stability Improvement</dt>
-            <dd>ปรับปรุงเสถียรภาพการทำงาน ทำให้ระบบจัดการสินค้ามีความทนทานต่อข้อผิดพลาด (Fault Tolerance) ไม่หยุดทำงานหรือพังลงจากการรับข้อมูลนำเข้าที่ไม่ถูกต้อง (Crash Prevention)</dd>
+            <dd>ปรับปรุงเสถียรภาพการทำงาน ทำให้ระบบจัดการสินค้ามีความทนทานต่อข้อผิดพลาด (Fault Tolerance)
+              ไม่หยุดทำงานหรือพังลงจากการรับข้อมูลนำเข้าที่ไม่ถูกต้อง (Crash Prevention)</dd>
           </div>
           <div>
             <dt>Refactoring</dt>
-            <dd>ทำความสะอาดโค้ดเดิม ยุบโค้ดส่วนที่ซ้ำซ้อน แยกฟังก์ชันออกเป็นโมดูล (Modularized) ให้ชัดเจนด้วย OOP/MVC</dd>
+            <dd>ทำความสะอาดโค้ดเดิม ยุบโค้ดส่วนที่ซ้ำซ้อน แยกฟังก์ชันออกเป็นโมดูล (Modularized) ให้ชัดเจนด้วย OOP/MVC
+            </dd>
           </div>
           <div>
             <dt>Data Integrity</dt>
-            <dd>ปรับปรุงฟังก์ชันการบันทึกฐานข้อมูล JSON ให้ปลอดภัย ป้องกันความเสี่ยงจากข้อมูลสูญหายด้วยวิธี Safe Atomic Write</dd>
+            <dd>ปรับปรุงฟังก์ชันการบันทึกฐานข้อมูล JSON ให้ปลอดภัย ป้องกันความเสี่ยงจากข้อมูลสูญหายด้วยวิธี Safe Atomic
+              Write</dd>
           </div>
           <div>
             <dt>Automated Testing</dt>
-            <dd>จัดทำชุดทดสอบ (PyTest) เพื่อให้มั่นใจว่าการปรับปรุงโค้ดเดิมจะไม่ส่งผลเสียต่อการทำงานที่มีอยู่ (Regression Testing)</dd>
+            <dd>จัดทำชุดทดสอบ (PyTest) เพื่อให้มั่นใจว่าการปรับปรุงโค้ดเดิมจะไม่ส่งผลเสียต่อการทำงานที่มีอยู่
+              (Regression Testing)</dd>
           </div>
         </dl>
       </article>
@@ -207,45 +213,68 @@
       <article class="panel" data-od-id="scope-wbs">
         <h2>2. ขอบเขตการทำงาน (Final Scope - WBS)</h2>
         <ol class="steps">
-          <li><strong>เฟส 1: การวางรากฐานและจัดโครงสร้างสถาปัตยกรรม</strong> (Refactoring & Infrastructure) <br>- แยกไฟล์ฐานข้อมูลเป็น <code>members.json</code> และ <code>data.json</code> <br>- เปลี่ยนไปใช้ Class (<code>InventoryManager</code>, <code>MemberManager</code>)</li>
-          <li><strong>เฟส 2: การจัดการฐานข้อมูลสมาชิก</strong> (Member Database Integration) <br>- สร้างเมธอดสำหรับเพิ่ม ค้นหา บันทึกข้อมูลสมาชิก และใช้ Safe Atomic Write</li>
-          <li><strong>เฟส 3: ปรับปรุงตรรกะการคำนวณ</strong> (Discount & Checkout Engine) <br>- พัฒนาระบบรับข้อมูลการจ่ายยอด ตรรกะคำนวณส่วนลด และแสดงผลก่อนหักสต็อก</li>
-          <li><strong>เฟส 4: เพิ่มระบบดักข้อผิดพลาดเชิงลึกและทดสอบ</strong> (Exception Handling & QA) <br>- ดักจับประเภทข้อมูลนำเข้า ทำ Graceful Degradation และเขียน Unit Tests ครอบคลุมเคสต่างๆ</li>
+          <li><strong>เฟส 1: การวางรากฐานและจัดโครงสร้างสถาปัตยกรรม</strong> (Refactoring & Infrastructure) <br>-
+            แยกไฟล์ฐานข้อมูลเป็น <code>members.json</code> และ <code>data.json</code> <br>- เปลี่ยนไปใช้ Class
+            (<code>InventoryManager</code>, <code>MemberManager</code>)</li>
+          <li><strong>เฟส 2: การจัดการฐานข้อมูลสมาชิก</strong> (Member Database Integration) <br>- สร้างเมธอดสำหรับเพิ่ม
+            ค้นหา บันทึกข้อมูลสมาชิก และใช้ Safe Atomic Write</li>
+          <li><strong>เฟส 3: ปรับปรุงตรรกะการคำนวณ</strong> (Discount & Checkout Engine) <br>-
+            พัฒนาระบบรับข้อมูลการจ่ายยอด ตรรกะคำนวณส่วนลด และแสดงผลก่อนหักสต็อก</li>
+          <li><strong>เฟส 4: เพิ่มระบบดักข้อผิดพลาดเชิงลึกและทดสอบ</strong> (Exception Handling & QA) <br>-
+            ดักจับประเภทข้อมูลนำเข้า ทำ Graceful Degradation และเขียน Unit Tests ครอบคลุมเคสต่างๆ</li>
         </ol>
       </article>
 
       <article class="panel" data-od-id="time-schedule">
         <h2>3. ตารางแผนเวลา (Time Schedule)</h2>
         <dl class="facts">
-          <div><dt>Week 1</dt><dd>วิเคราะห์โครงสร้างโค้ดเดิม จัดทำ Project Charter ร่าง Scope</dd></div>
-          <div><dt>Week 2</dt><dd>ออกแบบ DFD ประเมินความเสี่ยง วางแผนจัดการสถานะ Global</dd></div>
-          <div><dt>Week 3</dt><dd>เขียนโค้ดระบบจัดการสินค้า จัดทำ Exception Handling</dd></div>
-          <div><dt>Week 4</dt><dd>จัดทำ Unit Test ด้วย PyTest และทำเอกสารสรุป Integrated Proposal</dd></div>
+          <div>
+            <dt>Week 1</dt>
+            <dd>วิเคราะห์โครงสร้างโค้ดเดิม จัดทำ Project Charter ร่าง Scope</dd>
+          </div>
+          <div>
+            <dt>Week 2</dt>
+            <dd>ออกแบบ DFD ประเมินความเสี่ยง วางแผนจัดการสถานะ Global</dd>
+          </div>
+          <div>
+            <dt>Week 3</dt>
+            <dd>เขียนโค้ดระบบจัดการสินค้า จัดทำ Exception Handling</dd>
+          </div>
+          <div>
+            <dt>Week 4</dt>
+            <dd>จัดทำ Unit Test ด้วย PyTest และทำเอกสารสรุป Integrated Proposal</dd>
+          </div>
         </dl>
       </article>
     </section>
 
     <div class="divider"></div>
 
-    <section class="summary" aria-label="ความเสี่ยงและแผนรับมือ" data-od-id="phase-1-risk" style="grid-template-columns: 1fr;">
+    <section class="summary" aria-label="ความเสี่ยงและแผนรับมือ" data-od-id="phase-1-risk"
+      style="grid-template-columns: 1fr;">
       <article class="panel" data-od-id="risk-matrix">
         <h2>4. ตารางวิเคราะห์ความเสี่ยงและแผนรับมือ (Risk Matrix & Mitigation)</h2>
         <dl class="facts">
           <div>
             <dt>Global State Conflict</dt>
-            <dd><strong>Risk:</strong> การประกาศตัวแปรระดับ global อาจทำให้เขียนทับข้อมูลโดยไม่ได้ตั้งใจ <br><strong>Mitigation:</strong> แปลงระบบเป็น OOP แยก Business Logic ออกจาก Presentation Layer (CLI)</dd>
+            <dd><strong>Risk:</strong> การประกาศตัวแปรระดับ global อาจทำให้เขียนทับข้อมูลโดยไม่ได้ตั้งใจ
+              <br><strong>Mitigation:</strong> แปลงระบบเป็น OOP แยก Business Logic ออกจาก Presentation Layer (CLI)</dd>
           </div>
           <div>
             <dt>Data Corruption</dt>
-            <dd><strong>Risk:</strong> เขียนทับไฟล์ตรงๆ หากแอปล่มข้อมูลจะหาย <br><strong>Mitigation:</strong> ใช้กระบวนการ Safe Save (Atomic Write) บันทึกผ่าน Temporary Files ก่อนเขียนทับ</dd>
+            <dd><strong>Risk:</strong> เขียนทับไฟล์ตรงๆ หากแอปล่มข้อมูลจะหาย <br><strong>Mitigation:</strong>
+              ใช้กระบวนการ Safe Save (Atomic Write) บันทึกผ่าน Temporary Files ก่อนเขียนทับ</dd>
           </div>
           <div>
             <dt>Input Type Mismatch</dt>
-            <dd><strong>Risk:</strong> ผู้ใช้กรอกตัวอักษรแทนตัวเลขทำให้เกิด ValueError และระบบล่ม <br><strong>Mitigation:</strong> บังคับใช้ Input Validation ดักจับด้วย try-except เสมอ</dd>
+            <dd><strong>Risk:</strong> ผู้ใช้กรอกตัวอักษรแทนตัวเลขทำให้เกิด ValueError และระบบล่ม
+              <br><strong>Mitigation:</strong> บังคับใช้ Input Validation ดักจับด้วย try-except เสมอ</dd>
           </div>
           <div>
             <dt>Encoding Risk</dt>
-            <dd><strong>Risk:</strong> อ่านไฟล์โดยไม่ระบุ encoding อาจทำให้ภาษาไทยเพี้ยนใน OS อื่น <br><strong>Mitigation:</strong> กำหนด <code>encoding='utf-8'</code> เป็นมาตรฐานการอ่าน/เขียนไฟล์ทุกครั้ง</dd>
+            <dd><strong>Risk:</strong> อ่านไฟล์โดยไม่ระบุ encoding อาจทำให้ภาษาไทยเพี้ยนใน OS อื่น
+              <br><strong>Mitigation:</strong> กำหนด <code>encoding='utf-8'</code> เป็นมาตรฐานการอ่าน/เขียนไฟล์ทุกครั้ง
+            </dd>
           </div>
         </dl>
       </article>
@@ -256,16 +285,20 @@
     <section class="summary" aria-label="สถาปัตยกรรมและการทดสอบ" data-od-id="phase-1-arch">
       <article class="panel" data-od-id="architecture">
         <h2>5. DFD Level 1 (Data Flow)</h2>
-        <p style="margin-bottom: 12px; color: var(--text-muted); font-size: 0.95rem;">โครงสร้างกระแสข้อมูลที่ออกแบบใหม่เพื่อจัดการสถานะอย่างปลอดภัย</p>
-        <pre style="background: var(--paper-warm); padding: 12px; border-radius: 8px; overflow-x: auto; font-family: 'IBM Plex Mono', monospace; font-size: 0.85rem; color: var(--ink);"><code>User -> P1: load -> Memory Store -> P2: show_all -> User
+        <p style="margin-bottom: 12px; color: var(--text-muted); font-size: 0.95rem;">
+          โครงสร้างกระแสข้อมูลที่ออกแบบใหม่เพื่อจัดการสถานะอย่างปลอดภัย</p>
+        <pre
+          style="background: var(--paper-warm); padding: 12px; border-radius: 8px; overflow-x: auto; font-family: 'IBM Plex Mono', monospace; font-size: 0.85rem; color: var(--ink);"><code>User -> P1: load -> Memory Store -> P2: show_all -> User
 User -> P3: add_update -> Memory Store -> P6: save -> Disk
 User -> P4: cut_stock -> Memory Store -> P6: save -> Disk</code></pre>
       </article>
 
       <article class="panel" data-od-id="qa-testing">
         <h2>6. Automated Testing (PyTest)</h2>
-        <p style="margin-bottom: 12px; color: var(--text-muted); font-size: 0.95rem;">เกราะป้องกันเพื่อรับประกันความเสถียร (Regression Prevention)</p>
-        <pre style="background: var(--ink-soft); padding: 12px; border-radius: 8px; overflow-x: auto; font-family: 'IBM Plex Mono', monospace; font-size: 0.85rem; color: #fff;"><code>def test_cut_stock_not_enough(manager):
+        <p style="margin-bottom: 12px; color: var(--text-muted); font-size: 0.95rem;">
+          เกราะป้องกันเพื่อรับประกันความเสถียร (Regression Prevention)</p>
+        <pre
+          style="background: var(--ink-soft); padding: 12px; border-radius: 8px; overflow-x: auto; font-family: 'IBM Plex Mono', monospace; font-size: 0.85rem; color: #fff;"><code>def test_cut_stock_not_enough(manager):
     success, msg, rem = manager.cut_stock("2", 15)
     assert success is False
     assert msg == "Error: Not enough stock!"
@@ -274,8 +307,8 @@ User -> P4: cut_stock -> Memory Store -> P6: save -> Disk</code></pre>
     </section>
   </main>
 
-  
-  
+
+
 
   <script src="https://cdn.jsdelivr.net/npm/svg-pan-zoom@3.6.1/dist/svg-pan-zoom.min.js"></script>
   <script>
@@ -284,11 +317,11 @@ User -> P4: cut_stock -> Memory Store -> P6: save -> Disk</code></pre>
       document.querySelectorAll('.mermaid-container').forEach(container => {
         // Remove old buttons if script runs twice
         container.querySelectorAll('.btn-expand-mermaid').forEach(b => b.remove());
-        
+
         const btn = document.createElement('button');
         btn.className = 'btn-expand-mermaid';
         btn.innerHTML = ' Fullscreen';
-        
+
         btn.onclick = () => {
           const originalSvg = container.querySelector('svg');
           if (!originalSvg) return;
@@ -305,7 +338,7 @@ User -> P4: cut_stock -> Memory Store -> P6: save -> Disk</code></pre>
           overlay.style.display = 'flex';
           overlay.style.alignItems = 'center';
           overlay.style.justifyContent = 'center';
-          
+
           // Create Close button
           const closeBtn = document.createElement('button');
           closeBtn.innerHTML = ' Close';
@@ -322,7 +355,7 @@ User -> P4: cut_stock -> Memory Store -> P6: save -> Disk</code></pre>
           closeBtn.style.borderRadius = '8px';
           closeBtn.style.zIndex = '1000000';
           closeBtn.style.boxShadow = '0 4px 12px rgba(0,0,0,0.2)';
-          
+
           closeBtn.onmouseover = () => closeBtn.style.backgroundColor = '#e60000';
           closeBtn.onmouseout = () => closeBtn.style.backgroundColor = '#ff4d4d';
 
@@ -332,7 +365,7 @@ User -> P4: cut_stock -> Memory Store -> P6: save -> Disk</code></pre>
           clonedSvg.style.height = '100%';
           clonedSvg.style.maxWidth = '100vw';
           clonedSvg.style.maxHeight = '100vh';
-          
+
           overlay.appendChild(clonedSvg);
           overlay.appendChild(closeBtn);
           document.body.appendChild(overlay);
@@ -363,10 +396,10 @@ User -> P4: cut_stock -> Memory Store -> P6: save -> Disk</code></pre>
     });
   </script>
 
-<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
-    <script>
-        mermaid.initialize({ startOnLoad: true, theme: 'base', themeVariables: { primaryColor: '#EFE9DA', primaryTextColor: '#1B1F2B', primaryBorderColor: '#3D4B94', lineColor: '#3D4B94', secondaryColor: '#F6F4EE', tertiaryColor: '#F6F4EE' } });
-    </script>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+  <script>
+    mermaid.initialize({ startOnLoad: true, theme: 'base', themeVariables: { primaryColor: '#EFE9DA', primaryTextColor: '#1B1F2B', primaryBorderColor: '#3D4B94', lineColor: '#3D4B94', secondaryColor: '#F6F4EE', tertiaryColor: '#F6F4EE' } });
+  </script>
 </body>
 
 </html>

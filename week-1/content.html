@@ -174,24 +174,27 @@
     <div class="badge" data-od-id="week-1-label">Week 1 · Review</div>
     <h1 data-od-id="week-1-heading">Planning & Legacy Code Review</h1>
     <p class="lede">สรุปผลการวิเคราะห์โครงสร้างโค้ดเดิม การจัดทำ Project Charter และกำหนดขอบเขตของการพัฒนา</p>
-    
+
     <div class="divider"></div>
-    
+
     <section class="summary" aria-label="สถานะของระบบเดิม" data-od-id="week-1-summary">
       <article class="panel" data-od-id="project-facts">
         <h2>1. วิเคราะห์ระบบเดิม (Legacy Code Review)</h2>
         <dl class="facts">
           <div>
             <dt>Global State</dt>
-            <dd>ระบบเดิมใช้ตัวแปร global <code>x</code> ในการเก็บข้อมูลคลังสินค้า ทำให้เกิดความเสี่ยง (Global State Conflict) เมื่อมีการประมวลผลซ้อนกัน</dd>
+            <dd>ระบบเดิมใช้ตัวแปร global <code>x</code> ในการเก็บข้อมูลคลังสินค้า ทำให้เกิดความเสี่ยง (Global State
+              Conflict) เมื่อมีการประมวลผลซ้อนกัน</dd>
           </div>
           <div>
             <dt>Data Storage</dt>
-            <dd>ใช้ <code>json.dump()</code> บันทึกไฟล์ทับทันที หากเกิดข้อผิดพลาดระหว่างรัน (เช่น ไฟดับ) ข้อมูลสูญหายทั้งหมด</dd>
+            <dd>ใช้ <code>json.dump()</code> บันทึกไฟล์ทับทันที หากเกิดข้อผิดพลาดระหว่างรัน (เช่น ไฟดับ)
+              ข้อมูลสูญหายทั้งหมด</dd>
           </div>
           <div>
             <dt>Input Handling</dt>
-            <dd>ระบบไม่ตรวจสอบประเภทของข้อมูล (No Input Validation) หากผู้ใช้กรอกตัวอักษรลงในช่องตัวเลข โปรแกรมจะแครช (ValueError)</dd>
+            <dd>ระบบไม่ตรวจสอบประเภทของข้อมูล (No Input Validation) หากผู้ใช้กรอกตัวอักษรลงในช่องตัวเลข โปรแกรมจะแครช
+              (ValueError)</dd>
           </div>
         </dl>
       </article>
@@ -199,9 +202,11 @@
       <article class="panel" data-od-id="project-objectives">
         <h2>2. เป้าหมายสัปดาห์ที่ 1</h2>
         <ol class="steps">
-          <li><strong>System Understanding:</strong> ทำความเข้าใจตรรกะเดิมของฟังก์ชันทั้ง 5 (load, add, show, cut_stock, check)</li>
+          <li><strong>System Understanding:</strong> ทำความเข้าใจตรรกะเดิมของฟังก์ชันทั้ง 5 (load, add, show, cut_stock,
+            check)</li>
           <li><strong>Project Charter:</strong> กำหนดเป้าหมายหลักในการแก้ปัญหาระบบเดิม (เน้นเสถียรภาพ)</li>
-          <li><strong>Scope Definition:</strong> ตัดสินใจแบ่งงานเป็น 4 เฟสหลัก เพื่อค่อยๆ ปรับปรุงโดยไม่กระทบความสามารถเดิมของระบบ</li>
+          <li><strong>Scope Definition:</strong> ตัดสินใจแบ่งงานเป็น 4 เฟสหลัก เพื่อค่อยๆ
+            ปรับปรุงโดยไม่กระทบความสามารถเดิมของระบบ</li>
         </ol>
       </article>
     </section>
@@ -214,26 +219,29 @@
         <dl class="facts">
           <div>
             <dt>In-Scope</dt>
-            <dd>Refactoring ให้อยู่ในรูป Object-Oriented (OOP), การเพิ่มฐานข้อมูลสมาชิก (members.json), การเพิ่มตรรกะคำนวณส่วนลด, การป้องกัน Error และทำ Unit Test.</dd>
+            <dd>Refactoring ให้อยู่ในรูป Object-Oriented (OOP), การเพิ่มฐานข้อมูลสมาชิก (members.json),
+              การเพิ่มตรรกะคำนวณส่วนลด, การป้องกัน Error และทำ Unit Test.</dd>
           </div>
           <div>
             <dt>Out-of-Scope</dt>
-            <dd>ไม่มีการพัฒนาหน้าต่าง GUI, ไม่มีการใช้ SQL Database ภายนอก (ยังคงใช้ Local JSON/SQLite เพื่อความเรียบง่าย)</dd>
+            <dd>ไม่มีการพัฒนาหน้าต่าง GUI, ไม่มีการใช้ SQL Database ภายนอก (ยังคงใช้ Local JSON/SQLite
+              เพื่อความเรียบง่าย)</dd>
           </div>
         </dl>
       </article>
-      
+
       <article class="panel" data-od-id="project-risks">
         <h2>4. แผนงานระยะต่อไป</h2>
         <p style="padding-top: 12px; color: var(--text-main); font-size: 0.95rem; line-height: 1.6;">
-          เมื่อได้ปัญหาที่ชัดเจนแล้ว ในสัปดาห์ที่ 2 ทีมจะดำเนินการออกแบบ <strong>Data Flow Diagram (DFD)</strong> และปรับโครงสร้างการทำงานจาก Global State ให้เป็นรูปแบบ Class (MVC) รวมถึงประเมินความเสี่ยงเชิงระบบอย่างละเอียด
+          เมื่อได้ปัญหาที่ชัดเจนแล้ว ในสัปดาห์ที่ 2 ทีมจะดำเนินการออกแบบ <strong>Data Flow Diagram (DFD)</strong>
+          และปรับโครงสร้างการทำงานจาก Global State ให้เป็นรูปแบบ Class (MVC) รวมถึงประเมินความเสี่ยงเชิงระบบอย่างละเอียด
         </p>
       </article>
     </section>
   </main>
 
-  
-  
+
+
 
   <script src="https://cdn.jsdelivr.net/npm/svg-pan-zoom@3.6.1/dist/svg-pan-zoom.min.js"></script>
   <script>
@@ -242,11 +250,11 @@
       document.querySelectorAll('.mermaid-container').forEach(container => {
         // Remove old buttons if script runs twice
         container.querySelectorAll('.btn-expand-mermaid').forEach(b => b.remove());
-        
+
         const btn = document.createElement('button');
         btn.className = 'btn-expand-mermaid';
         btn.innerHTML = ' Fullscreen';
-        
+
         btn.onclick = () => {
           const originalSvg = container.querySelector('svg');
           if (!originalSvg) return;
@@ -263,7 +271,7 @@
           overlay.style.display = 'flex';
           overlay.style.alignItems = 'center';
           overlay.style.justifyContent = 'center';
-          
+
           // Create Close button
           const closeBtn = document.createElement('button');
           closeBtn.innerHTML = ' Close';
@@ -280,7 +288,7 @@
           closeBtn.style.borderRadius = '8px';
           closeBtn.style.zIndex = '1000000';
           closeBtn.style.boxShadow = '0 4px 12px rgba(0,0,0,0.2)';
-          
+
           closeBtn.onmouseover = () => closeBtn.style.backgroundColor = '#e60000';
           closeBtn.onmouseout = () => closeBtn.style.backgroundColor = '#ff4d4d';
 
@@ -290,7 +298,7 @@
           clonedSvg.style.height = '100%';
           clonedSvg.style.maxWidth = '100vw';
           clonedSvg.style.maxHeight = '100vh';
-          
+
           overlay.appendChild(clonedSvg);
           overlay.appendChild(closeBtn);
           document.body.appendChild(overlay);
@@ -321,10 +329,10 @@
     });
   </script>
 
-<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
-    <script>
-        mermaid.initialize({ startOnLoad: true, theme: 'base', themeVariables: { primaryColor: '#EFE9DA', primaryTextColor: '#1B1F2B', primaryBorderColor: '#3D4B94', lineColor: '#3D4B94', secondaryColor: '#F6F4EE', tertiaryColor: '#F6F4EE' } });
-    </script>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+  <script>
+    mermaid.initialize({ startOnLoad: true, theme: 'base', themeVariables: { primaryColor: '#EFE9DA', primaryTextColor: '#1B1F2B', primaryBorderColor: '#3D4B94', lineColor: '#3D4B94', secondaryColor: '#F6F4EE', tertiaryColor: '#F6F4EE' } });
+  </script>
 </body>
 
 </html>
