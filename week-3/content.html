@@ -253,7 +253,7 @@
         
         const btn = document.createElement('button');
         btn.className = 'btn-expand-mermaid';
-        btn.innerHTML = '🔍 Fullscreen';
+        btn.innerHTML = ' Fullscreen';
         
         btn.onclick = () => {
           const originalSvg = container.querySelector('svg');
@@ -274,7 +274,7 @@
           
           // Create Close button
           const closeBtn = document.createElement('button');
-          closeBtn.innerHTML = '✖ Close';
+          closeBtn.innerHTML = ' Close';
           closeBtn.style.position = 'absolute';
           closeBtn.style.top = '20px';
           closeBtn.style.right = '20px';
@@ -329,6 +329,10 @@
     });
   </script>
 
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <script>
+        mermaid.initialize({ startOnLoad: true, theme: 'base', themeVariables: { primaryColor: '#EFE9DA', primaryTextColor: '#1B1F2B', primaryBorderColor: '#3D4B94', lineColor: '#3D4B94', secondaryColor: '#F6F4EE', tertiaryColor: '#F6F4EE' } });
+    </script>
 </body>
 
 </html>

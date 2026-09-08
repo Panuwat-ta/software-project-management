@@ -1,0 +1,625 @@
+<!doctype html>
+<html lang="th">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Week 10 — Defect Log BUG-101, CR-02, CCB & Contingency Reserve</title>
+  <link rel="stylesheet" href="../shared-theme.css">
+  <style>
+    body {
+      display: block;
+      min-height: 100vh;
+      overflow: auto;
+      background-color: var(--paper);
+    }
+
+    .document {
+      width: 100%;
+      margin: 0;
+      padding: 30px clamp(15px, 2vw, 30px);
+    }
+
+    .file-path {
+      margin: 0 0 18px;
+      color: var(--ink-soft);
+      font: 500 .75rem/1.5 'IBM Plex Mono', monospace;
+      letter-spacing: .09em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      max-width: 850px;
+      font: 600 1.85rem/1.2 'Taviraj', serif !important;
+      margin-bottom: 0.5rem;
+      color: var(--ink);
+    }
+
+    .lede {
+      max-width: 720px;
+      margin: 0;
+      color: var(--text-muted);
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+
+    .nav-portal {
+      margin: 14px 0 24px;
+    }
+
+    .nav-portal a {
+      color: var(--ink-soft);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      font-size: 0.92rem;
+      font-weight: 500;
+    }
+
+    .divider {
+      height: 1px;
+      margin: 36px 0;
+      background: var(--border);
+    }
+
+    .summary {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 32px;
+    }
+
+    .panel {
+      padding: 24px;
+      background: var(--paper-warm);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+    }
+
+    .panel h2 {
+      margin-bottom: 18px;
+      font: 600 1.4rem/1.3 'Taviraj', serif;
+      color: var(--ink);
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 8px;
+    }
+
+    .panel h3 {
+      margin: 18px 0 10px;
+      font: 600 1.15rem/1.3 'Taviraj', serif;
+      color: var(--ink-soft);
+    }
+
+    .facts {
+      display: grid;
+      gap: 0;
+      margin: 0;
+    }
+
+    .facts div {
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      gap: 18px;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .facts div:last-child {
+      border: 0;
+      padding-bottom: 0;
+    }
+
+    dt {
+      color: var(--text-muted);
+      font: 600 .75rem/1.4 'IBM Plex Mono', monospace;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    dd,
+    p,
+    li {
+      margin: 0 0 8px;
+      color: var(--text-main);
+      font-size: 0.95rem !important;
+      line-height: 1.65 !important;
+    }
+
+    ul, ol {
+      margin: 8px 0 16px 20px;
+      padding-left: 10px;
+    }
+
+    li::marker {
+      color: var(--amber);
+    }
+
+    table {
+      width: 100%;
+      margin: 14px 0 20px;
+      border-collapse: collapse;
+      background: var(--paper);
+      border: 1px solid var(--border);
+    }
+
+    th, td {
+      padding: 10px 12px;
+      text-align: left;
+      vertical-align: top;
+      border-bottom: 1px solid var(--border);
+      border-right: 1px solid var(--border);
+      font-size: 0.9rem;
+    }
+
+    th:last-child, td:last-child {
+      border-right: none;
+    }
+
+    th {
+      color: var(--ink);
+      background: var(--paper-warm);
+      font-weight: 600;
+    }
+
+    blockquote {
+      margin: 14px 0;
+      padding: 10px 16px;
+      background: var(--paper);
+      border-left: 4px solid var(--amber);
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      border-radius: 4px;
+    }
+
+    code {
+      font-family: 'IBM Plex Mono', monospace;
+      color: var(--accent);
+      background: rgba(18, 23, 43, 0.05);
+      padding: 2px 4px;
+      border-radius: 4px;
+      font-size: 0.88em;
+    }
+
+    pre {
+      margin: 14px 0 20px;
+      padding: 14px 16px;
+      overflow-x: auto;
+      border-radius: 8px;
+    }
+
+    pre code {
+      background: none;
+      padding: 0;
+    }
+
+    @media (max-width: 720px) {
+      .facts div {
+        grid-template-columns: 1fr;
+        gap: 4px;
+      }
+      table {
+        display: block;
+        overflow-x: auto;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="document" data-od-id="week-10-content">
+    <p class="file-path">/week-10/content.html</p>
+    <div class="badge">Week 10 · Defect Log BUG-101, CR-02, CCB &amp; Contingency Reserve</div>
+    <h1>Defect Log BUG-101, CR-02, CCB และ Contingency Reserve</h1>
+    <p class="lede">สรุปเอกสารการดำเนินงานสัปดาห์ที่ 10: การติดตามข้อบกพร่อง BUG-101 พร้อมการวิเคราะห์สาเหตุที่แท้จริง, แบบฟอร์มผลกระทบและการตัดสินใจ CR-02, รายงานการประชุม CCB และบันทึกเงินสำรองฉุกเฉิน</p>
+
+    <div class="nav-portal">
+      <a href="../index.html">← กลับสู่หน้าหลัก Project Ledger (Documentation Portal)</a>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- DOCUMENT 1: Defect_Log_BUG-101.md -->
+    <section class="summary">
+      <article class="panel">
+        <h2>บันทึกข้อบกพร่อง (Defect Log) — BUG-101: KeyError <code>barcode</code> บนข้อมูลเก่า data.json</h2>
+
+        <blockquote>
+          สัปดาห์ที่ 10 — การติดตามข้อบกพร่อง (Defect tracking) + การวิเคราะห์สาเหตุที่แท้จริง (RCA: 5 Whys) + การทดสอบที่ขับเคลื่อนด้วยข้อบกพร่อง (Defect-Driven Testing)
+        </blockquote>
+
+        <table>
+          <thead>
+            <tr>
+              <th>ฟิลด์ (Field)</th>
+              <th>ค่า (Value)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>รหัสข้อบกพร่อง (Defect ID)</td>
+              <td>BUG-101</td>
+            </tr>
+            <tr>
+              <td>ชื่อเรื่อง (Title)</td>
+              <td><code>KeyError: 'barcode'</code> เมื่อโหลดข้อมูลเก่า (legacy) ใน <code>data.json</code> — Crash when loading legacy JSON</td>
+            </tr>
+            <tr>
+              <td>ตำแหน่ง (Location)</td>
+              <td><code>app.py: line 45</code> ใน <code>Product.__init__</code></td>
+            </tr>
+            <tr>
+              <td>ความรุนแรง / ความเร่งด่วน (Severity &amp; Priority)</td>
+              <td><strong>Critical / Major</strong> — โปรแกรมเกิด Runtime Exception แล้ว Crash</td>
+            </tr>
+            <tr>
+              <td>สภาพแวดล้อม (Environment)</td>
+              <td>Python <strong>3.11</strong>, Commit Hash, OS Version</td>
+            </tr>
+            <tr>
+              <td>สถานะวงจรชีวิตบั๊ก (Bug Life Cycle)</td>
+              <td>New → Assigned (Tech Lead มอบหมายเจ้าของโมดูล) → Fixing (RCA + แก้บน Bugfix Branch) → Verified (Tester รัน PyTest ซ้ำ) → Closed (Merge เข้าสายหลัก) — ปัจจุบันอยู่ขั้น Fixing</td>
+            </tr>
+            <tr>
+              <td>โมดูลที่เกี่ยวข้อง</td>
+              <td><code>InventoryRepository</code> (ชั้นโหลดข้อมูล) / โมเดล <code>Product</code></td>
+            </tr>
+            <tr>
+              <td>ส่วนที่เกี่ยวข้อง (Related)</td>
+              <td>CR-02 (การส่งออก CSV ต้องทนต่อกรณี <code>barcode</code> หายไปด้วย)</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3>สาเหตุเบื้องต้น (Context)</h3>
+        <p>ไฟล์ <code>data.json</code> เดิมสร้างจากสัปดาห์ที่ 1 ไม่มีฟิลด์ <code>barcode</code> ทำให้เกิดข้อบกพร่องขอบเขต (Edge Cases) เมื่อโค้ดสคีมาใหม่เข้าถึงคีย์ตรง ๆ — จัดเป็น <strong>Internal Defects (บั๊กภายใน)</strong>: Legacy Data Incompatibility + Edge Case Blindspots</p>
+
+        <h3>ขั้นตอนการทำซ้ำ (Steps to Reproduce — ต้องจำลองซ้ำได้ 100%)</h3>
+        <ol>
+          <li>เตรียม <code>data.json</code> แบบดั้งเดิมที่ไร้ฟิลด์ <code>barcode</code> (เช่น <code>{"P001": {"name": "Pen", "qty": 10, "price": 15.0}}</code>)</li>
+          <li>โหลดข้อมูลผ่าน <code>InventoryRepository</code> (ใช้ <code>Product.__init__</code> อ่านคีย์ <code>barcode</code> ตรง ๆ)</li>
+          <li>สังเกตผล: โปรแกรม Crash ทันที</li>
+        </ol>
+
+        <h3>ผลที่คาดหวังกับผลจริง (Expected vs Actual)</h3>
+        <ul>
+          <li><strong>ที่คาดหวัง (Expected):</strong> ระเบียนเก่าโหลดได้อย่างราบรื่น มี Default Fallback ให้อัตโนมัติ โปรแกรมไม่ล่ม</li>
+          <li><strong>ผลจริง (Actual):</strong> <code>KeyError: 'barcode'</code> — Error Stack Trace หยุดการโหลด/แสดงผล (ดูไฟล์ตัวอย่างข้อมูลเก่าใน <code>mock_legacy_products.json</code>)</li>
+        </ul>
+
+        <h3>การวิเคราะห์สาเหตุด้วย 5-Whys (RCA — The 5 Whys Method)</h3>
+        <ol>
+          <li><strong>Why 1 — ทำไมเกิด KeyError?</strong>  หาคีย์ <code>barcode</code> ไม่เจอ (โค้ดดึงค่าตรง ๆ)</li>
+          <li><strong>Why 2 — ทำไมหาคีย์ไม่เจอ?</strong>  <code>data.json</code> สร้างจากสัปดาห์ที่ 1 (สคีมาดั้งเดิมไม่มีฟิลด์นี้)</li>
+          <li><strong>Why 3 — ทำไมระบบอ่านข้อมูลเก่าไม่ได้?</strong>  ขาดตรรกะ Schema Migration</li>
+          <li><strong>Why 4 — ทำไมไม่มี Fallback?</strong>  สมมุติว่าข้อมูลต้องใหม่ (สคีมาใหม่) อย่างเดียว</li>
+          <li><strong>Why 5 (Root Cause ที่แท้จริง)</strong>  <strong>ขาดกลไก Data Validation และ Default Fallback ในชั้น <code>InventoryRepository</code></strong></li>
+        </ol>
+
+        <h3>วิธีแก้ (Fix) — แก้ที่ราก ไม่ใช่ปิดอาการ</h3>
+        <ul>
+          <li> ห้ามทำ Symptom Fixing: ใส่ <code>try-except: pass</code> ปิด Error (ยิ่งซ่อนระเบิดเวลาไว้ลึกขึ้น)</li>
+          <li> Root Cause Fix: ใส่ค่า Default ใน Repository เพื่อรองรับ Backward Compatibility</li>
+        </ul>
+        <pre><code># Symptom-Prone Code (พังง่าย) — ดึงค่าตรง ๆ ทำให้ Crash เมื่อเจอไฟล์เก่า
+code = item['barcode']
+
+# Root Cause Fix (ปลอดภัย) — มี Fallback รองรับ Legacy Schema
+code = item.get('barcode', '')</code></pre>
+        <p>ฟิลด์ที่เกี่ยวข้องในชั้น Repository: <code>name</code>, <code>qty</code>, <code>price</code>, <code>barcode</code> (default <code>''</code>), <code>reorder_point</code></p>
+
+        <h3>การทดสอบที่ขับเคลื่อนด้วยข้อบกพร่อง (Defect-Driven Testing)</h3>
+        <blockquote>
+          กฎ: ทุกครั้งที่พบบั๊ก ก่อนลงมือแก้โค้ด ต้องเขียน Unit Test ตัวใหม่ที่เลียนแบบบั๊กนั้นขึ้นมาก่อนเสมอ
+        </blockquote>
+        <ol>
+          <li><strong>Reproduce (RED):</strong> เขียน Test Case จำลองบั๊กใน <code>test_app.py</code>  รันแล้วต้อง Fail</li>
+          <li><strong>Fix Code:</strong> แก้ไขโค้ดที่รากเหง้าในชั้น Repository</li>
+          <li><strong>Verify (GREEN):</strong> รัน Test Case เดิมซ้ำ  ต้องผ่าน 100%</li>
+          <li><strong>Preserve:</strong> บรรจุ Test Case นี้เข้า Full Regression Suite เป็นเกราะถาวร (ป้องกันเพื่อนร่วมทีมเผลอลบตรรกะ Fallback ออกในอนาคต)</li>
+        </ol>
+        <pre><code>def test_repository_handles_legacy_json_without_barcode(tmp_path):
+    # 1. Arrange: จำลองไฟล์ JSON แบบดั้งเดิมที่ไร้ฟิลด์ barcode
+    p = tmp_path / "legacy_data.json"
+    p.write_text('{"P001": {"name": "Pen", "qty": 10, "price": 15.0}}', encoding="utf-8")
+    # 2. Act: โหลดข้อมูลผ่าน Repository
+    data = load_all(str(p))
+    # 3. Assert: ระบบต้องไม่พัง และใส่ Default Fallback ให้อัตโนมัติ
+    assert "P001" in data
+    assert data["P001"].get("barcode", "") == ""</code></pre>
+        <ul>
+          <li>ใช้ <code>tmp_path</code> ของ PyTest สร้างไฟล์ JSON จำลองในหน่วยความจำชั่วคราวโดยไม่รบกวนไฟล์จริง</li>
+          <li>เกณฑ์ปิดงาน: Test ผ่าน + ไม่มี <code>KeyError</code> บนไฟล์ข้อมูลเก่าทั้งไฟล์</li>
+        </ul>
+
+        <h3>กรณีขอบเขตที่ต้องลองเพิ่ม (Bug Bashing — เปิด Issue ติดป้าย <code>bug</code>)</h3>
+        <ul>
+          <li><strong>Case A:</strong> ป้อน Barcode ซ้ำกับสินค้าอื่น</li>
+          <li><strong>Case B:</strong> ป้อน Reorder Point เป็นตัวอักษรหรือค่าติดลบ</li>
+          <li><strong>Case C:</strong> ลบฟิลด์ใน <code>data.json</code> แล้วรันระบบ</li>
+        </ul>
+        <p>เมื่อพบข้อผิดพลาด ให้เปิด Issue บน GitHub Issues ทันที ระบุ Steps to Reproduce; แก้ด้วย TDR แล้ว Commit ด้วยข้อความ <code>fix: resolve legacy JSON missing barcode crash (fixes #12)</code></p>
+
+        <h3>อ้างอิงมาตรฐาน</h3>
+        <p>ISO/IEC 14764:2006 &amp; IEEE Std 1219-1998 (Software Maintenance Process); ISO/IEC/IEEE 29119 (Software Testing); Andersen &amp; Fagerhaug (2006) Root Cause Analysis</p>
+      </article>
+
+      <!-- DOCUMENT 2: CR-02_Impact_Decision_Form.md -->
+      <article class="panel">
+        <h2>แบบฟอร์มผลกระทบและการตัดสินใจ CR-02 (CR-02 Impact &amp; Decision Form) — การส่งออก CSV ฉุกเฉิน</h2>
+
+        <blockquote>
+          สัปดาห์ที่ 10 — กระบวนการจัดการคำขอฉุกเฉิน (Emergency Fast-Track) ตาม ISO/IEC 14764 / IEEE 1219: <strong>ห้ามกระโดดไปแก้โค้ดโดยไร้การควบคุม</strong>
+        </blockquote>
+
+        <table>
+          <thead>
+            <tr>
+              <th>ฟิลด์ (Field)</th>
+              <th>ค่า (Value)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>รหัสการเปลี่ยนแปลง (Change ID)</td>
+              <td>CR-02 (คำขอด่วน — Emergency Change Request)</td>
+            </tr>
+            <tr>
+              <td>ชื่อเรื่อง (Title)</td>
+              <td>Export รายชื่อสินค้าสต็อกต่ำเป็นไฟล์ <code>.csv</code> ทันที</td>
+            </tr>
+            <tr>
+              <td>ความจำเป็นทางธุรกิจ (Business Need)</td>
+              <td>นำไปเปิดใน Excel เพื่อสั่งซื้อสินค้าเติมคลังด่วน ป้องกันสินค้าขาดสต็อก</td>
+            </tr>
+            <tr>
+              <td>ประเภท (Type)</td>
+              <td>Emergency Change Request (เทียบ: CR-01 Barcode &amp; Reorder Point สัปดาห์ที่ 8–9 เป็น Normal Change ผ่าน Sprint Planning/Backlog ปกติ)</td>
+            </tr>
+            <tr>
+              <td>ขั้นตอน Fast-Track</td>
+              <td>1. Identify (ตรวจความถูกต้อง+ความเร่งด่วน) → 2. Impact (วิเคราะห์สถาปัตยกรรม+ข้อมูล) → 3. Estimate (ประเมิน Man-Hours ส่งต่อ CCB) → 4. Hotfix &amp; CI (พัฒนาบน Branch เฉพาะ + รัน PyTest)</td>
+            </tr>
+            <tr>
+              <td>Branch</td>
+              <td><code>feature/cr02-csv-export</code> (รอรวมเข้า <code>develop</code> ตามรอบ Sprint ได้ตามปกติ; ต่างจาก <code>hotfix/critical-db-crash</code> ที่แตกจาก <code>main</code> ตรงเมื่อบั๊กวิกฤตบน Production)</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3>การประเมินผลกระทบ 3 มิติ (Impact Assessment)</h3>
+        <ol>
+          <li><strong>Data &amp; Architecture Impact:</strong> อ่านข้อมูลจากโมเดล <code>Product</code> และเรียก <code>is_low_stock()</code>; สร้างคลาสใหม่ <strong><code>CsvReportExporter</code></strong> ตามหลัก Single Responsibility แยกขาดจาก UI</li>
+          <li><strong>Testing Impact:</strong> ต้องเขียน Unit Test <strong>2 เคส</strong> (ทดสอบการสร้างไฟล์ CSV + ความถูกต้องของ Header/Data); Regression: ไม่กระทบฟังก์ชันเดิมใน <code>InventoryService</code></li>
+          <li><strong>ข้อห้าม (Bad Practice):</strong> ห้ามยัด <code>import csv</code> แล้วเขียนไฟล์ลงใน <code>ConsoleUI</code> หรือ <code>InventoryRepository</code> (ทำให้เกิด Tight Coupling ทำลาย Clean Architecture)</li>
+        </ol>
+
+        <h3>การออกแบบ CsvReportExporter</h3>
+        <ul>
+          <li>คลาสเฉพาะ <code>CsvReportExporter</code> แปลง List ของ <code>Product</code> เป็นข้อความ/ไฟล์ CSV อย่างอิสระ (Static Method ไร้ State ทดสอบแยกง่าย)</li>
+          <li>Header: <code>ProductID,ProductName,Barcode,Quantity,ReorderPoint,Price</code></li>
+          <li>ใช้ Context Manager <code>with open(..., 'w', newline='', encoding='utf-8')</code> ปิดไฟล์อัตโนมัติ รองรับภาษาไทยสมบูรณ์</li>
+          <li>ตัวอย่างแถวข้อมูลจาก Unit Test: <code>P01,Sugar,111,2,5,20.0</code> (ไฟล์ <code>test_low_stock.csv</code>, ใช้ fixture <code>tmp_path</code> สร้าง/ลบอัตโนมัติ)</li>
+        </ul>
+
+        <h3>ประมาณการ Effort &amp; Risk (ตัวเลขส่งต่อ PM เข้าที่ประชุม CCB)</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>องค์ประกอบงาน (Task Breakdown)</th>
+              <th>ผู้รับผิดชอบ (Role)</th>
+              <th>Man-Hours</th>
+              <th>ระดับความเสี่ยง</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1. สร้างคลาส CsvReportExporter</td>
+              <td>Senior Developer</td>
+              <td>2.0 ชม.</td>
+              <td>Low </td>
+            </tr>
+            <tr>
+              <td>2. เชื่อมโยงเมนู Console UI</td>
+              <td>Developer</td>
+              <td>1.0 ชม.</td>
+              <td>Low </td>
+            </tr>
+            <tr>
+              <td>3. เขียน Unit Test ครอบคลุมไฟล์ CSV</td>
+              <td>QA Tester</td>
+              <td>1.5 ชม.</td>
+              <td>Low </td>
+            </tr>
+            <tr>
+              <td><strong>รวม Technical Effort ทั้งสิ้น</strong></td>
+              <td></td>
+              <td><strong>4.5 Man-Hours</strong></td>
+              <td><strong>Overall: Low Risk</strong></td>
+            </tr>
+          </tbody>
+        </table>
+        <ul>
+          <li><strong>ต้นทุน (Cost):</strong> ประมาณ <strong>1,350 บาท</strong> (4.5 ชม. @ 300 บาท)</li>
+          <li>เงื่อนไขด้านบั๊ก: การส่งออก CSV จะสืบทอดอาการล่มของ BUG-101 หากไม่รวมวิธีแก้ <code>dict.get('barcode', '')</code> ในชั้น Repository ก่อน</li>
+        </ul>
+
+        <h3>สามเหลี่ยมเหล็ก (Iron Triangle: Scope–Time–Cost)</h3>
+        <p>กฎเหล็ก: หากลูกค้าขอขยาย Scope (CR-02) ต้องขยาย Cost (งบประมาณ) หรือขยาย Time (เวลา) เสมอ มิฉะนั้น Quality (คุณภาพ) จะพังทลาย</p>
+
+        <h3>ทางเลือกทางการบริหาร (Trade-off Analysis)</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>ทางเลือก</th>
+              <th>ข้อดี (Pros)</th>
+              <th>ข้อแลกเปลี่ยน / ความเสี่ยง (Trade-offs)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Option A: Approve in Sprint 2</strong></td>
+              <td>ลูกค้าได้รับไฟล์ CSV ทันทีเพื่อสั่งซื้อสินค้าเติมคลัง ไม่เกิดสินค้าขาดสต็อก</td>
+              <td>ต้องดึงเงินสำรอง 1,350 บาท และเสี่ยงทำให้งาน Barcode หลุดกำหนด</td>
+            </tr>
+            <tr>
+              <td><strong>Option B: Defer to Sprint 3</strong></td>
+              <td>ทีมรักษา Focus งานหลักของ Sprint 2 ได้ 100% ไม่ต้องทำโอที</td>
+              <td>ลูกค้าต้องรออีก 1 สัปดาห์ อาจต้องใช้ระบบจดมือสั่งซื้อสินค้าชั่วคราว</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3>การตัดสินใจ (สำหรับ CCB — วงกลมเลือก 1 มติ)</h3>
+        <ul>
+          <li>[ ] <strong>Approve (อนุมัติ):</strong> ยอมรับทันที โดยตกลงดึงงบจาก Contingency Reserve หรือขยายเวลา Sprint 2</li>
+          <li>[ ] <strong>Defer (เลื่อนการทำ):</strong> เห็นชอบว่ามีประโยชน์ แต่ยกยอดไปเปิดเป็นการ์ด Task แรกของ Sprint 3</li>
+          <li>[ ] <strong>Reject (ปฏิเสธ):</strong> ไม่คุ้มค่าทางธุรกิจ หรือส่งผลให้โครงการหลักเสี่ยงล้มเหลวรุนแรง</li>
+        </ul>
+        <ul>
+          <li>ข้อตกลงร่วม (หากอนุมัติ): อนุมัติ <strong>4.5 Man-Hours @ 300 THB/ชม.</strong></li>
+          <li>บันทึกต่อใน: <code>CCB_Meeting_Minutes.md</code>, <code>Contingency_Reserve_Log.md</code></li>
+        </ul>
+      </article>
+
+      <!-- DOCUMENT 3: CCB_Meeting_Minutes.md -->
+      <article class="panel">
+        <h2>รายงานการประชุม CCB (CCB Meeting Minutes) — สัปดาห์ที่ 10 (CR-02 + BUG-101)</h2>
+
+        <blockquote>
+          กระบวนการ Integrated Change Control: 1. Submit CR → 2. Impact Analysis → 3. CCB Review → 4. Update Baseline — หน้าที่ CCB คือสกัดกั้น Scope Creep (งานงอกนอกรอบโดยไร้การเพิ่มงบ/ขยายเวลา ซึ่งทำให้ทีม Overworked/Burnout ข้อบกพร่องพุ่ง ส่งมอบล่าช้า งบล่ม)
+        </blockquote>
+
+        <table>
+          <thead>
+            <tr>
+              <th>หัวข้อ (Item)</th>
+              <th>รายละเอียด (Detail)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>วาระการประชุม (Agenda)</td>
+              <td>พิจารณาคำขอด่วน CR-02 (ขอส่งออก CSV รายงานสต็อกต่ำทันที) + รับทราบ BUG-101</td>
+            </tr>
+            <tr>
+              <td>ข้อมูลนำเข้า (Inputs)</td>
+              <td><code>Defect_Log_BUG-101.md</code>, <code>CR-02_Impact_Decision_Form.md</code> (ตัวเลข 4.5 Man-Hours / ประมาณ 1,350 บาท)</td>
+            </tr>
+            <tr>
+              <td>คณะกรรมการ CCB (Members)</td>
+              <td>Sponsor / อาจารย์ (อำนาจสูงสุดด้านงบประมาณ+ทิศทางธุรกิจ) • User Representative (คุณค่า+การใช้งานจริง) • Project Manager (ผลกระทบเวลา+งบประมาณ+ทรัพยากร) • Tech Lead (สถาปัตยกรรม+ความเสี่ยงเชิงโค้ด)</td>
+            </tr>
+            <tr>
+              <td>การลงนามรับรอง</td>
+              <td>Project Manager + Sponsor (อาจารย์) ลงนามร่วมกันเป็นหลักฐานแนบรายงาน</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3>สรุปการอภิปราย (Discussion Summary)</h3>
+        <ol>
+          <li><strong>BUG-101:</strong> ยืนยันรุนแรงระดับ Critical/Major (โปรแกรม Crash เมื่อเจอข้อมูลเก่าไร้ <code>barcode</code>); รากเหง้าคือขาด Data Validation + Default Fallback ในชั้น <code>InventoryRepository</code>; วิธีแก้คือ <code>dict.get('barcode', '')</code></li>
+          <li><strong>CR-02:</strong> ผลประโยชน์ลูกค้าคือได้ไฟล์ CSV ทันทีไปสั่งซื้อเติมคลัง (กันของขาดสต็อก); ผลประโยชน์ทีมคือรักษา Focus งานหลัก Sprint 2 (โดยเฉพาะงาน Barcode) ไม่ให้เกิด Burnout</li>
+          <li>ชั่งน้ำหนัก <strong>Option A: Approve in Sprint 2</strong> (ได้ CSV ทันที แต่ดึงสำรอง 1,350 บาท + เสี่ยงงาน Barcode หลุด) เทียบกับ <strong>Option B: Defer to Sprint 3</strong> (รักษา Focus 100% ไม่ต้องโอที แต่ลูกค้ารอ 1 สัปดาห์ ใช้จดมือชั่วคราว)</li>
+        </ol>
+
+        <h3>มติที่ประชุม (Decision — เลือก 1 ใน 3)</h3>
+        <ul>
+          <li>[ ]  <strong>Approve (อนุมัติ):</strong> ยอมรับทันที โดยตกลงดึงงบจาก Contingency Reserve หรือขยายเวลา Sprint 2</li>
+          <li>[ ]  <strong>Defer (เลื่อนการทำ):</strong> ยกยอดไปเปิดเป็นการ์ด Task แรกของ Sprint 3</li>
+          <li>[ ]  <strong>Reject (ปฏิเสธ):</strong> ไม่คุ้มค่าทางธุรกิจ หรือเสี่ยงให้โครงการหลักล้มเหลวรุนแรง</li>
+          <li><strong>BUG-101:</strong> อนุมัติให้แก้ที่ราก (<code>dict.get</code> Fallback ใน Repository) พร้อม Defect-Driven Test เป็นเกราะถาวร</li>
+          <li><strong>ข้อตกลงร่วม (หากอนุมัติ CR-02):</strong> อนุมัติ <strong>4.5 Man-Hours @ 300 THB/ชม.</strong> (1,350 บาท จาก Contingency Reserve ที่ตั้งไว้ในสัปดาห์ที่ 5)</li>
+        </ul>
+
+        <h3>การเจรจาต่อรอง (Principled Negotiation — Fisher &amp; Ury, 2011)</h3>
+        <ol>
+          <li><strong>Separate People from Problem:</strong> แยกอารมณ์/ตัวบุคคลออกจากปัญหา มุ่งแก้ที่เนื้องาน</li>
+          <li><strong>Focus on Interests:</strong> มุ่งผลประโยชน์ทางธุรกิจที่แท้จริง ไม่ยึดติดคำสั่ง</li>
+          <li><strong>Invent Options for Mutual Gain:</strong> คิดค้นทางเลือกร่วมกัน (Option A vs B) ให้ได้ประโยชน์ทั้งสองฝ่าย — ปกป้องทีม + สร้างความมั่นใจให้ลูกค้า</li>
+          <li><strong>Use Objective Criteria:</strong> ยืนบนเกณฑ์ที่วัดได้ (ตัวเลข 4.5 Man-Hours และ Team Capacity)</li>
+        </ol>
+        <ul>
+          <li> ห้ามพูด: "ทำไม่ได้ครับ งานล้นมือแล้ว ลูกค้ามาสั่งช้าเอง ช่วยไม่ได้ครับ" (ทำลายความสัมพันธ์ ลูกค้ากลายเป็น Resistant ทันที)</li>
+          <li> เทคนิค Yes, if...: "เราสามารถส่งมอบ CSV ให้ได้ในสัปดาห์นี้ครับ หากเราขอย้ายการตกแต่ง UI ไปทำใน Sprint 3 แทน"</li>
+          <li> เทคนิค Defer with Priority: "เพื่อให้ระบบบาร์โค้ดเสถียรที่สุด เราขอนำฟังก์ชัน CSV นี้เป็น Task แรกของ Sprint 3 ครับ"</li>
+        </ul>
+
+        <h3>การปรับปรุงเส้นฐาน (Update Baseline — หากอนุมัติ)</h3>
+        <ul>
+          <li><strong>Scope:</strong> + ข้อกำหนดส่งออก CSV (เกณฑ์ยอมรับ: รวมระเบียนเก่าไร้ <code>barcode</code> ได้); การ์ด Jira ใหม่ Summary: <code>[CR-02] Export Low Stock Products to CSV</code>, Original Estimate: 4.5h, Assignee: Senior Dev / Dev ตาม RACI → ลากเข้ากล่อง Active Sprint 2</li>
+          <li><strong>Burndown:</strong> เส้น Actual Line จะ "หักหัวพุ่งสูงขึ้นกะทันหัน (Scope Injection Bump)" — PM เขียน Comment กำกับบน Jira ว่า <strong>"Scope increase due to CCB approval on CR-02"</strong> พร้อมแคปเจอร์กราฟแนบรายงาน</li>
+          <li><strong>Forecast:</strong> หาก Remaining Capacity ไม่พอ → ขออนุมัติขยายวันสิ้นสุด Sprint 2 (Sprint End Date Adjustment); หรือใช้ Scope Swapping ปลดการ์ด Low Priority คืนสู่ Backlog เพื่อรักษาวันปิด Sprint เดิมโดยไม่เพิ่มโหลด</li>
+          <li><strong>Cost:</strong> ตัดยอด 1,350 บาทจาก Contingency Reserve → ดู <code>Contingency_Reserve_Log.md</code></li>
+          <li><strong>Tools:</strong> เช็คโควต้า GitHub Actions ไม่เกิน 2,000 นาทีฟรี/เดือน (Unit Test CSV ทำให้ CI รันบ่อยขึ้น); ตรวจว่าไฟล์ CSV ชั่วคราวไม่กิน Disk Space กระทบค่า Cloud Server</li>
+        </ul>
+
+        <h3>รายการที่ต้องดำเนินการ (Action Items)</h3>
+        <ul>
+          <li>[ ] PM: ถือ CR-02 Impact Analysis Form เข้าพบ Sponsor นำเสนอตัวเลข 4.5 Man-Hours + ผลกระทบ Iron Triangle เสนอ Option A vs B รับมติและขอลายเซ็น</li>
+          <li>[ ] Dev: พัฒนาวิธีแก้ BUG-101 + คลาส <code>CsvReportExporter</code> บน Branch <code>feature/cr02-csv-export</code> รัน Full Suite ผ่าน 100% แล้ว Push</li>
+          <li>[ ] PM: ตัดยอด Contingency Reserve + อัปเดต Log + ปรับ Forecast/Swapping + สื่อสารทีม</li>
+        </ul>
+      </article>
+
+      <!-- DOCUMENT 4: Contingency_Reserve_Log.md -->
+      <article class="panel">
+        <h2>บันทึกเงินสำรองฉุกเฉิน (Contingency Reserve Log) — สัปดาห์ที่ 10</h2>
+
+        <blockquote>
+          หลักธรรมาภิบาลทางการเงิน: เมื่อ CCB มีมติ <strong>Approved</strong> ให้เพิ่มงาน CR-02 PM ต้องตัดยอดจาก <strong>Contingency Reserve (ที่ตั้งไว้ในสัปดาห์ที่ 5)</strong> มาจ่ายค่าแรง 4.5 ชม. และบันทึกอย่างโปร่งใสลงใน <strong>Contingency Reserve Utilization Log</strong> เพื่อให้ตรวจสอบได้ในการทำ Audit ท้ายโครงการ
+        </blockquote>
+
+        <h3>กติกาเบิกใช้ (Reserve Drawdown Rules)</h3>
+        <ul>
+          <li>เบิกใช้ได้เฉพาะเมื่อ CCB มีมติ <strong>Approve</strong> เท่านั้น; <strong>Defer / Reject = ไม่เบิก</strong></li>
+          <li>เบิกจากเงินสำรองที่ตั้งไว้ในสัปดาห์ที่ 5 เพื่อจ่ายงาน CR-02 (4.5 ชม. @ 300 บาท = 1,350 บาท)</li>
+          <li>ทุกครั้งที่เบิกต้องปรับปรุงเส้นฐาน (Scope / Schedule / งบสำรอง) และสื่อสารทีม</li>
+        </ul>
+
+        <h3>ตารางบันทึกการใช้เงินสำรอง (Reserve Audit Trail)</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>CR ID</th>
+              <th>รายละเอียดการเบิกใช้เงินสำรอง</th>
+              <th>อนุมัติโดย</th>
+              <th>จำนวนเงิน</th>
+              <th>งบสำรองคงเหลือ</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Initial</td>
+              <td>งบสำรองความเสี่ยงเริ่มต้น (ที่ตั้งไว้ใน Week 7 Cost Baseline)</td>
+              <td>Sponsor</td>
+              <td>-</td>
+              <td>2,823 THB</td>
+            </tr>
+            <tr>
+              <td>CR-02</td>
+              <td>Export Low Stock to CSV (4.5 ชม. @ 300 บาท)</td>
+              <td>CCB Board</td>
+              <td>-1,350 THB</td>
+              <td>1,473 THB </td>
+            </tr>
+            <tr>
+              <td>(กรณี Defer)</td>
+              <td>เลื่อน CR-02 ไปเป็นการ์ด Task แรกของ Sprint 3</td>
+              <td>CCB Board</td>
+              <td>0 (ไม่เบิก)</td>
+              <td>คงเดิม (ลูกค้าใช้จดมือชั่วคราว 1 สัปดาห์)</td>
+            </tr>
+          </tbody>
+        </table>
+        <p> เงินสำรองคงเหลือ <strong>1,473 บาท</strong> เก็บรักษาไว้รองรับความเสี่ยงใน <strong>Sprint 3</strong> ต่อไป</p>
+
+        <h3>งานที่ต้องทำคู่กัน (Jira &amp; Tool Log)</h3>
+        <ul>
+          <li>สร้างการ์ด <code>[CR-02] Export Low Stock Products to CSV</code> (Original Estimate: 4.5h) ลากเข้า Active Sprint 2; เขียน Comment กำกับว่า <strong>"Scope increase due to CCB approval on CR-02"</strong> พร้อมแคปเจอร์ Burndown ที่มี Scope Bump แนบรายงาน</li>
+          <li>ตรวจสอบโควต้า GitHub Actions ไม่เกิน 2,000 นาทีฟรี/เดือน และที่เก็บไฟล์ CSV ชั่วคราวไม่กระทบค่า Cloud Server (อยู่ในโควต้าฟรี 0 THB)</li>
+        </ul>
+      </article>
+    </section>
+  </main>
+</body>
+
+</html>

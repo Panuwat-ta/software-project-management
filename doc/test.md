@@ -1,9 +1,9 @@
-# 📚 เอกสารสรุปเตรียมสอบฉบับสมบูรณ์: Software Project Management
+#  เอกสารสรุปเตรียมสอบฉบับสมบูรณ์: Software Project Management
 **อิงจากโปรเจค: CLI Inventory Management System (Python)** — Phase 1 ถึง Week 7
 
 ---
 
-## 📌 สารบัญ
+##  สารบัญ
 1. [บทที่ 1 — ปัญหาของ Legacy Code และการวิเคราะห์เชิงสถิต (Week 1 & 2)](#1)
 2. [บทที่ 2 — การวิเคราะห์ Hotspot และ DFD (Week 2)](#2)
 3. [บทที่ 3 — สถาปัตยกรรมเป้าหมาย และ Design Patterns (Week 2, 5, 6)](#3)
@@ -36,9 +36,9 @@
 
 | ฟังก์ชัน | ค่า CC | เกรด | ความหมาย |
 | :--- | :---: | :---: | :--- |
-| `main()` | **14** | **C** | ⚠️ ซับซ้อนเกินไป — มีกิ่งเงื่อนไขมากจนยากต่อการทดสอบ |
-| `load()` | 2 | A | ✅ ดีมาก |
-| `save()` | 1 | A | ✅ ดีมาก |
+| `main()` | **14** | **C** |  ซับซ้อนเกินไป — มีกิ่งเงื่อนไขมากจนยากต่อการทดสอบ |
+| `load()` | 2 | A |  ดีมาก |
+| `save()` | 1 | A |  ดีมาก |
 
 **สูตรคำนวณ CC พื้นฐาน:** `จำนวน if/elif/while/for ทั้งหมดในฟังก์ชัน + 1`
 
@@ -100,7 +100,7 @@
 
 ---
 
-#### 🔵 Singleton Pattern — `SQLiteDatabaseContext`
+####  Singleton Pattern — `SQLiteDatabaseContext`
 *   **นิยาม:** รับประกันว่าจะมีการสร้าง Object ของคลาสเพียงตัวเดียวตลอดโปรแกรม
 *   **ปัญหาที่แก้:** ป้องกัน **Database Locked** เมื่อหลายฟังก์ชันพยายามเขียนไฟล์ SQLite พร้อมกัน
 *   **วิธีทำงาน:** ครั้งแรกที่เรียก `getInstance()` จะสร้าง Connection ใหม่ — ครั้งต่อไปจะคืน Connection เดิม
@@ -108,23 +108,23 @@
 
 ---
 
-#### 🟢 Repository Pattern — `InventoryRepository`
+####  Repository Pattern — `InventoryRepository`
 *   **นิยาม:** ทำหน้าที่เป็นตัวกลาง (Abstraction Layer) คั่นระหว่าง Business Logic และ Database
 *   **ปัญหาที่แก้:** ป้องกัน Business Logic มีคำสั่ง SQL ปะปนอยู่ (Separation of Concerns)
 *   **วิธีทำงาน:** ครอบ SQL ทั้งหมดไว้ในเมธอด เช่น `findById()`, `save()`, `updateStock()`
 *   **ความปลอดภัย:** บังคับใช้ **Parameterized Queries** ป้องกัน **SQL Injection 100%**
 
 ```python
-# ❌ เสี่ยง SQL Injection
+#  เสี่ยง SQL Injection
 cursor.execute(f"SELECT * FROM items WHERE id='{user_input}'")
 
-# ✅ ปลอดภัยด้วย Parameterized Query
+#  ปลอดภัยด้วย Parameterized Query
 cursor.execute("SELECT * FROM items WHERE id=?", (user_input,))
 ```
 
 ---
 
-#### 🟡 Strategy Pattern — `MemberTier`
+####  Strategy Pattern — `MemberTier`
 *   **นิยาม:** แยกอัลกอริทึมการทำงาน (ในที่นี้คือการคิดส่วนลด) ออกเป็นคลาสย่อยแยกกัน
 *   **ปัญหาที่แก้:** โค้ดเดิมใช้ `if-elif-elif` ยาวในการเช็กระดับสมาชิก ทำให้ผิดหลัก **Open/Closed Principle (OCP)**
 *   **OCP คืออะไร?** โค้ดควรเปิดรับการขยาย (Open for Extension) แต่ปิดการแก้ไขโค้ดเดิม (Closed for Modification)
@@ -259,8 +259,8 @@ Developer push code → GitHub Actions ทำงาน
    ├── ติดตั้ง Python & pip install -r requirements.txt
    ├── cd week-4 && pytest test_app.py -v
    │
-   ├── ✅ ผ่านทุกเคส → ปลดล็อก ปุ่ม Merge สีเขียว
-   └── ❌ มีเคสพัง → ล็อก Pull Request ทันที → Tech Lead ไม่ต้องเสียเวลารีวิวโค้ดที่พัง
+   ├──  ผ่านทุกเคส → ปลดล็อก ปุ่ม Merge สีเขียว
+   └──  มีเคสพัง → ล็อก Pull Request ทันที → Tech Lead ไม่ต้องเสียเวลารีวิวโค้ดที่พัง
 ```
 
 ---
@@ -272,25 +272,25 @@ Developer push code → GitHub Actions ทำงาน
 
 | คุณลักษณะ | คะแนน As-Is | เหตุผล | เป้าหมาย To-Be |
 | :--- | :---: | :--- | :--- |
-| **Functional Suitability** | ⭐⭐ | ทำงานพื้นฐานได้ แต่ขาดระบบสมาชิก, ขาด Input Protection | ⭐⭐⭐⭐ |
-| **Performance Efficiency** | ⭐⭐⭐ | JSON ขนาดเล็กเร็ว แต่ถ้าข้อมูลเพิ่มขึ้นจะช้า | ⭐⭐⭐⭐ (SQLite) |
-| **Compatibility** | ⭐⭐⭐ | Python ข้ามแพลตฟอร์มได้ แต่ไม่มี API ออก | ⭐⭐⭐ |
-| **Usability** | ⭐⭐ | ไม่มี Input Validation โปรแกรมหลุดได้ง่าย | ⭐⭐⭐⭐ |
-| **Reliability** | ⭐ | ไม่มี Transaction, ไฟล์พังได้ง่าย | ⭐⭐⭐⭐⭐ (Atomic Save + SQLite) |
-| **Security** | ⭐ | ไม่มี Authentication, ข้อมูลเป็น Plain-text | ⭐⭐⭐ (Parameterized Query) |
-| **Maintainability** | ⭐⭐ | Monolithic, ชื่อตัวแปรสั้น ไม่มี Docstring | ⭐⭐⭐⭐⭐ (OOP + Tests) |
-| **Portability** | ⭐⭐⭐⭐ | Python รันได้ทุก OS | ⭐⭐⭐⭐ |
+| **Functional Suitability** |  | ทำงานพื้นฐานได้ แต่ขาดระบบสมาชิก, ขาด Input Protection |  |
+| **Performance Efficiency** |  | JSON ขนาดเล็กเร็ว แต่ถ้าข้อมูลเพิ่มขึ้นจะช้า |  (SQLite) |
+| **Compatibility** |  | Python ข้ามแพลตฟอร์มได้ แต่ไม่มี API ออก |  |
+| **Usability** |  | ไม่มี Input Validation โปรแกรมหลุดได้ง่าย |  |
+| **Reliability** |  | ไม่มี Transaction, ไฟล์พังได้ง่าย |  (Atomic Save + SQLite) |
+| **Security** |  | ไม่มี Authentication, ข้อมูลเป็น Plain-text |  (Parameterized Query) |
+| **Maintainability** |  | Monolithic, ชื่อตัวแปรสั้น ไม่มี Docstring |  (OOP + Tests) |
+| **Portability** |  | Python รันได้ทุก OS |  |
 
 ### 6.2 ISO/IEC 14598 — ตัวชี้วัดเชิงปริมาณ (Quantitative Metrics)
 ใช้ยืนยันเชิงตัวเลขว่า Refactoring ประสบความสำเร็จจริง:
 
 | ตัวชี้วัด | สถานะ As-Is | เป้าหมาย To-Be |
 | :--- | :--- | :--- |
-| **Max Cyclomatic Complexity v(G)** | > 20 ใน `main()` 🔴 | ≤ 8 ต่อฟังก์ชัน 🟢 |
-| **Code Coverage** | 0% (ไม่มีเทสต์) 🔴 | ≥ 85% จาก `test_app.py` 🟢 |
-| **Global State Usage** | `global x` ทุกฟังก์ชัน 🔴 | ยกเลิก 100% → ใช้ Class Instances 🟢 |
-| **SQL Injection Vulnerability** | N/A (JSON) | ป้องกัน 100% ด้วย Parameterized Query 🟢 |
-| **Data Security** | โปรแกรม Crash จากค่าผิดประเภท 🔴 | มีระบบ try-except ดักทุก Input 🟢 |
+| **Max Cyclomatic Complexity v(G)** | > 20 ใน `main()`  | ≤ 8 ต่อฟังก์ชัน  |
+| **Code Coverage** | 0% (ไม่มีเทสต์)  | ≥ 85% จาก `test_app.py`  |
+| **Global State Usage** | `global x` ทุกฟังก์ชัน  | ยกเลิก 100% → ใช้ Class Instances  |
+| **SQL Injection Vulnerability** | N/A (JSON) | ป้องกัน 100% ด้วย Parameterized Query  |
+| **Data Security** | โปรแกรม Crash จากค่าผิดประเภท  | มีระบบ try-except ดักทุก Input  |
 
 ---
 
@@ -338,11 +338,11 @@ Developer push code → GitHub Actions ทำงาน
 
 | ค่า | ความหมาย | การดำเนินการ |
 | :--- | :--- | :--- |
-| **CV > 0** | 🟢 Under Budget | ดำเนินการตามแผน |
-| **CV = 0** | 🟡 On Budget | ดำเนินการตามแผน |
-| **CV < 0** | 🔴 Over Budget | ดึงเงินจาก Contingency Reserve มาใช้ |
-| **SV > 0** | 🟢 Ahead of Schedule | ดำเนินการตามแผน |
-| **SV < 0** | 🔴 Behind Schedule | ปรับแผนงาน / เพิ่มทรัพยากร |
+| **CV > 0** |  Under Budget | ดำเนินการตามแผน |
+| **CV = 0** |  On Budget | ดำเนินการตามแผน |
+| **CV < 0** |  Over Budget | ดึงเงินจาก Contingency Reserve มาใช้ |
+| **SV > 0** |  Ahead of Schedule | ดำเนินการตามแผน |
+| **SV < 0** |  Behind Schedule | ปรับแผนงาน / เพิ่มทรัพยากร |
 
 #### กรณีศึกษา: งานย้ายฐานข้อมูล JSON → SQLite
 
@@ -351,7 +351,7 @@ Developer push code → GitHub Actions ทำงาน
 | งบประมาณที่ตั้งไว้ (Planned Cost) | 6 ชม. × 400 = **2,400 บาท** |
 | งานเสร็จ 100% → Earned Value (EV) | **2,400 บาท** |
 | โค้ดเก่าซับซ้อน → ใช้เวลา 10 ชม. จริง (AC) | 10 ชม. × 400 = **4,000 บาท** |
-| **Cost Variance (CV = EV - AC)** | 2,400 - 4,000 = **-1,600 บาท 🔴** |
+| **Cost Variance (CV = EV - AC)** | 2,400 - 4,000 = **-1,600 บาท ** |
 
 **การแก้ไข (Management Action):**
 1. PM แจ้งเตือนทีม (Warning) สถานะ Over Budget
@@ -372,9 +372,9 @@ Developer push code → GitHub Actions ทำงาน
 
 | ช่วง Variance | สถานะ | การดำเนินการ |
 | :--- | :--- | :--- |
-| 0% – 5% | 🟢 ปกติ | ดำเนินการต่อตามแผน |
-| > 5% – 10% | 🟡 แจ้งเตือน | PM ประชุมทีมหาแนวทางลดเวลาแก้บั๊ก |
-| > 10% | 🔴 วิกฤต | พิจารณาตัดฟีเจอร์ (Scope Reduction) หรือดึงงบสำรอง |
+| 0% – 5% |  ปกติ | ดำเนินการต่อตามแผน |
+| > 5% – 10% |  แจ้งเตือน | PM ประชุมทีมหาแนวทางลดเวลาแก้บั๊ก |
+| > 10% |  วิกฤต | พิจารณาตัดฟีเจอร์ (Scope Reduction) หรือดึงงบสำรอง |
 
 ---
 
@@ -402,7 +402,7 @@ Backlog → To Do → In Progress → Review → Done
 
 ---
 
-## 🎯 สรุปสูตรสำคัญที่ต้องจำ
+##  สรุปสูตรสำคัญที่ต้องจำ
 
 | หัวข้อ | สูตร / ค่า |
 | :--- | :--- |
@@ -413,7 +413,7 @@ Backlog → To Do → In Progress → Review → Done
 | Code Coverage | `บรรทัดที่ทดสอบ / บรรทัดทั้งหมด × 100` |
 | Contingency Reserve | ≈ 10–15% ของ Base Cost |
 
-## 🔑 คำศัพท์ที่ต้องรู้
+##  คำศัพท์ที่ต้องรู้
 
 | คำศัพท์ | ความหมาย |
 | :--- | :--- |

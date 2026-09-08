@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 8: Sprint 1 Tracking & Governance</title>
+    <link rel="stylesheet" href="../shared-theme.css">
+    <style>
+        .card {
+            padding: 1.25rem;
+            background: var(--paper-warm);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+        }
+        .card h3 {
+            color: var(--ink-soft);
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 0.4rem;
+            margin-bottom: 0.8rem;
+            font-size: 1.15rem;
+        }
+        .card p {
+            font-size: 0.92rem;
+            line-height: 1.6;
+            margin-bottom: 0.5rem;
+            color: var(--text-main);
+        }
+        ul.slide-list, ol.slide-list {
+            padding-left: 1.3rem;
+            font-size: 0.92rem;
+            line-height: 1.6;
+            margin: 0.4rem 0 0.8rem;
+        }
+        ul.slide-list li, ol.slide-list li {
+            margin-bottom: 0.45rem;
+            color: var(--text-main);
+        }
+        li::marker {
+            color: var(--amber);
+        }
+        table.slide-table {
+            width: 100%;
+            font-size: 0.88rem;
+            margin: 0.8rem 0;
+            border-collapse: collapse;
+            background: var(--paper);
+            border: 1px solid var(--border);
+        }
+        table.slide-table th, table.slide-table td {
+            padding: 8px 10px;
+            border-bottom: 1px solid var(--border);
+            border-right: 1px solid var(--border);
+            text-align: left;
+            vertical-align: top;
+        }
+        table.slide-table th:last-child, table.slide-table td:last-child {
+            border-right: none;
+        }
+        table.slide-table th {
+            background: var(--paper-warm);
+            color: var(--ink);
+            font-weight: 600;
+        }
+        .note-box {
+            background: var(--paper-warm);
+            border-left: 4px solid var(--amber);
+            padding: 8px 12px;
+            margin: 0.6rem 0;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            border-radius: 4px;
+        }
+        code {
+            font-family: 'IBM Plex Mono', monospace;
+            color: var(--accent);
+            background: rgba(18, 23, 43, 0.05);
+            padding: 1px 4px;
+            border-radius: 4px;
+        }
+        .nav-home-btn {
+            position: absolute;
+            top: 18px;
+            right: 24px;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.8rem;
+            color: var(--ink-soft);
+            text-decoration: underline;
+            text-underline-offset: 3px;
+            z-index: 10;
+        }
+    </style>
+</head>
+<body>
+<div id="deck">
+    <a href="../index.html" class="nav-home-btn">← Portal</a>
+
+    <!-- SLIDE 1: Cover -->
+    <div class="slide center-content">
+        <div class="badge">Week 8 · Sprint 1 Tracking & Governance</div>
+        <h1>Sprint 1 Tracking &amp; Governance</h1>
+        <h3>การติดตามสปรินต์ที่ 1, เมทริกซ์ผู้มีส่วนได้ส่วนเสีย, การจัดซื้อ และวิเคราะห์ผลกระทบ CR-01</h3>
+        <p style="margin-top: 1.5rem; max-width: 760px; color: var(--text-muted); font-size: 1.05rem; line-height: 1.6;">
+            รวบรวมเนื้อหาครบถ้วนจากเอกสารสัปดาห์ที่ 8: Active Board, Burndown &amp; Blocker, Stakeholder Engagement (C vs D), Procurement &amp; Tool Log, และกระบวนการ ISO/IEC 14764 วิเคราะห์ CR-01
+        </p>
+    </div>
+
+    <!-- SLIDE 2: Sprint 1 Tracking - Active Board & Burndown -->
+    <div class="slide">
+        <h2>1. การติดตามสปรินต์ที่ 1 — Active Board &amp; Burndown</h2>
+        <div class="grid-2">
+            <div class="card">
+                <h3>Active Board &amp; Work Log (ที่มา: ENGSE202 Week 8)</h3>
+                <ul class="slide-list">
+                    <li>ดึงการ์ด Refactoring เข้าช่อง <strong>In Progress</strong> แล้วกด <strong>Log Work</strong> ใส่ชั่วโมงจริง (Man-Hours)</li>
+                    <li>เส้น Burndown ขยับลงตามชั่วโมงงานที่เหลืออยู่จริง</li>
+                    <li>ส่ง Pull Request บน GitHub โดยใส่ Jira Issue Key ในชื่อ PR (ตัวอย่างจาก transcript: <code>ENGSE-201</code>) แล้วสอบทานว่า Automation ขยับการ์ด <strong>In Progress → Code Review</strong> อัตโนมัติ</li>
+                    <li>หลัก Governance: Transparency (งาน+ชั่วโมงจริงบนบอร์ด) / Inspection (ส่อง Burndown) / Adaptation (เคลียร์ Blocker ใน Daily Standup)</li>
+                    <li>สิ่งส่งมอบ: ภาพแคปเจอร์ Sprint Burndown Chart บน Jira + รายงาน Work Log</li>
+                </ul>
+            </div>
+            <div class="card">
+                <h3>Burndown Chart — แกน, เส้น และรูปแบบ (ENGSE202)</h3>
+                <ul class="slide-list">
+                    <li><strong>แกน X:</strong> วันทำงานใน Sprint (เช่น Day 1 ถึง Day 10)</li>
+                    <li><strong>แกน Y:</strong> ปริมาณงานที่เหลือ (Man-Hours หรือ Story Points)</li>
+                    <li><strong>Ideal Burndown Line:</strong> เส้นตรงอุดมคติจากงานรวมลงสู่ 0</li>
+                    <li><strong>Actual Burndown Line:</strong> เส้นจริงขยับตามการกด Log Work</li>
+                </ul>
+                <div style="margin-top: 0.5rem;">
+                    <strong>รูปแบบ Burndown 3 แบบ:</strong>
+                    <ol class="slide-list">
+                        <li><strong>Ahead of Schedule </strong> — เส้น Actual อยู่ใต้ Ideal Line → ปิดงานเร็วกว่าแผน</li>
+                        <li><strong>Behind Schedule </strong> — เส้น Actual อยู่เหนือ Ideal Line → ล่าช้ากว่าแผน เสี่ยงปิดไม่ทัน</li>
+                        <li><strong>Scope Increase </strong> — เส้น Actual พุ่งสูงขึ้นกลาง Sprint → งานแทรก หรือเพิ่มเวลาจาก CR</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+        <div class="note-box">
+            หมายเหตุ: ไม่มีการระบุตัวเลขรายวัน (actual/ideal รายวัน, story points รวม, capacity ชั่วโมง) ใน transcript จึงไม่มีตารางตัวเลขรายวันในเอกสารนี้
+        </div>
+    </div>
+
+    <!-- SLIDE 3: Blocker Handling & Fowler Refactoring -->
+    <div class="slide">
+        <h2>2. Blocker, Jira Flag &amp; Refactoring ที่ถูกติดตาม</h2>
+        <div class="grid-2">
+            <div class="card">
+                <h3>การจัดการ Blocker / Jira Flag (ที่มา: ENGSE202 Week 8)</h3>
+                <ul class="slide-list">
+                    <li><strong>Blocker คือ:</strong> ปัญหาหรือความเสี่ยงที่เกิดจริงแล้วทำให้สมาชิกทำต่อไม่ได้</li>
+                    <li><strong>ตัวอย่างจาก transcript:</strong> ติดขัดเพราะไร้ Mock Data / รอ Peer Review บน GitHub นานเกิน 24 ชม.</li>
+                    <li><strong>บทบาท PM ใน Daily Standup:</strong> บันทึกลง Impediment Backlog แล้วรีบเข้าช่วยปลดล็อกเพื่อรักษาสปีดทีม</li>
+                    <li><strong>Jira Flagging:</strong> กด <strong>Add Flag</strong> บนการ์ด → การ์ดเปลี่ยนเป็นสีแดง/เหลือง มีสัญลักษณ์ธงเด่นบน Active Board → PM เข้าเคลียร์</li>
+                    <li><strong>ข้อบังคับ:</strong> ต้องใส่ Comment ระบุสาเหตุและชื่อผู้ที่ต้องเข้าช่วย</li>
+                </ul>
+            </div>
+            <div class="card">
+                <h3>Refactoring ที่ถูกติดตามบนบอร์ดนี้ (ENGSE225 Week 8)</h3>
+                <ul class="slide-list">
+                    <li>Branch ปฏิบัติการ: <code>feature/refactor-core-architecture</code></li>
+                    <li>4 เทคนิค Fowler: Rename Variable/Method, Extract Function, Extract Class, Encapsulate Field</li>
+                    <li><strong>กฎเหล็ก:</strong> รักษา PyTest ไฟเขียว 100% ตลอดกระบวนการ
+                        <ul style="margin: 0.3rem 0; padding-left: 1.2rem;">
+                            <li>Baseline: <code>pytest test_app.py</code> ต้อง <code>1 passed</code> ก่อนแตะโค้ด</li>
+                            <li>แก้ทีละน้อยแล้วรัน pytest ซ้ำทันที</li>
+                            <li>ไฟแดงให้ <code>git checkout</code> ถอยกลับ</li>
+                            <li>ห้ามเพิ่มฟีเจอร์ใหม่ตอน Refactor</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 4: Stakeholder Matrix (Current vs Desired) -->
+    <div class="slide">
+        <h2>3. เมทริกซ์ผู้มีส่วนได้ส่วนเสีย — C vs D + CR-01</h2>
+        <div class="grid-2" style="grid-template-columns: 1fr 1fr; margin-bottom: 0.6rem;">
+            <div>
+                <p><strong>คำนิยามและกลุ่ม (ENGSE202 Week 8, PMBOK 7th):</strong></p>
+                <ul class="slide-list">
+                    <li><strong>Stakeholder:</strong> บุคคล/กลุ่ม/องค์กรที่มีผลกระทบหรือได้รับผลกระทบจากการตัดสินใจและผลลัพธ์ของโครงการ</li>
+                    <li><strong>Sponsor / อาจารย์:</strong> ต้องการงานเสร็จตามงบ เวลา และสเปก</li>
+                    <li><strong>Tech Lead / Devs:</strong> ต้องการโค้ดสะอาด ลดหนี้ทางเทคนิค</li>
+                    <li><strong>End-Users:</strong> ต้องการฟีเจอร์ใหม่ที่ใช้งานง่าย ไร้บั๊ก</li>
+                </ul>
+            </div>
+            <div>
+                <p><strong>ระดับการมีส่วนร่วม 5 ระดับ (ที่มา: ENGSE202 Week 8):</strong></p>
+                <ol class="slide-list">
+                    <li><strong>Unaware</strong> — ไม่ทราบถึงการมีอยู่หรือผลกระทบโครงการ</li>
+                    <li><strong>Resistant</strong> — ทราบเรื่องแต่ต่อต้าน ไม่เห็นด้วย</li>
+                    <li><strong>Neutral</strong> — ทราบเรื่องแต่ไม่แสดงท่าทีหนุนหรือค้าน</li>
+                    <li><strong>Supportive</strong> — ทราบเรื่องและพร้อมหนุนให้สำเร็จ</li>
+                    <li><strong>Leading</strong> — มีส่วนร่วมเข้มข้น ผลักดันโครงการ</li>
+                </ol>
+            </div>
+        </div>
+
+        <table class="slide-table">
+            <thead>
+                <tr>
+                    <th>ผู้มีส่วนได้ส่วนเสีย (Stakeholder)</th>
+                    <th>ปัจจุบัน (Current, C)</th>
+                    <th>ที่ต้องการ (Desired, D)</th>
+                    <th>กลยุทธ์รับมือ CR-01 (จาก transcript)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Sponsor (อาจารย์)</td>
+                    <td>Supportive</td>
+                    <td>Leading</td>
+                    <td>รายงาน Impact Analysis</td>
+                </tr>
+                <tr>
+                    <td>Tech Lead (ทีมงาน/เพื่อนในทีม)</td>
+                    <td>Leading</td>
+                    <td>Leading</td>
+                    <td>จัดสรร Refactoring</td>
+                </tr>
+                <tr>
+                    <td>End-User (ผู้ใช้/ผู้ใช้สมมุติ)</td>
+                    <td>Resistant</td>
+                    <td>Supportive</td>
+                    <td>สาธิตฟีเจอร์ Barcode</td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <div class="note-box">
+            <strong>การทูต CR-01:</strong> ห้ามยอมรับทันทีโดยไม่ประเมิน และห้ามปฏิเสธลูกค้ารุนแรงทันที แนวทางมืออาชีพคือใช้ Impact Analysis ชี้แจงผลกระทบเวลา/งบ แล้วนำ CR-01 ไปจัดลำดับใส่ Sprint 2 พร้อมทางเลือกขยายงบจาก Contingency Reserve หรือตัด Scope ที่ไม่สำคัญออก (+8 Man-Hours, กระทบ 2 Class, เพิ่ม PyTest 3 Cases)
+        </div>
+    </div>
+
+    <!-- SLIDE 5: Procurement & Tool Log -->
+    <div class="slide">
+        <h2>4. บันทึกการจัดซื้อ — Procurement &amp; Tool Log</h2>
+        <p style="font-size: 0.9rem; margin-bottom: 0.5rem;"><strong>กรอบการจัดซื้อ (ENGSE202 Week 8, PMBOK):</strong> จัดหา/จัดซื้อ/บริหารสัญญาซอฟต์แวร์ เครื่องมือพัฒนา และ SaaS ไม่ให้ค่าบริการเครื่องมือบานปลายจนกระทบ Cost Baseline (Software Licenses, Cloud Computing, CI/CD Minutes)</p>
+
+        <div class="grid-2">
+            <div>
+                <p><strong>ตาราง Procurement &amp; Tool Log:</strong></p>
+                <table class="slide-table">
+                    <thead>
+                        <tr>
+                            <th>Tool / Service</th>
+                            <th>Provider</th>
+                            <th>Cost Model</th>
+                            <th>Estimated</th>
+                            <th>Actual Spent</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Jira Software</td>
+                            <td>Atlassian</td>
+                            <td>Free Tier (≤ 10 Users)</td>
+                            <td>0 THB</td>
+                            <td>0 THB</td>
+                        </tr>
+                        <tr>
+                            <td>GitHub Actions</td>
+                            <td>GitHub</td>
+                            <td>2,000 Free Mins/Month</td>
+                            <td>0 THB</td>
+                            <td>0 THB</td>
+                        </tr>
+                        <tr>
+                            <td>Cloud Database</td>
+                            <td>AWS / GCP</td>
+                            <td>Pay-as-you-go</td>
+                            <td>500 THB</td>
+                            <td>450 THB </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div>
+                <p><strong>สถานะโควต้า/การเงิน (Workshop Step 4):</strong></p>
+                <table class="slide-table">
+                    <thead>
+                        <tr>
+                            <th>Tool Item</th>
+                            <th>Quota Usage Status</th>
+                            <th>Financial Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Jira Software</td>
+                            <td>5 / 10 Active Users</td>
+                            <td>Free Tier (0 THB)</td>
+                        </tr>
+                        <tr>
+                            <td>GitHub Actions</td>
+                            <td>120 / 2,000 Mins Spent</td>
+                            <td>Free Quota (0 THB)</td>
+                        </tr>
+                        <tr>
+                            <td>Cloud Database</td>
+                            <td>450 / 500 THB Budget</td>
+                            <td>Under Budget (+50 THB )</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="card" style="margin-top: 0.6rem;">
+            <h3>กรณีโควต้าเกิน + Contingency Reserve (ที่มา: ENGSE202 Week 8)</h3>
+            <p>หาก GitHub Actions Compute Minutes หมดเพราะรัน PyTest บ่อยเกิน → เกิดค่าใช้จ่ายส่วนเกิน (AC > PV)<br>
+            แนวทาง PM: ทำเรื่องอนุมัติดึงงบจาก <strong>Contingency Reserve (สัปดาห์ที่ 5)</strong> มาจ่ายชดเชย และบันทึกสาเหตุลง Procurement Log</p>
+        </div>
+    </div>
+
+    <!-- SLIDE 6: CR-01 Impact Analysis & Traceability -->
+    <div class="slide">
+        <h2>5. วิเคราะห์ผลกระทบ CR-01 — Barcode &amp; Reorder Point</h2>
+        <div class="grid-2">
+            <div class="card">
+                <h3>ใบคำขอและกระบวนการ ISO/IEC 14764</h3>
+                <ul class="slide-list">
+                    <li><strong>CR ID:</strong> CR-01 (คำขอ: เพิ่มเก็บ Barcode และ Reorder Point)</li>
+                    <li><strong>Requester:</strong> อาจารย์ / Sponsor</li>
+                    <li><strong>ข้อบังคับ Step 1:</strong> ห้ามรับคำขอผ่านวาจา/แช็ตส่วนตัว ต้องบันทึก CR Form ชัดเจน</li>
+                    <li><strong>Step 1 Identification:</strong> รับและบันทึก CR Form</li>
+                    <li><strong>Step 2 Impact Analysis:</strong> ประเมิน Technical / Test / Cost</li>
+                    <li><strong>Step 3 Implementation:</strong> แตก Branch <code>feature/cr01-barcode-reorder-point</code> จาก <code>develop</code> → รัน pytest 100%</li>
+                    <li><strong>ผลกระทบสรุป:</strong> Cost Impact: +8 Man-Hours | Technical Impact: กระทบ 2 Class (Product, Repo) | Test Impact: เขียน PyTest เพิ่ม 3 Cases</li>
+                </ul>
+            </div>
+            <div class="card">
+                <h3>Traceability Matrix — รายละเอียดจุดกระทบ (ENGSE225)</h3>
+                <table class="slide-table">
+                    <thead>
+                        <tr>
+                            <th>องค์ประกอบ</th>
+                            <th>จุดกระทบเชิงเทคนิค</th>
+                            <th>ผลกระทบด้านการทดสอบ</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Class Product</td>
+                            <td>เพิ่ม <code>barcode: str</code> และ <code>reorder_point: int</code></td>
+                            <td>เพิ่ม Unit Test ตรวจชนิดข้อมูล</td>
+                        </tr>
+                        <tr>
+                            <td>InventoryRepository</td>
+                            <td>ปรับโครงสร้าง JSON serialization / deserialization คีย์ใหม่</td>
+                            <td>เพิ่ม Test Case อ่าน/เขียนไฟล์</td>
+                        </tr>
+                        <tr>
+                            <td>ConsoleUI</td>
+                            <td>เพิ่มช่องรับ Input Barcode และแสดงเตือน Reorder Alert</td>
+                            <td>ทดสอบ UI Mock Inputs</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="note-box" style="margin: 0.4rem 0 0;">
+                    หมายเหตุ: ENGSE202 สรุปภาพรวมกระทบ 2 Class (Product, Repo) ส่วน ENGSE225 ลงรายละเอียด 3 แถวรวม ConsoleUI
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 7: Refactoring context before CR-01 -->
+    <div class="slide">
+        <h2>6. บริบท Refactoring ก่อนรับ CR-01 &amp; การทูต</h2>
+        <div class="grid-2">
+            <div class="card">
+                <h3>บริบท Refactoring ก่อนรับ CR-01 (ที่มา: ENGSE225 Week 8)</h3>
+                <ul class="slide-list">
+                    <li>ผ่าตัด <code>app_v1.py</code> บน Branch <code>feature/refactor-core-architecture</code> ปรับโครงสร้างภายในโดยไม่เปลี่ยนพฤติกรรมภายนอก</li>
+                    <li><strong>Rename Variable/Method:</strong> ชื่อลึกลับ <code>x, a, b</code> → Intent-Revealing (Analyzability ISO 25010)</li>
+                    <li><strong>Extract Function:</strong> ลด v(G) ของ <code>main()</code> จาก 22 → 8 เทสต์เฉพาะฟังก์ชันได้</li>
+                    <li><strong>Extract Class:</strong> Product (Data Model), InventoryRepository (JSON CRUD), InventoryService (Business Logic)</li>
+                    <li><strong>Encapsulate Field:</strong> เลิก <code>global x</code>; ฉีด Repository เข้า Service (Dependency Injection)</li>
+                    <li>Baseline <code>pytest test_app.py</code> ต้อง <code>1 passed</code> ไฟเขียว 100% ก่อนแตะโค้ด แก้ทีละน้อยแล้วรันซ้ำทันที</li>
+                </ul>
+            </div>
+            <div class="card">
+                <h3>การทูต/การสื่อสาร และการส่งต่อสู่ SPM</h3>
+                <ul class="slide-list">
+                    <li>การส่งต่อสู่ SPM: นำ Man-Hours ไปประเมินงบเพิ่มเติม ดึง Contingency Reserve และปรับการ์ดงานบน Jira</li>
+                    <li>ไม่รับ CR-01 กลาง Sprint 1 ทันที และไม่ปฏิเสธรุนแรง</li>
+                    <li>ชี้แจงด้วย Impact Analysis แล้วจัดลำดับเข้า <strong>Sprint 2</strong></li>
+                    <li>ทางเลือกที่สื่อสาร: ขยายงบจาก Contingency Reserve หรือตัด Scope ไม่สำคัญออก</li>
+                </ul>
+                <div class="note-box" style="margin-top: 1rem;">
+                    หมายเหตุ: transcript ไม่ได้แจกแจง 8 Man-Hours เป็นรายกิจกรรม ไม่ได้ระบุชื่อเมธอด/แฟล็ก CLI/จำนวนเคส pytest รวม และไม่มี ticket ID สำหรับ CR-01 (นอกจากตัวอย่าง Issue Key <code>ENGSE-201</code> ในบริบท Automation)
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="controls">
+    <button class="btn" id="prevBtn" onclick="prevSlide()" disabled>&#8592;</button>
+    <div class="counter"><span id="currentSlide">1</span> / <span id="totalSlides">7</span></div>
+    <button class="btn" id="nextBtn" onclick="nextSlide()">&#8594;</button>
+</div>
+
+<script>
+    const slides = document.querySelectorAll('.slide');
+    const total = slides.length;
+    let current = 0;
+    document.getElementById('totalSlides').textContent = total;
+
+    function updateSlides() {
+        slides.forEach((slide, index) => {
+            slide.classList.remove('active', 'prev');
+            if (index === current) slide.classList.add('active');
+            else if (index < current) slide.classList.add('prev');
+        });
+        document.getElementById('currentSlide').textContent = current + 1;
+        document.getElementById('prevBtn').disabled = current === 0;
+        document.getElementById('nextBtn').disabled = current === total - 1;
+    }
+
+    function nextSlide() { if (current < total - 1) { current++; updateSlides(); } }
+    function prevSlide() { if (current > 0) { current--; updateSlides(); } }
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight' || e.key === 'Space') nextSlide();
+        else if (e.key === 'ArrowLeft') prevSlide();
+    });
+    updateSlides();
+</script>
+</body>
+</html>

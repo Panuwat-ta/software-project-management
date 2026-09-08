@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 9: EVM, Retrospective & Sprint Transition</title>
+    <link rel="stylesheet" href="../shared-theme.css">
+    <style>
+        .card {
+            padding: 1.25rem;
+            background: var(--paper-warm);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+        }
+        .card h3 {
+            color: var(--ink-soft);
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 0.4rem;
+            margin-bottom: 0.8rem;
+            font-size: 1.15rem;
+        }
+        .card p {
+            font-size: 0.92rem;
+            line-height: 1.6;
+            margin-bottom: 0.5rem;
+            color: var(--text-main);
+        }
+        ul.slide-list, ol.slide-list {
+            padding-left: 1.3rem;
+            font-size: 0.92rem;
+            line-height: 1.6;
+            margin: 0.4rem 0 0.8rem;
+        }
+        ul.slide-list li, ol.slide-list li {
+            margin-bottom: 0.45rem;
+            color: var(--text-main);
+        }
+        li::marker {
+            color: var(--amber);
+        }
+        table.slide-table {
+            width: 100%;
+            font-size: 0.88rem;
+            margin: 0.8rem 0;
+            border-collapse: collapse;
+            background: var(--paper);
+            border: 1px solid var(--border);
+        }
+        table.slide-table th, table.slide-table td {
+            padding: 8px 10px;
+            border-bottom: 1px solid var(--border);
+            border-right: 1px solid var(--border);
+            text-align: left;
+            vertical-align: top;
+        }
+        table.slide-table th:last-child, table.slide-table td:last-child {
+            border-right: none;
+        }
+        table.slide-table th {
+            background: var(--paper-warm);
+            color: var(--ink);
+            font-weight: 600;
+        }
+        .note-box {
+            background: var(--paper-warm);
+            border-left: 4px solid var(--amber);
+            padding: 8px 12px;
+            margin: 0.6rem 0;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            border-radius: 4px;
+        }
+        code {
+            font-family: 'IBM Plex Mono', monospace;
+            color: var(--accent);
+            background: rgba(18, 23, 43, 0.05);
+            padding: 1px 4px;
+            border-radius: 4px;
+        }
+        .nav-home-btn {
+            position: absolute;
+            top: 18px;
+            right: 24px;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.8rem;
+            color: var(--ink-soft);
+            text-decoration: underline;
+            text-underline-offset: 3px;
+            z-index: 10;
+        }
+    </style>
+</head>
+<body>
+<div id="deck">
+    <a href="../index.html" class="nav-home-btn">← Portal</a>
+
+    <!-- SLIDE 1: Cover -->
+    <div class="slide center-content">
+        <div class="badge">Week 9 · EVM, Retrospective & Sprint Transition</div>
+        <h1>EVM, Retrospective &amp; Sprint Transition</h1>
+        <h3>วิเคราะห์มูลค่างานปิด Sprint 1, ทบทวนสปรินต์ และเปลี่ยนผ่านสู่ Sprint 2</h3>
+        <p style="margin-top: 1.5rem; max-width: 760px; color: var(--text-muted); font-size: 1.05rem; line-height: 1.6;">
+            รวบรวมเนื้อหาครบถ้วนจากเอกสารสัปดาห์ที่ 9: ตาราง EVM (PV/EV/AC, SV/CV), บอร์ด Mad/Sad/Glad และ Start/Stop/Continue, SMART Action Items, Velocity, Merge Workflow, TDR สำหรับ CR-01 และ Procurement Log
+        </p>
+    </div>
+
+    <!-- SLIDE 2: EVM Inputs + Variances -->
+    <div class="slide">
+        <h2>1. การวิเคราะห์ EVM — ปิด Sprint 1</h2>
+        <div class="note-box">
+            ที่มาของตัวเลข: กรณีศึกษา Sprint 1 ใน ENGSE202 Week 9 — ตั้งเป้า 4 Tasks งบ Task ละ 1,000 บาท ทำเสร็จผ่าน PyTest 3 Tasks จ่ายค่าแรงจริงจาก Log Work บน Jira
+        </div>
+        <div class="grid-2">
+            <div>
+                <p><strong>ข้อมูลนำเข้า (Inputs) (บาท):</strong></p>
+                <table class="slide-table">
+                    <thead>
+                        <tr>
+                            <th>ตัวแปร EVM</th>
+                            <th>รายละเอียดเนื้องานและการคำนวณ</th>
+                            <th>มูลค่า</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>PV (Planned Value)</td>
+                            <td>ตั้งเป้าทำ 4 Tasks งบประมาณ Task ละ 1,000 บาท</td>
+                            <td>4,000 THB</td>
+                        </tr>
+                        <tr>
+                            <td>EV (Earned Value)</td>
+                            <td>ทำเสร็จสมบูรณ์ผ่าน PyTest จำนวน 3 Tasks</td>
+                            <td>3,000 THB</td>
+                        </tr>
+                        <tr>
+                            <td>AC (Actual Cost)</td>
+                            <td>จ่ายชั่วโมงค่าแรงจริงจากการกด Log Work บน Jira</td>
+                            <td>4,200 THB</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p style="font-size: 0.85rem;">วิธีรวบรวมข้อมูล (Workshop ขั้นตอนที่ 3): PV = รวมงบของการ์ดที่ตั้งเป้าไว้ใน Sprint 1, EV = รวมงบของการ์ดที่ปิด Done สำเร็จจริง, AC = รวมชั่วโมงค่าแรงจริงที่สมาชิกกด Log Work บน Jira</p>
+            </div>
+            <div>
+                <p><strong>ผลต่าง (Variances):</strong></p>
+                <table class="slide-table">
+                    <thead>
+                        <tr>
+                            <th>ตัวชี้วัด</th>
+                            <th>สูตรคำนวณ</th>
+                            <th>ผลลัพธ์</th>
+                            <th>การตีความ</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>SV (Schedule Variance)</td>
+                            <td>SV = EV − PV = 3,000 − 4,000</td>
+                            <td><strong>−1,000 THB (ล่าช้ากว่าแผน )</strong></td>
+                            <td>SV &gt; 0 เร็วกว่าแผน  / SV = 0 ตามแผน  / SV &lt; 0 ล่าช้ากว่าแผน </td>
+                        </tr>
+                        <tr>
+                            <td>CV (Cost Variance)</td>
+                            <td>CV = EV − AC = 3,000 − 4,200</td>
+                            <td><strong>−1,200 THB (เกินงบประมาณ )</strong></td>
+                            <td>CV &gt; 0 ประหยัดงบ  / CV = 0 ตรงตามงบ  / CV &lt; 0 เกินงบประมาณ </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p style="font-size: 0.85rem;">นิยามตามบทเรียน: PV = งบตามแผน ณ ปัจจุบัน, EV = มูลค่างานที่ทำเสร็จจริง, AC = ชั่วโมงค่าแรงที่จ่ายไปจริง</p>
+            </div>
+        </div>
+        <div class="card" style="margin-top: 0.6rem;">
+            <h3>สาเหตุหลัก + แผนแก้ไข</h3>
+            <p><strong>Root Cause:</strong> พบหนี้ทางเทคนิคซ่อนเร้นใน app_v1.py และเสียเวลาแก้ Merge Conflict ที่ไม่จำเป็น ทำให้ SV และ CV ติดลบ</p>
+            <ol class="slide-list">
+                <li><strong>แผนเวลา (SV):</strong> ยกงานที่หลุดไปใส่ใน Sprint 2 และปรับเพิ่ม Buffer Time</li>
+                <li><strong>แผนงบ (CV):</strong> อนุมัติดึงเงิน −1,200 บาท ออกจาก Contingency Reserve ที่ตั้งไว้ในสัปดาห์ที่ 5</li>
+                <li><strong>ปิด Sprint 1 ที่ EV = 3,000</strong> ยกงานค้างกลับ Backlog แล้ววางแผน Sprint 2 โดยคุมไม่ให้เกิน Velocity (ดู Sprint_Transition.md)</li>
+            </ol>
+        </div>
+    </div>
+
+    <!-- SLIDE 3: Retrospective Mad/Sad/Glad -->
+    <div class="slide">
+        <h2>2. Retrospective — Mad / Sad / Glad</h2>
+        <div class="note-box">
+            พิธีกรรมบังคับท้าย Sprint ตาม The Scrum Guide (Schwaber &amp; Sutherland, 2020): Sprint Review เน้นประเมินตัวชิ้นงาน (Product &amp; Increment) ส่วน Sprint Retrospective เน้นทบทวนคน กระบวนการ และเครื่องมือ (People, Process &amp; Tools) เพื่อปรับปรุงต่อเนื่อง (Kaizen) บนพื้นที่ปลอดภัย ไม่กล่าวโทษตัวบุคคล
+        </div>
+        <p style="font-size: 0.9rem;">วันที่: ปิด Sprint 1 — เครื่องมือบอร์ด: Miro / EasyRetro</p>
+        <p><strong>เทคนิคที่ 1: โกรธ / เศร้า / ดีใจ (Mad / Sad / Glad)</strong></p>
+        <table class="slide-table">
+            <thead>
+                <tr>
+                    <th> Mad (หงุดหงิด)</th>
+                    <th> Sad (เสียดาย)</th>
+                    <th> Glad (ประทับใจ)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>อุปสรรค กระบวนการ หรือเครื่องมือที่ทำให้งานสะดุด เช่น Merge Conflict รุนแรง, CI/CD รันช้า</td>
+                    <td>สิ่งที่ไม่เป็นไปตามคาด หรือน่าจะทำได้ดีกว่านี้ เช่น ประมาณการเวลา Refactor ต่ำไป</td>
+                    <td>ความสำเร็จ เรื่องดี หรือคำชื่นชมเพื่อน เช่น PyTest ช่วยดักบั๊กได้จริง, เพื่อนช่วยแก้ Conflict</td>
+                </tr>
+                <tr>
+                    <td>ตัวอย่าง Sprint 1: เสียเวลาแก้ Merge Conflict ที่ไม่จำเป็นจน SV/CV ติดลบ</td>
+                    <td>ตัวอย่าง Sprint 1: ประเมินงานรื้อโครงสร้างต่ำไป เจอหนี้เทคนิคซ่อนใน app_v1.py</td>
+                    <td>ตัวอย่าง Sprint 1: รัน PyTest ไฟเขียวช่วยดักบั๊กก่อนเดโม เพื่อนช่วยเคลียร์ Conflict</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- SLIDE 4: Start/Stop/Continue + SMART -->
+    <div class="slide">
+        <h2>3. Retrospective — Start / Stop / Continue + SMART</h2>
+        <p><strong>เทคนิคที่ 2: เริ่มทำ / หยุดทำ / ทำต่อ (Start / Stop / Continue)</strong></p>
+        <table class="slide-table">
+            <thead>
+                <tr>
+                    <th> Start (เริ่มทำ)</th>
+                    <th> Stop (หยุดทำ)</th>
+                    <th> Continue (ทำต่อ)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>พฤติกรรมใหม่ที่ควรเริ่มใน Sprint 2 เช่น เขียน PyTest ก่อนเขียนฟังก์ชันจริงตาม TDR</td>
+                    <td>พฤติกรรมที่สร้างปัญหาและต้องเลิกเด็ดขาด เช่น หยุดดอง PR ไว้นานเกิน 24 ชม., หยุด Commit ข้าม PR</td>
+                    <td>แนวปฏิบัติที่ดีอยู่แล้ว เช่น การสื่อสาร Blocker ใน Daily Standup ทุกเช้า</td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="grid-2">
+            <div class="card">
+                <h3>จากข้อคิดเห็นสู่ Action Items</h3>
+                <p>Retro ที่ไร้ประโยชน์คือการบ่นระบายอารมณ์แล้วแยกย้ายโดยไม่มีข้อตกลงแก้ไขเป็นรูปธรรม — ให้คัดประเด็นสำคัญ 1–2 เรื่อง แปลงเป็น SMART Action Item แล้วสร้างเป็นการ์ดงานบน Jira Backlog ใน Sprint 2</p>
+                <div class="note-box">ตัวอย่างตามบทเรียน: "บังคับ Reviewer ต้องเข้าตรวจ PR ภายใน 12 ชม. หลังได้รับแจ้งเตือนบน Discord"</div>
+            </div>
+            <div class="card">
+                <h3>แผนปฏิบัติ SMART (Sprint 2)</h3>
+                <ol class="slide-list">
+                    <li><strong>ตรวจ PR ใน 12 ชม.:</strong> Reviewer เข้าตรวจทุก PR ภายใน 12 ชม. หลังแจ้งเตือนบน Discord (ตัวชี้วัด: ไม่มีการ์ดค้างตรวจเกินกำหนดใน Sprint 2)</li>
+                    <li><strong>เขียน PyTest ก่อนโค้ด (TDR):</strong> เริ่มงาน CR-01 ด้วยการเขียน PyTest ล็อกตรรกะก่อนลงมือเขียนฟังก์ชันจริง (ตัวชี้วัด: ทุกงาน CR-01 มีเคส RED ก่อน GREEN บน Feature Branch)</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 5: Demo script + Velocity + Close -->
+    <div class="slide">
+        <h2>4. Transition — เดโมรีวิว, Velocity, ปิด Sprint 1</h2>
+        <div class="grid-2">
+            <div class="card">
+                <h3>1. สคริปต์เดโมรีวิวสปรินต์ (Sprint Review Demo Script)</h3>
+                <p>สาธิตด้วย Working Software ที่รันได้จริงเท่านั้น ห้ามใช้สไลด์นิ่ง ("Working software is the primary measure of progress." — Agile Manifesto) เป้าหมาย Sprint 1: โชว์โครงสร้างใหม่ รัน PyTest ไฟเขียว 100% ไร้ global x</p>
+                <ol class="slide-list">
+                    <li><strong>Show Architecture:</strong> เปิดโครงสร้างไฟล์แสดงคลาส Product, InventoryRepository, InventoryService</li>
+                    <li><strong>Run PyTest Suite:</strong> สั่งรัน <code>pytest -v</code> ใน Terminal โชว์ไฟเขียว 100% ต่อหน้า Sponsor</li>
+                    <li><strong>Demonstrate Execution:</strong> สั่งรันโปรแกรมคลังสินค้า ทดลองเพิ่ม/ลดสต็อกและคำนวณราคารวม</li>
+                    <li><strong>ภาพรวม EVM (2 นาที):</strong> PV 4,000 / EV 3,000 / AC 4,200 → SV −1,000 (Behind ), CV −1,200 (Over ) ชดเชยส่วนเกินจาก Contingency Reserve สัปดาห์ที่ 5</li>
+                </ol>
+            </div>
+            <div class="card">
+                <h3>2. ความเร็วทีม (Velocity)</h3>
+                <p>Team Velocity คือปริมาณงานที่ส่งมอบเสร็จจริงตาม DoD ใน 1 Sprint — ตัวอย่างตามบทเรียน: ตั้งเป้าไว้ 20 Points ทำเสร็จจริง 15 Points  Velocity = 15 Points ใช้เป็นเกณฑ์ดึงงานเข้า Sprint 2 ห้ามดึงเกิน 15 Points เด็ดขาด เพื่อกันทีมล้า</p>
+                <ul class="slide-list">
+                    <li>Velocity Sprint 1 = <strong>15 Points</strong> (ตั้งเป้า 20 Points)</li>
+                    <li>ความจุ Sprint 2 คุมไม่ให้เกิน <strong>15 Points</strong></li>
+                </ul>
+                <h3>3. ปิด Sprint 1 บน Jira (Close Sprint 1)</h3>
+                <ol class="slide-list">
+                    <li>เข้าหน้า Active Sprints กดปุ่ม "Complete Sprint"</li>
+                    <li>ตรวจสอบรายการ Completed Tasks และย้ายงานไม่เสร็จกลับ Backlog</li>
+                    <li>สังเกตระบบ Jira บันทึกค่า Team Velocity ของ Sprint 1 อัตโนมัติ</li>
+                    <li>คำนวณ EVM (SV = EV − PV, CV = EV − AC) วิเคราะห์สาเหตุ (หนี้เทคนิคใน app_v1.py + เสียเวลา Merge Conflict) แล้วบันทึก Retro (ดู EVM_Sprint1.md, Retrospective_Sprint1.md)</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 6: Merge + Open Sprint 2 -->
+    <div class="slide">
+        <h2>5. Transition — Merge + เปิด Sprint 2 ด้วย CR-01 แบบ TDR</h2>
+        <div class="grid-2">
+            <div class="card">
+                <h3>4. ผสานงาน Sprint 1 เข้า develop (Merge + Conflict Workflow)</h3>
+                <p>ย้ายโค้ด Refactoring จาก <code>feature/refactor-core-architecture</code> เข้าสู่ <code>develop</code> ป้องกัน Long-Lived Branches ที่ก่อ Merge Conflict รุนแรง (Conflict เกิดเมื่อบรรทัดเดียวกันในไฟล์เดียวกันถูกแก้ไม่ตรงกันโดย 2 คนคนละสายงาน สัปดาห์ที่ 8 รื้อโครงสร้างหนักจึงเสี่ยงสูง)</p>
+                <p>ด่านตรวจก่อนกด Confirm Merge บน GitHub (4 ข้อ): Peer Code Review อนุมัติอย่างน้อย 1 คน, Clean Code ไม่มี global x, GitHub Actions รัน pytest ไฟเขียว 100%, เคลียร์ No Unresolved Conversations ครบ</p>
+                <p>ยุทธวิธีแก้ Merge Conflict (5 ขั้น): 1) <code>git checkout develop &amp;&amp; git pull</code> 2) <code>git merge develop</code> บนสาย feature 3) Resolve ใน IDE (Accept Current / Incoming / Both) 4) รัน <code>pytest</code> ยืนยันตรรกะไม่พัง 5) Commit "fix: Resolve merge conflicts with develop" แล้ว Push</p>
+                <p>หลัง Merge รัน Full Regression Suite ครอบคลุมเคสเดิมทั้งหมด การันตี Zero Regression Defect — ผลตามบทเรียน <code>4 passed in 0.12s (100%)</code> สาย develop พร้อมต่อเติมฟีเจอร์ใหม่</p>
+            </div>
+            <div class="card">
+                <h3>5. เปิด Sprint 2 ด้วย CR-01 แบบ TDR (Open Sprint 2)</h3>
+                <p>CR-01 (Perfective Maintenance จาก Impact Analysis สัปดาห์ที่ 8): Barcode (String รองรับสแกนเนอร์) + Reorder Point (Integer เกณฑ์ขั้นต่ำ) + แจ้งเตือนเมื่อ <code>quantity &lt;= reorder_point</code> — ขยาย Product (<code>barcode=""</code>, <code>reorder_point=5</code>, เมธอด <code>is_low_stock() -&gt; bool</code>) และ InventoryService (<code>get_low_stock_alerts() -&gt; list[Product]</code> ผ่าน <code>load_all()</code> + วนตรวจ <code>is_low_stock()</code> ตรรกะอยู่ใน Service 100% ไม่ปน <code>print()</code> ใน ConsoleUI)</p>
+                <p>วงจร Test-Driven Refinement (TDR): 1) RED  เขียน PyTest ล็อกตรรกะ CR-01 แล้วรันต้อง Fail เพราะยังไม่มีเมธอดจริง 2) GREEN  เขียนโค้ดสั้นที่สุดใน Product &amp; Service ให้ผ่านไฟเขียว 3) REFACTOR  จัดโค้ดให้สะอาดโดย PyTest ยังเขียวสม่ำเสมอ (เขียน Test ก่อนช่วยเข้าใจ CR-01 และกันโค้ดส่วนเกิน)</p>
+                <p>Edge Cases ตามบทเรียน: TC-CR01-01 quantity 3 &lt; reorder 5 → True  (Alert), TC-CR01-02 quantity 5 == 5 (Boundary) → True  (Alert), TC-CR01-03 quantity 6 &gt; 5 → False  (Normal)</p>
+                <p>ขั้นตอน: แตก Branch <code>feature/cr01-barcode-reorder-point</code> จาก develop → เขียนเทสบาร์โค้ด/Reorder Point ใน test_app.py รันให้ RED → เติม Attributes/เมธอดให้ GREEN → รัน Full Suite <code>pytest -v</code> ให้เขียว 100% → Push → ส่งลิงก์ PR ให้ PM ผูก Jira Issue Key และส่ง Man-Hours จริงให้ PM กด Log Work คิด CV</p>
+                <p>เปิด Sprint บน Jira: ดึงการ์ดบาร์โค้ด + Reorder Point เข้ากล่อง Sprint 2 โดยคุมไม่เกิน Velocity 15 Points → กด "Start Sprint 2" → อัปเดต Procurement Log</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 7: Procurement + Checklist -->
+    <div class="slide">
+        <h2>6. Procurement Log + เช็กลิสต์ส่งมอบสัปดาห์ที่ 9</h2>
+        <p><strong>6. บันทึก Procurement Log (SLA &amp; Quota)</strong></p>
+        <table class="slide-table">
+            <thead>
+                <tr>
+                    <th>Tool / Service</th>
+                    <th>Quota Usage Status</th>
+                    <th>Cost Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>GitHub Actions</td>
+                    <td>120 / 2,000 Compute Minutes Spent</td>
+                    <td>Free Quota (0 THB)</td>
+                </tr>
+                <tr>
+                    <td>Jira Software</td>
+                    <td>5 / 10 Active Seats Used</td>
+                    <td>Free Tier (0 THB)</td>
+                </tr>
+                <tr>
+                    <td>Cloud Database</td>
+                    <td>450 / 500 THB Budget Spent</td>
+                    <td>Under Budget (+50 THB )</td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="note-box">
+            เป้าหมายคุม SLA: คุมค่าบริการเครื่องมือไม่ให้บานปลาย ติดตามผู้ให้บริการตาม Service Level Agreement (GitHub Actions ตรวจโควต้านาที CI/CD, Jira คุมไม่เกิน Free Tier และ % Uptime คลาวด์)
+        </div>
+        <div class="card" style="margin-top: 0.6rem;">
+            <h3>7. เช็กลิสต์ส่งมอบสัปดาห์ที่ 9</h3>
+            <ol class="slide-list">
+                <li>ภาพประวัติ Commit &amp; Network Graph แสดง Merge งาน Sprint 1 เข้า develop</li>
+                <li>ซอร์สโค้ด + PyTest ครอบคลุม CR-01 บน Feature Branch</li>
+                <li>รายงาน Retrospective Sprint 1 (บอร์ด Mad/Sad/Glad)</li>
+                <li>ตาราง EVM (SV, CV) + ภาพ Active Sprint 2 บน Jira</li>
+            </ol>
+        </div>
+    </div>
+</div>
+
+<div class="controls">
+    <button class="btn" id="prevBtn" onclick="prevSlide()" disabled>&#8592;</button>
+    <div class="counter"><span id="currentSlide">1</span> / <span id="totalSlides">7</span></div>
+    <button class="btn" id="nextBtn" onclick="nextSlide()">&#8594;</button>
+</div>
+
+<script>
+    const slides = document.querySelectorAll('.slide');
+    const total = slides.length;
+    let current = 0;
+    document.getElementById('totalSlides').textContent = total;
+
+    function updateSlides() {
+        slides.forEach((slide, index) => {
+            slide.classList.remove('active', 'prev');
+            if (index === current) slide.classList.add('active');
+            else if (index < current) slide.classList.add('prev');
+        });
+        document.getElementById('currentSlide').textContent = current + 1;
+        document.getElementById('prevBtn').disabled = current === 0;
+        document.getElementById('nextBtn').disabled = current === total - 1;
+    }
+
+    function nextSlide() { if (current < total - 1) { current++; updateSlides(); } }
+    function prevSlide() { if (current > 0) { current--; updateSlides(); } }
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight' || e.key === 'Space') nextSlide();
+        else if (e.key === 'ArrowLeft') prevSlide();
+    });
+    updateSlides();
+</script>
+</body>
+</html>

@@ -1,0 +1,510 @@
+<!doctype html>
+<html lang="th">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Week 11 — Hardening, Flow Metrics & Scope Freeze</title>
+  <link rel="stylesheet" href="../shared-theme.css">
+  <style>
+    body {
+      display: block;
+      min-height: 100vh;
+      overflow: auto;
+      background-color: var(--paper);
+    }
+
+    .document {
+      width: 100%;
+      margin: 0;
+      padding: 30px clamp(15px, 2vw, 30px);
+    }
+
+    .file-path {
+      margin: 0 0 18px;
+      color: var(--ink-soft);
+      font: 500 .75rem/1.5 'IBM Plex Mono', monospace;
+      letter-spacing: .09em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      max-width: 850px;
+      font: 600 1.85rem/1.2 'Taviraj', serif !important;
+      margin-bottom: 0.5rem;
+      color: var(--ink);
+    }
+
+    .lede {
+      max-width: 720px;
+      margin: 0;
+      color: var(--text-muted);
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+
+    .nav-portal {
+      margin: 14px 0 24px;
+    }
+
+    .nav-portal a {
+      color: var(--ink-soft);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      font-size: 0.92rem;
+      font-weight: 500;
+    }
+
+    .divider {
+      height: 1px;
+      margin: 36px 0;
+      background: var(--border);
+    }
+
+    .summary {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 32px;
+    }
+
+    .panel {
+      padding: 24px;
+      background: var(--paper-warm);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+    }
+
+    .panel h2 {
+      margin-bottom: 18px;
+      font: 600 1.4rem/1.3 'Taviraj', serif;
+      color: var(--ink);
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 8px;
+    }
+
+    .panel h3 {
+      margin: 18px 0 10px;
+      font: 600 1.15rem/1.3 'Taviraj', serif;
+      color: var(--ink-soft);
+    }
+
+    .facts {
+      display: grid;
+      gap: 0;
+      margin: 0;
+    }
+
+    .facts div {
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      gap: 18px;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .facts div:last-child {
+      border: 0;
+      padding-bottom: 0;
+    }
+
+    dt {
+      color: var(--text-muted);
+      font: 600 .75rem/1.4 'IBM Plex Mono', monospace;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    dd,
+    p,
+    li {
+      margin: 0 0 8px;
+      color: var(--text-main);
+      font-size: 0.95rem !important;
+      line-height: 1.65 !important;
+    }
+
+    ul, ol {
+      margin: 8px 0 16px 20px;
+      padding-left: 10px;
+    }
+
+    li::marker {
+      color: var(--amber);
+    }
+
+    table {
+      width: 100%;
+      margin: 14px 0 20px;
+      border-collapse: collapse;
+      background: var(--paper);
+      border: 1px solid var(--border);
+    }
+
+    th, td {
+      padding: 10px 12px;
+      text-align: left;
+      vertical-align: top;
+      border-bottom: 1px solid var(--border);
+      border-right: 1px solid var(--border);
+      font-size: 0.9rem;
+    }
+
+    th:last-child, td:last-child {
+      border-right: none;
+    }
+
+    th {
+      color: var(--ink);
+      background: var(--paper-warm);
+      font-weight: 600;
+    }
+
+    blockquote {
+      margin: 14px 0;
+      padding: 10px 16px;
+      background: var(--paper);
+      border-left: 4px solid var(--amber);
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      border-radius: 4px;
+    }
+
+    code {
+      font-family: 'IBM Plex Mono', monospace;
+      color: var(--accent);
+      background: rgba(18, 23, 43, 0.05);
+      padding: 2px 4px;
+      border-radius: 4px;
+      font-size: 0.88em;
+    }
+
+    pre {
+      margin: 14px 0;
+      padding: 14px 16px;
+      overflow-x: auto;
+      background: var(--paper);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+    }
+
+    pre code {
+      background: none;
+      padding: 0;
+    }
+
+    @media (max-width: 720px) {
+      .facts div {
+        grid-template-columns: 1fr;
+        gap: 4px;
+      }
+      table {
+        display: block;
+        overflow-x: auto;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="document" data-od-id="week-11-content">
+    <p class="file-path">/week-11/content.html</p>
+    <div class="badge">Week 11 · Hardening, Flow Metrics & Scope Freeze</div>
+    <h1>Hardening, Flow Metrics &amp; Scope Freeze — เตรียมระบบสู่ UAT</h1>
+    <p class="lede">สรุปเอกสารการดำเนินงานสัปดาห์ที่ 11: รายงานการปรับโค้ดให้แข็งแกร่ง (Hardening Report), ตัวชี้วัดการไหลของงาน (Flow Metrics) และข้อตกลงการแช่แข็งขอบเขต (Scope Freeze Agreement)</p>
+
+    <div class="nav-portal">
+      <a href="../index.html">← กลับสู่หน้าหลัก Project Ledger (Documentation Portal)</a>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- DOCUMENT 1: Hardening_Report.md -->
+    <section class="summary">
+      <article class="panel">
+        <h2>รายงานการปรับโค้ดให้แข็งแกร่ง — Hardening Report (สัปดาห์ที่ 11)</h2>
+        <blockquote>
+          ที่มาทุกข้อ: บทถอดความ Week 11 — ENGSE225 (System Hardening &amp; Code Freeze) และ ENGSE202 (Flow Metrics &amp; Scope Freeze) ไม่แต่งตัวเลขเพิ่ม
+        </blockquote>
+
+        <h3>1. กลิ่นโค้ด (Code Smells) ที่แก้ไขแล้ว (3 รายการ)</h3>
+
+        <h3>1.1 โค้ดซ้ำซ้อน (Duplicate Code) — ละเมิด DRY</h3>
+        <ul>
+          <li><strong>ก่อนแก้:</strong> ตรรกะตรวจสอบ <code>if product_id in products:</code> ถูกเขียนซ้ำ ๆ ทั้งในเมนูเพิ่มสต็อก ลดสต็อก และส่งออก CSV</li>
+          <li><strong>ความเสี่ยง:</strong> หากแก้เงื่อนไขไม่ครบทุกจุดจะเกิด Inconsistency</li>
+          <li><strong>แนวทางหลังแก้ (Extract Method):</strong> ยุบตรรกะซ้ำซ้อนเป็น Helper Method กลางใน <code>InventoryService</code> แล้วให้ทุกจุดเรียกใช้แทน ไม่เปลี่ยนพฤติกรรมโปรแกรม</li>
+        </ul>
+
+        <h3>1.2 โค้ดตาย (Dead Code) — ภาระการทำความเข้าใจ (Cognitive Load)</h3>
+        <ul>
+          <li><strong>ก่อนแก้:</strong> ฟังก์ชันคำนวณและตัวแปรชั่วคราวจากการทดลองใน Sprint 1 ที่ไม่ได้ใช้แล้ว บล็อกคอมเมนต์ขนาดใหญ่ที่ปิดทับโค้ดเก่า และ Speculative Generality (เขียนเผื่อฟังก์ชันอนาคตที่ยังไม่จำเป็น)</li>
+          <li><strong>แนวทางหลังแก้ (Delete Ruthlessly):</strong> ลบโค้ดส่วนเกินทิ้งทันที ไม่ต้องกลัวโค้ดหาย เพราะ Git Version Control บันทึกประวัติไว้ทั้งหมด 100% ช่วยลดภาระการทำความเข้าใจของทีม</li>
+        </ul>
+
+        <h3>1.3 การแอบใช้ข้อมูลของโมดูลอื่น (Feature Envy) — ละเมิด Information Hiding</h3>
+        <ul>
+          <li><strong>ก่อนแก้:</strong> คลาสภายนอก (เช่น <code>ConsoleUI</code> หรือ <code>CsvExporter</code>) แอบดึงฟิลด์ของ <code>Product</code> มาคำนวณยอดเงินด้วยตัวเอง</li>
+          <li><strong>แนวทางหลังแก้ (Move Method):</strong> ย้ายตรรกะการคำนวณเข้าไปอยู่ในคลาสเจ้าของข้อมูล (Data Owner) ผู้เรียกส่งอาร์กิวเมนต์น้อยที่สุดแล้วใช้ค่าที่ส่งกลับมา</li>
+        </ul>
+
+        <h3>2. การเขียนไฟล์แบบอะตอมมิก (Atomic File Writing) (2 ขั้นตอน)</h3>
+        <ul>
+          <li><strong>ปัญหา:</strong> <code>open(..., 'w')</code> ล้างเนื้อหาไฟล์เดิมทิ้งทันที หากไฟดับหรือ Crash ระหว่าง <code>json.dump()</code> ข้อมูลจะสูญหายถาวร กลายเป็นไฟล์ว่างขนาด 0 Bytes (Data Corruption Risk)</li>
+          <li><strong>ขั้นตอนที่ 1 — Write to Temp:</strong> เขียนข้อมูลใหม่ลงไฟล์ชั่วคราว (<code>.tmp</code>) ให้เสร็จสมบูรณ์ก่อน</li>
+          <li><strong>ขั้นตอนที่ 2 — Atomic Replace:</strong> สั่ง <code>os.replace()</code> สลับไฟล์ในระดับ OS แบบ All-or-Nothing</li>
+          <li><strong>หลักประกัน:</strong> Zero Data Loss Guarantee — เขียนสำเร็จ 100% หรือรักษาไฟล์เดิมไว้ ไม่เกิดไฟล์พังครึ่ง ๆ กลาง ๆ (ใช้ <code>tempfile</code> + <code>os.replace</code>)</li>
+        </ul>
+
+        <h3>3. สุขอนามัยของข้อยกเว้น (Exception Hygiene) — ห้าม <code>except: pass</code></h3>
+        <ul>
+          <li><strong>ห้ามเด็ดขาด (Anti-Pattern):</strong> <code>try</code> / <code>except</code> / <code>pass</code> ครอบจักรวาล (Blind Exception Swallowing) — ซ่อนระเบิดเวลา ทำให้ระบบเน่าเสียเงียบ ๆ</li>
+          <li><strong>แนวทางที่ถูก (Best Practice):</strong> ระบุ Exception เจาะจง (<code>FileNotFoundError</code>, <code>JSONDecodeError</code>) บันทึก Log เพื่อการสืบสวน และแจ้งเตือนด้วยข้อความที่ปลอดภัยโดยไม่เปิดเผย Stack Trace ภายใน</li>
+        </ul>
+
+        <h3>4. ขั้นตอนสแกน Flake8 / Bandit (ตามที่สอน)</h3>
+        <p>รันจากรากของรีโป:</p>
+        <pre><code>flake8 . --count --statistics
+bandit -r . -x ./tests</code></pre>
+        <ul>
+          <li><strong>Flake8:</strong> เคลียร์ข้อผิดพลาดด้าน Syntax, Unused Imports และ PEP 8 ทั้งหมด ช่วยเพิ่มค่า Analyzability และ Modifiability ตาม ISO/IEC 25010</li>
+          <li><strong>Bandit:</strong> สแกนช่องโหว่ซอร์สโค้ด Python (Hardcode รหัสผ่าน/API Keys, ฟังก์ชันอันตราย <code>eval()</code>/<code>exec()</code>, Injection, การเปิดไฟล์ไม่ปลอดภัย) ตรวจระดับ Medium/High ต้องไม่เหลือหลงอยู่</li>
+          <li><strong>สถานะ:</strong> ยังไม่ได้รันซ้ำในคอมมิตของเอกสารนี้ จึงไม่แปะผลลัพธ์ของเครื่องมือที่นี่เพื่อหลีกเลี่ยงการแต่งตัวเลข ให้บันทึกผลคำสั่งจริงลง Hardening Log / ข้อความคอมมิตเมื่อรันแล้ว และแก้ไขทุกข้อที่พบก่อน Freeze</li>
+        </ul>
+
+        <h3>5. วินัย Code Freeze (ISO/IEC/IEEE 12207:2017)</h3>
+        <ul>
+          <li><strong>เหตุผล:</strong> การแก้โค้ดนาทีสุดท้าย (Last-Minute Changes) คือสาเหตุอันดับ 1 ที่ทำให้ระบบพังวันส่งมอบ</li>
+          <li><strong>ห้าม:</strong> แตก Branch ฟีเจอร์ใหม่ ปรับ UI เพื่อความสวยงามส่วนตัว รับ Change Request ตัวใหม่</li>
+          <li><strong>อนุญาตเฉพาะ:</strong> แก้บั๊กวิกฤต (Critical Defects) อุดช่องโหว่ตามรายงาน Bandit/Flake8 และเขียน Unit Test เพิ่มเพื่อยกระดับ Coverage</li>
+          <li><strong>เงื่อนไขก่อน Freeze:</strong> ฟังก์ชัน Sprint 2 (CR-01 Barcode + CR-02 CSV Export) เสร็จ 100% ประกาศระงับ Feature Branch ใหม่ เตรียมระบบสู่ UAT ใน Week 12</li>
+        </ul>
+      </article>
+
+      <!-- DOCUMENT 2: Flow_Metrics.md -->
+      <article class="panel">
+        <h2>ตัวชี้วัดการไหลของงาน — Flow Metrics (สัปดาห์ที่ 11)</h2>
+        <blockquote>
+          ที่มาทุกข้อ: บทถอดความ Week 11 — ENGSE202 (Advanced Flow &amp; Scope Freeze) ตัวเลขทั้งหมดตามที่สอนเท่านั้น
+        </blockquote>
+
+        <h3>1. กายวิภาคของแผนภูมิการไหลสะสม (CFD Anatomy)</h3>
+        <ul>
+          <li><strong>แกน X:</strong> เส้นเวลา <strong>แกน Y:</strong> จำนวนงานสะสม</li>
+          <li><strong>แถบล่าง Done:</strong> งานที่ปิดสมบูรณ์แล้ว <strong>แถบกลาง Code Review / QA:</strong> ด่านตรวจ PR/QA <strong>แถบบน In Progress:</strong> งานกำลังลงมือทำ (คอลัมน์ To Do → In Progress → Review → Done)</li>
+          <li><strong>สภาวะปกติ (Healthy Flow):</strong> แถบสีทุกชั้นกว้างสม่ำเสมอ ขนานกัน ขยับขึ้นราบเรียบ ไร้จุดอุดตัน</li>
+          <li><strong>สภาวะคอขวด (Bottleneck ):</strong> แถบชั้น Code Review / QA บวมกว้างผิดปกติ — นักพัฒนาเขียนโค้ดเสร็จแล้วแต่งานติดค้างรอ Tech Lead ตรวจ PR นานเกินไป</li>
+        </ul>
+
+        <h3>2. กฎการหาจุดคอขวด + กฎของลิตเติล + WIP Limits</h3>
+        <ul>
+          <li><strong>กฎของลิตเติล (Little's Law):</strong> ยิ่งปล่อยให้งานสะสมในช่อง Review สูง ระยะเวลาที่งานจะเสร็จยิ่งนานขึ้น</li>
+          <li><strong>มาตรการแก้ WIP Limits บน Jira:</strong> จำกัดช่อง Code Review <strong>3 ใบ</strong> หากเต็มโควต้า สมาชิกทุกคนต้องหยุดเขียนโค้ดใหม่แล้วมาช่วยกันรีวิวโค้ดที่ค้างให้เสร็จก่อน</li>
+        </ul>
+
+        <h3>3. แผนภูมิเบิร์นอัพ (Burnup) — ขอบเขตตามที่สอน</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>ขอบเขตงาน (Scope Milestone)</th>
+              <th>Story Points</th>
+              <th>สถานะความสำเร็จ</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Initial Scope (แผนเดิม)</td>
+              <td>20 Points</td>
+              <td>ส่งมอบเสร็จสิ้น 100% </td>
+            </tr>
+            <tr>
+              <td>CR-01 Scope Added (Barcode)</td>
+              <td>+5 Points</td>
+              <td>ส่งมอบเสร็จสิ้น 100% </td>
+            </tr>
+            <tr>
+              <td>CR-02 Scope Added (CSV Export)</td>
+              <td>+4 Points</td>
+              <td>พัฒนาเสร็จ 2 จาก 4 Points </td>
+            </tr>
+            <tr>
+              <td><strong>Total Scope Completed</strong></td>
+              <td><strong>27 / 29 Points</strong></td>
+              <td><strong>สำเร็จ 93% ของเนื้องานรวม </strong></td>
+            </tr>
+          </tbody>
+        </table>
+        <p>เส้นขอบเขต (Scope) แบนราบที่ 29 (แช่แข็งแล้ว) เส้นงานที่เสร็จพุ่งขึ้นถึง 27 คงเหลือ 2 pts</p>
+
+        <h3>4. มูลค่าที่ได้รับ (EVM) ของสปรินต์ที่ 2 (บาท)</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>ตัวชี้วัด (Metric)</th>
+              <th>ค่า (Value)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>PV (Planned Value รวมงบ CR-02)</td>
+              <td>11,350</td>
+            </tr>
+            <tr>
+              <td>EV (Earned Value จริง)</td>
+              <td>11,000</td>
+            </tr>
+            <tr>
+              <td>AC (Actual Cost แรง + เครื่องมือ)</td>
+              <td>11,500</td>
+            </tr>
+            <tr>
+              <td>SV (EV − PV)</td>
+              <td>−350 (behind schedule) </td>
+            </tr>
+            <tr>
+              <td>CV (EV − AC)</td>
+              <td>−500 (over budget) </td>
+            </tr>
+          </tbody>
+        </table>
+        <p>อยู่ใน Warning Zone (±5%) ควบคุมได้ดีมาก</p>
+
+        <h3>5. ดัชนีประสิทธิภาพ CPI / SPI</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>ดัชนี</th>
+              <th>ค่า</th>
+              <th>ความหมายตามที่สอน</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>SPI (EV / PV)</td>
+              <td>0.97</td>
+              <td>โครงการดำเนินงานด้วยความเร็วคิดเป็น 97% ของแผน</td>
+            </tr>
+            <tr>
+              <td>CPI (EV / AC)</td>
+              <td>0.96</td>
+              <td>ทุกเงิน 1 บาทที่จ่ายไป โครงการได้เนื้องานมูลค่า 0.96 บาท</td>
+            </tr>
+          </tbody>
+        </table>
+        <p>การอ่านค่า: ล่าช้ากว่าแผนเล็กน้อยและเกินงบเล็กน้อย ใกล้ 1.0 จึงยังควบคุมได้ด้วยการทำ Hardening + แช่แข็งขอบเขต (ไม่เพิ่มขอบเขตใหม่)</p>
+      </article>
+
+      <!-- DOCUMENT 3: Scope_Freeze_Agreement.md -->
+      <article class="panel">
+        <h2>ข้อตกลงการแช่แข็งขอบเขต — Scope Freeze Agreement (สัปดาห์ที่ 11)</h2>
+        <blockquote>
+          ที่มาทุกข้อ: บทถอดความ Week 11 — ENGSE202 (Scope Freeze + UAT) ผูกกับ ENGSE225 (Code Freeze) มีผลตั้งแต่ Hardening สัปดาห์ที่ 11
+        </blockquote>
+
+        <h3>1. เงื่อนไขการแช่แข็ง (Freeze Terms)</h3>
+        <ol>
+          <li>ล็อกขอบเขต (Scope) ไว้ที่ <strong>29 สตอรีพอยต์</strong> (แผนเดิม 20 + CR-01 Barcode 5 + CR-02 CSV Export 4) ห้ามเพิ่มฟีเจอร์ใหม่หรือเปลี่ยนข้อกำหนดในรีลีสปัจจุบัน</li>
+          <li>สัปดาห์ที่ 12 (Sprint 3) เป็นช่วงเวลาแห่งความนิ่ง มุ่งเฉพาะ UAT และเตรียม Release Notes เท่านั้น</li>
+          <li>งานที่อนุญาตช่วง Freeze: แก้บั๊กวิกฤต (Critical Defects) อุดช่องโหว่ตามรายงาน Bandit/Flake8 และเขียน Unit Test เพิ่มเพื่อยกระดับ Coverage (ตามกฎ Code Freeze ISO 12207)</li>
+          <li>ห้าม: แตก Branch ฟีเจอร์ใหม่ ปรับ UI เพื่อความสวยงาม รับ Change Request ตัวใหม่ — เพราะการแก้โค้ดนาทีสุดท้ายคือสาเหตุอันดับ 1 ที่ทำให้ระบบพังวันส่งมอบ</li>
+        </ol>
+
+        <h3>2. แบบฟอร์มตรวจรับ UAT (Acceptance Protocol)</h3>
+        <ul>
+          <li><strong>System Testing (ENGSE225):</strong> ทดสอบเชิงเทคนิคว่าโค้ดทำงานถูกต้องตามสเปก — รัน PyTest Full Suite 100% Pass สแกนช่องโหว่</li>
+          <li><strong>UAT Testing (ENGSE202):</strong> ทดสอบความพึงพอใจการใช้งานจริงว่าซอฟต์แวร์แก้ปัญหาธุรกิจได้จริง — ตรวจความถูกต้องของข้อมูลรายงาน CSV</li>
+        </ul>
+        <table>
+          <thead>
+            <tr>
+              <th>UAT ID</th>
+              <th>สถานการณ์ทดสอบ (Business Scenario)</th>
+              <th>เกณฑ์ตัดสิน</th>
+              <th>สถานะตรวจรับ</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>UAT-01</td>
+              <td>เพิ่มสินค้าใหม่พร้อมระบุ Barcode และ Reorder Point</td>
+              <td>บันทึกสำเร็จ ไร้ Crash</td>
+              <td>Passed </td>
+            </tr>
+            <tr>
+              <td>UAT-02</td>
+              <td>ตัดสต็อกสินค้าจนต่ำกว่าเกณฑ์ และตรวจการแจ้งเตือน</td>
+              <td>ขึ้น Alert ชัดเจน</td>
+              <td>Passed </td>
+            </tr>
+            <tr>
+              <td>UAT-03</td>
+              <td>ส่งออกรายงาน CSV และเปิดตรวจไฟล์ใน Microsoft Excel</td>
+              <td>Header/Data ถูกต้อง</td>
+              <td>Passed </td>
+            </tr>
+          </tbody>
+        </table>
+        <p>โครงแบบฟอร์มเตรียมไว้: ฟีเจอร์ → ขั้นตอน → ผลที่คาดหวัง → ผ่าน/ไม่ผ่าน → ลายเซ็น</p>
+
+        <h3>3. เกณฑ์เข้าทดสอบ UAT (UAT Entry Criteria)</h3>
+        <ul>
+          <li>งาน 27/29 พอยต์อยู่ในสถานะ Done และสาธิตได้ (CR-01 ครบ 100% ส่วน CR-02 เหลือ 2 pts เป็นช่องว่างที่ทราบแล้ว)</li>
+          <li>ผ่าน Hardening แล้ว: Atomic Writes, ไม่มี <code>except</code> แบบเปลือย, ลบ Dead Code แล้ว</li>
+          <li>รัน Flake8 + Bandit แล้วและล้างข้อที่พบหมด (แปะผลคำสั่งจริงในบันทึกการปล่อยรีลีส)</li>
+          <li>ชุดทดสอบผ่านทั้งหมด เตรียมแบบฟอร์ม UAT แล้ว</li>
+        </ul>
+
+        <h3>4. ขั้นตอนการเจรจา + เส้นทางเปลี่ยนแปลง → แบ็กล็อก v3.0</h3>
+        <ol>
+          <li>โชว์ Burnup Chart ยืนยันว่าส่งมอบ CR-01 และ CR-02 สำเร็จ (27/29 Points, 93%)</li>
+          <li>ชี้แจงความเสี่ยงหากเพิ่มฟังก์ชันใหม่ในโค้งสุดท้าย (ช่วง High Anxiety Period ก่อนส่งมอบ)</li>
+          <li>ยื่นเอกสาร Scope Freeze Agreement ให้อาจารย์ (Sponsor) ลงนามยืนยันว่าไม่มีฟังก์ชันใหม่ในสัปดาห์ที่ 12</li>
+          <li>หากลูกค้ามีไอเดียใหม่: บันทึกไว้ใน Future Backlog (สำหรับ Version 3.0) โดยไม่แตะต้องสปรินต์ปัจจุบัน ประเมินเป็นพอยต์ใหม่และวาง Baselines ใหม่สำหรับ v3.0</li>
+          <li>การแช่แข็งมีผลจนกว่าจะลงนาม UAT จะยกเลิกได้ต่อเมื่อทีม + อาจารย์ตกลงเป็นลายลักษณ์อักษรเท่านั้น</li>
+        </ol>
+
+        <h3>5. ตารางกระทบยอดค่าใช้จ่ายเครื่องมือ (Procurement Reconciliation)</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Tool / Resource Item</th>
+              <th>Baseline Budget</th>
+              <th>Actual Spent</th>
+              <th>Status / Remarks</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Jira Software License</td>
+              <td>0 THB</td>
+              <td>0 THB</td>
+              <td>Free Tier (≤ 10 Users)</td>
+            </tr>
+            <tr>
+              <td>GitHub Actions Compute</td>
+              <td>0 THB</td>
+              <td>0 THB</td>
+              <td>ใช้ 1,250 / 2,000 Mins</td>
+            </tr>
+            <tr>
+              <td>Cloud Server Hosting</td>
+              <td>500 THB</td>
+              <td>480 THB</td>
+              <td>ประหยัด +20 THB </td>
+            </tr>
+            <tr>
+              <td><strong>รวมค่าใช้จ่ายเครื่องมือสุทธิ</strong></td>
+              <td><strong>800 THB</strong></td>
+              <td><strong>780 THB</strong></td>
+              <td><strong>Under Budget (+20 THB )</strong></td>
+            </tr>
+          </tbody>
+        </table>
+        <ul>
+          <li><strong>งบสำรอง:</strong> เริ่มต้น (Week 7 Cost Baseline) 2,823 THB เบิกจ่ายให้ CR-02 (Week 10) −1,350 THB คงเหลือสุทธิ <strong>1,473 THB</strong>  ล็อกไว้สำหรับ Hardening และแก้บั๊ก UAT หากไม่ได้ใช้คืนให้ Sponsor ท้ายโครงการ</li>
+        </ul>
+      </article>
+    </section>
+  </main>
+</body>
+
+</html>

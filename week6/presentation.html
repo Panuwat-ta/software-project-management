@@ -31,14 +31,14 @@
         <p style="margin-bottom: 1rem; font-size: 1.05rem;">การเปลี่ยนผ่านจาก Monolithic JSON ไปสู่สถาปัตยกรรมแบบ Modular อาศัย 3 องค์ประกอบหลัก:</p>
         <div class="grid-2">
             <div class="card">
-                <h3>💾 Database & Repository</h3>
+                <h3> Database & Repository</h3>
                 <ul class="slide-list">
                     <li><strong>SQLiteDatabaseContext:</strong> ใช้ <em>Singleton Pattern</em> ควบคุมให้มี Connection เดียว ป้องกันปัญหา Database Locked</li>
                     <li><strong>InventoryRepository:</strong> หุ้มคำสั่ง SQL ทั้งหมด บังคับใช้ Parameterized Query เพื่อป้องกัน <strong>SQL Injection</strong> โดยสมบูรณ์</li>
                 </ul>
             </div>
             <div class="card">
-                <h3>👑 Member Tier Strategy</h3>
+                <h3> Member Tier Strategy</h3>
                 <ul class="slide-list">
                     <li>ใช้ <em>Strategy Pattern</em> ในการคำนวณส่วนลดแยกตามระดับ (Regular, Silver, Gold, Platinum)</li>
                     <li>ขจัดปัญหา Code Smell ประเภท <code>if-else</code> ซ้อนทับกันยาวเหยียดในหน้า Checkout</li>
@@ -84,7 +84,7 @@
         <p style="font-size: 1.05rem; line-height: 1.6; margin-bottom: 1rem;">การใช้ข้อมูลจริงในการแก้ไขปัญหาโครงการงบประมาณบานปลาย (Over Budget):</p>
         <div class="grid-2">
             <div class="card" style="background-color: #fcf4f4; border-color: #f5c2c7;">
-                <h3 style="color: #b02a37;">🚨 ปัญหาที่พบ (The Variance)</h3>
+                <h3 style="color: #b02a37;"> ปัญหาที่พบ (The Variance)</h3>
                 <ul class="slide-list" style="color: #6a1a21;">
                     <li><strong>งาน:</strong> ย้ายฐานข้อมูล JSON -> SQLite</li>
                     <li><strong>Planned (ตั้งงบ):</strong> 6 ชม. (2,400 บาท)</li>
@@ -94,7 +94,7 @@
                 </ul>
             </div>
             <div class="card" style="background-color: #f0f7f4; border-color: #badbcc;">
-                <h3 style="color: #146c43;">✅ วิธีแก้ไข (Management Action)</h3>
+                <h3 style="color: #146c43;"> วิธีแก้ไข (Management Action)</h3>
                 <ul class="slide-list" style="color: #0f5132;">
                     <li>แจ้งเตือนทีมถึงความเสี่ยงสถานะการเงินของโปรเจค</li>
                     <li><strong>PM:</strong> อนุมัติเบิกเงินสำรองฉุกเฉิน (Contingency Reserve) ที่ตั้งไว้ 15% มาโปะส่วนต่างทันที</li>

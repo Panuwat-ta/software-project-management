@@ -31,14 +31,14 @@
         <p style="margin-bottom: 1rem; font-size: 1.05rem;">ตัวชี้วัดเชิงปริมาณ (Quantitative Metrics) เพื่อประกันความสำเร็จของการรีแฟกเตอร์:</p>
         <div class="grid-2">
             <div class="card">
-                <h3>📊 Cyclomatic Complexity v(G)</h3>
+                <h3> Cyclomatic Complexity v(G)</h3>
                 <ul class="slide-list">
                     <li><strong>ก่อนแก้ไข:</strong> `main()` มีการใช้ <code>if-elif-else</code> ซ้อนกันมากกว่า 20 ชั้น เสี่ยงต่อบั๊กแฝงสูงลิบ</li>
                     <li><strong>เป้าหมายใหม่:</strong> บังคับให้ฟังก์ชันย่อยลง (Modular) จนมีค่า v(G) ≤ 8 เพื่อการดูแลรักษาที่ง่ายขึ้น</li>
                 </ul>
             </div>
             <div class="card">
-                <h3>🛡️ Security & Reliability</h3>
+                <h3> Security & Reliability</h3>
                 <ul class="slide-list">
                     <li><strong>กำจัดตัวแปร Global:</strong> เลิกใช้ <code>global x</code> และผูกข้อมูลเข้ากับ Class (Encapsulation)</li>
                     <li><strong>ป้องกัน SQL Injection:</strong> ห้ามต่อสตริง SQL สดๆ บังคับใช้ Parameterized Query ทุกคำสั่ง (Repository)</li>

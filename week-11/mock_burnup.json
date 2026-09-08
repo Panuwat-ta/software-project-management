@@ -1,0 +1,12 @@
+{
+  "sprint": "Sprint 2",
+  "total_points": 29,
+  "done_points": 27,
+  "remaining_points": 2,
+  "completion_percentage": 93,
+  "scope_breakdown": {
+    "initial_scope": 20,
+    "cr01_barcode": 5,
+    "cr02_csv_export": 4
+  }
+}
