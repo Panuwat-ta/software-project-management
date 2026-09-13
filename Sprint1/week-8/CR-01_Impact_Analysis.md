@@ -29,7 +29,7 @@
 ## บริบท Refactoring ก่อนรับ CR-01 (ที่มา: ENGSE225 Week 8)
 - ผ่าตัด `app_v1.py` (หนี้: Global x, Cryptic Variables) บน Branch `feature/refactor-core-architecture`
 - หลักการ: ปรับโครงสร้างภายในโดย**ไม่เปลี่ยนพฤติกรรมภายนอก** (ต่างจาก Bug Fix = แก้พฤติกรรมผิด, Feature Addition = เพิ่มพฤติกรรมใหม่)
-- 4 เทคนิค: **Rename Variable/Method** (ชื่อลึกลับ `x, a, b` → Intent-Revealing; เพิ่ม Analyzability ตาม ISO 25010), **Extract Function** (ลด v(G) ของ `main()` จาก 22 → 8; เทสต์เฉพาะฟังก์ชันได้), **Extract Class** (Product ห่อหุ้ม id/name/qty/price + Type Safety; InventoryRepository ชั้น CRUD JSON แบบ Repository Pattern; InventoryService ชั้น Business Logic คำนวณรวม/ตัดสต็อก/ตรวจเงื่อนไข), **Encapsulate Field** (เลิก `global x`; ฉีด Repository เข้า Service ผ่าน Constructor — Dependency Injection)
+- 4 เทคนิค: **Rename Variable/Method** (ชื่อลึกลับ `x, a, b` → Intent-Revealing; เพิ่ม Analyzability ตาม ISO 25010), **Extract Function** (ลด v(G) ของ `main()` จาก 14 (ค่าที่วัดได้ใน Static-Analysis) → ≤ 8; เทสต์เฉพาะฟังก์ชันได้), **Extract Class** (Product ห่อหุ้ม id/name/qty/price + Type Safety; InventoryRepository ชั้น CRUD JSON แบบ Repository Pattern; InventoryService ชั้น Business Logic คำนวณรวม/ตัดสต็อก/ตรวจเงื่อนไข), **Encapsulate Field** (เลิก `global x`; ฉีด Repository เข้า Service ผ่าน Constructor — Dependency Injection)
 - Safety: Baseline `pytest test_app.py` ต้อง `1 passed` ไฟเขียว 100% ก่อนแตะโค้ด → แก้ทีละน้อย → รัน pytest ซ้ำทันที → ไฟแดงใช้ `git checkout` ถอยกลับ
 - การส่งต่อสู่ SPM (จาก transcript): นำ Man-Hours ไปประเมินงบเพิ่มเติม ดึง Contingency Reserve และปรับการ์ดงานบน Jira
 

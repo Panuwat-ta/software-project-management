@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>สัปดาห์ที่ 11: การปรับโค้ดแข็งแกร่งและแช่แข็งขอบเขต | SPM</title>
+  <link rel="stylesheet" href="../../theme.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="../../index.html">
+        <span class="brand-icon">SPM</span>
+        <span>CLI Inventory Management</span>
+      </a>
+      <nav class="nav-links">
+        <a class="nav-item" href="../../index.html">หน้าแรก</a>
+        <a class="nav-item" href="../sprint-report.html">รายงานปิด Sprint 1</a>
+        <details class="nav-dropdown">
+          <summary class="nav-dropdown-summary">
+            <span>เอกสารสัปดาห์ (1-12)</span>
+          </summary>
+          <div class="dropdown-menu">
+            <a href="../week-1/index.html">สัปดาห์ 1 <small>Charter &amp; Legacy</small></a>
+            <a href="../week-2/index.html">สัปดาห์ 2 <small>DFD &amp; Blueprint</small></a>
+            <a href="../week-3/index.html">สัปดาห์ 3 <small>DoD &amp; RACI</small></a>
+            <a href="../week-4/index.html">สัปดาห์ 4 <small>Refactor &amp; Test</small></a>
+            <a href="../week-5/index.html">สัปดาห์ 5 <small>Architecture &amp; Budget</small></a>
+            <a href="../week-6/index.html">สัปดาห์ 6 <small>DoD &amp; To-Be</small></a>
+            <a href="../week-7/index.html">สัปดาห์ 7 <small>Baseline &amp; Quality</small></a>
+            <a href="../week-8/index.html">สัปดาห์ 8 <small>CR-01 &amp; Tracking</small></a>
+            <a href="../week-9/index.html">สัปดาห์ 9 <small>EVM &amp; Transition</small></a>
+            <a href="../week-10/index.html">สัปดาห์ 10 <small>CCB &amp; BUG-101</small></a>
+            <a href="../week-11/index.html">สัปดาห์ 11 <small>Hardening &amp; Freeze</small></a>
+            <a href="../week-12/index.html">สัปดาห์ 12 <small>UAT &amp; Close-out</small></a>
+          </div>
+        </details>
+      </nav>
+    </div>
+  </header>
+
+  <main class="main-wrapper">
+    <div class="content-container">
+      <nav class="breadcrumb">
+        <a href="../../index.html">หน้าแรก</a>
+        <span class="breadcrumb-sep">/</span>
+        <a href="../../index.html#weeks-section">เอกสารรายสัปดาห์</a>
+        <span class="breadcrumb-sep">/</span>
+        <span>สัปดาห์ที่ 11</span>
+      </nav>
+
+      <div class="page-header-block">
+        <div class="notice-pill">ข้อมูลสมมติเพื่อการเรียน · W11 Documentation</div>
+        <h1 class="page-title">สัปดาห์ที่ 11: การปรับโค้ดให้แข็งแกร่ง (Hardening) และการแช่แข็งขอบเขต (Scope Freeze)</h1>
+        <p class="page-desc">รายงานผลการปรับปรุงความแข็งแกร่งของระบบ (System Hardening), สุขอนามัยของโค้ดและข้อยกเว้น, การสแกนเครื่องมือ และข้อตกลง Scope Freeze</p>
+        <div class="page-header-actions">
+          <a class="btn btn-secondary" href="../week-11/slides.html">เปิดสไลด์ประกอบสัปดาห์ 11 &rarr;</a>
+        </div>
+      </div>
+
+      <section>
+        <h2>1. รายงานการปรับโค้ดให้แข็งแกร่ง (Hardening Report)</h2>
+        <p>ดำเนินการแก้ไขกลิ่นโค้ด (Code Smells) สำคัญ 3 รายการตามหลัก Clean Architecture:</p>
+        <ul>
+          <li><strong>1. Duplicate Code:</strong> ตรรกะตรวจเช็ค <code>if product_id in products:</code> ที่ซ้ำซ้อนในหลายจุด ถูกยุบเป็น Helper Method กลางใน <code>InventoryService</code></li>
+          <li><strong>2. Dead Code:</strong> ลบโค้ดทดลอง ตัวแปรชั่วคราว และบล็อกคอมเมนต์ที่ไม่ใช้งานทิ้งทั้งหมดเพื่อลดภาระทางความคิด (Cognitive Load)</li>
+          <li><strong>3. Feature Envy:</strong> ย้ายตรรกะการคำนวณราคาและมูลค่าที่คลาสอื่นแอบดึงไปคิดเอง กลับเข้ามาอยู่ในคลาสเจ้าของข้อมูล (Data Owner) ตามหลัก Information Hiding</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>2. การเขียนไฟล์แบบอะตอมมิกและสุขอนามัยของข้อยกเว้น (Exception Hygiene)</h2>
+        <ul>
+          <li><strong>Safe Atomic Write:</strong> เปลี่ยนจากการใช้ <code>open(..., 'w')</code> ตรงๆ มาเป็นขั้นตอน 2 จังหวะ: 1) เขียนลงไฟล์ชั่วคราว <code>.tmp</code> จนสมบูรณ์ 2) ใช้ <code>os.replace()</code> สลับไฟล์ในระดับ OS ป้องกันปัญหาไฟล์พังขนาด 0 bytes เมื่อเกิดไฟดับ</li>
+          <li><strong>Exception Hygiene:</strong> บังคับห้ามใช้ <code>except: pass</code> ครอบจักรวาลโดยเด็ดขาด ให้ระบุประเภทข้อยกเว้นอย่างเจาะจง (<code>FileNotFoundError</code>, <code>JSONDecodeError</code>)</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>3. ผลการสแกนความปลอดภัยและหนี้เทคนิค (Flake8 / Bandit)</h2>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>เครื่องมือสแกน</th>
+                <th>สถานะการตรวจ</th>
+                <th>ผลลัพธ์และข้อสังเกต</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Bandit Security Scanner</strong></td>
+                <td><span class="badge badge-green">CLEAN</span></td>
+                <td>ไม่พบช่องโหว่ความปลอดภัยระดับ Medium หรือ High ไม่มีการ Hardcode รหัสผ่านหรือคำสั่งอันตราย</td>
+              </tr>
+              <tr>
+                <td><strong>Flake8 Linter</strong></td>
+                <td><span class="badge badge-orange">E501 OPEN</span></td>
+                <td>ยังพบรายการแจ้งเตือน Line too long (<code>E501</code>) คงค้างอยู่ จัดเป็นหนี้ทางเทคนิค (Technical Debt) ที่ต้องเก็บกวาดในรอบถัดไป</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section>
+        <h2>4. ข้อตกลงการแช่แข็งขอบเขต (Scope Freeze Agreement)</h2>
+        <div class="callout">
+          <div class="callout-badge">AGREEMENT</div>
+          <div class="callout-content">
+            <strong>เงื่อนไขการแช่แข็งระบบ (Scope Freeze):</strong><br>
+            • ล็อกขอบเขตของโครงการไว้ที่ <strong>29 สตอรีพอยต์</strong> (แผนเดิม 20 + CR-01 Barcode 5 + CR-02 CSV 4) โดยส่งมอบแล้ว 27/29 พอยต์ (93%)<br>
+            • ห้ามแตก Feature Branch ใหม่ หรือปรับแต่ง UI เพื่อความสวยงามส่วนตัว ให้โฟกัสเฉพาะการทดสอบ UAT, อุดช่องโหว่ และจัดเตรียมเอกสาร Release Notes<br>
+            • ไอเดียฟังก์ชันใหม่ๆ ของลูกค้าให้บันทึกลง Future Backlog สำหรับ Version 3.0 เท่านั้น
+          </div>
+        </div>
+      </section>
+
+      <div class="deck-banner">
+        <div>
+          <div class="deck-banner-title">สไลด์บรรยายสัปดาห์ที่ 11</div>
+          <div class="deck-banner-sub">ดูสไลด์สรุป Hardening, Atomic Save และข้อตกลง Scope Freeze</div>
+        </div>
+        <a class="btn btn-primary" href="../week-11/slides.html">เปิดสไลด์ W11 &rarr;</a>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div>แหล่งข้อมูล: <code>Sprint1/week-11/</code> · ข้อมูลสมมติเพื่อการเรียน</div>
+      <div class="footer-links">
+        <a href="../week-10/index.html">&larr; สัปดาห์ที่ 10</a>
+        <a href="../week-12/index.html">สัปดาห์ที่ 12 &rarr;</a>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

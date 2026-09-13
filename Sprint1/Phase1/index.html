@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Phase 1: ข้อเสนอโครงการฉบับสมบูรณ์ | SPM</title>
+  <link rel="stylesheet" href="../../theme.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="../../index.html">
+        <span class="brand-icon">SPM</span>
+        <span>CLI Inventory Management</span>
+      </a>
+      <nav class="nav-links">
+        <a class="nav-item" href="../../index.html">หน้าแรก</a>
+        <a class="nav-item" href="../sprint-report.html">รายงานปิด Sprint 1</a>
+        <details class="nav-dropdown">
+          <summary class="nav-dropdown-summary">
+            <span>เอกสารสัปดาห์ (1-12)</span>
+          </summary>
+          <div class="dropdown-menu">
+            <a href="../week-1/index.html">สัปดาห์ 1 <small>Charter &amp; Legacy</small></a><a href="../week-2/index.html">สัปดาห์ 2 <small>DFD &amp; Blueprint</small></a><a href="../week-3/index.html">สัปดาห์ 3 <small>DoD &amp; RACI</small></a><a href="../week-4/index.html">สัปดาห์ 4 <small>Refactor &amp; Test</small></a><a href="../week-5/index.html">สัปดาห์ 5 <small>Architecture &amp; Budget</small></a><a href="../week-6/index.html">สัปดาห์ 6 <small>DoD &amp; To-Be</small></a><a href="../week-7/index.html">สัปดาห์ 7 <small>Baseline &amp; Quality</small></a><a href="../week-8/index.html">สัปดาห์ 8 <small>CR-01 &amp; Tracking</small></a><a href="../week-9/index.html">สัปดาห์ 9 <small>EVM &amp; Transition</small></a><a href="../week-10/index.html">สัปดาห์ 10 <small>CCB &amp; BUG-101</small></a><a href="../week-11/index.html">สัปดาห์ 11 <small>Hardening &amp; Freeze</small></a><a href="../week-12/index.html">สัปดาห์ 12 <small>UAT &amp; Close-out</small></a>
+          </div>
+        </details>
+      </nav>
+    </div>
+  </header>
+
+  <main class="main-wrapper">
+    <div class="content-container">
+      <nav class="breadcrumb">
+        <a href="../../index.html">หน้าแรก</a>
+        <span class="breadcrumb-sep">/</span>
+        <span>Phase 1: ข้อเสนอโครงการ</span>
+      </nav>
+
+      <div class="page-header-block">
+        <div class="notice-pill">ข้อมูลสมมติเพื่อการเรียน · Phase 1 Integrated Proposal</div>
+        <h1 class="page-title">ข้อเสนอโครงการฉบับสมบูรณ์ (Integrated Planning Proposal)</h1>
+        <p class="page-desc">รวบรวมงานสัปดาห์ที่ 1–4 เป็นข้อเสนอปรับปรุงระบบจัดการคลังสินค้า CLI: เป้าหมาย 4 ด้าน ขอบเขต 4 เฟส ตารางเวลา เมทริกซ์ความเสี่ยง DFD และเกราะ PyTest</p>
+        <div class="page-header-actions">
+          <a class="btn btn-secondary" href="slides.html">เปิดสไลด์ Phase 1 &rarr;</a>
+        </div>
+      </div>
+
+      <section>
+        <h2>1. เป้าหมายโครงการและขอบเขต 4 เฟส</h2>
+        <ul>
+          <li><strong>Stability:</strong> ทนทานต่อข้อผิดพลาด ไม่พังจาก input ผิด (Crash Prevention)</li>
+          <li><strong>Refactoring:</strong> ยุบโค้ดซ้ำ แยกฟังก์ชันเป็นโมดูลชัดเจน</li>
+          <li><strong>Data Integrity:</strong> เซฟ JSON ปลอดภัย กันข้อมูลหาย</li>
+          <li><strong>Automated Testing:</strong> regression tests กันแก้แล้วพังของเดิม</li>
+        </ul>
+        <ul>
+          <li><strong>เฟส 1 Refactoring &amp; Infrastructure:</strong> แยก members.json เลิก global ใช้ Class ยุบตรรกะซ้ำ</li>
+          <li><strong>เฟส 2 Member Database:</strong> โมเดลสมาชิก + LOAD/SAVE + Safe Atomic Write</li>
+          <li><strong>เฟส 3 Discount &amp; Checkout:</strong> ตรรกะส่วนลด + รายละเอียดคิดเงินก่อนหักสต็อก</li>
+          <li><strong>เฟส 4 Exception &amp; QA:</strong> ดัก input แปลก + Graceful Degradation + Unit Tests</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>2. ตารางเวลาและ Trello</h2>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>สัปดาห์</th><th>เฟส</th><th>งานหลัก</th><th>สถานะ Trello</th></tr></thead>
+            <tbody>
+              <tr><td>1</td><td>Phase 1</td><td>วิเคราะห์โค้ดเดิม + Charter + Scope</td><td>Backlog / To Do</td></tr>
+              <tr><td>2</td><td>Phase 2</td><td>DFD + เสี่ยงระบบ + แผนเลิก Global</td><td>Done</td></tr>
+              <tr><td>3</td><td>Phase 3</td><td>โค้ดจัดการสินค้า + Exception Handling</td><td>Done / Review</td></tr>
+              <tr><td>4</td><td>Phase 4</td><td>PyTest + เล่ม Proposal</td><td>Done</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p style="color: var(--color-text-secondary); font-size: 0.9375rem;">หมายเหตุ: "เฟส" คืองานสาย (workstream) ไม่ใช่เลขสัปดาห์ ตารางนี้แมปตาม proposal ต้นฉบับ</p>
+      </section>
+
+      <section>
+        <h2>3. เมทริกซ์ความเสี่ยง 4 ข้อ</h2>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>#</th><th>ความเสี่ยง</th><th>มาตรการ</th></tr></thead>
+            <tbody>
+              <tr><td>1</td><td>Global State Conflict (<code>global x</code> เขียนทับกัน)</td><td>แปลงเป็น OOP แยก Business Logic จาก CLI</td></tr>
+              <tr><td>2</td><td>Data Corruption (dump ทับตรงแล้วไฟดับ)</td><td>Atomic Write / SQLite Transaction</td></tr>
+              <tr><td>3</td><td>Input Type Mismatch (<code>ValueError</code> แล้วล่ม)</td><td>Validation + try-except เคร่งครัด</td></tr>
+              <tr><td>4</td><td>Encoding ภาษาไทยเพี้ยนข้าม OS</td><td>บังคับ UTF-8 ทุกจุดอ่าน/เขียน</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section>
+        <h2>4. DFD และเกราะ PyTest</h2>
+        <p>DFD Level 1 กระบวนการ P1–P6: <code>load → show_all → add_update → cut_stock → check → save</code> ผ่าน store กลาง <code>x</code> (หน่วยความจำ) และ <code>data.json</code> (ดิสก์) โดยมี <code>save</code> เป็น Safe Save จุดเดียว</p>
+        <p>เกราะ regression ตัวอย่าง: <code>cut_stock("1", 5) → remaining 15</code> · เบิกเกินสต็อกต้อง <code>success False</code> · ID ไม่มีต้อง <code>Product not found!</code></p>
+      </section>
+
+      <div class="deck-banner">
+        <div>
+          <div class="deck-banner-title">สไลด์บรรยาย Phase 1</div>
+          <div class="deck-banner-sub">ดูสไลด์สรุปเป้าหมาย 4 เฟส ตารางเวลา และความเสี่ยง</div>
+        </div>
+        <a class="btn btn-primary" href="slides.html">เปิดสไลด์ Phase 1 &rarr;</a>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div>แหล่งข้อมูล: <code>Sprint1/Phase1/Integrated_Planning_Proposal.md</code> · ข้อมูลสมมติเพื่อการเรียน</div>
+      <div class="footer-links">
+        <a href="../../index.html">หน้าแรก</a>
+        <a href="../week-1/index.html">สัปดาห์ที่ 1 &rarr;</a>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

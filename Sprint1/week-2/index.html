@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>สัปดาห์ที่ 2: วิเคราะห์และออกแบบระบบใหม่ | SPM</title>
+  <link rel="stylesheet" href="../../theme.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="../../index.html">
+        <span class="brand-icon">SPM</span>
+        <span>CLI Inventory Management</span>
+      </a>
+      <nav class="nav-links">
+        <a class="nav-item" href="../../index.html">หน้าแรก</a>
+        <a class="nav-item" href="../sprint-report.html">รายงานปิด Sprint 1</a>
+        <details class="nav-dropdown">
+          <summary class="nav-dropdown-summary">
+            <span>เอกสารสัปดาห์ (1-12)</span>
+          </summary>
+          <div class="dropdown-menu">
+            <a href="../week-1/index.html">สัปดาห์ 1 <small>Charter &amp; Legacy</small></a>
+            <a href="../week-2/index.html">สัปดาห์ 2 <small>DFD &amp; Blueprint</small></a>
+            <a href="../week-3/index.html">สัปดาห์ 3 <small>DoD &amp; RACI</small></a>
+            <a href="../week-4/index.html">สัปดาห์ 4 <small>Refactor &amp; Test</small></a>
+            <a href="../week-5/index.html">สัปดาห์ 5 <small>Architecture &amp; Budget</small></a>
+            <a href="../week-6/index.html">สัปดาห์ 6 <small>DoD &amp; To-Be</small></a>
+            <a href="../week-7/index.html">สัปดาห์ 7 <small>Baseline &amp; Quality</small></a>
+            <a href="../week-8/index.html">สัปดาห์ 8 <small>CR-01 &amp; Tracking</small></a>
+            <a href="../week-9/index.html">สัปดาห์ 9 <small>EVM &amp; Transition</small></a>
+            <a href="../week-10/index.html">สัปดาห์ 10 <small>CCB &amp; BUG-101</small></a>
+            <a href="../week-11/index.html">สัปดาห์ 11 <small>Hardening &amp; Freeze</small></a>
+            <a href="../week-12/index.html">สัปดาห์ 12 <small>UAT &amp; Close-out</small></a>
+          </div>
+        </details>
+      </nav>
+    </div>
+  </header>
+
+  <main class="main-wrapper">
+    <div class="content-container">
+      <nav class="breadcrumb">
+        <a href="../../index.html">หน้าแรก</a>
+        <span class="breadcrumb-sep">/</span>
+        <a href="../../index.html#weeks-section">เอกสารรายสัปดาห์</a>
+        <span class="breadcrumb-sep">/</span>
+        <span>สัปดาห์ที่ 2</span>
+      </nav>
+
+      <div class="page-header-block">
+        <div class="notice-pill">ข้อมูลสมมติเพื่อการเรียน · W2 Documentation</div>
+        <h1 class="page-title">สัปดาห์ที่ 2: ขั้นออกแบบโครงสร้างและวางระบบใหม่ (Evolution &amp; Refactoring Design)</h1>
+        <p class="page-desc">วิเคราะห์ Data Flow Diagram, ชี้เป้า Hotspots อันตราย, รายงานการวิเคราะห์โค้ดเชิงสถิต (Static Code Analysis) และจัดทำพิมพ์เขียว Blueprint</p>
+        <div class="page-header-actions">
+          <a class="btn btn-secondary" href="../week-2/slides.html">เปิดสไลด์ประกอบสัปดาห์ 2 &rarr;</a>
+        </div>
+      </div>
+
+      <section>
+        <h2>1. การวิเคราะห์จุดอันตราย (Dangerous Hotspots Analysis)</h2>
+        <p>เอกสาร <code>Hotspot.md</code> ชี้เป้า 3 จุดวิกฤตที่มีการผูกมัดข้อมูลอย่างหนาแน่น (High Coupling) และเปราะบางสูงใน <code>app_v1.py</code>:</p>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>จุดอันตราย (Hotspot)</th>
+                <th>ลักษณะปัญหาและความเสี่ยง</th>
+                <th>แนวทางแก้ไขเชิงสถาปัตยกรรม</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Hotspot 1: ตัวแปรโกลบอล <code>x</code></strong></td>
+                <td>ทุกฟังก์ชันรุมอ่านเขียนข้อมูลใน <code>x</code> โดยตรง สกีมาไม่มีการป้องกัน (อ้างคีย์สั้น <code>x[k]['n']</code>) หากคีย์เปลี่ยนจะเกิด <code>KeyError</code> ทันที และทำให้เขียน Unit Test ไม่ได้</td>
+                <td>ครอบด้วยคลาส <code>Product</code> มี Type Annotation และจัดการผ่านคลาส <code>InventoryManager</code></td>
+              </tr>
+              <tr>
+                <td><strong>Hotspot 2: ฟังก์ชัน <code>main()</code> มัดรวมทุกสิ่ง</strong></td>
+                <td>มัดรวม UI, Business Logic และ Data Access ในบล็อก <code>if-elif</code> เดียว มี Cyclomatic Complexity สูงถึง 14 การแก้อาจเกิด Side-effects ได้ง่าย</td>
+                <td>แยกเลเยอร์ตามหลัก Separation of Concerns ให้ <code>main()</code> รับผิดชอบเฉพาะหน้าจอ CLI</td>
+              </tr>
+              <tr>
+                <td><strong>Hotspot 3: Direct Value Casting</strong></td>
+                <td>แปลง <code>int(input())</code> และ <code>float(input())</code> โดยไม่มี <code>try-except</code> ทำให้โปรแกรมแครชทันทีเมื่อกรอกผิด</td>
+                <td>สร้าง Helper Method ตรวจสอบความถูกต้องและดักจับ <code>ValueError</code></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section>
+        <h2>2. รายงานการวิเคราะห์ซอร์สโค้ดเชิงสถิต (Static Code Analysis)</h2>
+        <p>ผลจากการตรวจสอบ <code>app_v1.py</code> ด้วยเครื่องมือ Pylint และ Radon ในเอกสาร <code>Static-Analysis.md</code> สรุปตัวชี้วัดได้ดังนี้:</p>
+        
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>ตัวชี้วัด (Metric)</th>
+                <th>ค่าที่ตรวจพบในโค้ดเดิม</th>
+                <th>การประเมินผล</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Lines of Code (LOC)</td>
+                <td>99 บรรทัด (LLOC 77, SLOC 78, Comments 8)</td>
+                <td>ขนาดเล็กแต่มีความหนาแน่นของตรรกะสูง</td>
+              </tr>
+              <tr>
+                <td>Pylint Score</td>
+                <td><strong>7.10 / 10</strong></td>
+                <td>มีข้อควรแก้ไขด้านระเบียบโค้ด PEP 8 หลายจุด</td>
+              </tr>
+              <tr>
+                <td>Complexity: <code>main()</code></td>
+                <td><strong>CC = 14 (Grade C)</strong></td>
+                <td>ซับซ้อนปานกลางถึงสูง มีกิ่งเงื่อนไขแตกแขนงถึง 17 สาขา (R0912) และ 55 คำสั่ง (R0915)</td>
+              </tr>
+              <tr>
+                <td>Complexity: <code>load()</code></td>
+                <td>CC = 2 (Grade A)</td>
+                <td>ความซับซ้อนต่ำ โครงสร้างเป็นเส้นตรง</td>
+              </tr>
+              <tr>
+                <td>Complexity: <code>save()</code></td>
+                <td>CC = 1 (Grade A)</td>
+                <td>ความซับซ้อนต่ำ</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section>
+        <h2>3. พิมพ์เขียวสถาปัตยกรรมใหม่ (Refactoring Blueprint)</h2>
+        <p>กำหนดโครงสร้างแบ่งเลเยอร์ 3 ชั้น (Three-Tier Architecture) เพื่อให้ระบบแยกหน้าที่ชัดเจน:</p>
+        <ul>
+          <li><strong>Presentation Layer (CLI Interface):</strong> รับอินพุต แสดงผลคอนโซล และตรวจสอบความถูกต้องของข้อมูล (Input Validation) ก่อนส่งต่อ</li>
+          <li><strong>Domain Layer (InventoryManager):</strong> จัดเก็บตรรกะทางธุรกิจ เช่น การคำนวณมูลค่ารวม การลดจำนวนสต็อก และเงื่อนไขเตือนสต็อกต่ำ</li>
+          <li><strong>Data Access Layer &amp; Models (Product):</strong> คลาสแบบจำลองข้อมูลสินค้า และการบันทึกไฟล์ JSON แบบปลอดภัย</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>4. แผนงานระบบสมาชิกและส่วนลด (Member Discount - แบบออกแบบเท่านั้น)</h2>
+        <div class="callout">
+          <div class="callout-badge">DESIGN ONLY</div>
+          <div class="callout-content">
+            <strong>หมายเหตุความโปร่งใส:</strong> เอกสาร <code>Member-Discount.md</code> และพิมพ์เขียวระบบสมาชิกในสัปดาห์นี้ เป็นเพียงการศึกษาและออกแบบโครงสร้างข้อมูล (Tiers: Regular 0%, Silver 5%, Gold 10%, Platinum 15%) เพื่อเตรียมการขยายระบบในอนาคต ยังไม่ได้มีการพัฒนาในโค้ดของ Sprint 1 แต่อย่างใด
+          </div>
+        </div>
+      </section>
+
+      <div class="deck-banner">
+        <div>
+          <div class="deck-banner-title">สไลด์บรรยายสัปดาห์ที่ 2</div>
+          <div class="deck-banner-sub">ดูสไลด์สรุปผลวิเคราะห์ Hotspots, Static Analysis และพิมพ์เขียว Blueprint</div>
+        </div>
+        <a class="btn btn-primary" href="../week-2/slides.html">เปิดสไลด์ W2 &rarr;</a>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div>แหล่งข้อมูล: <code>Sprint1/week-2/</code> · ข้อมูลสมมติเพื่อการเรียน</div>
+      <div class="footer-links">
+        <a href="../week-1/index.html">&larr; สัปดาห์ที่ 1</a>
+        <a href="../week-3/index.html">สัปดาห์ที่ 3 &rarr;</a>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

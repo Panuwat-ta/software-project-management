@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>สัปดาห์ที่ 1: วางแผนและทบทวนโค้ดเดิม | SPM</title>
+  <link rel="stylesheet" href="../../theme.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="../../index.html">
+        <span class="brand-icon">SPM</span>
+        <span>CLI Inventory Management</span>
+      </a>
+      <nav class="nav-links">
+        <a class="nav-item" href="../../index.html">หน้าแรก</a>
+        <a class="nav-item" href="../sprint-report.html">รายงานปิด Sprint 1</a>
+        <details class="nav-dropdown">
+          <summary class="nav-dropdown-summary">
+            <span>เอกสารสัปดาห์ (1-12)</span>
+          </summary>
+          <div class="dropdown-menu">
+            <a href="../week-1/index.html">สัปดาห์ 1 <small>Charter &amp; Legacy</small></a>
+            <a href="../week-2/index.html">สัปดาห์ 2 <small>DFD &amp; Blueprint</small></a>
+            <a href="../week-3/index.html">สัปดาห์ 3 <small>DoD &amp; RACI</small></a>
+            <a href="../week-4/index.html">สัปดาห์ 4 <small>Refactor &amp; Test</small></a>
+            <a href="../week-5/index.html">สัปดาห์ 5 <small>Architecture &amp; Budget</small></a>
+            <a href="../week-6/index.html">สัปดาห์ 6 <small>DoD &amp; To-Be</small></a>
+            <a href="../week-7/index.html">สัปดาห์ 7 <small>Baseline &amp; Quality</small></a>
+            <a href="../week-8/index.html">สัปดาห์ 8 <small>CR-01 &amp; Tracking</small></a>
+            <a href="../week-9/index.html">สัปดาห์ 9 <small>EVM &amp; Transition</small></a>
+            <a href="../week-10/index.html">สัปดาห์ 10 <small>CCB &amp; BUG-101</small></a>
+            <a href="../week-11/index.html">สัปดาห์ 11 <small>Hardening &amp; Freeze</small></a>
+            <a href="../week-12/index.html">สัปดาห์ 12 <small>UAT &amp; Close-out</small></a>
+          </div>
+        </details>
+      </nav>
+    </div>
+  </header>
+
+  <main class="main-wrapper">
+    <div class="content-container">
+      <nav class="breadcrumb">
+        <a href="../../index.html">หน้าแรก</a>
+        <span class="breadcrumb-sep">/</span>
+        <a href="../../index.html#weeks-section">เอกสารรายสัปดาห์</a>
+        <span class="breadcrumb-sep">/</span>
+        <span>สัปดาห์ที่ 1</span>
+      </nav>
+
+      <div class="page-header-block">
+        <div class="notice-pill">ข้อมูลสมมติเพื่อการเรียน · W1 Documentation</div>
+        <h1 class="page-title">สัปดาห์ที่ 1: ขั้นวางแผนและทบทวนโค้ดดั้งเดิม (Planning &amp; Legacy Code Review)</h1>
+        <p class="page-desc">จัดทำกฎบัตรโครงการ (Project Charter) กำหนดบทบาทหน้าที่ วางกรอบขอบเขตงาน (Scope) และวิเคราะห์ความเสี่ยงเริ่มต้นของระบบเดิมใน <code>app_v1.py</code></p>
+        <div class="page-header-actions">
+          <a class="btn btn-secondary" href="../week-1/slides.html">เปิดสไลด์ประกอบสัปดาห์ 1 &rarr;</a>
+        </div>
+      </div>
+
+      <section>
+        <h2>1. กฎบัตรโครงการ (Project Charter Highlights)</h2>
+        <p>จัดทำขึ้นเพื่อกำหนดกรอบการบำรุงรักษาและปรับปรุงระบบจัดการคลังสินค้าแบบ CLI โดยระบุเป้าหมาย 4 ด้านหลัก:</p>
+        <ul>
+          <li><strong>ปรับปรุงเสถียรภาพ (Stability):</strong> ป้องกันระบบแครชจากการกรอกข้อมูลผิดประเภท (เช่น ตัวอักษรปนในช่องตัวเลข) และป้องกันการใส่ค่าติดลบ</li>
+          <li><strong>ปรับปรุงโครงสร้าง (Refactoring):</strong> กำจัดตัวแปร Global Mutable State (<code>x</code>, <code>db</code>) และเปลี่ยนชื่อตัวแปรย่อเป็นชื่อที่มีความหมายชัดเจนตามมาตรฐาน PEP 8</li>
+          <li><strong>รักษาความสมบูรณ์ของข้อมูล (Data Integrity):</strong> ป้องกันไฟล์ข้อมูลเสียหายเมื่อเกิดเหตุไฟฟ้าดับหรือระบบหยุดทำงานกะทันหันขณะบันทึก</li>
+          <li><strong>สร้างระบบทดสอบอัตโนมัติ (Automated Testing):</strong> พัฒนาชุดทดสอบ Regression Tests ด้วย PyTest</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>2. ขอบเขตการทำงาน (In-Scope vs Out-of-Scope)</h2>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>สิ่งที่อยู่ในขอบเขต (In-Scope)</th>
+                <th>สิ่งที่อยู่นอกขอบเขตเด็ดขาด (Out-of-Scope)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>• ดักจับ Input Validation และ Exception Handling (ราคา, สต็อก)</td>
+                <td>• การพัฒนา GUI (Graphical User Interface) หรือหน้าเว็บแอปพลิเคชัน</td>
+              </tr>
+              <tr>
+                <td>• เปลี่ยนชื่อตัวแปรที่กำกวม (<code>x</code>, <code>db</code>, <code>a</code>, <code>b</code>, <code>c</code>, <code>d</code>, <code>e</code>)</td>
+                <td>• การเปลี่ยนเทคโนโลยีฐานข้อมูลเป็น SQL/NoSQL ภายนอกในเฟสแรก</td>
+              </tr>
+              <tr>
+                <td>• แยก Business Logic ออกจาก CLI Presentation Layer</td>
+                <td>• การเพิ่มระบบชำระเงินออนไลน์หรือโมดูลภายนอกที่ไม่เกี่ยวข้อง</td>
+              </tr>
+              <tr>
+                <td>• การบันทึกไฟล์ด้วยกระบวนการ Safe Atomic Write</td>
+                <td>• ระบบสมาชิกหรือโปรโมชั่นลดราคา (ยังไม่อยู่ในขอบเขตการส่งมอบเฟสแรก)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section>
+        <h2>3. การวิเคราะห์ข้อบกพร่องในระบบเดิม (Legacy Code: app_v1.py)</h2>
+        <p>จากการตรวจสอบไฟล์ <code>app_v1.py</code> และ <code>doc.md</code> พบจุดอันตรายทางโครงสร้างที่ส่งผลกระทบโดยตรงต่อความเสถียรของระบบ:</p>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>จุดบกพร่องใน <code>app_v1.py</code></th>
+                <th>ผลกระทบต่อระบบ</th>
+                <th>แนวทางแก้ไข</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>ตัวแปร Global <code>x</code> และ <code>db</code></td>
+                <td>เกิด High Coupling ทุกฟังก์ชันเข้ามารุมแก้ไขข้อมูลในหน่วยความจำโดยตรง ไม่สามารถเขียน Unit Test แยกส่วนได้</td>
+                <td>ย้ายเข้าสู่คลาส <code>InventoryManager</code> และใช้ Dependency Injection</td>
+              </tr>
+              <tr>
+                <td>การแปลงชนิดข้อมูลตรงๆ เช่น <code>int(input())</code></td>
+                <td>หากผู้ใช้กรอกข้อความหรือกด Enter ข้าม โปรแกรมจะโยนข้อผิดพลาด <code>ValueError</code> และล่มทันที</td>
+                <td>ครอบด้วยลูปรับค่าพร้อมบล็อก <code>try-except</code></td>
+              </tr>
+              <tr>
+                <td>ไม่ตรวจสอบตัวเลขติดลบ</td>
+                <td>ผู้ใช้สามารถกรอกจำนวนสต็อกหรือราคาติดลบ ทำให้ยอดมูลค่ารวมคลังสินค้าเพี้ยน</td>
+                <td>เพิ่มเงื่อนไขตรวจสอบค่ามากกว่าหรือเท่ากับศูนย์ (Non-negative check)</td>
+              </tr>
+              <tr>
+                <td>การบันทึกทับไฟล์ JSON โดยตรง</td>
+                <td>หากโปรแกรมหยุดชะงักขณะเขียนไฟล์ ข้อมูลสินค้าทั้งหมดจะสูญหายถาวร</td>
+                <td>ใช้หลักการ Atomic Write (เขียนลง Temp แล้วสลับด้วย <code>os.replace</code>)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section>
+        <h2>4. ตารางประเมินความเสี่ยงเริ่มต้น (Initial Risk Assessment)</h2>
+        <ul>
+          <li><strong>ความเสี่ยงจากการพังยับเนื่องจากการเปลี่ยนโค้ด (Regression Risk):</strong> การนำตัวแปรโกลบอลออกอาจส่งผลกระทบต่อตรรกะเดิม &rarr; <em>มาตรการ:</em> ให้ QA สร้าง Unit Tests ครอบคลุมการทำงานเดิมก่อนเริ่มแตะต้องโค้ดโครงสร้างหลัก</li>
+          <li><strong>ความเสี่ยงของโครงสร้างข้อมูลเดิมเสียหาย (Data Incompatibility):</strong> ข้อมูลเดิมใน <code>data.json</code> อาจไม่ตรงกับโครงสร้างใหม่ &rarr; <em>มาตรการ:</em> เพิ่มชั้น Default Fallback ในการโหลดข้อมูล</li>
+          <li><strong>ความเสี่ยงจากการไม่มีชุดทดสอบเดิม (Lack of Tests):</strong> โค้ดตั้งต้นไม่มีเทสต์ &rarr; <em>มาตรการ:</em> บังคับเกณฑ์ DoD ให้ทุกชิ้นงานต้องผ่าน PyTest 100%</li>
+        </ul>
+      </section>
+
+      <div class="deck-banner">
+        <div>
+          <div class="deck-banner-title">สไลด์บรรยายสัปดาห์ที่ 1</div>
+          <div class="deck-banner-sub">ดูสไลด์สรุปกฎบัตร วัตถุประสงค์ และการวิเคราะห์โค้ดเดิม</div>
+        </div>
+        <a class="btn btn-primary" href="../week-1/slides.html">เปิดสไลด์ W1 &rarr;</a>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div>แหล่งข้อมูล: <code>Sprint1/week-1/</code> · ข้อมูลสมมติเพื่อการเรียน</div>
+      <div class="footer-links">
+        <a href="../../index.html">หน้าแรก</a>
+        <a href="../week-2/index.html">สัปดาห์ที่ 2 &rarr;</a>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

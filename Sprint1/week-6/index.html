@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>สัปดาห์ที่ 6: การสื่อสารและ To-Be Architecture | SPM</title>
+  <link rel="stylesheet" href="../../theme.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="../../index.html">
+        <span class="brand-icon">SPM</span>
+        <span>CLI Inventory Management</span>
+      </a>
+      <nav class="nav-links">
+        <a class="nav-item" href="../../index.html">หน้าแรก</a>
+        <a class="nav-item" href="../sprint-report.html">รายงานปิด Sprint 1</a>
+        <details class="nav-dropdown">
+          <summary class="nav-dropdown-summary">
+            <span>เอกสารสัปดาห์ (1-12)</span>
+          </summary>
+          <div class="dropdown-menu">
+            <a href="../week-1/index.html">สัปดาห์ 1 <small>Charter &amp; Legacy</small></a>
+            <a href="../week-2/index.html">สัปดาห์ 2 <small>DFD &amp; Blueprint</small></a>
+            <a href="../week-3/index.html">สัปดาห์ 3 <small>DoD &amp; RACI</small></a>
+            <a href="../week-4/index.html">สัปดาห์ 4 <small>Refactor &amp; Test</small></a>
+            <a href="../week-5/index.html">สัปดาห์ 5 <small>Architecture &amp; Budget</small></a>
+            <a href="../week-6/index.html">สัปดาห์ 6 <small>DoD &amp; To-Be</small></a>
+            <a href="../week-7/index.html">สัปดาห์ 7 <small>Baseline &amp; Quality</small></a>
+            <a href="../week-8/index.html">สัปดาห์ 8 <small>CR-01 &amp; Tracking</small></a>
+            <a href="../week-9/index.html">สัปดาห์ 9 <small>EVM &amp; Transition</small></a>
+            <a href="../week-10/index.html">สัปดาห์ 10 <small>CCB &amp; BUG-101</small></a>
+            <a href="../week-11/index.html">สัปดาห์ 11 <small>Hardening &amp; Freeze</small></a>
+            <a href="../week-12/index.html">สัปดาห์ 12 <small>UAT &amp; Close-out</small></a>
+          </div>
+        </details>
+      </nav>
+    </div>
+  </header>
+
+  <main class="main-wrapper">
+    <div class="content-container">
+      <nav class="breadcrumb">
+        <a href="../../index.html">หน้าแรก</a>
+        <span class="breadcrumb-sep">/</span>
+        <a href="../../index.html#weeks-section">เอกสารรายสัปดาห์</a>
+        <span class="breadcrumb-sep">/</span>
+        <span>สัปดาห์ที่ 6</span>
+      </nav>
+
+      <div class="page-header-block">
+        <div class="notice-pill">ข้อมูลสมมติเพื่อการเรียน · W6 Documentation</div>
+        <h1 class="page-title">สัปดาห์ที่ 6: เกณฑ์การสื่อสาร DoR/DoD และสถาปัตยกรรม To-Be</h1>
+        <p class="page-desc">กำหนดตารางการสื่อสารภายในทีม (Communication Matrix), เกณฑ์ DoR/DoD, กรณีศึกษาผลต่างงบประมาณ (Cost Variance) และสถาปัตยกรรม To-Be</p>
+        <div class="page-header-actions">
+          <a class="btn btn-secondary" href="../week-6/slides.html">เปิดสไลด์ประกอบสัปดาห์ 6 &rarr;</a>
+        </div>
+      </div>
+
+      <section>
+        <h2>1. ตารางการสื่อสารภายในทีม (Communication Matrix)</h2>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>หัวข้อ / วัตถุประสงค์</th>
+                <th>ช่องทาง</th>
+                <th>ความถี่</th>
+                <th>ผู้รับฟัง</th>
+                <th>ผู้รับผิดชอบ</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>อัปเดตงานประจำวัน (Standup)</td>
+                <td>Discord Voice / Chat</td>
+                <td>ทุกเย็น (15 นาที)</td>
+                <td>สมาชิกทุกคนในทีม</td>
+                <td><strong>Project Manager</strong></td>
+              </tr>
+              <tr>
+                <td>การแจ้งบั๊ก / ทดสอบไม่ผ่าน</td>
+                <td>การ์ดบน Trello</td>
+                <td>ทันทีที่พบปัญหา</td>
+                <td>ผู้เขียนโค้ดฟีเจอร์นั้นๆ</td>
+                <td><strong>QA / Tester</strong></td>
+              </tr>
+              <tr>
+                <td>ขอ Review Code ก่อน Merge</td>
+                <td>GitHub PR / Discord</td>
+                <td>เมื่อสร้าง PR เสร็จ</td>
+                <td>สมาชิกทีมที่เกี่ยวข้อง</td>
+                <td><strong>Tech Lead</strong></td>
+              </tr>
+              <tr>
+                <td>ติดตามความคืบหน้าภาพรวม</td>
+                <td>Trello Board</td>
+                <td>อัปเดตตลอดเวลา</td>
+                <td>สมาชิกทุกคนและอาจารย์</td>
+                <td>สมาชิกทุกคน</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section>
+        <h2>2. เกณฑ์ความพร้อมและความสำเร็จ (DoR vs DoD)</h2>
+        <p><strong>Definition of Ready (DoR):</strong> ก่อนดึงการ์ดงานมาทำ ต้องมีรายละเอียดชัดเจน, ผ่านการประเมิน Hotspot, มีการระบุบทบาท RACI (R และ A) และแตก Branch ออกจาก <code>develop</code></p>
+        <p><strong>Definition of Done (DoD):</strong> งานจะเสร็จสมบูรณ์เมื่อผ่านการตรวจ Code Review จาก Tech Lead ตามมาตรฐาน PEP 8, ผ่าน Automated Tests 100%, รวมโค้ดเข้าสายหลัก และจัดทำเอกสารสรุปผลเรียบร้อย</p>
+      </section>
+
+      <section>
+        <h2>3. กรณีศึกษาการวิเคราะห์ผลต่างงบประมาณ (Cost Variance Analysis)</h2>
+        <div class="notice-pill">ข้อมูลสมมติเพื่อการเรียน · Fictional Educational Data</div>
+        <p>การวิเคราะห์ตามหลักการ EVM ในเอกสาร <code>Cost_Variance_Analysis.md</code> เพื่อควบคุมต้นทุน:</p>
+        <ul>
+          <li><strong>มูลค่างานที่ทำเสร็จ (EV):</strong> 2,400 บาท (ประมาณการ 6 ชม. &times; 400 บาท/ชม.)</li>
+          <li><strong>ต้นทุนจริงที่เกิดขึ้น (AC):</strong> 4,000 บาท (เกิดปัญหาข้อมูลเก่าทำให้ใช้เวลา 10 ชม. &times; 400 บาท/ชม.)</li>
+          <li><strong>ผลต่างงบประมาณ:</strong> $CV = EV - AC = 2,400 - 4,000 = -1,600$ บาท (<strong>เกินงบประมาณ</strong>)</li>
+        </ul>
+        <p><em>แนวทางบริหาร:</em> PM แจ้งเตือนความเสี่ยง ดึงเงินสำรอง Contingency Reserve มาชดเชย และปรึกษา Tech Lead เพื่อทบทวนการออกแบบ Blueprint ป้องกันการแก้โค้ดซ้ำซ้อน</p>
+      </section>
+
+      <section>
+        <h2>4. สถาปัตยกรรม To-Be (แบบออกแบบเท่านั้น)</h2>
+        <div class="callout">
+          <div class="callout-badge">DESIGN ONLY</div>
+          <div class="callout-content">
+            <strong>สถานะสถาปัตยกรรม To-Be:</strong> ในเอกสาร <code>To_Be_Architecture.md</code> มีการระบุสถาปัตยกรรมคลังสินค้าใหม่ที่รวม SQLite, โมดูลระบบสมาชิก (Member Tier) และระบบคำนวณเงินสด (Checkout Engine) ซึ่งทั้งหมดในสัปดาห์นี้<strong>ยังคงเป็นแบบออกแบบเท่านั้น (Design-only)</strong> ยังไม่มีการเขียนโค้ดจริงใน Sprint 1
+          </div>
+        </div>
+      </section>
+
+      <div class="deck-banner">
+        <div>
+          <div class="deck-banner-title">สไลด์บรรยายสัปดาห์ที่ 6</div>
+          <div class="deck-banner-sub">ดูสไลด์สรุปเกณฑ์ DoR/DoD, Communication Matrix และ Cost Variance</div>
+        </div>
+        <a class="btn btn-primary" href="../week-6/slides.html">เปิดสไลด์ W6 &rarr;</a>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div>แหล่งข้อมูล: <code>Sprint1/week-6/</code> · ข้อมูลสมมติเพื่อการเรียน</div>
+      <div class="footer-links">
+        <a href="../week-5/index.html">&larr; สัปดาห์ที่ 5</a>
+        <a href="../week-7/index.html">สัปดาห์ที่ 7 &rarr;</a>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

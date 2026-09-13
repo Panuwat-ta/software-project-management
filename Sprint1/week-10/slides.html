@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>สไลด์สัปดาห์ที่ 10: CCB, CR-02 และ BUG-101 | SPM</title>
+  <style>
+    :root {
+      --canvas: #ffffff;
+      --surface: #f6f5f4;
+      --surface-card: #ffffff;
+      --surface-subtle: #f8f8f7;
+      --text: rgba(0, 0, 0, 0.95);
+      --text-secondary: #615d59;
+      --text-muted: #8c8780;
+      --border: rgba(0, 0, 0, 0.1);
+      --border-subtle: rgba(0, 0, 0, 0.06);
+      --accent: #0075de;
+      --accent-hover: #005bab;
+      --badge-blue-bg: #f2f9ff;
+      --badge-blue-text: #097fe8;
+      --badge-gray-bg: #f1f1ef;
+      --badge-gray-text: #615d59;
+      --badge-green-bg: #ebf5ee;
+      --badge-green-text: #1b7a3a;
+      --shadow-card: rgba(0, 0, 0, 0.04) 0px 4px 18px, rgba(0, 0, 0, 0.02) 0px 1px 3px;
+      --font-sans: "Noto Sans Thai", "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background-color: var(--surface);
+      color: var(--text);
+      font-family: var(--font-sans);
+      -webkit-font-smoothing: antialiased;
+      line-height: 1.5;
+    }
+
+    .frame {
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      box-sizing: border-box;
+    }
+
+    .deck {
+      width: min(calc(100vw - 32px), calc((100vh - 32px) * 16 / 9));
+      height: min(calc(100vh - 32px), calc((100vw - 32px) * 9 / 16));
+      aspect-ratio: 16 / 9;
+      background: var(--canvas);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      box-shadow: var(--shadow-card);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .slide {
+      display: none;
+      width: 100%;
+      height: 100%;
+      padding: 4.5% 6%;
+      grid-template-rows: auto 1fr auto;
+      gap: 22px;
+      box-sizing: border-box;
+    }
+
+    .slide.active {
+      display: grid;
+    }
+
+    .slide-header {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .marker-wrap {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .marker-pill {
+      font-size: 24px;
+      font-weight: 600;
+      color: var(--badge-blue-text);
+      background: var(--badge-blue-bg);
+      padding: 4px 16px;
+      border-radius: 9999px;
+      display: inline-block;
+      letter-spacing: -0.01em;
+    }
+
+    .marker-pill.gray {
+      color: var(--badge-gray-text);
+      background: var(--badge-gray-bg);
+    }
+
+    .marker-pill.green {
+      color: var(--badge-green-text);
+      background: var(--badge-green-bg);
+    }
+
+    .slide h1 {
+      font-size: clamp(38px, 3.8vw, 58px);
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      font-weight: 700;
+      color: var(--text);
+      margin: 0;
+    }
+
+    .slide-lead {
+      font-size: clamp(24px, 1.7vw, 28px);
+      line-height: 1.45;
+      color: var(--text-secondary);
+      margin: 0;
+    }
+
+    .slide-body {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 18px;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    .cards-grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+
+    .cards-grid-3 {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 16px;
+    }
+
+    .card {
+      background: var(--surface-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px 22px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .card.subtle {
+      background: var(--surface-subtle);
+    }
+
+    .card-title {
+      font-size: 26px;
+      font-weight: 700;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .card-text {
+      font-size: clamp(24px, 1.4vw, 25px);
+      line-height: 1.45;
+      color: var(--text-secondary);
+    }
+
+    .card-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .card-list li {
+      font-size: clamp(24px, 1.4vw, 25px);
+      line-height: 1.4;
+      color: var(--text-secondary);
+      position: relative;
+      padding-left: 22px;
+    }
+
+    .card-list li::before {
+      content: "•";
+      position: absolute;
+      left: 6px;
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    .data-item {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .data-label {
+      font-size: 24px;
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+
+    .data-val {
+      font-size: clamp(28px, 2.3vw, 36px);
+      font-weight: 700;
+      font-family: var(--font-mono);
+      color: var(--text);
+    }
+
+    .data-sub {
+      font-size: 24px;
+      color: var(--text-muted);
+      line-height: 1.35;
+    }
+
+    .callout {
+      background: var(--surface-subtle);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 22px 26px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .callout-title {
+      font-size: 26px;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .callout-body {
+      font-size: clamp(24px, 1.55vw, 27px);
+      line-height: 1.5;
+      color: var(--text-secondary);
+    }
+
+    .slide-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid var(--border-subtle);
+      padding-top: 14px;
+    }
+
+    .notice {
+      font-size: 24px;
+      color: var(--text-muted);
+    }
+
+    .controls {
+      position: absolute;
+      right: 4.5%;
+      bottom: 3.5%;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      z-index: 20;
+    }
+
+    .btn {
+      font-family: inherit;
+      font-size: 24px;
+      font-weight: 500;
+      background: #ffffff;
+      color: var(--text);
+      border: 1px solid var(--border);
+      border-radius: 9999px;
+      padding: 6px 18px;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.15s ease;
+      line-height: 1.2;
+    }
+
+    .btn:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .btn:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+    }
+
+    .slide-count {
+      font-size: 24px;
+      font-family: var(--font-mono);
+      color: var(--text-secondary);
+      font-weight: 500;
+      min-width: 65px;
+      text-align: center;
+    }
+
+    code {
+      font-family: var(--font-mono);
+      font-size: 24px;
+      background: var(--badge-gray-bg);
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: var(--text);
+    }
+
+    .badge-status {
+      font-size: 24px;
+      font-weight: 600;
+      color: var(--badge-green-text);
+      background: var(--badge-green-bg);
+      padding: 2px 10px;
+      border-radius: 4px;
+      display: inline-block;
+    }
+
+    @media print {
+      body, .frame {
+        background: #ffffff;
+        padding: 0;
+        display: block;
+        height: auto;
+      }
+      .deck {
+        width: 100vw;
+        height: 56.25vw;
+        border: none;
+        box-shadow: none;
+        border-radius: 0;
+      }
+      .slide {
+        display: grid !important;
+        break-after: page;
+        page-break-after: always;
+        height: 100vh;
+        padding: 50px 70px;
+      }
+      .controls {
+        display: none !important;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        transition: none !important;
+      }
+    }
+  .content-body,.slide-body{overflow-y:auto;scrollbar-width:thin;min-height:0}
+    </style>
+</head>
+<body>
+  <div class="frame">
+    <main class="deck" aria-live="off">
+
+      <!-- Slide 1: ภาพรวมสัปดาห์ที่ 10 -->
+      <section class="slide active" id="slide-1">
+        <header class="slide-header">
+          <div class="marker-wrap">
+            <span class="marker-pill">SPM WEEK 10</span>
+            <span class="marker-pill gray">ข้อมูลสมมติเพื่อการเรียน</span>
+          </div>
+          <h1>CCB, คำขอฉุกเฉิน CR-02 และ BUG-101</h1>
+          <p class="slide-lead">การควบคุมการเปลี่ยนแปลงฉุกเฉินตามมาตรฐาน ISO/IEC 14764, การประชุม CCB และการสืบสวนรากเหง้า BUG-101 ด้วย 5 Whys</p>
+        </header>
+        <div class="slide-body">
+          <div class="cards-grid-2">
+            <div class="card">
+              <div class="card-title">การควบคุมการเปลี่ยนแปลง (CCB)</div>
+              <ul class="card-list">
+                <li>สกัดกั้น Scope Creep ที่ก่อให้เกิดภาระงานล้นมือและทำให้ระบบล้มเหลว</li>
+                <li>ประเมินผลกระทบคำขอด่วน CR-02 (ส่งออกรายงาน CSV สินค้าสต็อกต่ำสำหรับ Excel)</li>
+                <li>ชั่งน้ำหนักระหว่าง Option A (อนุมัติใน S2) เทียบกับ Option B (เลื่อนไป S3)</li>
+              </ul>
+            </div>
+            <div class="card">
+              <div class="card-title">การสืบสวนและแก้ไขข้อบกพร่อง</div>
+              <ul class="card-list">
+                <li>ติดตามข้อบกพร่องวิกฤต BUG-101 (KeyError 'barcode' เมื่อโหลดข้อมูลเก่า)</li>
+                <li>วิเคราะห์หาต้นตอที่แท้จริงด้วยเทคนิค 5 Whys ตามมาตรฐานสากล</li>
+                <li>แก้ไขที่รากเหง้าในชั้น Repository พร้อมเขียน Defect-Driven Test เป็นเกราะถาวร</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <footer class="slide-footer">
+          <span class="notice">สไลด์สรุปประกอบรายวิชาการจัดการโครงการซอฟต์แวร์ [ข้อมูลสมมติเพื่อการเรียน]</span>
+        </footer>
+      </section>
+
+      <!-- Slide 2: คำขอฉุกเฉิน CR-02 และการจัดสรรงบสำรอง -->
+      <section class="slide" id="slide-2"><header class="slide-header"><div class="marker-wrap"><span class="marker-pill">สัปดาห์ที่ 10</span><span class="marker-pill gray">สารบัญ</span></div><h1>สารบัญสไลด์</h1><p class="slide-lead">กดหัวข้อเพื่อกระโดดไปสไลด์นั้น</p></header><div class="slide-body"><div class="card"><ul class="card-list"><li><a href="#slide-1">CCB, คำขอฉุกเฉิน CR-02 และ BUG-101</a></li><li><a href="#slide-2">การพิจารณาคำขอ CR-02 และการจัดสรรงบสำรอง</a></li><li><a href="#slide-3">การออกแบบและมติ CCB</a></li><li><a href="#slide-4">การสืบสวน BUG-101 ด้วยเทคนิค 5 Whys</a></li><li><a href="#slide-5">เปลี่ยนอย่างมีหลักฐาน แก้บั๊กที่ต้นตอ</a></li></ul></div></div><footer class="slide-footer"><span class="notice">กดหัวข้อเพื่อกระโดดไปสไลด์นั้น</span></footer></section>
+
+      <!-- Slide 3: BUG-101 5 Whys -->
+      <section class="slide" id="slide-3">
+        <header class="slide-header">
+          <div class="marker-wrap">
+            <span class="marker-pill">CCB &amp; CR-02</span>
+            <span class="marker-pill gray">ตัวเลขจำลอง</span>
+          </div>
+          <h1>การพิจารณาคำขอ CR-02 และการจัดสรรงบสำรอง</h1>
+          <p class="slide-lead">การประเมินภาระงาน 4.5 Man-Hours และการตัดสินใจเชิงบริหารของคณะกรรมการ CCB [ตัวเลขจำลอง]</p>
+        </header>
+        <div class="slide-body">
+          <div class="cards-grid-3">
+            <div class="card subtle">
+              <div class="data-item">
+                <div class="data-label">ประมาณการแรงงาน (Effort)</div>
+                <div class="data-val">4.5 ชม.</div>
+                <div class="data-sub">Senior Dev 2.0, Dev 1.0, QA 1.5 ชม.</div>
+              </div>
+            </div>
+            <div class="card subtle">
+              <div class="data-item">
+                <div class="data-label">ต้นทุนที่ต้องใช้ (Cost)</div>
+                <div class="data-val">1,350 บาท</div>
+                <div class="data-sub">คิดอัตราค่าแรงมาตรฐาน 300 บาท/ชม.</div>
+              </div>
+            </div>
+            <div class="card subtle">
+              <div class="data-item">
+                <div class="data-label">งบสำรองคงเหลือสุทธิ</div>
+                <div class="data-val">1,473 บาท</div>
+                <div class="data-sub">หักจาก Contingency Reserve เริ่มต้น 2,823 บาท</div>
+              </div>
+            </div>
+          </div>
+          </div>
+        <footer class="slide-footer">
+          <span class="notice">อ้างอิงเอกสาร: CCB_Meeting_Minutes.md และ CR-02_Impact_Decision_Form.md [ตัวเลขจำลอง]</span>
+        </footer>
+      </section>
+
+      <!-- Slide 4: ข้อสรุปและหลักการ -->
+      <section class="slide" id="slide-4">
+        <header class="slide-header">
+          <div class="marker-wrap">
+            <span class="marker-pill">CCB &amp; CR-02</span>
+            <span class="marker-pill gray">ตัวเลขจำลอง</span>
+          </div>
+          <h1>การออกแบบและมติ CCB</h1>
+          <p class="slide-lead">Clean Architecture และมติ Option A [ตัวเลขจำลอง]</p>
+        </header>
+        <div class="slide-body"><div class="slide-body"><div class="cards-grid-2">
+            <div class="card">
+              <div class="card-title">การออกแบบ Clean Architecture</div>
+              <ul class="card-list">
+                <li>สร้างคลาสแยกเฉพาะ CsvReportExporter แบบ Static Method ไร้ State</li>
+                <li>กำหนด Header: ProductID, ProductName, Barcode, Quantity, ReorderPoint, Price</li>
+                <li>ห้ามยัด import csv ปนใน ConsoleUI เพื่อไม่ทำลายโครงสร้างระบบ</li>
+              </ul>
+            </div>
+            <div class="card">
+              <div class="card-title">มติ CCB และการปรับเส้นฐาน</div>
+              <ul class="card-list">
+                <li>มติ Option A: อนุมัติใน Sprint 2 เพื่อส่งมอบ CSV ป้องกันสินค้าขาดสต็อก</li>
+                <li>บันทึกการเพิ่มงานบน Jira Burndown เป็น Scope Bump กะทันหัน</li>
+                <li>บันทึกการเบิกจ่ายเงินอย่างโปร่งใสลงใน Contingency Reserve Log</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        </div>
+        <footer class="slide-footer">
+          <span class="notice">อ้างอิงเอกสาร: CCB_Meeting_Minutes.md และ CR-02_Impact_Decision_Form.md [ตัวเลขจำลอง]</span>
+        </footer>
+      </section>
+
+      <!-- Controls -->
+      <div class="controls">
+        <a href="index.html" class="btn" title="กลับหน้าสรุปเนื้อหาสัปดาห์ 10">หน้าเนื้อหา</a>
+        <button type="button" class="btn" id="restart-btn">เริ่มใหม่</button>
+        <button type="button" class="btn" id="prev-btn" aria-label="สไลด์ก่อนหน้า">ก่อนหน้า</button>
+        <span class="slide-count" id="slide-counter">1 / 4</span><span class="sr-only" aria-live="polite" id="slide-live" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap"></span>
+        <button type="button" class="btn" id="next-btn" aria-label="สไลด์ถัดไป">ถัดไป</button>
+      </div>
+
+    </main>
+  </div>
+
+  <script>
+    (function() {
+      const slides = Array.from(document.querySelectorAll('.slide'));
+      const counter = document.getElementById('slide-counter');
+      const prevBtn = document.getElementById('prev-btn');
+      const nextBtn = document.getElementById('next-btn');
+      const storageKey = 'spm-site-agy-w10-slide';
+
+      let current = 0;
+      const fresh = /[?&]fresh=1/.test(location.search);
+      const hashMatch = /#slide-(\d+)/.exec(location.hash);
+      if (hashMatch) {
+        const h = parseInt(hashMatch[1], 10) - 1;
+        if (!isNaN(h) && h >= 0 && h < slides.length) {
+          current = h;
+        }
+      } else if (!fresh) {
+        const saved = localStorage.getItem(storageKey);
+        if (saved !== null) {
+          const parsed = parseInt(saved, 10);
+          if (!isNaN(parsed) && parsed >= 0 && parsed < slides.length) {
+            current = parsed;
+          }
+        }
+      }
+
+      function showSlide(index) {
+        if (index < 0) index = slides.length - 1;
+        if (index >= slides.length) index = 0;
+        current = index;
+
+        slides.forEach((slide, idx) => {
+          slide.classList.toggle('active', idx === current);
+        });
+
+        if (counter) {
+          counter.textContent = (current + 1) + ' / ' + slides.length;
+        }
+        try {
+          history.replaceState(null, '', '#slide-' + (current + 1));
+        } catch (e) {
+          // Ignore history errors
+        }
+        var live = document.getElementById('slide-live');
+        if (live) {
+          live.textContent = 'สไลด์ ' + (current + 1) + ' จาก ' + slides.length;
+        }
+
+        try {
+          localStorage.setItem(storageKey, current.toString());
+        } catch (e) {
+          // Ignore localStorage errors
+        }
+      }
+
+      if (prevBtn) {
+        prevBtn.addEventListener('click', () => showSlide(current - 1));
+      }
+      if (nextBtn) {
+        nextBtn.addEventListener('click', () => showSlide(current + 1));
+      }
+      const restartBtn = document.getElementById('restart-btn');
+      if (restartBtn) {
+        restartBtn.addEventListener('click', () => {
+          try { localStorage.removeItem(storageKey); } catch (e) {}
+          showSlide(0);
+        });
+      }
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowLeft') {
+          showSlide(current - 1);
+        } else if (e.key === 'ArrowRight' || e.key === ' ') {
+          e.preventDefault();
+          showSlide(current + 1);
+        }
+      });
+
+      showSlide(current);
+    })();
+  </script>
+    <script>window.addEventListener('hashchange',function(){location.reload();});</script>
+</body>
+</html>

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>สัปดาห์ที่ 9: EVM และการเปลี่ยนผ่านสปรินต์ | SPM</title>
+  <link rel="stylesheet" href="../../theme.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="../../index.html">
+        <span class="brand-icon">SPM</span>
+        <span>CLI Inventory Management</span>
+      </a>
+      <nav class="nav-links">
+        <a class="nav-item" href="../../index.html">หน้าแรก</a>
+        <a class="nav-item" href="../sprint-report.html">รายงานปิด Sprint 1</a>
+        <details class="nav-dropdown">
+          <summary class="nav-dropdown-summary">
+            <span>เอกสารสัปดาห์ (1-12)</span>
+          </summary>
+          <div class="dropdown-menu">
+            <a href="../week-1/index.html">สัปดาห์ 1 <small>Charter &amp; Legacy</small></a>
+            <a href="../week-2/index.html">สัปดาห์ 2 <small>DFD &amp; Blueprint</small></a>
+            <a href="../week-3/index.html">สัปดาห์ 3 <small>DoD &amp; RACI</small></a>
+            <a href="../week-4/index.html">สัปดาห์ 4 <small>Refactor &amp; Test</small></a>
+            <a href="../week-5/index.html">สัปดาห์ 5 <small>Architecture &amp; Budget</small></a>
+            <a href="../week-6/index.html">สัปดาห์ 6 <small>DoD &amp; To-Be</small></a>
+            <a href="../week-7/index.html">สัปดาห์ 7 <small>Baseline &amp; Quality</small></a>
+            <a href="../week-8/index.html">สัปดาห์ 8 <small>CR-01 &amp; Tracking</small></a>
+            <a href="../week-9/index.html">สัปดาห์ 9 <small>EVM &amp; Transition</small></a>
+            <a href="../week-10/index.html">สัปดาห์ 10 <small>CCB &amp; BUG-101</small></a>
+            <a href="../week-11/index.html">สัปดาห์ 11 <small>Hardening &amp; Freeze</small></a>
+            <a href="../week-12/index.html">สัปดาห์ 12 <small>UAT &amp; Close-out</small></a>
+          </div>
+        </details>
+      </nav>
+    </div>
+  </header>
+
+  <main class="main-wrapper">
+    <div class="content-container">
+      <nav class="breadcrumb">
+        <a href="../../index.html">หน้าแรก</a>
+        <span class="breadcrumb-sep">/</span>
+        <a href="../../index.html#weeks-section">เอกสารรายสัปดาห์</a>
+        <span class="breadcrumb-sep">/</span>
+        <span>สัปดาห์ที่ 9</span>
+      </nav>
+
+      <div class="page-header-block">
+        <div class="notice-pill">ข้อมูลสมมติเพื่อการเรียน · W9 Documentation</div>
+        <h1 class="page-title">สัปดาห์ที่ 9: การวิเคราะห์ EVM, Retrospective และการเปลี่ยนผ่านสปรินต์</h1>
+        <p class="page-desc">วิเคราะห์ดัชนี Earned Value Management (EVM) ของ Sprint 1, สรุปผลการทบทวนสปรินต์ (Retrospective) และวางแผนเปลี่ยนผ่านสู่ Sprint 2</p>
+        <div class="page-header-actions">
+          <a class="btn btn-secondary" href="../week-9/slides.html">เปิดสไลด์ประกอบสัปดาห์ 9 &rarr;</a>
+        </div>
+      </div>
+
+      <section>
+        <h2>1. การวิเคราะห์ EVM ปิดสปรินต์ที่ 1 (EVM Analysis Sprint 1)</h2>
+        <div class="notice-pill">ข้อมูลสมมติเพื่อการเรียน · Fictional Educational Data</div>
+        <p>สรุปตัวเลขนำเข้าและผลต่างจากการดำเนินงานจริงใน Sprint 1 (เอกสาร <code>EVM_Sprint1.md</code>):</p>
+        
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>ตัวแปร EVM</th>
+                <th>รายละเอียดการคำนวณ</th>
+                <th>มูลค่า (บาท)</th>
+                <th>การตีความ</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Planned Value (PV)</td>
+                <td>ตั้งเป้า 4 Tasks งบ Task ละ 1,000 บาท</td>
+                <td>4,000</td>
+                <td>แผนงานเริ่มต้น</td>
+              </tr>
+              <tr>
+                <td>Earned Value (EV)</td>
+                <td>ทำเสร็จสมบูรณ์ผ่าน PyTest จำนวน 3 Tasks</td>
+                <td>3,000</td>
+                <td>มูลค่างานที่ส่งมอบจริง</td>
+              </tr>
+              <tr>
+                <td>Actual Cost (AC)</td>
+                <td>จ่ายค่าแรงจริงจาก Log Work บน Jira</td>
+                <td>4,200</td>
+                <td>ต้นทุนที่ใช้จริง</td>
+              </tr>
+              <tr>
+                <td>Schedule Variance (SV)</td>
+                <td>$SV = EV - PV = 3,000 - 4,000$</td>
+                <td><strong>-1,000</strong></td>
+                <td><strong>ล่าช้ากว่าแผน</strong></td>
+              </tr>
+              <tr>
+                <td>Cost Variance (CV)</td>
+                <td>$CV = EV - AC = 3,000 - 4,200$</td>
+                <td><strong>-1,200</strong></td>
+                <td><strong>เกินงบประมาณ</strong></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p><strong>สาเหตุหลัก:</strong> พบหนี้ทางเทคนิคที่ซ่อนอยู่ใน <code>app_v1.py</code> และเสียเวลามากกับการแก้ Merge Conflict ส่งผลให้ SV และ CV ติดลบ ทีมจึงอนุมัติดึงเงินสำรอง 1,200 บาทมาชดเชย</p>
+      </section>
+
+      <section>
+        <h2>2. สรุปผลการทบทวนสปรินต์ (Retrospective: Mad / Sad / Glad)</h2>
+        <div class="callout">
+          <div class="callout-badge">RETRO</div>
+          <div class="callout-content">
+            <ul>
+              <li><strong>Mad:</strong> เสียเวลาแก้ไขปัญหา Merge Conflict อันเนื่องมาจากการรื้อโครงสร้างใหญ่พร้อมกันหลายสายงาน</li>
+              <li><strong>Sad:</strong> ประเมินเวลาทำงาน Refactoring ต่ำเกินไปเพราะมีหนี้เทคนิคเดิมตกค้าง</li>
+              <li><strong>Glad:</strong> ชุดทดสอบ PyTest ทำหน้าที่ตรวจจับข้อผิดพลาดได้ก่อนส่งมอบงาน และทีมร่วมมือกันแก้ไข conflict ได้สำเร็จ</li>
+              <li><strong>Action Items สู่ Sprint 2:</strong> แจ้ง blocker ใน Daily Standup ทันที, บังคับตรวจ PR ภายใน 12 ชั่วโมง และใช้กระบวนการ Test-Driven Refinement (TDR)</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>3. การเปลี่ยนผ่านสปรินต์ (Sprint Transition: S1 &rarr; S2)</h2>
+        <ul>
+          <li><strong>Team Velocity:</strong> จากการปิด Sprint 1 ทำได้จริง <strong>15 Points</strong> (จากเป้า 20 Points) จึงกำหนดให้การดึงงานเข้า Sprint 2 ต้องไม่เกิน 15 Points เพื่อป้องกันทีมล้า</li>
+          <li><strong>การผสานสายงาน (Merge Workflow):</strong> ย้ายโค้ด <code>feature/refactor-core-architecture</code> เข้า <code>develop</code> ด้วย 5 ขั้นตอนระวัง Conflict และรัน Full Regression Suite ผ่าน 100%</li>
+          <li><strong>เปิด Sprint 2 ด้วย CR-01 แบบ TDR:</strong> แตก Branch <code>feature/cr01-barcode-reorder-point</code> และใช้วงจร TDR (Red-Green-Refactor) ในการพัฒนา</li>
+        </ul>
+      </section>
+
+      <div class="deck-banner">
+        <div>
+          <div class="deck-banner-title">สไลด์บรรยายสัปดาห์ที่ 9</div>
+          <div class="deck-banner-sub">ดูสไลด์สรุป EVM Sprint 1, ผล Retrospective และการส่งต่องานสู่ Sprint 2</div>
+        </div>
+        <a class="btn btn-primary" href="../week-9/slides.html">เปิดสไลด์ W9 &rarr;</a>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div>แหล่งข้อมูล: <code>Sprint1/week-9/</code> · ข้อมูลสมมติเพื่อการเรียน</div>
+      <div class="footer-links">
+        <a href="../week-8/index.html">&larr; สัปดาห์ที่ 8</a>
+        <a href="../week-10/index.html">สัปดาห์ที่ 10 &rarr;</a>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

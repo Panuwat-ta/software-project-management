@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>สัปดาห์ที่ 4: การทดสอบและปรับปรุงโค้ด | SPM</title>
+  <link rel="stylesheet" href="../../theme.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="../../index.html">
+        <span class="brand-icon">SPM</span>
+        <span>CLI Inventory Management</span>
+      </a>
+      <nav class="nav-links">
+        <a class="nav-item" href="../../index.html">หน้าแรก</a>
+        <a class="nav-item" href="../sprint-report.html">รายงานปิด Sprint 1</a>
+        <details class="nav-dropdown">
+          <summary class="nav-dropdown-summary">
+            <span>เอกสารสัปดาห์ (1-12)</span>
+          </summary>
+          <div class="dropdown-menu">
+            <a href="../week-1/index.html">สัปดาห์ 1 <small>Charter &amp; Legacy</small></a>
+            <a href="../week-2/index.html">สัปดาห์ 2 <small>DFD &amp; Blueprint</small></a>
+            <a href="../week-3/index.html">สัปดาห์ 3 <small>DoD &amp; RACI</small></a>
+            <a href="../week-4/index.html">สัปดาห์ 4 <small>Refactor &amp; Test</small></a>
+            <a href="../week-5/index.html">สัปดาห์ 5 <small>Architecture &amp; Budget</small></a>
+            <a href="../week-6/index.html">สัปดาห์ 6 <small>DoD &amp; To-Be</small></a>
+            <a href="../week-7/index.html">สัปดาห์ 7 <small>Baseline &amp; Quality</small></a>
+            <a href="../week-8/index.html">สัปดาห์ 8 <small>CR-01 &amp; Tracking</small></a>
+            <a href="../week-9/index.html">สัปดาห์ 9 <small>EVM &amp; Transition</small></a>
+            <a href="../week-10/index.html">สัปดาห์ 10 <small>CCB &amp; BUG-101</small></a>
+            <a href="../week-11/index.html">สัปดาห์ 11 <small>Hardening &amp; Freeze</small></a>
+            <a href="../week-12/index.html">สัปดาห์ 12 <small>UAT &amp; Close-out</small></a>
+          </div>
+        </details>
+      </nav>
+    </div>
+  </header>
+
+  <main class="main-wrapper">
+    <div class="content-container">
+      <nav class="breadcrumb">
+        <a href="../../index.html">หน้าแรก</a>
+        <span class="breadcrumb-sep">/</span>
+        <a href="../../index.html#weeks-section">เอกสารรายสัปดาห์</a>
+        <span class="breadcrumb-sep">/</span>
+        <span>สัปดาห์ที่ 4</span>
+      </nav>
+
+      <div class="page-header-block">
+        <div class="notice-pill">ข้อมูลสมมติเพื่อการเรียน · W4 Documentation</div>
+        <h1 class="page-title">สัปดาห์ที่ 4: การทดสอบและการแก้ไขปรับปรุงโค้ด (Testing &amp; Code Refinement)</h1>
+        <p class="page-desc">สอบทานความถูกต้องของระบบด้วยการทดสอบอัตโนมัติ (Automated Unit Testing), ส่งออกผลทดสอบลง <code>test.json</code> และปรับแต่งโค้ดเวอร์ชัน refactor</p>
+        <div class="page-header-actions">
+          <a class="btn btn-secondary" href="../week-4/slides.html">เปิดสไลด์ประกอบสัปดาห์ 4 &rarr;</a>
+        </div>
+      </div>
+
+      <section>
+        <h2>1. ผลการทดสอบอัตโนมัติ (Automated Test Execution)</h2>
+        <p>ชุดทดสอบหลัก <code>test_app.py</code> ที่พัฒนาโดย QA (เอกพันธ์) มุ่งเน้นการทดสอบพฤติกรรมหลักของ <code>InventoryManager</code> และ <code>Product</code> โดยผลการรันทดสอบบนเครื่องและการบันทึกลง <code>test.json</code> พบว่าผ่าน 100% (5 passed):</p>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Test Case</th>
+                <th>พฤติกรรมที่ทดสอบ</th>
+                <th>ผลลัพธ์</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>test_add_or_update_product</code></td>
+                <td>ทดสอบการเพิ่มสินค้าใหม่และการแก้ไขสินค้าเดิม ตรวจสอบชื่อ ปริมาณ และราคา</td>
+                <td><span class="badge badge-green">PASSED</span></td>
+              </tr>
+              <tr>
+                <td><code>test_cut_stock_success</code></td>
+                <td>ทดสอบการหักสต็อกเมื่อสินค้ามีเพียงพอ (Happy Path)</td>
+                <td><span class="badge badge-green">PASSED</span></td>
+              </tr>
+              <tr>
+                <td><code>test_cut_stock_not_enough</code></td>
+                <td>ทดสอบการตัดสต็อกเกินจำนวนคงเหลือ (ป้องกันข้อผิดพลาดค่าติดลบ)</td>
+                <td><span class="badge badge-green">PASSED</span></td>
+              </tr>
+              <tr>
+                <td><code>test_cut_stock_not_found</code></td>
+                <td>ทดสอบการตัดสต็อกสินค้าที่ไม่มีอยู่ในระบบ (Key Error Prevention)</td>
+                <td><span class="badge badge-green">PASSED</span></td>
+              </tr>
+              <tr>
+                <td><code>test_get_total_inventory_value</code></td>
+                <td>ทดสอบการคำนวณมูลค่ารวมคลังสินค้า ($\sum \text{qty} \times \text{price}$)</td>
+                <td><span class="badge badge-green">PASSED</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section>
+        <h2>2. รายงานผลการทดสอบเชิงโครงสร้าง (test.json)</h2>
+        <p>เพื่อตอบสนองต่อข้อกำหนดใน Definition of Done (DoD) ระบบทดสอบอัตโนมัติถูกตั้งค่าให้ออกรายงานผลการรันในรูปแบบ JSON เพื่อให้สามารถส่งต่อหรือผสานเข้ากับระบบ CI/CD ได้โดยสะดวก:</p>
+        <pre><code>{
+  "timestamp": "2026-08-10T14:30:00",
+  "test_framework": "pytest",
+  "total_tests": 5,
+  "passed": 5,
+  "failed": 0,
+  "status": "GREEN",
+  "coverage_target": "InventoryManager & Product Core Logic"
+}</code></pre>
+      </section>
+
+      <section>
+        <h2>3. การตรวจสอบความสอดคล้องของโค้ด (Code Parity Check)</h2>
+        <div class="callout">
+          <div class="callout-badge">FINDING</div>
+          <div class="callout-content">
+            จากการตรวจเทียบไฟล์ซอร์สโค้ดในโครงการ พบว่าไฟล์ <code>week-3/app_v2.py</code>, <code>week-4/app.py</code> และ <code>app.py</code> ที่รากของรีพอซิทอรี เป็นไฟล์ที่เหมือนกันทุกไบต์ (Exact Match) ซึ่งแสดงถึงความเสถียรของโค้ดในระยะการ Refactor เบื้องต้นก่อนเริ่มรับ Change Request ในสัปดาห์ถัดๆ ไป
+          </div>
+        </div>
+      </section>
+
+      <div class="deck-banner">
+        <div>
+          <div class="deck-banner-title">สไลด์บรรยายสัปดาห์ที่ 4</div>
+          <div class="deck-banner-sub">ดูสไลด์สรุปผลการรัน PyTest 5 passed และระบบรายงานผล test.json</div>
+        </div>
+        <a class="btn btn-primary" href="../week-4/slides.html">เปิดสไลด์ W4 &rarr;</a>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div>แหล่งข้อมูล: <code>Sprint1/week-4/</code> · ข้อมูลสมมติเพื่อการเรียน</div>
+      <div class="footer-links">
+        <a href="../week-3/index.html">&larr; สัปดาห์ที่ 3</a>
+        <a href="../week-5/index.html">สัปดาห์ที่ 5 &rarr;</a>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>สัปดาห์ที่ 3: พัฒนาโค้ดและเกณฑ์งาน | SPM</title>
+  <link rel="stylesheet" href="../../theme.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="../../index.html">
+        <span class="brand-icon">SPM</span>
+        <span>CLI Inventory Management</span>
+      </a>
+      <nav class="nav-links">
+        <a class="nav-item" href="../../index.html">หน้าแรก</a>
+        <a class="nav-item" href="../sprint-report.html">รายงานปิด Sprint 1</a>
+        <details class="nav-dropdown">
+          <summary class="nav-dropdown-summary">
+            <span>เอกสารสัปดาห์ (1-12)</span>
+          </summary>
+          <div class="dropdown-menu">
+            <a href="../week-1/index.html">สัปดาห์ 1 <small>Charter &amp; Legacy</small></a>
+            <a href="../week-2/index.html">สัปดาห์ 2 <small>DFD &amp; Blueprint</small></a>
+            <a href="../week-3/index.html">สัปดาห์ 3 <small>DoD &amp; RACI</small></a>
+            <a href="../week-4/index.html">สัปดาห์ 4 <small>Refactor &amp; Test</small></a>
+            <a href="../week-5/index.html">สัปดาห์ 5 <small>Architecture &amp; Budget</small></a>
+            <a href="../week-6/index.html">สัปดาห์ 6 <small>DoD &amp; To-Be</small></a>
+            <a href="../week-7/index.html">สัปดาห์ 7 <small>Baseline &amp; Quality</small></a>
+            <a href="../week-8/index.html">สัปดาห์ 8 <small>CR-01 &amp; Tracking</small></a>
+            <a href="../week-9/index.html">สัปดาห์ 9 <small>EVM &amp; Transition</small></a>
+            <a href="../week-10/index.html">สัปดาห์ 10 <small>CCB &amp; BUG-101</small></a>
+            <a href="../week-11/index.html">สัปดาห์ 11 <small>Hardening &amp; Freeze</small></a>
+            <a href="../week-12/index.html">สัปดาห์ 12 <small>UAT &amp; Close-out</small></a>
+          </div>
+        </details>
+      </nav>
+    </div>
+  </header>
+
+  <main class="main-wrapper">
+    <div class="content-container">
+      <nav class="breadcrumb">
+        <a href="../../index.html">หน้าแรก</a>
+        <span class="breadcrumb-sep">/</span>
+        <a href="../../index.html#weeks-section">เอกสารรายสัปดาห์</a>
+        <span class="breadcrumb-sep">/</span>
+        <span>สัปดาห์ที่ 3</span>
+      </nav>
+
+      <div class="page-header-block">
+        <div class="notice-pill">ข้อมูลสมมติเพื่อการเรียน · W3 Documentation</div>
+        <h1 class="page-title">สัปดาห์ที่ 3: ขั้นลงมือพัฒนาโค้ดใหม่ (Implementation &amp; Testing Setup)</h1>
+        <p class="page-desc">พัฒนาโค้ดฉบับปรับปรุง <code>app_v2.py</code> ตาม Blueprint กำหนดเกณฑ์ความสำเร็จ Definition of Done (DoD) และจัดทำตาราง RACI Matrix</p>
+        <div class="page-header-actions">
+          <a class="btn btn-secondary" href="../week-3/slides.html">เปิดสไลด์ประกอบสัปดาห์ 3 &rarr;</a>
+        </div>
+      </div>
+
+      <section>
+        <h2>1. เกณฑ์ความสำเร็จของชิ้นงาน (Definition of Done - DoD)</h2>
+        <p>เอกสาร <code>dod.md</code> ระบุข้อตกลงและมาตรฐานของกลุ่ม ชิ้นงานย่อยจะถือว่าเสร็จสมบูรณ์เมื่อผ่านเกณฑ์ครบทุกข้อ:</p>
+        <ul>
+          <li><strong>1. ผ่านการทดสอบอัตโนมัติ 100% (PyTest Passed):</strong> โค้ดใหม่ต้องรันผ่านชุดทดสอบทั้งหมด ไฟเขียวครบทุกเคส และสามารถบันทึกรายงานลง <code>test.json</code> ได้ถูกต้อง</li>
+          <li><strong>2. เขียนโค้ดตามมาตรฐานการออกแบบ (Code Standards):</strong> ปรับโครงสร้างเป็นแบบ OOP ตาม Blueprint และตั้งชื่อตัวแปร ฟังก์ชัน คลาสตามมาตรฐาน PEP 8</li>
+          <li><strong>3. ความปลอดภัยและดักจับข้อผิดพลาด (Error Handling &amp; Integrity):</strong> มีระบบดักจับข้อผิดพลาดจากฝั่งผู้ใช้ไม่ให้แอปพลิเคชันล่ม และใช้กลไก Atomic Save (<code>os.replace</code>) ในการบันทึกข้อมูล</li>
+          <li><strong>4. อัปเดตเอกสารคู่มือครบถ้วน (Documentation Updated):</strong> อธิบายการทำงานใน Docstring และอัปเดตเอกสาร Markdown ให้สอดคล้องกัน</li>
+          <li><strong>5. ผ่านการรีวิวและอนุมัติ (Code Review &amp; Approval):</strong> QA ทดสอบควบคู่กับระบบแมนนวลไม่พบ Critical Bug และได้รับการกด Approve จาก Tech Lead</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>2. ตารางกำหนดบทบาทหน้าที่ (RACI Matrix)</h2>
+        <p>อ้างอิงจาก <code>raci.md</code> สำหรับชิ้นงานย่อยในการวิวัฒนาการระบบ:</p>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>ชิ้นงานย่อย (Task)</th>
+                <th>ภานุวัฒน์ (PM/Dev)</th>
+                <th>เอกพันธ์ (QA/Tester)</th>
+                <th>ณฐภาพ (Tech Lead)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1. เขียนโค้ดแก้บั๊ก Choice 2 (Add/Update)</td>
+                <td><strong>R (ผู้ปฏิบัติงาน)</strong></td>
+                <td>C (ผู้ให้คำปรึกษา)</td>
+                <td><strong>A (ผู้อนุมัติ)</strong></td>
+              </tr>
+              <tr>
+                <td>2. ปรับโครงสร้างโค้ดเป็นแบบ OOP/MVC</td>
+                <td><strong>R (ผู้ปฏิบัติงาน)</strong></td>
+                <td>I (ผู้รับทราบ)</td>
+                <td><strong>A (ผู้อนุมัติ)</strong></td>
+              </tr>
+              <tr>
+                <td>3. กด Approve รวมสายโค้ดเข้าคลังหลัก (Merge)</td>
+                <td>I (ผู้รับทราบ)</td>
+                <td>I (ผู้รับทราบ)</td>
+                <td><strong>R, A (ตรวจและอนุมัติ)</strong></td>
+              </tr>
+              <tr>
+                <td>4. พัฒนาสคริปต์ Automated Test (PyTest)</td>
+                <td>C (ผู้ให้คำปรึกษา)</td>
+                <td><strong>R (ผู้ปฏิบัติงาน)</strong></td>
+                <td><strong>A (ผู้อนุมัติ)</strong></td>
+              </tr>
+              <tr>
+                <td>5. เปลี่ยนผ่านระบบฐานข้อมูลเป็น SQLite</td>
+                <td><strong>R (ผู้ปฏิบัติงาน)</strong></td>
+                <td>C (ผู้ให้คำปรึกษา)</td>
+                <td><strong>A (ผู้อนุมัติ)</strong></td>
+              </tr>
+              <tr>
+                <td>6. เพิ่มฟีเจอร์ระบบสมาชิก (Member Discount)</td>
+                <td><strong>R (ผู้ปฏิบัติงาน)</strong></td>
+                <td>C (ผู้ให้คำปรึกษา)</td>
+                <td><strong>A (ผู้อนุมัติ)</strong></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section>
+        <h2>3. สถาปัตยกรรมโค้ด app_v2.py</h2>
+        <p>ในสัปดาห์นี้ โค้ดได้รับการปรับปรุงสู่ <code>app_v2.py</code> โดยยกเลิกการใช้ <code>global x</code> และแทนที่ด้วย 3 คลาสหลัก:</p>
+        <ul>
+          <li><code>class Product:</code> ห่อหุ้มข้อมูลสินค้า (ID, Name, Quantity, Price, Category) รองรับเมธอด <code>to_dict()</code> และ <code>from_dict()</code> พร้อม Fallback</li>
+          <li><code>class InventoryManager:</code> บริหารจัดการสต็อกสินค้าในหน่วยความจำ มีเมธอด <code>add_or_update_product()</code>, <code>cut_stock()</code>, <code>get_total_inventory_value()</code> และเซฟไฟล์ผ่านไฟล์ชั่วคราวด้วย <code>os.replace</code></li>
+          <li><code>class InventoryCLI:</code> ชั้นแสดงผลเมนูและรับข้อมูลพร้อมระบบตรวจสอบความถูกต้อง (Input Validation)</li>
+        </ul>
+      </section>
+
+      <div class="deck-banner">
+        <div>
+          <div class="deck-banner-title">สไลด์บรรยายสัปดาห์ที่ 3</div>
+          <div class="deck-banner-sub">ดูสไลด์สรุปเกณฑ์ DoD, ตาราง RACI และการเปลี่ยนผ่านสู่ OOP</div>
+        </div>
+        <a class="btn btn-primary" href="../week-3/slides.html">เปิดสไลด์ W3 &rarr;</a>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div>แหล่งข้อมูล: <code>Sprint1/week-3/</code> · ข้อมูลสมมติเพื่อการเรียน</div>
+      <div class="footer-links">
+        <a href="../week-2/index.html">&larr; สัปดาห์ที่ 2</a>
+        <a href="../week-4/index.html">สัปดาห์ที่ 4 &rarr;</a>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

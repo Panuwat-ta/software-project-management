@@ -1,597 +1,305 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="th">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Project Documentation Portal</title>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Taviraj:wght@500;600;700&family=Sarabun:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap"
-    rel="stylesheet">
-  <style>
-    :root {
-      --ink: #12172B;
-      --ink-soft: #1C2340;
-      --paper: #F6F4EE;
-      --paper-warm: #EFE9DA;
-      --rule: #DBD5C6;
-      --indigo: #3D4B94;
-      --indigo-deep: #2A3570;
-      --amber: #C1832A;
-      --amber-soft: rgba(193, 131, 42, .14);
-      --text-main: #1B1F2B;
-      --text-muted: #6B6F7D;
-    }
-
-    * {
-      box-sizing: border-box;
-      scrollbar-width: thin;
-      scrollbar-color: rgba(107, 111, 125, 0.4) transparent;
-    }
-
-    ::-webkit-scrollbar {
-      width: 6px;
-      height: 6px;
-    }
-
-    ::-webkit-scrollbar-track {
-      background: transparent;
-    }
-
-    ::-webkit-scrollbar-thumb {
-      background: rgba(107, 111, 125, 0.3);
-      border-radius: 4px;
-    }
-
-    ::-webkit-scrollbar-thumb:hover {
-      background: rgba(107, 111, 125, 0.5);
-    }
-
-    body {
-      min-width: 320px;
-      height: 100vh;
-      margin: 0;
-      overflow: hidden;
-      color: var(--text-main);
-      font-family: 'Sarabun', sans-serif;
-      background-color: var(--paper);
-      background-image: radial-gradient(circle at 1px 1px, oklch(.47 .06 271 / .13) 1px, transparent 0);
-      background-size: 18px 18px;
-    }
-
-    .portal {
-      display: grid;
-      grid-template-columns: 292px minmax(0, 1fr);
-      height: 100vh;
-    }
-
-    .sidebar {
-      position: relative;
-      z-index: 2;
-      display: flex;
-      flex-direction: column;
-      padding: 30px 18px 20px;
-      overflow-y: auto;
-      color: var(--paper);
-      background: var(--ink);
-    }
-
-    .brand {
-      padding: 4px 14px 28px;
-      border-bottom: 1px solid rgb(246 244 238 / .16);
-    }
-
-    .brand-mark,
-    .section-label,
-    .doc-number {
-      font: 500 .75rem/1.4 'IBM Plex Mono', monospace;
-      letter-spacing: .12em;
-      text-transform: uppercase;
-    }
-
-    .brand-mark {
-      color: var(--amber);
-    }
-
-    .brand h1 {
-      margin: 8px 0 0;
-      color: var(--paper);
-      font: 600 1.85rem/1.1 'Taviraj', serif;
-    }
-
-    .project-name {
-      margin: 8px 0 0;
-      color: rgb(246 244 238 / .68);
-      font-size: .85rem;
-      line-height: 1.45;
-    }
-
-    .nav-group+.nav-group {
-      margin-top: 20px;
-      padding-top: 18px;
-      border-top: 1px solid rgb(246 244 238 / .14);
-    }
-
-    .nav-section {
-      display: block;
-      margin: 0 12px 8px;
-      color: rgb(246 244 238 / .48);
-      font: 500 .75rem/1.3 'IBM Plex Mono', monospace;
-      letter-spacing: .1em;
-      text-transform: uppercase;
-    }
-
-    .nav-list {
-      display: grid;
-      gap: 5px;
-      margin: 0;
-      padding: 0;
-      list-style: none;
-    }
-
-    .nav-item {
-      position: relative;
-      display: flex;
-      gap: 12px;
-      align-items: center;
-      width: 100%;
-      min-height: 54px;
-      padding: 6px 10px;
-      color: rgb(246 244 238 / .75);
-      text-align: left;
-      cursor: pointer;
-      background: transparent;
-      border: 0;
-      border-left: 3px solid transparent;
-      font: 500 .95rem/1.2 'Sarabun', sans-serif;
-      transition: background .3s cubic-bezier(.2, .8, .2, 1), color .3s ease, border-color .3s ease;
-    }
-
-    .nav-item:hover,
-    .nav-item.is-active {
-      color: var(--paper);
-      background: var(--ink-soft);
-      border-left-color: var(--amber);
-    }
-
-    .stamp {
-      display: grid;
-      flex: 0 0 32px;
-      width: 32px;
-      height: 32px;
-      place-items: center;
-      color: rgb(246 244 238 / .45);
-      font: 500 .75rem 'IBM Plex Mono', monospace;
-      letter-spacing: .02em;
-      border: 1px solid rgb(246 244 238 / .15);
-      border-radius: 4px;
-      transition: transform .3s cubic-bezier(.2, .8, .2, 1), color .3s ease, border-color .3s ease, background .3s ease;
-    }
-
-    .nav-item:hover .stamp,
-    .nav-item.is-active .stamp {
-      color: var(--ink);
-      background: var(--amber);
-      border-color: var(--amber);
-      transform: rotate(-7deg);
-    }
-
-    .nav-copy {
-      display: grid;
-      gap: 2px;
-    }
-
-    .nav-phase {
-      color: inherit;
-    }
-
-    .nav-detail {
-      color: rgb(246 244 238 / .5);
-      font-size: .75rem;
-    }
-
-    .sidebar-footer {
-      margin-top: auto;
-      padding: 18px 14px 0;
-      color: rgb(246 244 238 / .47);
-      border-top: 1px solid rgb(246 244 238 / .16);
-      font: 400 .75rem/1.55 'IBM Plex Mono', monospace;
-      letter-spacing: .03em;
-    }
-
-    main {
-      display: grid;
-      grid-template-rows: auto minmax(0, 1fr);
-      min-width: 0;
-      min-height: 100vh;
-    }
-
-    .topbar {
-      display: flex;
-      gap: 20px;
-      align-items: center;
-      justify-content: space-between;
-      padding: 20px clamp(20px, 4vw, 48px);
-      background: var(--paper-warm);
-      border-bottom: 1px solid var(--rule);
-    }
-
-    .eyebrow {
-      margin: 0 0 5px;
-      color: var(--indigo);
-      font: 500 .75rem/1.3 'IBM Plex Mono', monospace;
-      letter-spacing: .12em;
-      text-transform: uppercase;
-    }
-
-    .page-title {
-      margin: 0;
-      color: var(--text-main);
-      font: 600 1.85rem/1.15 'Taviraj', serif;
-    }
-
-    .topbar-actions {
-      display: flex;
-      flex: 0 0 auto;
-      gap: 10px;
-      align-items: center;
-    }
-
-    .doc-number {
-      padding: 8px 10px;
-      color: var(--indigo-deep);
-      border: 1px solid var(--rule);
-      background: var(--paper);
-    }
-
-    .fullscreen-button {
-      min-height: 44px;
-      padding: 0 14px;
-      color: var(--indigo-deep);
-      cursor: pointer;
-      background: var(--paper);
-      border: 1px solid var(--rule);
-      border-radius: 999px;
-      font: 500 .75rem/1 'IBM Plex Mono', monospace;
-      letter-spacing: .06em;
-      text-transform: uppercase;
-      transition: background .25s ease, border-color .25s ease, color .25s ease, transform .25s ease;
-    }
-
-    .fullscreen-button:hover {
-      color: var(--ink);
-      background: var(--amber);
-      border-color: var(--amber);
-      transform: translateY(-2px);
-    }
-
-    .viewer {
-      position: relative;
-      min-height: 0;
-      padding: clamp(16px, 2.5vw, 32px);
-    }
-
-    iframe {
-      display: block;
-      width: 100%;
-      height: 100%;
-      min-height: 540px;
-      background: transparent;
-      border: none;
-      border-radius: 0;
-      box-shadow: none;
-      opacity: 1;
-      transform: translateY(0);
-      transition: opacity .3s ease, transform .3s ease;
-    }
-
-    iframe.is-loading {
-      opacity: 0;
-      transform: translateY(8px);
-    }
-
-    .loader {
-      position: absolute;
-      z-index: 3;
-      top: 50%;
-      left: 50%;
-      display: grid;
-      width: 66px;
-      height: 66px;
-      place-items: center;
-      opacity: 0;
-      pointer-events: none;
-      background: var(--paper);
-      border: 1px solid var(--rule);
-      border-radius: 50%;
-      box-shadow: 0 10px 25px rgb(18 23 43 / .14);
-      transform: translate(-50%, -50%) scale(.9);
-      transition: opacity .2s ease, transform .2s ease;
-    }
-
-    .loader.is-visible {
-      opacity: 1;
-      transform: translate(-50%, -50%) scale(1);
-    }
-
-    .loader::after {
-      width: 24px;
-      height: 24px;
-      content: '';
-      border: 3px solid var(--rule);
-      border-top-color: var(--amber);
-      border-radius: 50%;
-      animation: spin .7s linear infinite;
-    }
-
-    .viewer:fullscreen {
-      display: block;
-      width: 100vw;
-      height: 100vh;
-      padding: 20px;
-      background: var(--paper);
-    }
-
-    .viewer:fullscreen iframe {
-      width: 100%;
-      height: 100%;
-      min-height: 0;
-      border-radius: 12px;
-    }
-
-    @keyframes spin {
-      to {
-        transform: rotate(1turn);
-      }
-    }
-
-    button:focus-visible {
-      outline: 3px solid var(--amber);
-      outline-offset: 3px;
-    }
-
-    @media (max-width:899px) {
-      .portal {
-        display: block;
-      }
-
-      .sidebar {
-        position: sticky;
-        top: 0;
-        padding: 12px 14px;
-        overflow: hidden;
-      }
-
-      .brand {
-        display: flex;
-        gap: 10px;
-        align-items: baseline;
-        padding: 0 4px 10px;
-        border: 0;
-      }
-
-      .brand h1 {
-        margin: 0;
-        font-size: 1.25rem;
-      }
-
-      .project-name,
-      .sidebar-footer,
-      .nav-section {
-        display: none;
-      }
-
-      .sidebar nav {
-        display: flex;
-        gap: 12px;
-        overflow-x: auto;
-        scrollbar-width: thin;
-      }
-
-      .nav-group {
-        display: flex;
-        flex: 0 0 auto;
-      }
-
-      .nav-group+.nav-group {
-        margin: 0;
-        padding: 0;
-        border: 0;
-      }
-
-      .nav-list {
-        display: flex;
-        gap: 4px;
-        width: max-content;
-        margin: 0;
-      }
-
-      .nav-item {
-        min-height: 48px;
-        width: auto;
-        padding: 6px 9px;
-        border-left: 0;
-        border-bottom: 3px solid transparent;
-        white-space: nowrap;
-      }
-
-      .nav-item:hover,
-      .nav-item.is-active {
-        border-bottom-color: var(--amber);
-        border-left-color: transparent;
-      }
-
-      .stamp {
-        flex-basis: 28px;
-        width: 28px;
-        height: 28px;
-      }
-
-      .nav-detail {
-        display: none;
-      }
-
-      main {
-        min-height: calc(100vh - 128px);
-      }
-
-      .topbar {
-        padding: 15px 20px;
-      }
-
-      iframe {
-        min-height: 600px;
-        border-radius: 12px;
-      }
-    }
-
-    @media (max-width:540px) {
-      .topbar {
-        gap: 10px;
-      }
-
-      .doc-number {
-        display: none;
-      }
-
-      .fullscreen-button {
-        padding: 0 11px;
-        font-size: .65rem;
-      }
-
-      .viewer {
-        padding: 12px;
-      }
-
-      .page-title {
-        font-size: 1.35rem;
-      }
-    }
-
-    @media (prefers-reduced-motion:reduce) {
-
-      *,
-      *::before,
-      *::after {
-        scroll-behavior: auto !important;
-        animation-duration: .01ms !important;
-        transition-duration: .01ms !important;
-      }
-    }
-  </style>
+  <title>พอร์ทัลเอกสารโครงการ | ระบบจัดการสินค้าคงคลังแบบ CLI</title>
+  <link rel="stylesheet" href="theme.css">
 </head>
-
 <body>
-  <div class="portal" data-od-id="documentation-portal">
-    <aside class="sidebar" aria-label="เอกสารโครงการ" data-od-id="portal-sidebar">
-      <div class="brand" data-od-id="portal-brand"><span class="brand-mark">Project Ledger</span>
-        <h1>Documentation</h1>
-        <p class="project-name">CLI Inventory Management System</p>
-      </div>
-      <nav aria-label="ลำดับเอกสาร" data-od-id="document-navigation">
-        <div class="nav-group"><span class="nav-section">เนื้อหาเอกสาร</span>
-          <ul class="nav-list">
-            <li><button class="nav-item is-active" type="button" data-doc="0" aria-current="page"
-                data-od-id="nav-phase-1-content"><span class="stamp">01</span><span class="nav-copy"><span
-                    class="nav-phase">Phase 1</span><span class="nav-detail">Project record &amp;
-                    planning</span></span></button></li>
-            <li><button class="nav-item" type="button" data-doc="1" data-od-id="nav-week-1-content"><span
-                  class="stamp">02</span><span class="nav-copy"><span class="nav-phase">Week 1</span><span
-                    class="nav-detail">Planning &amp; legacy review</span></span></button></li>
-            <li><button class="nav-item" type="button" data-doc="2" data-od-id="nav-week-2-content"><span
-                  class="stamp">03</span><span class="nav-copy"><span class="nav-phase">Week 2</span><span
-                    class="nav-detail">Evolution &amp; refactoring design</span></span></button></li>
-            <li><button class="nav-item" type="button" data-doc="3" data-od-id="nav-week-3-content"><span
-                  class="stamp">04</span><span class="nav-copy"><span class="nav-phase">Week 3</span><span
-                    class="nav-detail">Implementation &amp; automated testing</span></span></button></li>
-            <li><button class="nav-item" type="button" data-doc="4" data-od-id="nav-week-4-content"><span
-                  class="stamp">05</span><span class="nav-copy"><span class="nav-phase">Week 4</span><span
-                    class="nav-detail">Testing &amp; code refinement</span></span></button></li>
-            <li><button class="nav-item" type="button" data-doc="5" data-od-id="nav-week-5-content"><span
-                  class="stamp">06</span><span class="nav-copy"><span class="nav-phase">Week 5</span><span
-                    class="nav-detail">Quality, architecture &amp; budget</span></span></button></li>
-            <li><button class="nav-item" type="button" data-doc="6" data-od-id="nav-week-6-content"><span
-                  class="stamp">07</span><span class="nav-copy"><span class="nav-phase">Week 6</span><span
-                    class="nav-detail">Architecture &amp; Governance</span></span></button></li>
-            <li><button class="nav-item" type="button" data-doc="7" data-od-id="nav-week-7-content"><span
-                  class="stamp">08</span><span class="nav-copy"><span class="nav-phase">Week 7</span><span
-                    class="nav-detail">Quality &amp; SCM</span></span></button></li>
-          </ul>
-        </div>
-        <div class="nav-group"><span class="nav-section">สไลด์นำเสนอ</span>
-          <ul class="nav-list">
-            <li><button class="nav-item" type="button" data-doc="8" data-od-id="nav-phase-1-slides"><span
-                  class="stamp">09</span><span class="nav-copy"><span class="nav-phase">Phase 1</span><span
-                    class="nav-detail">Integrated planning proposal</span></span></button></li>
-            <li><button class="nav-item" type="button" data-doc="9" data-od-id="nav-week-1"><span
-                  class="stamp">10</span><span class="nav-copy"><span class="nav-phase">Week 1</span><span
-                    class="nav-detail">Planning &amp; legacy review</span></span></button></li>
-            <li><button class="nav-item" type="button" data-doc="10" data-od-id="nav-week-2"><span
-                  class="stamp">11</span><span class="nav-copy"><span class="nav-phase">Week 2</span><span
-                    class="nav-detail">Evolution &amp; refactoring design</span></span></button></li>
-            <li><button class="nav-item" type="button" data-doc="11" data-od-id="nav-week-3"><span
-                  class="stamp">12</span><span class="nav-copy"><span class="nav-phase">Week 3</span><span
-                    class="nav-detail">Implementation &amp; automated testing</span></span></button></li>
-            <li><button class="nav-item" type="button" data-doc="12" data-od-id="nav-week-4"><span
-                  class="stamp">13</span><span class="nav-copy"><span class="nav-phase">Week 4</span><span
-                    class="nav-detail">Testing &amp; code refinement</span></span></button></li>
-            <li><button class="nav-item" type="button" data-doc="13" data-od-id="nav-week-5"><span
-                  class="stamp">14</span><span class="nav-copy"><span class="nav-phase">Week 5</span><span
-                    class="nav-detail">Quality, architecture &amp; budget</span></span></button></li>
-            <li><button class="nav-item" type="button" data-doc="14" data-od-id="nav-week-6"><span
-                  class="stamp">15</span><span class="nav-copy"><span class="nav-phase">Week 6</span><span
-                    class="nav-detail">Architecture &amp; Governance</span></span></button></li>
-            <li><button class="nav-item" type="button" data-doc="15" data-od-id="nav-week-7"><span
-                  class="stamp">16</span><span class="nav-copy"><span class="nav-phase">Week 7</span><span
-                    class="nav-detail">Quality &amp; SCM</span></span></button></li>
-          </ul>
-        </div>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="index.html">
+        <span class="brand-icon">SPM</span>
+        <span>CLI Inventory Management</span>
+      </a>
+      <nav class="nav-links">
+        <a class="nav-item active" href="index.html">หน้าแรก</a>
+        <a class="nav-item" href="Sprint1/sprint-report.html">รายงานปิด Sprint 1</a>
+        <details class="nav-dropdown">
+          <summary class="nav-dropdown-summary">
+            <span>เอกสารสัปดาห์ (1-12)</span>
+          </summary>
+          <div class="dropdown-menu">
+            <a href="Sprint1/week-1/index.html">สัปดาห์ 1 <small>Charter &amp; Legacy</small></a>
+            <a href="Sprint1/week-2/index.html">สัปดาห์ 2 <small>DFD &amp; Blueprint</small></a>
+            <a href="Sprint1/week-3/index.html">สัปดาห์ 3 <small>DoD &amp; RACI</small></a>
+            <a href="Sprint1/week-4/index.html">สัปดาห์ 4 <small>Refactor &amp; Test</small></a>
+            <a href="Sprint1/week-5/index.html">สัปดาห์ 5 <small>Architecture &amp; Budget</small></a>
+            <a href="Sprint1/week-6/index.html">สัปดาห์ 6 <small>DoD &amp; To-Be</small></a>
+            <a href="Sprint1/week-7/index.html">สัปดาห์ 7 <small>Baseline &amp; Quality</small></a>
+            <a href="Sprint1/week-8/index.html">สัปดาห์ 8 <small>CR-01 &amp; Tracking</small></a>
+            <a href="Sprint1/week-9/index.html">สัปดาห์ 9 <small>EVM &amp; Transition</small></a>
+            <a href="Sprint1/week-10/index.html">สัปดาห์ 10 <small>CCB &amp; BUG-101</small></a>
+            <a href="Sprint1/week-11/index.html">สัปดาห์ 11 <small>Hardening &amp; Freeze</small></a>
+            <a href="Sprint1/week-12/index.html">สัปดาห์ 12 <small>UAT &amp; Close-out</small></a>
+          </div>
+        </details>
       </nav>
-      <div class="sidebar-footer">SPM / 2026<br>PROJECT DOCUMENTATION</div>
-    </aside>
-    <main data-od-id="portal-main">
-      <header class="topbar" data-od-id="portal-topbar">
-        <div>
-          <p class="eyebrow" id="breadcrumb" data-od-id="portal-breadcrumb">เนื้อหา · PHASE 1</p>
-          <h2 class="page-title" id="documentTitle" data-od-id="portal-title">Integrated Planning Proposal</h2>
-        </div>
-        <div class="topbar-actions"><button class="fullscreen-button" id="fullscreenButton" type="button"
-            aria-label="ขยายสไลด์สำหรับนำเสนอเต็มจอ" data-od-id="fullscreen-presentation" hidden>นำเสนอเต็มจอ</button>
-          <div class="doc-number" id="documentNumber" data-od-id="portal-document-number">DOC 01/07</div>
-        </div>
-      </header>
-      <section class="viewer" aria-label="ตัวแสดงเอกสาร" data-od-id="document-viewer">
-        <div class="loader" id="loader" aria-hidden="true"></div><iframe id="contentFrame"
-          title="Integrated Planning Proposal" src="Phase1/content.html" data-od-id="content-frame"></iframe>
-      </section>
-    </main>
-  </div>
-  <script>
-    const documents = [
-      { phase: 'เนื้อหา · PHASE 1', title: 'Integrated Planning Proposal', path: 'Phase1/content.html', kind: 'content' },
-      { phase: 'เนื้อหา · WEEK 1', title: 'Planning & Legacy Code Review', path: 'week-1/content.html', kind: 'content' },
-      { phase: 'เนื้อหา · WEEK 2', title: 'Evolution & Refactoring Design', path: 'week-2/content.html', kind: 'content' },
-      { phase: 'เนื้อหา · WEEK 3', title: 'Implementation & Automated Testing', path: 'week-3/content.html', kind: 'content' },
-      { phase: 'เนื้อหา · WEEK 4', title: 'Testing & Code Refinement', path: 'week-4/content.html', kind: 'content' },
-      { phase: 'เนื้อหา · WEEK 5', title: 'Quality, Architecture & Budget', path: 'week-5/content.html', kind: 'content' },
-      { phase: 'เนื้อหา · WEEK 6', title: 'Architecture & Governance', path: 'week6/content.html', kind: 'content' },
-      { phase: 'เนื้อหา · WEEK 7', title: 'Quality & SCM', path: 'week7/content.html', kind: 'content' },
-      { phase: 'สไลด์ · PHASE 1', title: 'Integrated Planning Proposal', path: 'Phase1/presentation.html', kind: 'slides' },
-      { phase: 'สไลด์ · WEEK 1', title: 'Planning & Legacy Code Review', path: 'week-1/presentation.html', kind: 'slides' },
-      { phase: 'สไลด์ · WEEK 2', title: 'Evolution & Refactoring Design', path: 'week-2/presentation.html', kind: 'slides' },
-      { phase: 'สไลด์ · WEEK 3', title: 'Implementation & Automated Testing', path: 'week-3/presentation.html', kind: 'slides' },
-      { phase: 'สไลด์ · WEEK 4', title: 'Testing & Code Refinement', path: 'week-4/presentation.html', kind: 'slides' },
-      { phase: 'สไลด์ · WEEK 5', title: 'Quality, Architecture & Budget', path: 'week-5/presentation.html', kind: 'slides' },
-      { phase: 'สไลด์ · WEEK 6', title: 'Architecture & Governance', path: 'week6/presentation.html', kind: 'slides' },
-      { phase: 'สไลด์ · WEEK 7', title: 'Quality & SCM', path: 'week7/presentation.html', kind: 'slides' }
-    ];
-    const frame = document.getElementById('contentFrame'); const loader = document.getElementById('loader'); const viewer = document.querySelector('.viewer'); const fullscreenButton = document.getElementById('fullscreenButton'); const navItems = [...document.querySelectorAll('.nav-item')];
-    function openDocument(index) { const doc = documents[index]; navItems.forEach((item, i) => { const active = i === index; item.classList.toggle('is-active', active); item.toggleAttribute('aria-current', active); }); document.getElementById('breadcrumb').textContent = doc.phase; document.getElementById('documentTitle').textContent = doc.title; document.getElementById('documentNumber').textContent = `DOC ${String(index + 1).padStart(2, '0')}/${String(documents.length).padStart(2, '0')}`; fullscreenButton.hidden = doc.kind !== 'slides'; frame.title = doc.title; loader.classList.add('is-visible'); frame.classList.add('is-loading'); frame.src = doc.path; }
-    navItems.forEach(item => item.addEventListener('click', () => openDocument(Number(item.dataset.doc))));
-    frame.addEventListener('load', () => { loader.classList.remove('is-visible'); frame.classList.remove('is-loading'); });
-    fullscreenButton.addEventListener('click', async () => { if (document.fullscreenElement) { await document.exitFullscreen(); } else if (viewer.requestFullscreen) { await viewer.requestFullscreen(); } });
-    document.addEventListener('fullscreenchange', () => { const active = document.fullscreenElement === viewer; fullscreenButton.textContent = active ? 'ออกจากเต็มจอ' : 'นำเสนอเต็มจอ'; fullscreenButton.setAttribute('aria-label', active ? 'ออกจากโหมดนำเสนอเต็มจอ' : 'ขยายสไลด์สำหรับนำเสนอเต็มจอ'); });
-  </script>
-</body>
+    </div>
+  </header>
 
+  <main class="main-wrapper">
+    <div class="portal-container">
+      <div class="page-header-block">
+        <div class="notice-pill">ข้อมูลสมมติเพื่อการเรียน · Fictional Coursework</div>
+        <h1 class="page-title">ระบบจัดการสินค้าคงคลังแบบ CLI</h1>
+        <p class="page-desc">พอร์ทัลรายงานผลการดำเนินงาน การปรับปรุงโครงสร้างสถาปัตยกรรม การทดสอบอัตโนมัติ และการปิด Sprint ประจำรายวิชา Software Project Management (SPM)</p>
+        <div class="page-header-actions">
+          <a class="btn btn-primary" href="Sprint1/sprint-report.html">อ่านรายงานปิด Sprint 1</a>
+          <a class="btn btn-secondary" href="Sprint1/Phase1/index.html">ข้อเสนอ Phase 1</a>
+          <a class="btn btn-secondary" href="#weeks-section">เลือกดูเอกสารรายสัปดาห์ W1-W12</a>
+        </div>
+      </div>
+
+      <p class="page-desc">สารบัญ: <a href="#objectives">วัตถุประสงค์</a> · <a href="#team">ทีม</a> · <a href="#weeks-section">รายสัปดาห์ W1–W12</a> · <a href="Sprint1/sprint-report.html">รายงานปิด Sprint</a></p>
+
+      <section style="margin-bottom: 48px;" id="objectives">
+        <h2>วัตถุประสงค์โครงการ (Project Objectives)</h2>
+        <div class="card-grid">
+          <article class="card">
+            <div class="card-title">1. ปรับปรุงเสถียรภาพการทำงาน</div>
+            <div class="card-body">
+              ทำให้ระบบทนทานต่อข้อผิดพลาด (Fault Tolerance) ป้องกันโปรแกรมล่มจากการรับข้อมูลนำเข้าผิดประเภท (Crash Prevention) และดักจับค่าขยะหรือตัวเลขติดลบ
+            </div>
+            <div class="card-meta">
+              <span class="badge badge-blue">Stability</span>
+              <span>Crash Prevention</span>
+            </div>
+          </article>
+          <article class="card">
+            <div class="card-title">2. ปรับปรุงโครงสร้างโค้ด</div>
+            <div class="card-body">
+              ทำความสะอาดโค้ดดั้งเดิม (Clean Code) กำจัดการใช้ตัวแปรโกลบอล <code>x</code> แยก Business Logic ออกจาก Presentation Layer และจัดระบบตามหลัก OOP
+            </div>
+            <div class="card-meta">
+              <span class="badge badge-green">Architecture</span>
+              <span>PEP 8 / OOP</span>
+            </div>
+          </article>
+          <article class="card">
+            <div class="card-title">3. รักษาความสมบูรณ์ของข้อมูล</div>
+            <div class="card-body">
+              ปรับปรุงกระบวนการบันทึกไฟล์ JSON ให้ปลอดภัยด้วยวิธี Safe Atomic Write (เขียนลง Temp แล้วสลับด้วย <code>os.replace</code>) ป้องกันข้อมูลสูญหาย
+            </div>
+            <div class="card-meta">
+              <span class="badge badge-orange">Integrity</span>
+              <span>Atomic Write</span>
+            </div>
+          </article>
+          <article class="card">
+            <div class="card-title">4. สร้างระบบทดสอบอัตโนมัติ</div>
+            <div class="card-body">
+              จัดทำชุดทดสอบอัตโนมัติด้วย PyTest ครอบคลุมฟังก์ชันคำนวณและกรณีขอบเขต (Boundary Cases) เพื่อทำ Regression Testing ป้องกันข้อผิดพลาดเดิมย้อนกลับมา
+            </div>
+            <div class="card-meta">
+              <span class="badge badge-blue">Testing</span>
+              <span>PyTest 100%</span>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section style="margin-bottom: 48px;" id="team">
+        <h2>สมาชิกในโครงการและบทบาทหน้าที่ (Project Members &amp; Roles)</h2>
+        <p style="color: var(--color-text-secondary); font-size: 0.9375rem;">อ้างอิงจาก <code>README.md</code> และการกำหนดความรับผิดชอบตาม RACI Matrix ใน <code>Sprint1/week-3/raci.md</code></p>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>ชื่อ-นามสกุล</th>
+                <th>รหัสนักศึกษา</th>
+                <th>บทบาทหน้าที่หลัก (Key Responsibilities)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>นาย ภานุวัฒน์ ต๋าคำ</strong></td>
+                <td><code>6754210044-3</code></td>
+                <td>
+                  <strong>Project Manager / Developer</strong><br>
+                  บริหารจัดการภาพรวมโครงการ กำหนดกรอบเวลา (Timeline) ติดตามความคืบหน้าของทีม ประสานงาน แก้ไขบั๊ก และพัฒนาระบบตามที่ได้รับมอบหมาย รวมถึงเขียนโค้ด Input Validation และ Atomic Save
+                </td>
+              </tr>
+              <tr>
+                <td><strong>นาย เอกพันธ์ ทศทิศรังสรรค์</strong></td>
+                <td><code>67543210050-0</code></td>
+                <td>
+                  <strong>QA / Tester</strong><br>
+                  ออกแบบกรณีการทดสอบ (Test Cases) ครอบคลุมการทำงานทั่วไปและกรณีขอบเขตอันตราย (Edge Cases) จัดทำเอกสารชุดทดสอบ และเขียนสคริปต์ Automated Unit Testing ด้วย PyTest
+                </td>
+              </tr>
+              <tr>
+                <td><strong>นาย ณฐภาพ สายหล้า</strong></td>
+                <td><code>67543210054-2</code></td>
+                <td>
+                  <strong>Tech Lead / Architect</strong><br>
+                  ออกแบบแนวทางการปรับโครงสร้างโค้ด (Refactoring Architecture) ตรวจสอบคุณภาพโค้ด (Code Review) กำหนดแนวทางปฏิบัติตามมาตรฐาน PEP 8 และทำหน้าที่กดอนุมัติ (Approve) Pull Request เข้าคลังหลัก
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="weeks-section">
+        <h2>คลังเอกสารรายสัปดาห์ (Weeks 1 - 12)</h2>
+        <p style="color: var(--color-text-secondary); font-size: 0.9375rem;">สรุปหลักฐาน รายงานการวิเคราะห์ และแผนงานในแต่ละสัปดาห์ พร้อมสไลด์นำเสนอประกอบ ตัวเลขงบคนละชุดมีฐานต่างกัน: 39,100 = W5 worksheet · 18,823 = W7 baseline ที่อนุมัติ · 15,525 = ขอบเขต EVM (ทั้งหมดสมมติเพื่อการเรียน)</p>
+        
+        <div class="card-grid">
+          <div class="card">
+            <div class="card-title">สัปดาห์ที่ 1: วางแผนและทบทวนระบบเดิม</div>
+            <div class="card-body">
+              จัดทำ Project Charter, Scope of Work และวิเคราะห์ความเสี่ยงเริ่มต้นของระบบเดิมที่ใช้ตัวแปรโกลบอล <code>x</code>
+            </div>
+            <div class="card-meta">
+              <a href="Sprint1/week-1/index.html">อ่านเอกสาร &rarr;</a>
+              <a href="Sprint1/week-1/slides.html">สไลด์บรรยาย &rarr;</a>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-title">สัปดาห์ที่ 2: วิเคราะห์และออกแบบโครงสร้างใหม่</div>
+            <div class="card-body">
+              วิเคราะห์ Hotspot, DFD Level 1, Static Code Analysis (LOC 99, CC 14) และจัดทำพิมพ์เขียว Blueprint
+            </div>
+            <div class="card-meta">
+              <a href="Sprint1/week-2/index.html">อ่านเอกสาร &rarr;</a>
+              <a href="Sprint1/week-2/slides.html">สไลด์บรรยาย &rarr;</a>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-title">สัปดาห์ที่ 3: ลงมือพัฒนาและกำหนดเกณฑ์งาน</div>
+            <div class="card-body">
+              พัฒนา <code>app_v2.py</code> ตามสถาปัตยกรรมใหม่ กำหนดเกณฑ์ Definition of Done (DoD) และ RACI Matrix
+            </div>
+            <div class="card-meta">
+              <a href="Sprint1/week-3/index.html">อ่านเอกสาร &rarr;</a>
+              <a href="Sprint1/week-3/slides.html">สไลด์บรรยาย &rarr;</a>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-title">สัปดาห์ที่ 4: ทดสอบระบบและปรับปรุงโค้ด</div>
+            <div class="card-body">
+              ทดสอบ PyTest 5 ผ่าน พัฒนาระบบรายงานผล <code>test.json</code> และปรับปรุงความสมบูรณ์ของ <code>app.py</code>
+            </div>
+            <div class="card-meta">
+              <a href="Sprint1/week-4/index.html">อ่านเอกสาร &rarr;</a>
+              <a href="Sprint1/week-4/slides.html">สไลด์บรรยาย &rarr;</a>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-title">สัปดาห์ที่ 5: สถาปัตยกรรมและงบประมาณ</div>
+            <div class="card-body">
+              ออกแบบ As-is vs To-be Architecture, ประเมินคุณภาพ ISO 25010 และจัดทำ Budget Worksheet (39,100 THB ข้อมูลสมมติเพื่อการเรียน)
+            </div>
+            <div class="card-meta">
+              <a href="Sprint1/week-5/index.html">อ่านเอกสาร &rarr;</a>
+              <a href="Sprint1/week-5/slides.html">สไลด์บรรยาย &rarr;</a>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-title">สัปดาห์ที่ 6: เกณฑ์การสื่อสารและ To-Be Architecture</div>
+            <div class="card-body">
+              กำหนด Communication Matrix, เกณฑ์ DoR/DoD และออกแบบ To-Be Architecture รองรับ SQLite และ Member System (แบบออกแบบเท่านั้น)
+            </div>
+            <div class="card-meta">
+              <a href="Sprint1/week-6/index.html">อ่านเอกสาร &rarr;</a>
+              <a href="Sprint1/week-6/slides.html">สไลด์บรรยาย &rarr;</a>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-title">สัปดาห์ที่ 7: ต้นทุนงบประมาณ Baseline และคุณภาพ</div>
+            <div class="card-body">
+              อนุมัติ Cost Baseline 18,823 THB (ข้อมูลสมมติเพื่อการเรียน) และรายงานคุณภาพ ISO/IEC 14598 กำหนดท่อส่ง CI/CD
+            </div>
+            <div class="card-meta">
+              <a href="Sprint1/week-7/index.html">อ่านเอกสาร &rarr;</a>
+              <a href="Sprint1/week-7/slides.html">สไลด์บรรยาย &rarr;</a>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-title">สัปดาห์ที่ 8: คำขอ CR-01 และการติดตามงาน</div>
+            <div class="card-body">
+              วิเคราะห์ผลกระทบ CR-01 Barcode &amp; Reorder Point (+8 Man-Hours ข้อมูลสมมติเพื่อการเรียน) และติดตามผ่าน Burndown บน Jira
+            </div>
+            <div class="card-meta">
+              <a href="Sprint1/week-8/index.html">อ่านเอกสาร &rarr;</a>
+              <a href="Sprint1/week-8/slides.html">สไลด์บรรยาย &rarr;</a>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-title">สัปดาห์ที่ 9: วิเคราะห์ EVM และส่งต่องาน</div>
+            <div class="card-body">
+              สรุป EVM Sprint 1: SV -1,000, CV -1,200 (ข้อมูลสมมติเพื่อการเรียน), ถอดบทเรียน Retrospective และวางแผนเปิด Sprint 2
+            </div>
+            <div class="card-meta">
+              <a href="Sprint1/week-9/index.html">อ่านเอกสาร &rarr;</a>
+              <a href="Sprint1/week-9/slides.html">สไลด์บรรยาย &rarr;</a>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-title">สัปดาห์ที่ 10: คำขอฉุกเฉิน CR-02 และแก้ BUG-101</div>
+            <div class="card-body">
+              อนุมัติ CR-02 CSV Export ผ่าน CCB ดึงเงินสำรอง 1,350 THB (ข้อมูลสมมติเพื่อการเรียน) และแก้ BUG-101 KeyError barcode ด้วย 5 Whys
+            </div>
+            <div class="card-meta">
+              <a href="Sprint1/week-10/index.html">อ่านเอกสาร &rarr;</a>
+              <a href="Sprint1/week-10/slides.html">สไลด์บรรยาย &rarr;</a>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-title">สัปดาห์ที่ 11: การปรับโค้ดแข็งแกร่งและแช่แข็งขอบเขต</div>
+            <div class="card-body">
+              รายงาน Hardening: กำจัด 3 Code Smells, บังคับใช้ Atomic Save, Bandit สะอาดแต่ Flake8 ค้าง E501 และตกลง Scope Freeze ที่ 29 Points
+            </div>
+            <div class="card-meta">
+              <a href="Sprint1/week-11/index.html">อ่านเอกสาร &rarr;</a>
+              <a href="Sprint1/week-11/slides.html">สไลด์บรรยาย &rarr;</a>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-title">สัปดาห์ที่ 12: ปิดงาน UAT, Final EVM และ Release</div>
+            <div class="card-body">
+              ชุดทดสอบผ่าน 25 passed, สรุป Final EVM (CV -575 ข้อมูลสมมติเพื่อการเรียน), เตรียม UAT Sign-off Sheet และ Release Checklist
+            </div>
+            <div class="card-meta">
+              <a href="Sprint1/week-12/index.html">อ่านเอกสาร &rarr;</a>
+              <a href="Sprint1/week-12/slides.html">สไลด์บรรยาย &rarr;</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section style="margin-top: 48px;">
+        <div class="callout">
+          <div class="callout-badge">NOTE</div>
+          <div class="callout-content">
+            <strong>ความโปร่งใสของข้อมูลโครงการ (Content Honesty):</strong> ข้อมูลทั้งหมดจัดทำขึ้นเพื่อการศึกษาในรายวิชา Software Project Management ตัวเลขงบประมาณ, EVM, Velocity, Story Points ทั้งหมดเป็นข้อมูลสมมติเพื่อการเรียน ฟังก์ชัน SQLite, Member System และ Checkout อยู่ในสถานะแบบออกแบบเท่านั้น และสถานะ UAT Formal Sign-off ยังรอการลงนามอย่างเป็นทางการ
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div>แหล่งข้อมูลหลัก: <code>README.md</code>, <code>Sprint1/sprint1.md</code> และเอกสาร <code>Sprint1/week-N/</code></div>
+      <div class="footer-links">
+        <a href="index.html">หน้าแรก</a>
+        <a href="Sprint1/sprint-report.html">รายงานปิด Sprint 1</a>
+      </div>
+    </div>
+  </footer>
+</body>
 </html>

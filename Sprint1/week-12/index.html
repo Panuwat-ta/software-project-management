@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>สัปดาห์ที่ 12: ปิดงาน UAT, Final EVM และ Release | SPM</title>
+  <link rel="stylesheet" href="../../theme.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="../../index.html">
+        <span class="brand-icon">SPM</span>
+        <span>CLI Inventory Management</span>
+      </a>
+      <nav class="nav-links">
+        <a class="nav-item" href="../../index.html">หน้าแรก</a>
+        <a class="nav-item" href="../sprint-report.html">รายงานปิด Sprint 1</a>
+        <details class="nav-dropdown">
+          <summary class="nav-dropdown-summary">
+            <span>เอกสารสัปดาห์ (1-12)</span>
+          </summary>
+          <div class="dropdown-menu">
+            <a href="../week-1/index.html">สัปดาห์ 1 <small>Charter &amp; Legacy</small></a>
+            <a href="../week-2/index.html">สัปดาห์ 2 <small>DFD &amp; Blueprint</small></a>
+            <a href="../week-3/index.html">สัปดาห์ 3 <small>DoD &amp; RACI</small></a>
+            <a href="../week-4/index.html">สัปดาห์ 4 <small>Refactor &amp; Test</small></a>
+            <a href="../week-5/index.html">สัปดาห์ 5 <small>Architecture &amp; Budget</small></a>
+            <a href="../week-6/index.html">สัปดาห์ 6 <small>DoD &amp; To-Be</small></a>
+            <a href="../week-7/index.html">สัปดาห์ 7 <small>Baseline &amp; Quality</small></a>
+            <a href="../week-8/index.html">สัปดาห์ 8 <small>CR-01 &amp; Tracking</small></a>
+            <a href="../week-9/index.html">สัปดาห์ 9 <small>EVM &amp; Transition</small></a>
+            <a href="../week-10/index.html">สัปดาห์ 10 <small>CCB &amp; BUG-101</small></a>
+            <a href="../week-11/index.html">สัปดาห์ 11 <small>Hardening &amp; Freeze</small></a>
+            <a href="../week-12/index.html">สัปดาห์ 12 <small>UAT &amp; Close-out</small></a>
+          </div>
+        </details>
+      </nav>
+    </div>
+  </header>
+
+  <main class="main-wrapper">
+    <div class="content-container">
+      <nav class="breadcrumb">
+        <a href="../../index.html">หน้าแรก</a>
+        <span class="breadcrumb-sep">/</span>
+        <a href="../../index.html#weeks-section">เอกสารรายสัปดาห์</a>
+        <span class="breadcrumb-sep">/</span>
+        <span>สัปดาห์ที่ 12</span>
+      </nav>
+
+      <div class="page-header-block">
+        <div class="notice-pill">ข้อมูลสมมติเพื่อการเรียน · W12 Documentation</div>
+        <h1 class="page-title">สัปดาห์ที่ 12: การทดสอบ UAT, Final EVM และการเตรียมปล่อยระบบ (Release)</h1>
+        <p class="page-desc">สรุปผลการทดสอบ PyTest 25 passed, รายงาน Final EVM สรุป 3 Sprints, แบบฟอร์มตรวจรับ UAT และเช็กลิสต์ความพร้อมก่อนปล่อย Release v2.0.0-evolution</p>
+        <div class="page-header-actions">
+          <a class="btn btn-secondary" href="../week-12/slides.html">เปิดสไลด์ประกอบสัปดาห์ 12 &rarr;</a>
+        </div>
+      </div>
+
+      <section>
+        <h2>1. รายงาน EVM ฉบับสุดท้าย (Final EVM Summary)</h2>
+        <div class="notice-pill">ข้อมูลสมมติเพื่อการเรียน · Fictional Educational Data</div>
+        <p>การกระทบยอดผลลัพธ์โครงการตลอด 3 Sprints (เอกสาร <code>Final_EVM.md</code>):</p>
+        
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>ตัวแปร EVM</th>
+                <th>รายละเอียด</th>
+                <th>มูลค่า / ดัชนี</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Planned Value (PV)</td>
+                <td>งบประมาณแผนงานรวมทั้งหมด (รวม CR-02)</td>
+                <td>15,525 บาท</td>
+              </tr>
+              <tr>
+                <td>Earned Value (EV)</td>
+                <td>มูลค่างานที่ผ่าน DoD และเกณฑ์ทดสอบครบ 100%</td>
+                <td>15,525 บาท</td>
+              </tr>
+              <tr>
+                <td>Actual Cost (AC)</td>
+                <td>ค่าแรงจริงจาก Log Time + ค่าเครื่องมือจริง</td>
+                <td>16,100 บาท</td>
+              </tr>
+              <tr>
+                <td>Schedule Performance Index (SPI)</td>
+                <td>$SPI = EV / PV = 15,525 / 15,525$</td>
+                <td><strong>1.00 (ตรงเวลา 100%)</strong></td>
+              </tr>
+              <tr>
+                <td>Cost Performance Index (CPI)</td>
+                <td>$CPI = EV / AC = 15,525 / 16,100$</td>
+                <td><strong>0.96 (เกินงบ 3.7%)</strong></td>
+              </tr>
+              <tr>
+                <td>Cost Variance (CV)</td>
+                <td>$CV = EV - AC = 15,525 - 16,100$</td>
+                <td><strong>-575 บาท (ชดเชยด้วยงบสำรอง)</strong></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p><strong>การกระทบยอดงบสำรองความเสี่ยง:</strong> เริ่มต้น 2,823 บาท &minus; คำขอฉุกเฉิน CR-02 (1,350 บาท) &minus; ค่าแรงส่วนเกิน Refactoring (575 บาท) = <strong>คงเหลือสุทธิ 898 บาท</strong> (ไม่มีภาวะติดลบ งบประมาณโครงการควบคุมได้สมบูรณ์)</p>
+      </section>
+
+      <section>
+        <h2>2. ผลการทดสอบการวิวัฒนาการ 25 Passed (Full Regression)</h2>
+        <p>ชุดทดสอบ <code>week-12/test_app.py</code> ครอบคลุมการวิวัฒนาการของระบบครบถ้วน 25 กรณีทดสอบ:</p>
+        <ul>
+          <li>5 Baseline Tests: การคำนวณและตัดสต็อกดั้งเดิม</li>
+          <li>4 CR-01 Tests: รหัสบาร์โค้ด และการคำนวณจุดสั่งซื้อขั้นต่ำ (Reorder Point)</li>
+          <li>6 CR-02 Tests: การส่งออกไฟล์ CSV พร้อมหัวตารางที่ถูกต้อง</li>
+          <li>4 BUG-101 Tests: การรับมือข้อมูลเก่าที่ไม่มีฟิลด์บาร์โค้ด (Legacy Compatibility)</li>
+          <li>3 CLI Tests: การทำงานของส่วนติดต่อผู้ใช้</li>
+          <li>3 Integration Tests: การทำงานร่วมกันระหว่างโมเดลและไฟล์ระบบ</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>3. สถานะการตรวจรับ UAT และ Release Checklist</h2>
+        <div class="callout">
+          <div class="callout-badge">HONEST NOTICE</div>
+          <div class="callout-content">
+            <strong>ความโปร่งใสของสถานะส่งมอบ:</strong><br>
+            • <strong>UAT Sign-off:</strong> ในเอกสาร <code>UAT_Sign_Off_Sheet.md</code> มีการกำหนด 3 Scenarios (รับสินค้า Milk, ตัดสต็อกจน Alert, และส่งออก CSV) แต่<strong>ช่องลายเซ็นของผู้ทดสอบและ Tech Lead ยังคงว่าง</strong> สถานะคือรอการลงนามอย่างเป็นทางการ<br>
+            • <strong>Git Release Tag:</strong> จัดเตรียม <code>CHANGELOG.md</code> เรียบร้อยแล้ว แต่<strong>ยังไม่มี Git Tag <code>v2.0.0-evolution</code> บนสาขา <code>main</code></strong> ในคลังโค้ดมีเพียงแท็ก <code>v1.0.0</code> เท่านั้น<br>
+            • <strong>หนี้ทางเทคนิค:</strong> Flake8 <code>E501</code> ยังเปิดอยู่ และระบบ SQLite/Member ยังเป็นแบบออกแบบเท่านั้น
+          </div>
+        </div>
+      </section>
+
+      <div class="deck-banner">
+        <div>
+          <div class="deck-banner-title">สไลด์บรรยายสัปดาห์ที่ 12</div>
+          <div class="deck-banner-sub">ดูสไลด์สรุป Final EVM, การทดสอบ 25 passed และสถานะ Release</div>
+        </div>
+        <a class="btn btn-primary" href="../week-12/slides.html">เปิดสไลด์ W12 &rarr;</a>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div>แหล่งข้อมูล: <code>Sprint1/week-12/</code> · ข้อมูลสมมติเพื่อการเรียน</div>
+      <div class="footer-links">
+        <a href="../week-11/index.html">&larr; สัปดาห์ที่ 11</a>
+        <a href="../sprint-report.html">รายงานปิด Sprint 1 &rarr;</a>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

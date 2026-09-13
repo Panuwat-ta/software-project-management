@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>สไลด์สัปดาห์ที่ 6 | เกณฑ์การสื่อสาร DoR/DoD และสถาปัตยกรรม To-Be</title>
+  <style>
+    :root {
+      --bg-page: #f7f6f3;
+      --bg-card: #ffffff;
+      --bg-callout: #fbfbfa;
+      --ink-primary: #37352f;
+      --ink-secondary: #6f6a63;
+      --border-light: rgba(55, 53, 47, 0.09);
+      --border-medium: rgba(55, 53, 47, 0.16);
+      --border-card: rgba(55, 53, 47, 0.12);
+      
+      --tag-gray-bg: #f1f1ef;
+      --tag-gray-text: #5a5a58;
+      --tag-blue-bg: #e8f3fc;
+      --tag-blue-text: #0b6e99;
+      --tag-orange-bg: #faebdd;
+      --tag-orange-text: #9c4400;
+      --tag-green-bg: #edf3ec;
+      --tag-green-text: #448361;
+      
+      --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans Thai", Helvetica, Arial, sans-serif;
+      --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      background-color: var(--bg-page);
+      color: var(--ink-primary);
+      font-family: var(--font-sans);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .viewport-frame {
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .deck-container {
+      width: min(100vw, 177.78vh);
+      height: min(56.25vw, 100vh);
+      background-color: #ffffff;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid var(--border-light);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+    }
+
+    .slide {
+      display: none;
+      width: 100%;
+      height: 100%;
+      padding: 56px 80px 100px 80px;
+      grid-template-rows: auto 1fr auto;
+      gap: 24px;
+    }
+
+    .slide.active {
+      display: grid;
+    }
+
+    .slide-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .badge-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      font-size: 24px;
+      font-weight: 500;
+      padding: 6px 14px;
+      border-radius: 6px;
+      line-height: 1.3;
+    }
+
+    .badge-gray {
+      background-color: var(--tag-gray-bg);
+      color: var(--tag-gray-text);
+    }
+
+    .badge-blue {
+      background-color: var(--tag-blue-bg);
+      color: var(--tag-blue-text);
+    }
+
+    .badge-orange {
+      background-color: var(--tag-orange-bg);
+      color: var(--tag-orange-text);
+    }
+
+    .badge-green {
+      background-color: var(--tag-green-bg);
+      color: var(--tag-green-text);
+    }
+
+    .header-note {
+      font-size: 24px;
+      color: var(--ink-secondary);
+    }
+
+    .slide-title-area {
+      margin-top: 4px;
+    }
+
+    .slide-title-area h1 {
+      font-size: clamp(44px, 4vw, 68px);
+      font-weight: 700;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+      color: var(--ink-primary);
+      margin-bottom: 12px;
+    }
+
+    .slide-title-area h2 {
+      font-size: clamp(36px, 3.2vw, 52px);
+      font-weight: 600;
+      line-height: 1.25;
+      letter-spacing: -0.01em;
+      color: var(--ink-primary);
+      margin-bottom: 10px;
+    }
+
+    .slide-subtitle {
+      font-size: clamp(24px, 1.8vw, 30px);
+      line-height: 1.5;
+      color: var(--ink-secondary);
+      max-width: 50ch;
+    }
+
+    .content-body {
+      align-self: center;
+      width: 100%;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+      width: 100%;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 24px;
+      width: 100%;
+    }
+
+    .notion-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-card);
+      border-radius: 8px;
+      padding: 26px 30px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .notion-card.subtle {
+      background: var(--bg-callout);
+      border-color: var(--border-light);
+    }
+
+    .card-title {
+      font-size: 28px;
+      font-weight: 600;
+      color: var(--ink-primary);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .card-desc {
+      font-size: 24px;
+      line-height: 1.55;
+      color: var(--ink-primary);
+    }
+
+    .notion-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .notion-list li {
+      font-size: 24px;
+      line-height: 1.55;
+      color: var(--ink-primary);
+      position: relative;
+      padding-left: 28px;
+    }
+
+    .notion-list li::before {
+      content: "-";
+      position: absolute;
+      left: 8px;
+      color: var(--ink-secondary);
+      font-weight: bold;
+    }
+
+    .metric-row {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border-light);
+      font-size: 24px;
+    }
+
+    .metric-row:last-child {
+      border-bottom: none;
+    }
+
+    .metric-label {
+      color: var(--ink-secondary);
+    }
+
+    .metric-value {
+      font-weight: 600;
+      font-family: var(--font-mono);
+      color: var(--ink-primary);
+    }
+
+    .slide-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid var(--border-light);
+      padding-top: 14px;
+    }
+
+    .footer-notice {
+      font-size: 24px;
+      color: var(--ink-secondary);
+    }
+
+    .nav-controls {
+      position: absolute;
+      right: 48px;
+      bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      z-index: 10;
+    }
+
+    .nav-btn {
+      font-family: var(--font-sans);
+      font-size: 24px;
+      font-weight: 500;
+      background: #ffffff;
+      color: var(--ink-primary);
+      border: 1px solid var(--border-medium);
+      border-radius: 6px;
+      padding: 8px 20px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .nav-btn:hover {
+      background: var(--tag-gray-bg);
+      border-color: var(--ink-secondary);
+    }
+
+    .nav-btn:focus-visible {
+      outline: 2px solid var(--tag-blue-text);
+      outline-offset: 2px;
+    }
+
+    .slide-count {
+      font-family: var(--font-mono);
+      font-size: 24px;
+      font-weight: 500;
+      color: var(--ink-secondary);
+      min-width: 80px;
+      text-align: center;
+    }
+
+    .doc-link {
+      font-size: 24px;
+      color: var(--tag-blue-text);
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .doc-link:hover {
+      text-decoration: underline;
+    }
+
+    @media print {
+      body, .viewport-frame {
+        height: auto !important;
+        overflow: visible !important;
+        background: transparent !important;
+      }
+      .deck-container {
+        width: 100vw !important;
+        height: 56.25vw !important;
+        border: none !important;
+        box-shadow: none !important;
+        position: static !important;
+      }
+      .slide {
+        display: grid !important;
+        page-break-after: always;
+        break-after: page;
+        height: 100vh !important;
+      }
+      .nav-controls {
+        display: none !important;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        transition: none !important;
+      }
+    }
+  .content-body,.slide-body{overflow-y:auto;scrollbar-width:thin;min-height:0}
+    </style>
+</head>
+<body>
+  <div class="viewport-frame">
+    <main class="deck-container" aria-live="off">
+
+      <!-- Slide 1: Cover -->
+      <section class="slide active" id="slide-1">
+        <header class="slide-header">
+          <div class="badge-row">
+            <span class="badge badge-gray">Software Project Management · สัปดาห์ที่ 06</span>
+            <span class="badge badge-orange">ข้อมูลจำลองเพื่อการเรียน</span>
+          </div>
+          <span class="header-note">W6 Documentation</span>
+        </header>
+        <div class="content-body">
+          <div class="slide-title-area">
+            <h1>เกณฑ์การสื่อสาร DoR/DoD และสถาปัตยกรรม To-Be</h1>
+            <p class="slide-subtitle">ข้อตกลงการประสานงานภายในทีม เกณฑ์ความพร้อมและความสำเร็จ และการวิเคราะห์ผลต่างงบประมาณด้วย EVM (ตัวเลขจำลองเพื่อการศึกษา)</p>
+          </div>
+          <div style="margin-top: 32px;">
+            <div class="notion-card subtle">
+              <div class="card-title">สาระสำคัญประจำสัปดาห์</div>
+              <ul class="notion-list">
+                <li>กำหนดตารางการสื่อสาร (Communication Matrix) และช่องทางติดตามงานสำหรับทีมพัฒนา 3 คน</li>
+                <li>วางเกณฑ์ความพร้อมก่อนเริ่ม (DoR) และเกณฑ์ความสำเร็จก่อนปิดงาน (DoD) ผ่าน Trello และ GitHub</li>
+                <li>วิเคราะห์ผลต่างงบประมาณ (Cost Variance) งานย้าย JSON สู่ SQLite พร้อมแนวทางบริหารด้วยงบสำรอง</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <footer class="slide-footer">
+          <a href="index.html" class="doc-link">&larr; กลับสู่เอกสารสัปดาห์ 6</a>
+          <span class="footer-notice">ใช้ปุ่มลูกศรซ้าย/ขวา หรือ Spacebar เพื่อเปลี่ยนหน้าสไลด์</span>
+        </footer>
+      </section>
+
+      <!-- Slide 2: Communication Matrix -->
+      <section class="slide" id="slide-2"><header class="slide-header"><div class="badge-row"><span class="badge badge-gray">สัปดาห์ที่ 6</span><span class="badge badge-green">สารบัญ</span></div><span class="header-note">Overview</span></header><div class="content-body"><div class="slide-title-area"><h2>สารบัญสไลด์</h2><p class="slide-subtitle">กดหัวข้อเพื่อกระโดดไปสไลด์นั้น</p></div><article class="notion-card"><ul class="notion-list"><li><a href="#slide-1">เกณฑ์การสื่อสาร DoR/DoD และสถาปัตยกรรม To-Be</a></li><li><a href="#slide-2">ตารางการสื่อสารและการประสานงานภายในทีม</a></li><li><a href="#slide-3">เกณฑ์ความพร้อม (DoR) และเกณฑ์ความสำเร็จ (DoD)</a></li><li><a href="#slide-4">กรณีศึกษาผลต่างงบประมาณ (EVM)</a></li><li><a href="#slide-5">รูปแบบสถาปัตยกรรม To-Be</a></li></ul></article></div><footer class="slide-footer"><span class="notice">กดหัวข้อเพื่อกระโดดไปสไลด์นั้น</span></footer></section>
+
+      <!-- Slide 3: DoR & DoD -->
+      <section class="slide" id="slide-3">
+        <header class="slide-header">
+          <div class="badge-row">
+            <span class="badge badge-gray">สัปดาห์ที่ 06</span>
+            <span class="badge badge-blue">มาตรฐานการสื่อสาร</span>
+          </div>
+          <span class="header-note">Team Communication Matrix</span>
+        </header>
+        <div class="content-body">
+          <div class="slide-title-area">
+            <h2>ตารางการสื่อสารและการประสานงานภายในทีม</h2>
+            <p class="slide-subtitle">กำหนดช่องทาง ความถี่ และผู้รับผิดชอบตามกรอบ RACI เพื่อควบคุมจังหวะการทำงาน</p>
+          </div>
+          <div class="grid-3" style="margin-top: 24px;">
+            <article class="notion-card">
+              <div class="card-title">
+                <span>อัปเดตงานประจำวัน</span>
+                <span class="badge badge-blue">Daily</span>
+              </div>
+              <ul class="notion-list">
+                <li>ช่องทาง: Discord Voice / กลุ่มแชท</li>
+                <li>ความถี่: ทุกเย็น (15 นาที)</li>
+                <li>ผู้รับผิดชอบ: Project Manager</li>
+                <li>ติดตามความก้าวหน้าและปลดล็อกปัญหาอุปสรรค</li>
+              </ul>
+            </article>
+            <article class="notion-card">
+              <div class="card-title">
+                <span>การแจ้งข้อผิดพลาด</span>
+                <span class="badge badge-orange">Bug Report</span>
+              </div>
+              <ul class="notion-list">
+                <li>ช่องทาง: การ์ดงานบนบอร์ด Trello</li>
+                <li>ความถี่: ทันทีที่พบข้อผิดพลาด</li>
+                <li>ผู้รับผิดชอบ: QA / Tester</li>
+                <li>ส่งข้อมูลให้ผู้พัฒนาแก้ไขได้อย่างทันท่วงที</li>
+              </ul>
+            </article>
+            <article class="notion-card">
+              <div class="card-title">
+                <span>การตรวจทานโค้ด</span>
+                <span class="badge badge-green">Code Review</span>
+              </div>
+              <ul class="notion-list">
+                <li>ช่องทาง: GitHub Pull Request</li>
+                <li>ความถี่: เมื่อสร้าง PR เสร็จสิ้น</li>
+                <li>ผู้รับผิดชอบ: Tech Lead</li>
+                <li>ตรวจสอบความสะอาดตามมาตรฐาน PEP 8</li>
+              </ul>
+            </article>
+          </div>
+        </div>
+        <footer class="slide-footer">
+          <span class="footer-notice">อ้างอิงข้อมูล: Communication_Matrix_and_DoD.md (สัปดาห์ที่ 6)</span>
+          <span class="header-note">ข้อมูลจำลองเพื่อการเรียน</span>
+        </footer>
+      </section>
+
+      <!-- Slide 4: Cost Variance & To-Be Design -->
+      <section class="slide" id="slide-4">
+        <header class="slide-header">
+          <div class="badge-row">
+            <span class="badge badge-gray">สัปดาห์ที่ 06</span>
+            <span class="badge badge-green">เกณฑ์ควบคุมคุณภาพ</span>
+          </div>
+          <span class="header-note">Definition of Ready &amp; Done</span>
+        </header>
+        <div class="content-body">
+          <div class="slide-title-area">
+            <h2>เกณฑ์ความพร้อม (DoR) และเกณฑ์ความสำเร็จ (DoD)</h2>
+            <p class="slide-subtitle">ข้อกำหนดก่อนเริ่มลงมือพัฒนา และเกณฑ์การส่งมอบเพื่ออนุมัติปิดงานเข้าช่อง Done</p>
+          </div>
+          <div class="grid-2" style="margin-top: 24px;">
+            <article class="notion-card">
+              <div class="card-title">
+                <span>Definition of Ready (DoR)</span>
+                <span class="badge badge-blue">ก่อนเริ่มงาน</span>
+              </div>
+              <ul class="notion-list">
+                <li>การ์ดงานระบุรายละเอียด (Description) ของฟีเจอร์อย่างชัดเจน</li>
+                <li>มีการประเมินจุดเสี่ยง (Hotspot) เพื่อระบุส่วนกระทบของระบบ</li>
+                <li>ระบุบทบาทชัดเจนใน RACI Matrix ว่าใครคือ R และใครคือ A</li>
+                <li>สร้าง Branch แยกบน GitHub ออกจากกิ่ง develop เรียบร้อย</li>
+              </ul>
+            </article>
+            <article class="notion-card">
+              <div class="card-title">
+                <span>Definition of Done (DoD)</span>
+                <span class="badge badge-green">ก่อนปิดงาน</span>
+              </div>
+              <ul class="notion-list">
+                <li>ผ่านการตรวจสอบ Code Review โดย Tech Lead ตามมาตรฐาน PEP 8</li>
+                <li>ผ่านชุดทดสอบอัตโนมัติ (Automated Tests) ด้วย PyTest ครบ 100%</li>
+                <li>รวมโค้ด (Merge) เข้าสู่กิ่งหลักในระบบจัดการเวอร์ชันสำเร็จ</li>
+                <li>จัดทำเอกสารสรุปผลการทดสอบและบันทึกอัปเดตบน Trello</li>
+              </ul>
+            </article>
+          </div>
+        </div>
+        <footer class="slide-footer">
+          <span class="footer-notice">อ้างอิงข้อมูล: Communication_Matrix_and_DoD.md (สัปดาห์ที่ 6)</span>
+          <span class="header-note">ข้อมูลจำลองเพื่อการเรียน</span>
+        </footer>
+      </section>
+
+      <!-- Fixed Navigation Controls -->
+      <nav class="nav-controls" aria-label="Slide Controls">
+        <button type="button" class="nav-btn" id="prev">ก่อนหน้า</button>
+        <span class="slide-count" id="count">1 / 4</span><span class="sr-only" aria-live="polite" id="slide-live" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap"></span>
+        <button type="button" class="nav-btn" id="next">ถัดไป</button>
+        <button type="button" class="nav-btn" id="restart">เริ่มใหม่</button>
+      </nav>
+
+    </main>
+  </div>
+
+  <script>
+    const slides = Array.from(document.querySelectorAll('.slide'));
+    const storageKey = 'spm-site-week-6-slide';
+    let currentIndex = 0;
+    (function initPos() {
+      const fresh = /[?&]fresh=1/.test(location.search);
+      const m = /#slide-(\d+)/.exec(location.hash);
+      if (m) {
+        const h = parseInt(m[1], 10) - 1;
+        if (!isNaN(h) && h >= 0 && h < slides.length) { currentIndex = h; return; }
+      }
+      if (!fresh) {
+        try {
+          const s = Number(localStorage.getItem(storageKey)) || 0;
+          currentIndex = Math.max(0, Math.min(slides.length - 1, s));
+        } catch (e) { /* storage unavailable */ }
+      }
+    })();
+
+    function updateSlide(index) {
+      currentIndex = (index + slides.length) % slides.length;
+      slides.forEach((slide, idx) => {
+        slide.classList.toggle('active', idx === currentIndex);
+      });
+      document.getElementById('count').textContent = (currentIndex + 1) + ' / ' + slides.length;
+      try {
+        history.replaceState(null, '', '#slide-' + (currentIndex + 1));
+      } catch (e) { /* ignore */ }
+      var liveB = document.getElementById('slide-live');
+      if (liveB) {
+        liveB.textContent = 'สไลด์ ' + (currentIndex + 1) + ' จาก ' + slides.length;
+      }
+      localStorage.setItem(storageKey, currentIndex);
+    }
+
+    document.getElementById('prev').addEventListener('click', () => updateSlide(currentIndex - 1));
+    document.getElementById('next').addEventListener('click', () => updateSlide(currentIndex + 1));
+    document.getElementById('restart').addEventListener('click', () => {
+      try { localStorage.removeItem(storageKey); } catch (e) { /* ignore */ }
+      updateSlide(0);
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft') {
+        updateSlide(currentIndex - 1);
+      } else if (e.key === 'ArrowRight' || e.key === ' ') {
+        e.preventDefault();
+        updateSlide(currentIndex + 1);
+      }
+    });
+
+    updateSlide(currentIndex);
+  </script>
+    <script>window.addEventListener('hashchange',function(){location.reload();});</script>
+</body>
+</html>

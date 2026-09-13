@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>สัปดาห์ที่ 5: สถาปัตยกรรมและงบประมาณ | SPM</title>
+  <link rel="stylesheet" href="../../theme.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="../../index.html">
+        <span class="brand-icon">SPM</span>
+        <span>CLI Inventory Management</span>
+      </a>
+      <nav class="nav-links">
+        <a class="nav-item" href="../../index.html">หน้าแรก</a>
+        <a class="nav-item" href="../sprint-report.html">รายงานปิด Sprint 1</a>
+        <details class="nav-dropdown">
+          <summary class="nav-dropdown-summary">
+            <span>เอกสารสัปดาห์ (1-12)</span>
+          </summary>
+          <div class="dropdown-menu">
+            <a href="../week-1/index.html">สัปดาห์ 1 <small>Charter &amp; Legacy</small></a>
+            <a href="../week-2/index.html">สัปดาห์ 2 <small>DFD &amp; Blueprint</small></a>
+            <a href="../week-3/index.html">สัปดาห์ 3 <small>DoD &amp; RACI</small></a>
+            <a href="../week-4/index.html">สัปดาห์ 4 <small>Refactor &amp; Test</small></a>
+            <a href="../week-5/index.html">สัปดาห์ 5 <small>Architecture &amp; Budget</small></a>
+            <a href="../week-6/index.html">สัปดาห์ 6 <small>DoD &amp; To-Be</small></a>
+            <a href="../week-7/index.html">สัปดาห์ 7 <small>Baseline &amp; Quality</small></a>
+            <a href="../week-8/index.html">สัปดาห์ 8 <small>CR-01 &amp; Tracking</small></a>
+            <a href="../week-9/index.html">สัปดาห์ 9 <small>EVM &amp; Transition</small></a>
+            <a href="../week-10/index.html">สัปดาห์ 10 <small>CCB &amp; BUG-101</small></a>
+            <a href="../week-11/index.html">สัปดาห์ 11 <small>Hardening &amp; Freeze</small></a>
+            <a href="../week-12/index.html">สัปดาห์ 12 <small>UAT &amp; Close-out</small></a>
+          </div>
+        </details>
+      </nav>
+    </div>
+  </header>
+
+  <main class="main-wrapper">
+    <div class="content-container">
+      <nav class="breadcrumb">
+        <a href="../../index.html">หน้าแรก</a>
+        <span class="breadcrumb-sep">/</span>
+        <a href="../../index.html#weeks-section">เอกสารรายสัปดาห์</a>
+        <span class="breadcrumb-sep">/</span>
+        <span>สัปดาห์ที่ 5</span>
+      </nav>
+
+      <div class="page-header-block">
+        <div class="notice-pill">ข้อมูลสมมติเพื่อการเรียน · W5 Documentation</div>
+        <h1 class="page-title">สัปดาห์ที่ 5: สถาปัตยกรรม คุณภาพ ISO 25010 และงบประมาณ</h1>
+        <p class="page-desc">เปรียบเทียบสถาปัตยกรรมระบบ As-is vs To-be, ประเมินคุณภาพตามกรอบมาตรฐาน ISO/IEC 25010 และจัดทำแผ่นงานงบประมาณโครงการ (Budget Worksheet)</p>
+        <div class="page-header-actions">
+          <a class="btn btn-secondary" href="../week-5/slides.html">เปิดสไลด์ประกอบสัปดาห์ 5 &rarr;</a>
+        </div>
+      </div>
+
+      <section>
+        <h2>1. สถาปัตยกรรมระบบ: เดิม vs เป้าหมาย (As-is vs To-be)</h2>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>มิติการเปรียบเทียบ</th>
+                <th>สถาปัตยกรรมเดิม (As-is)</th>
+                <th>สถาปัตยกรรมเป้าหมาย (To-be Design)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>รูปแบบโครงสร้าง</td>
+                <td>Monolithic Script มัดรวม UI, Logic, Storage</td>
+                <td>Clean Architecture แบ่ง 3 เลเยอร์ (Facade, Service, Repository)</td>
+              </tr>
+              <tr>
+                <td>การจัดการสถานะ</td>
+                <td>Global Variable <code>x</code> และ <code>db</code></td>
+                <td>Encapsulated Classes (Product, ProductManager, DatabaseManager)</td>
+              </tr>
+              <tr>
+                <td>การจัดเก็บข้อมูล</td>
+                <td>ไฟล์ JSON เดียว บันทึกทับทันที</td>
+                <td>SQLite Database รองรับ ACID Transactions (Commit/Rollback)</td>
+              </tr>
+              <tr>
+                <td>ระบบสมาชิก</td>
+                <td>ไม่มีระบบสมาชิก</td>
+                <td>โมดูลสมาชิก 4 ระดับ (Regular, Silver, Gold, Platinum)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section>
+        <h2>2. การประเมินคุณภาพตามมาตรฐาน ISO/IEC 25010</h2>
+        <ul>
+          <li><strong>Maintainability (ความสามารถในการบำรุงรักษา):</strong> ยกระดับ Modularity ด้วยการแยกคลาส, เพิ่ม Analyzability โดยตั้งชื่อตัวแปรตาม PEP 8 และเพิ่ม Testability ด้วยการลด Global Coupling</li>
+          <li><strong>Reliability (ความน่าเชื่อถือ):</strong> ป้องกัน Fault Tolerance ด้วย Try-Except Validation และเตรียม Transaction Rollback ป้องกันข้อมูลสูญหาย</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>3. แผ่นงานงบประมาณโครงการ (Budget Worksheet)</h2>
+        <div class="notice-pill">ข้อมูลสมมติเพื่อการเรียน · Fictional Educational Data</div>
+        <p>การคำนวณต้นทุนอ้างอิงจากการแบ่งงาน WBS ในเอกสาร <code>budget_worksheet.md</code> (ระยะเวลา 5 สัปดาห์):</p>
+        
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>หมวดหมู่ค่าใช้จ่าย</th>
+                <th>รายละเอียดการคำนวณ</th>
+                <th>จำนวนเงิน (บาท)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>ค่าแรงงานทางตรง: PM / Dev</td>
+                <td>20 ชม. &times; 500 บาท/ชม.</td>
+                <td>10,000</td>
+              </tr>
+              <tr>
+                <td>ค่าแรงงานทางตรง: Tech Lead</td>
+                <td>25 ชม. &times; 600 บาท/ชม.</td>
+                <td>15,000</td>
+              </tr>
+              <tr>
+                <td>ค่าแรงงานทางตรง: QA / Tester</td>
+                <td>15 ชม. &times; 400 บาท/ชม.</td>
+                <td>6,000</td>
+              </tr>
+              <tr>
+                <td><strong>รวมต้นทุนค่าแรง (Subtotal 1)</strong></td>
+                <td><strong>60 Man-Hours</strong></td>
+                <td><strong>31,000</strong></td>
+              </tr>
+              <tr>
+                <td>โครงสร้างพื้นฐานและเครื่องมือ</td>
+                <td>Cloud Database (1,500) + CI/CD (500) + Tool Licenses (1,000)</td>
+                <td>3,000</td>
+              </tr>
+              <tr>
+                <td><strong>ต้นทุนรวมเบื้องต้น (Base Cost)</strong></td>
+                <td>ค่าแรง + โครงสร้างพื้นฐาน</td>
+                <td><strong>34,000</strong></td>
+              </tr>
+              <tr>
+                <td>งบสำรองความเสี่ยง (Contingency Reserve 15%)</td>
+                <td>15% ของต้นทุนรวมเบื้องต้น</td>
+                <td>5,100</td>
+              </tr>
+              <tr>
+                <td><strong>งบประมาณโครงการรวมทั้งสิ้น (Total Budget)</strong></td>
+                <td>Base Cost + Contingency Reserve</td>
+                <td><strong>39,100</strong></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="callout">
+          <div class="callout-badge">NOTE</div>
+          <div class="callout-content">
+            <strong>ข้อสังเกตด้านตัวเลขงบประมาณ:</strong> ตัวเลขใน Worksheet สัปดาห์ที่ 5 นี้ระบุยอดรวม 39,100 บาท ซึ่งเป็นการประมาณการเบื้องต้นสำหรับโครงสร้าง 5 สัปดาห์เต็ม ต่างจากยอด Cost Baseline ที่ได้รับอนุมัติในสัปดาห์ที่ 7 (18,823 บาท) และยอดสรุป EVM ใน Transcript (15,525 บาท) ทั้งหมดเป็นข้อมูลสมมติเพื่อการเรียนที่มีฐานคิดต่างกันและต้องไม่รวมปนกัน
+          </div>
+        </div>
+      </section>
+
+      <div class="deck-banner">
+        <div>
+          <div class="deck-banner-title">สไลด์บรรยายสัปดาห์ที่ 5</div>
+          <div class="deck-banner-sub">ดูสไลด์สรุปสถาปัตยกรรม To-be, ISO 25010 และตารางงบประมาณ</div>
+        </div>
+        <a class="btn btn-primary" href="../week-5/slides.html">เปิดสไลด์ W5 &rarr;</a>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div>แหล่งข้อมูล: <code>Sprint1/week-5/</code> · ข้อมูลสมมติเพื่อการเรียน</div>
+      <div class="footer-links">
+        <a href="../week-4/index.html">&larr; สัปดาห์ที่ 4</a>
+        <a href="../week-6/index.html">สัปดาห์ที่ 6 &rarr;</a>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
