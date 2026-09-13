@@ -1,0 +1,861 @@
+<!doctype html>
+<html lang="th">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="สไลด์สรุป Sprint 1 พร้อมหลักฐานและสถานะการปล่อย">
+  <title>สรุป Sprint 1 | CLI Inventory</title>
+  <style>
+    :root {
+      --ink: #132733;
+      --muted: #46606a;
+      --paper: #fff;
+      --canvas: #e8eeee;
+      --line: #bdd0d2;
+      --blue: #075f98;
+      --blue-pale: #e2f0f7;
+      --green: #176544;
+      --amber: #875008;
+      --amber-pale: #fff1d8;
+      --red: #9a3030;
+      --red-pale: #fbe9e8;
+      --font: "Noto Sans Thai", "Leelawadee UI", system-ui, sans-serif
+    }
+
+    * {
+      box-sizing: border-box
+    }
+
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+      margin: 0
+    }
+
+    body {
+      overflow: hidden;
+      background: var(--canvas);
+      color: var(--ink);
+      font-family: var(--font)
+    }
+
+    ::selection {
+      background: #a9d8eb
+    }
+
+    :focus-visible {
+      outline: 3px solid var(--blue);
+      outline-offset: 3px
+    }
+
+    .frame {
+      min-height: 100%;
+      display: grid;
+      place-items: center;
+      padding: 20px
+    }
+
+    .deck {
+      width: min(1440px, calc((100vh - 40px)*16/9), calc(100vw - 40px));
+      aspect-ratio: 16/9;
+      position: relative;
+      overflow: hidden;
+      padding: 12px;
+      background: var(--paper);
+      box-shadow: 0 18px 44px rgb(19 39 51 / 22%)
+    }
+
+    .slide {
+      display: none;
+      height: 100%;
+      padding: 5.2% 7%;
+      grid-template-rows: auto 1fr auto;
+      gap: 20px;
+      background: var(--paper);
+      animation: enter .26s cubic-bezier(.2, .8, .2, 1)
+    }
+
+    .slide.active {
+      display: grid
+    }
+
+    @keyframes enter {
+      from {
+        opacity: .35;
+        transform: translateY(8px)
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0)
+      }
+    }
+
+    @media(prefers-reduced-motion:reduce) {
+      .slide {
+        animation: none
+      }
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin: 0
+    }
+
+    h1 {
+      max-width: 900px;
+      font-size: clamp(36px, 4.4vw, 66px);
+      line-height: 1.08;
+      letter-spacing: -.035em
+    }
+
+    h2 {
+      max-width: 1040px;
+      font-size: clamp(28px, 3.05vw, 47px);
+      line-height: 1.16;
+      letter-spacing: -.025em
+    }
+
+    h3 {
+      font-size: clamp(17px, 1.7vw, 26px);
+      line-height: 1.25
+    }
+
+    p,
+    li,
+    td,
+    th {
+      font-size: clamp(14px, 1.36vw, 21px);
+      line-height: 1.43
+    }
+
+    code {
+      font-family: "IBM Plex Mono", Consolas, monospace;
+      font-size: .88em
+    }
+
+    .lead {
+      max-width: 1000px;
+      margin-top: 22px;
+      color: var(--muted);
+      font-size: clamp(18px, 1.82vw, 28px);
+      line-height: 1.42
+    }
+
+    .note {
+      margin-top: 10px;
+      color: var(--muted)
+    }
+
+    .cover {
+      background: #edf6f7
+    }
+
+    .cover-body {
+      align-self: center;
+      max-width: 1020px
+    }
+
+    .mark {
+      width: 126px;
+      height: 7px;
+      margin: 30px 0;
+      background: var(--blue)
+    }
+
+    .two {
+      display: grid;
+      grid-template-columns: 1.06fr .94fr;
+      gap: 48px;
+      align-items: center
+    }
+
+    .three {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+      align-items: stretch
+    }
+
+    .rules {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      border-top: 1px solid var(--line)
+    }
+
+    .rules li {
+      padding: 15px 0;
+      border-bottom: 1px solid var(--line)
+    }
+
+    .rules strong {
+      color: var(--blue)
+    }
+
+    .message {
+      padding: 28px 30px;
+      background: var(--blue-pale)
+    }
+
+    .message.warn {
+      background: var(--amber-pale)
+    }
+
+    .message.danger {
+      background: var(--red-pale)
+    }
+
+    .message h3 {
+      margin-bottom: 10px
+    }
+
+    table {
+      width: 100%;
+      align-self: center;
+      border-collapse: collapse;
+      table-layout: fixed
+    }
+
+    th {
+      padding: 13px 17px;
+      text-align: left;
+      color: #fff;
+      background: var(--ink);
+      font-weight: 700
+    }
+
+    td {
+      padding: 14px 17px;
+      vertical-align: top;
+      border-bottom: 1px solid var(--line)
+    }
+
+    tbody tr:nth-child(even) td {
+      background: #f5f9f8
+    }
+
+    .compact th,
+    .compact td {
+      padding: 11px 14px
+    }
+
+    .good {
+      color: var(--green);
+      font-weight: 800
+    }
+
+    .wait {
+      color: var(--amber);
+      font-weight: 800
+    }
+
+    .stop {
+      color: var(--red);
+      font-weight: 800
+    }
+
+    .phase {
+      padding-top: 14px;
+      border-top: 1px solid var(--line)
+    }
+
+    .phase h3 {
+      color: var(--blue)
+    }
+
+    .phase:nth-child(2) h3 {
+      color: #287f72
+    }
+
+    .phase:nth-child(3) h3 {
+      color: #9a5b0a
+    }
+
+    .phase ul {
+      margin: 16px 0 0;
+      padding-left: 1.1em
+    }
+
+    .phase li {
+      margin-bottom: 8px
+    }
+
+    .flow {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr auto 1fr;
+      gap: 20px;
+      align-items: center;
+      align-self: center
+    }
+
+    .stage {
+      min-height: 210px;
+      padding: 22px 0;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line)
+    }
+
+    .stage p {
+      margin-top: 12px;
+      color: var(--muted)
+    }
+
+    .divider {
+      width: 42px;
+      height: 1px;
+      background: var(--blue)
+    }
+
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      align-self: center;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line)
+    }
+
+    .metric {
+      padding: 22px 20px;
+      border-right: 1px solid var(--line)
+    }
+
+    .metric:last-child {
+      border: 0
+    }
+
+    .metric b {
+      display: block;
+      font-size: clamp(27px, 3.1vw, 48px);
+      line-height: 1;
+      letter-spacing: -.035em
+    }
+
+    .metric p {
+      margin-top: 11px;
+      color: var(--muted)
+    }
+
+    .command {
+      margin-top: 12px;
+      padding: 12px 15px;
+      background: #eff5f5;
+      font-family: "IBM Plex Mono", Consolas, monospace;
+      font-size: clamp(12px, 1.1vw, 16px);
+      overflow-wrap: anywhere
+    }
+
+    .agenda {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      counter-reset: a;
+      border-top: 1px solid var(--line)
+    }
+
+    .agenda li {
+      counter-increment: a;
+      display: grid;
+      grid-template-columns: 50px 1fr;
+      gap: 18px;
+      padding: 15px 0;
+      border-bottom: 1px solid var(--line)
+    }
+
+    .agenda li::before {
+      content: counter(a, decimal-leading-zero);
+      color: var(--blue);
+      font-weight: 800;
+      font-variant-numeric: tabular-nums
+    }
+
+    footer {
+      display: flex;
+      justify-content: space-between;
+      gap: 24px;
+      padding-top: 14px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: clamp(10px, 1vw, 15px)
+    }
+
+    footer span:last-child {
+      text-align: right
+    }
+
+    .controls {
+      position: absolute;
+      right: 3.6%;
+      bottom: 3.5%;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      gap: 8px
+    }
+
+    button {
+      min-width: 48px;
+      min-height: 42px;
+      border: 1px solid #8ba4aa;
+      background: #fff;
+      color: var(--ink);
+      font: 700 21px/1 var(--font);
+      cursor: pointer
+    }
+
+    button:hover {
+      background: var(--blue);
+      color: #fff;
+      border-color: var(--blue)
+    }
+
+    .count {
+      min-width: 64px;
+      color: var(--muted);
+      text-align: center;
+      font-variant-numeric: tabular-nums
+    }
+
+    .sr {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0
+    }
+
+    @media(max-width:760px) {
+      .frame {
+        padding: 0
+      }
+
+      .deck {
+        width: 100vw;
+        box-shadow: none
+      }
+
+      .slide {
+        padding: 4.8% 6%;
+        gap: 10px
+      }
+
+      .two,
+      .three {
+        gap: 16px
+      }
+
+      .message {
+        padding: 17px 20px
+      }
+
+      .flow {
+        gap: 10px
+      }
+
+      .divider {
+        width: 20px
+      }
+
+      .stage {
+        min-height: 0;
+        padding: 12px 0
+      }
+
+      .metric {
+        padding: 12px 10px
+      }
+
+      td,
+      th {
+        padding: 8px 10px
+      }
+
+      footer {
+        padding-top: 8px
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="frame">
+    <section class="deck" aria-label="สไลด์สรุป Sprint 1 ระบบจัดการสินค้าคงคลังแบบ CLI">
+      <article class="slide cover active">
+        <div class="cover-body">
+          <h1>สรุป Sprint 1<br>ระบบจัดการสินค้าคงคลังแบบ CLI</h1>
+          <div class="mark"></div>
+          <p class="lead">การปรับโครงสร้างระบบ การทดสอบ การควบคุมการเปลี่ยนแปลง และสถานะพร้อมปล่อยที่ตรวจสอบย้อนกลับได้
+          </p>
+        </div>
+        <footer><span>ENGSE202 / ENGSE225</span><span>ตัวเลขแผนงานและ EVM เป็นข้อมูลสมมติเพื่อการเรียน</span></footer>
+      </article>
+
+      <article class="slide">
+        <header>
+          <h2>ขอบเขตการนำเสนอและหลักฐาน</h2>
+          <p class="note">แยกข้อเท็จจริงจากโค้ดและเอกสาร ออกจากตัวเลขที่ใช้เป็นกรณีศึกษาในรายวิชา</p>
+        </header>
+        <div class="two">
+          <ul class="rules">
+            <li><strong>เป้าหมาย:</strong> ลดความเสี่ยงจาก global state, ตรวจข้อมูลนำเข้า และบันทึก JSON แบบ atomic</li>
+            <li><strong>ผลผลิตที่ตรวจได้:</strong> โค้ด refactor, ชุดทดสอบ, เอกสารควบคุมการเปลี่ยนแปลง และ checklist
+              ปล่อยงาน</li>
+            <li><strong>ขอบเขตที่ไม่กล่าวอ้างว่าเสร็จ:</strong> SQLite, Member และ Checkout อยู่ในสถานะออกแบบหรือ
+              backlog</li>
+          </ul>
+          <aside class="message warn">
+            <h3>เกณฑ์ความน่าเชื่อถือ</h3>
+            <p>ทุกข้อสรุปอ้างอิงจาก <code>sprint1.md</code> และเอกสาร W1–W12 หากหลักฐานการอนุมัติยังไม่มี จะระบุว่า
+              “คงค้าง” แทนการสรุปว่าเสร็จแล้ว</p>
+          </aside>
+        </div>
+        <footer><span>แหล่งหลัก: Sprint1/sprint1.md §1, §4, §8–§12</span><span>2 / 12</span></footer>
+      </article>
+
+      <article class="slide">
+        <header>
+          <h2>เส้นทางหลักฐานตลอด W1–W12</h2>
+          <p class="note">แต่ละช่วงสร้างหลักฐานคนละชนิด ตั้งแต่ปัญหาเดิมจนถึงการเตรียมตรวจรับ</p>
+        </header>
+        <div class="three">
+          <section class="phase">
+            <h3>W1–W4<br>วิเคราะห์และปรับโครงสร้าง</h3>
+            <ul>
+              <li>Charter, scope และความเสี่ยงของระบบเดิม</li>
+              <li>DFD, hotspot และ static analysis</li>
+              <li>แยก Product, InventoryManager และ CLI</li>
+              <li>ยืนยันพฤติกรรมหลักด้วย PyTest</li>
+            </ul>
+          </section>
+          <section class="phase">
+            <h3>W5–W8<br>วางแผนและควบคุมการเปลี่ยนแปลง</h3>
+            <ul>
+              <li>ประเมินสถาปัตยกรรม คุณภาพ และงบ</li>
+              <li>กำหนด communication matrix กับ DoD</li>
+              <li>ตั้ง cost baseline และ quality gate</li>
+              <li>วิเคราะห์ CR-01 ก่อนนำเข้า backlog</li>
+            </ul>
+          </section>
+          <section class="phase">
+            <h3>W9–W12<br>วัดผล ทำให้แข็งแรง และเตรียมปล่อย</h3>
+            <ul>
+              <li>EVM, retrospective และการส่งต่องาน</li>
+              <li>CCB สำหรับ CR-02 และแก้ BUG-101</li>
+              <li>Hardening, scope freeze และ UAT plan</li>
+              <li>Final EVM, changelog และ release checklist</li>
+            </ul>
+          </section>
+        </div>
+        <footer><span>รายละเอียดครบถ้วน: Sprint1/week-1 … Sprint1/week-12</span><span>3 / 12</span></footer>
+      </article>
+
+      <article class="slide">
+        <header>
+          <h2>การเปลี่ยนจากระบบเดิมสู่ระบบที่ดูแลรักษาได้</h2>
+          <p class="note">แนวคิดของโค้ดที่นำเสนอ ไม่ใช่การอ้างว่า SQLite หรือระบบสมาชิกส่งมอบแล้ว</p>
+        </header>
+        <div class="flow">
+          <section class="stage">
+            <h3>ระบบเดิม</h3>
+            <p>ตัวแปร global, <code>main()</code> ที่รวม UI กับ business logic และการแปลงข้อมูลที่เสี่ยงต่อการล่ม</p>
+          </section><span class="divider"></span>
+          <section class="stage">
+            <h3>ผล refactor</h3>
+            <p><code>Product</code>, <code>InventoryManager</code> และ CLI แยกหน้าที่ พร้อม validation และ atomic write
+            </p>
+          </section><span class="divider"></span>
+          <section class="stage">
+            <h3>งานต่อยอด</h3>
+            <p>Barcode, reorder alert และ CSV มีหลักฐานใน Week 12 ส่วน SQLite, Member และ Checkout
+              ยังคงเป็นแบบออกแบบหรือ backlog</p>
+          </section>
+        </div>
+        <footer><span>แหล่ง: week-1/Project-Charter.md, week-2/Hotspot.md, week-6/To_Be_Architecture.md</span><span>4 /
+            12</span></footer>
+      </article>
+
+      <article class="slide">
+        <header>
+          <h2>ผลส่งมอบ สถานะออกแบบ และเงื่อนไขปิดงาน</h2>
+        </header>
+        <table class="compact">
+          <thead>
+            <tr>
+              <th style="width:23%">สถานะ</th>
+              <th style="width:29%">รายการ</th>
+              <th>หลักฐานหรือเงื่อนไข</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="good">มีหลักฐาน</td>
+              <td>Refactor และความเข้ากันได้กับข้อมูลเก่า</td>
+              <td>Input validation, atomic write และ fallback สำหรับข้อมูลเก่าที่ไม่มี <code>barcode</code></td>
+            </tr>
+            <tr>
+              <td class="good">มีหลักฐาน</td>
+              <td>Barcode, reorder alert และ CSV</td>
+              <td>เอกสาร Week 12 และชุดทดสอบเฉพาะส่วน 25 กรณี</td>
+            </tr>
+            <tr>
+              <td class="wait">ออกแบบ / backlog</td>
+              <td>SQLite, Member tiers และ Checkout</td>
+              <td>มี blueprint และ To-Be Architecture แต่ยังไม่มีหลักฐาน implementation ใน Sprint 1</td>
+            </tr>
+            <tr>
+              <td class="stop">คงค้างก่อน release</td>
+              <td>UAT sign-off, merge ตาม checklist และ Git tag</td>
+              <td>ต้องปิด formal acceptance ก่อนอ้างว่าเป็น release สมบูรณ์</td>
+            </tr>
+          </tbody>
+        </table>
+        <footer><span>แหล่ง: sprint1.md §4, §8, §10–§12</span><span>5 / 12</span></footer>
+      </article>
+
+      <article class="slide">
+        <header>
+          <h2>ทีม งานตัดสินใจ และเกณฑ์รับงาน</h2>
+          <p class="note">บทบาทช่วยให้การทดสอบ การทบทวน และการเปลี่ยนแปลงมีเจ้าของที่ชัดเจน</p>
+        </header>
+        <table>
+          <thead>
+            <tr>
+              <th style="width:27%">บทบาท</th>
+              <th style="width:37%">ความรับผิดชอบในการนำเสนอ</th>
+              <th>หลักฐานที่เกี่ยวข้อง</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>PM / Developer</td>
+              <td>กำหนดกรอบงาน ประสานทีม และพัฒนา validation กับ atomic save</td>
+              <td>Project Charter, sprint report</td>
+            </tr>
+            <tr>
+              <td>QA / Tester</td>
+              <td>ออกแบบ test case รัน regression และตรวจเงื่อนไข DoD</td>
+              <td>test_app.py, DoD, UAT scenarios</td>
+            </tr>
+            <tr>
+              <td>Tech Lead / Architect</td>
+              <td>ออกแบบ To-Be Architecture ทบทวนโค้ด และควบคุมมาตรฐาน</td>
+              <td>RACI, architecture, release checklist</td>
+            </tr>
+          </tbody>
+        </table>
+        <footer><span>แหล่ง: README.md, week-3/raci.md และ week-3/dod.md</span><span>6 / 12</span></footer>
+      </article>
+
+      <article class="slide">
+        <header>
+          <h2>การเปลี่ยนแปลงและข้อบกพร่องที่ควบคุมได้</h2>
+          <p class="note">แยกงานเพิ่มขอบเขตจากบั๊ก เพื่อป้องกันการแก้ไขที่กระทบเป้าหมายเดิมโดยไม่มีการตัดสินใจ</p>
+        </header>
+        <table class="compact">
+          <thead>
+            <tr>
+              <th style="width:20%">รายการ</th>
+              <th style="width:32%">ผลกระทบที่บันทึกไว้</th>
+              <th>แนวทางจัดการ</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>CR-01<br>Barcode / Reorder Point</td>
+              <td>8 man-hours, 2 class ตามสรุป ENGSE202 และมี ConsoleUI ใน traceability</td>
+              <td>Normal change จัดลำดับใน Sprint 2 ไม่แทรกกลาง Sprint 1</td>
+            </tr>
+            <tr>
+              <td>CR-02<br>CSV export</td>
+              <td>4.5 man-hours, 1,350 บาท และความเสี่ยงต่ำ</td>
+              <td>เข้ากระบวนการ CCB และดึง contingency reserve เมื่ออนุมัติ</td>
+            </tr>
+            <tr>
+              <td>BUG-101<br>ข้อมูลเก่าไม่มี barcode</td>
+              <td>เสี่ยง <code>KeyError</code> เมื่ออ่าน JSON เดิม</td>
+              <td>ใช้ fallback <code>dict.get('barcode', '')</code> และทดสอบ regression</td>
+            </tr>
+          </tbody>
+        </table>
+        <footer><span>แหล่ง: week-8/CR-01_Impact_Analysis.md, week-10/CR-02_Impact_Decision_Form.md,
+            Defect_Log_BUG-101.md</span><span>7 / 12</span></footer>
+      </article>
+
+      <article class="slide">
+        <header>
+          <h2>EVM ของ Sprint 1</h2>
+          <p class="note">ตัวเลขเป็นกรณีศึกษาสำหรับการเรียน ใช้อธิบายเหตุผลของการย้ายงานค้างและการใช้เงินสำรอง</p>
+        </header>
+        <div class="metrics">
+          <section class="metric"><b>4,000</b>
+            <p>PV<br>แผน 4 tasks</p>
+          </section>
+          <section class="metric"><b>3,000</b>
+            <p>EV<br>งานที่ผ่าน PyTest 3 tasks</p>
+          </section>
+          <section class="metric"><b>4,200</b>
+            <p>AC<br>ค่าแรงจาก Log Work</p>
+          </section>
+          <section class="metric"><b>−1,000<br>−1,200</b>
+            <p>SV / CV<br>ล่าช้าและเกินงบ</p>
+          </section>
+        </div>
+        <div class="two">
+          <p class="lead">รายงานชี้สาเหตุที่หนี้เทคนิคใน <code>app_v1.py</code> และเวลาแก้ merge conflict
+            จึงย้ายงานที่ยังไม่เสร็จกลับ backlog พร้อมเพิ่ม buffer time</p>
+          <aside class="message">
+            <h3>การตีความที่ถูกต้อง</h3>
+            <p>SV และ CV ติดลบเป็นสถานะของ Sprint 1 เท่านั้น ไม่ใช่ตัวเลขรวมทั้งโครงการ</p>
+          </aside>
+        </div>
+        <footer><span>แหล่ง: week-9/EVM_Sprint1.md</span><span>8 / 12</span></footer>
+      </article>
+
+      <article class="slide">
+        <header>
+          <h2>Final EVM และแนวโน้มความเร็ว</h2>
+          <p class="note">กรณีศึกษา “รวม 3 sprints” ต้องอ่านแยกจากผลจริงของ Sprint 1 และไม่ใช่หลักฐานการอนุมัติ release
+          </p>
+        </header>
+        <div class="two">
+          <table class="compact">
+            <thead>
+              <tr>
+                <th>ตัวชี้วัดรวม</th>
+                <th>ค่า</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>PV / EV</td>
+                <td>15,525 / 15,525 บาท</td>
+              </tr>
+              <tr>
+                <td>AC</td>
+                <td>16,100 บาท</td>
+              </tr>
+              <tr>
+                <td>SPI / CPI</td>
+                <td>1.00 / 0.96</td>
+              </tr>
+              <tr>
+                <td>CV</td>
+                <td>−575 บาท หรือเกิน 3.7%</td>
+              </tr>
+            </tbody>
+          </table>
+          <section class="message warn">
+            <h3>Velocity ในกรณีศึกษา</h3>
+            <p>S1 = 15, S2 = 22, S3 = 12 story points</p>
+            <p style="margin-top:12px">ผลรวมนี้อธิบายการควบคุมต้นทุนและเวลาในชั้นเรียนเท่านั้น UAT ที่ยังไม่ลงนามและ tag
+              ที่ยังไม่มี ยังคงเป็นข้อจำกัดของการปล่อยจริง</p>
+          </section>
+        </div>
+        <footer><span>แหล่ง: week-12/Final_EVM.md และ sprint1.md §6, §8</span><span>9 / 12</span></footer>
+      </article>
+
+      <article class="slide">
+        <header>
+          <h2>ผลการทดสอบที่รันซ้ำได้</h2>
+          <p class="note">รายงานผลตามคำสั่งที่ระบุไฟล์ เพื่อไม่ให้ชื่อ <code>test_app.py</code>
+            ซ้ำกันในหลายโฟลเดอร์ทำให้การ collect ปะปน</p>
+        </header>
+        <div class="two">
+          <section>
+            <h3>ชุดทดสอบระบบ refactor</h3>
+            <p class="command">python -m pytest test_app.py -q</p>
+            <p class="lead"><strong>5 passed</strong><br>เพิ่มและลดสต็อก, มูลค่าคลัง และ validation</p>
+          </section>
+          <section>
+            <h3>ชุดทดสอบ Week 12</h3>
+            <p class="command">cd Sprint1 &amp;&amp; python -m pytest week-12/test_app.py -q</p>
+            <p class="lead"><strong>25 passed</strong><br>baseline, CR-01, CR-02, BUG-101, CLI และ integration</p>
+          </section>
+        </div>
+        <aside class="message danger">
+          <h3>ข้อจำกัดที่ต้องสื่อสาร</h3>
+          <p><code>python -m pytest -q</code> จากรากรีโปยัง error ระหว่าง collection เพราะมีไฟล์
+            <code>test_app.py</code> ชื่อซ้ำกัน จึงไม่ควรเรียกผล 5 และ 25 ว่า “full suite ทั้งรีโปผ่าน”
+          </p>
+        </aside>
+        <footer><span>ตรวจรันแบบระบุไฟล์เมื่อ 14 ก.ย. 2026; แหล่ง: sprint1.md §5</span><span>10 / 12</span></footer>
+      </article>
+
+      <article class="slide">
+        <header>
+          <h2>สถานะความพร้อมก่อนปล่อย</h2>
+          <p class="note">การทดสอบผ่านช่วยยืนยันพฤติกรรมของโค้ด แต่ยังแทน formal acceptance และ release governance
+            ไม่ได้</p>
+        </header>
+        <table class="compact">
+          <thead>
+            <tr>
+              <th style="width:25%">ด่านตรวจ</th>
+              <th style="width:20%">สถานะ</th>
+              <th>หลักฐานและงานที่เหลือ</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Regression test</td>
+              <td class="good">ผ่านแบบระบุไฟล์</td>
+              <td>5 passed สำหรับ refactor และ 25 passed สำหรับ Week 12</td>
+            </tr>
+            <tr>
+              <td>UAT 3 scenarios</td>
+              <td class="wait">รอลงนาม</td>
+              <td>มี scenario SC01–SC03 แต่ช่องผลและลายเซ็น formal acceptance ยังว่าง</td>
+            </tr>
+            <tr>
+              <td>Release tag</td>
+              <td class="wait">ยังไม่มี</td>
+              <td>CHANGELOG เตรียมไว้ แต่พบ tag <code>v1.0.0</code> เท่านั้น ยังไม่มี <code>v2.0.0-evolution</code></td>
+            </tr>
+            <tr>
+              <td>Code quality gate</td>
+              <td class="wait">มีหนี้เทคนิค</td>
+              <td>Bandit สะอาดตามรายงาน แต่ Flake8 ยังมี line-length <code>E501</code></td>
+            </tr>
+          </tbody>
+        </table>
+        <footer><span>แหล่ง: sprint1.md §5, §8, §10–§12; UAT_Sign_Off_Sheet.md; Release_Checklist.md</span><span>11 /
+            12</span></footer>
+      </article>
+
+      <article class="slide cover">
+        <div class="cover-body">
+          <h2>เส้นทางการสาธิตในชั้นเรียน</h2>
+          <ol class="agenda">
+            <li>เริ่มจากความเสี่ยงของโค้ดเดิมและขอบเขตที่ทีมตกลงกัน</li>
+            <li>อธิบายการ refactor และหลักฐานการทดสอบแบบรันซ้ำได้</li>
+            <li>สรุปการตัดสินใจ CR, EVM และบทเรียนการบริหารงาน</li>
+            <li>ปิดด้วย release gate ที่ยังต้องทำก่อนส่งมอบอย่างเป็นทางการ</li>
+          </ol>
+          <p class="lead">ข้อสรุป: มีหลักฐานสำหรับโค้ด การทดสอบ และเอกสารควบคุมงาน ขณะที่ UAT sign-off, lint ที่คงค้าง
+            และ Git tag ต้องปิดให้ครบก่อนเรียกว่า release สมบูรณ์</p>
+        </div>
+        <footer><span>กด ← →, Page Up / Down, Home หรือ End เพื่อควบคุมสไลด์</span><span>12 / 12</span></footer>
+      </article>
+      <div class="controls" aria-label="ควบคุมสไลด์"><button id="previous" type="button"
+          aria-label="สไลด์ก่อนหน้า">‹</button><span class="count" id="count" aria-live="polite">1 / 12</span><button
+          id="next" type="button" aria-label="สไลด์ถัดไป">›</button></div>
+      <p class="sr" id="announce" aria-live="polite"></p>
+    </section>
+  </main>
+  <script>
+    const slides = [...document.querySelectorAll(".slide")], count = document.querySelector("#count"), announce = document.querySelector("#announce"); let current = 0;
+    function show(index) { current = (index + slides.length) % slides.length; slides.forEach((slide, i) => slide.classList.toggle("active", i === current)); count.textContent = `${current + 1} / ${slides.length}`; announce.textContent = `สไลด์ ${current + 1} จาก ${slides.length}`; }
+    document.querySelector("#previous").addEventListener("click", () => show(current - 1)); document.querySelector("#next").addEventListener("click", () => show(current + 1));
+    document.addEventListener("keydown", event => { if (["ArrowRight", "PageDown", " "].includes(event.key)) { event.preventDefault(); show(current + 1) } if (["ArrowLeft", "PageUp"].includes(event.key)) { event.preventDefault(); show(current - 1) } if (event.key === "Home") { event.preventDefault(); show(0) } if (event.key === "End") { event.preventDefault(); show(slides.length - 1) } });
+  </script>
+</body>
+
+</html>

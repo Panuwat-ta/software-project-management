@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="th">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>สัปดาห์ที่ 5: สถาปัตยกรรมและงบประมาณ | SPM</title>
   <link rel="stylesheet" href="../../theme.css">
 </head>
+
 <body>
   <header class="site-header">
     <div class="header-inner">
@@ -35,6 +37,28 @@
             <a href="../week-12/index.html">สัปดาห์ 12 <small>UAT &amp; Close-out</small></a>
           </div>
         </details>
+        <details class="nav-dropdown nav-slides-dropdown">
+          <summary class="nav-dropdown-summary">
+            <span>สไลด์</span>
+          </summary>
+          <div class="dropdown-menu">
+            <a href="../templates/index.html">เทมเพลตสไลด์ <small>เลือก 3 แบบ</small></a>
+            <a href="../sprint1-slides.html">สรุป Sprint 1 <small>Project close-out</small></a>
+            <a href="../Phase1/slides.html">Phase 1 <small>Planning proposal</small></a>
+            <a href="../week-1/slides.html">สัปดาห์ 1 <small>Charter & Legacy</small></a>
+            <a href="../week-2/slides.html">สัปดาห์ 2 <small>DFD & Blueprint</small></a>
+            <a href="../week-3/slides.html">สัปดาห์ 3 <small>DoD & RACI</small></a>
+            <a href="../week-4/slides.html">สัปดาห์ 4 <small>Refactor & Test</small></a>
+            <a href="../week-5/slides.html">สัปดาห์ 5 <small>Architecture & Budget</small></a>
+            <a href="../week-6/slides.html">สัปดาห์ 6 <small>DoD & To-Be</small></a>
+            <a href="../week-7/slides.html">สัปดาห์ 7 <small>Baseline & Quality</small></a>
+            <a href="../week-8/slides.html">สัปดาห์ 8 <small>CR-01 & Tracking</small></a>
+            <a href="../week-9/slides.html">สัปดาห์ 9 <small>EVM & Transition</small></a>
+            <a href="../week-10/slides.html">สัปดาห์ 10 <small>CCB & BUG-101</small></a>
+            <a href="../week-11/slides.html">สัปดาห์ 11 <small>Hardening & Freeze</small></a>
+            <a href="../week-12/slides.html">สัปดาห์ 12 <small>UAT & Close-out</small></a>
+          </div>
+        </details>
       </nav>
     </div>
   </header>
@@ -52,7 +76,8 @@
       <div class="page-header-block">
         <div class="notice-pill">ข้อมูลสมมติเพื่อการเรียน · W5 Documentation</div>
         <h1 class="page-title">สัปดาห์ที่ 5: สถาปัตยกรรม คุณภาพ ISO 25010 และงบประมาณ</h1>
-        <p class="page-desc">เปรียบเทียบสถาปัตยกรรมระบบ As-is vs To-be, ประเมินคุณภาพตามกรอบมาตรฐาน ISO/IEC 25010 และจัดทำแผ่นงานงบประมาณโครงการ (Budget Worksheet)</p>
+        <p class="page-desc">เปรียบเทียบสถาปัตยกรรมระบบ As-is vs To-be, ประเมินคุณภาพตามกรอบมาตรฐาน ISO/IEC 25010
+          และจัดทำแผ่นงานงบประมาณโครงการ (Budget Worksheet)</p>
         <div class="page-header-actions">
           <a class="btn btn-secondary" href="../week-5/slides.html">เปิดสไลด์ประกอบสัปดาห์ 5 &rarr;</a>
         </div>
@@ -98,8 +123,10 @@
       <section>
         <h2>2. การประเมินคุณภาพตามมาตรฐาน ISO/IEC 25010</h2>
         <ul>
-          <li><strong>Maintainability (ความสามารถในการบำรุงรักษา):</strong> ยกระดับ Modularity ด้วยการแยกคลาส, เพิ่ม Analyzability โดยตั้งชื่อตัวแปรตาม PEP 8 และเพิ่ม Testability ด้วยการลด Global Coupling</li>
-          <li><strong>Reliability (ความน่าเชื่อถือ):</strong> ป้องกัน Fault Tolerance ด้วย Try-Except Validation และเตรียม Transaction Rollback ป้องกันข้อมูลสูญหาย</li>
+          <li><strong>Maintainability (ความสามารถในการบำรุงรักษา):</strong> ยกระดับ Modularity ด้วยการแยกคลาส, เพิ่ม
+            Analyzability โดยตั้งชื่อตัวแปรตาม PEP 8 และเพิ่ม Testability ด้วยการลด Global Coupling</li>
+          <li><strong>Reliability (ความน่าเชื่อถือ):</strong> ป้องกัน Fault Tolerance ด้วย Try-Except Validation
+            และเตรียม Transaction Rollback ป้องกันข้อมูลสูญหาย</li>
         </ul>
       </section>
 
@@ -107,7 +134,7 @@
         <h2>3. แผ่นงานงบประมาณโครงการ (Budget Worksheet)</h2>
         <div class="notice-pill">ข้อมูลสมมติเพื่อการเรียน · Fictional Educational Data</div>
         <p>การคำนวณต้นทุนอ้างอิงจากการแบ่งงาน WBS ในเอกสาร <code>budget_worksheet.md</code> (ระยะเวลา 5 สัปดาห์):</p>
-        
+
         <div class="table-wrap">
           <table>
             <thead>
@@ -165,7 +192,10 @@
         <div class="callout">
           <div class="callout-badge">NOTE</div>
           <div class="callout-content">
-            <strong>ข้อสังเกตด้านตัวเลขงบประมาณ:</strong> ตัวเลขใน Worksheet สัปดาห์ที่ 5 นี้ระบุยอดรวม 39,100 บาท ซึ่งเป็นการประมาณการเบื้องต้นสำหรับโครงสร้าง 5 สัปดาห์เต็ม ต่างจากยอด Cost Baseline ที่ได้รับอนุมัติในสัปดาห์ที่ 7 (18,823 บาท) และยอดสรุป EVM ใน Transcript (15,525 บาท) ทั้งหมดเป็นข้อมูลสมมติเพื่อการเรียนที่มีฐานคิดต่างกันและต้องไม่รวมปนกัน
+            <strong>ข้อสังเกตด้านตัวเลขงบประมาณ:</strong> ตัวเลขใน Worksheet สัปดาห์ที่ 5 นี้ระบุยอดรวม 39,100 บาท
+            ซึ่งเป็นการประมาณการเบื้องต้นสำหรับโครงสร้าง 5 สัปดาห์เต็ม ต่างจากยอด Cost Baseline
+            ที่ได้รับอนุมัติในสัปดาห์ที่ 7 (18,823 บาท) และยอดสรุป EVM ใน Transcript (15,525 บาท)
+            ทั้งหมดเป็นข้อมูลสมมติเพื่อการเรียนที่มีฐานคิดต่างกันและต้องไม่รวมปนกัน
           </div>
         </div>
       </section>
@@ -189,5 +219,7 @@
       </div>
     </div>
   </footer>
+  <script src="../../site-nav.js" defer></script>
 </body>
+
 </html>

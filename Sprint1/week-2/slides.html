@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="th">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -28,13 +29,16 @@
       --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
     }
 
-    *, *::before, *::after {
+    *,
+    *::before,
+    *::after {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
     }
 
-    html, body {
+    html,
+    body {
       width: 100%;
       height: 100%;
       overflow: hidden;
@@ -293,12 +297,15 @@
     }
 
     @media print {
-      body, .frame {
+
+      body,
+      .frame {
         background: #ffffff;
         padding: 0;
         display: block;
         height: auto;
       }
+
       .deck {
         width: 100vw;
         height: 56.25vw;
@@ -306,6 +313,7 @@
         box-shadow: none;
         border-radius: 0;
       }
+
       .slide {
         display: grid !important;
         break-after: page;
@@ -313,6 +321,7 @@
         height: 100vh;
         padding: 50px 70px;
       }
+
       .controls {
         display: none !important;
       }
@@ -324,29 +333,219 @@
         animation: none !important;
       }
     }
-  .content-body,.slide-body{overflow-y:auto;scrollbar-width:thin;min-height:0}
-    </style>
+
+    .content-body,
+    .slide-body {
+      overflow-y: auto;
+      scrollbar-width: thin;
+      min-height: 0
+    }
+
+    @media (max-width: 600px) {
+
+      html,
+      body {
+        overflow-x: hidden;
+        overflow-y: auto;
+      }
+
+      .frame,
+      .viewport-frame {
+        display: block;
+        width: 100%;
+        height: auto;
+        min-height: 100vh;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      .deck,
+      .deck-container {
+        width: 100%;
+        min-height: 100vh;
+        height: auto;
+        aspect-ratio: auto;
+        overflow: visible;
+        border: 0;
+        border-radius: 0;
+        box-shadow: none;
+        padding-bottom: 72px;
+        box-sizing: border-box;
+      }
+
+      .slide {
+        min-height: calc(100vh - 72px);
+        height: auto;
+        padding: 28px 20px;
+        gap: 16px;
+        box-sizing: border-box;
+      }
+
+      .slide h1 {
+        font-size: clamp(28px, 8vw, 38px);
+        line-height: 1.2;
+      }
+
+      .slide-title-area h2 {
+        font-size: clamp(26px, 7.5vw, 34px);
+        line-height: 1.2;
+      }
+
+      .slide-lead,
+      .slide-subtitle {
+        font-size: 18px;
+        line-height: 1.45;
+      }
+
+      .content-body,
+      .slide-body {
+        height: auto;
+        overflow: visible;
+        justify-content: flex-start;
+      }
+
+      .cards-grid-2,
+      .cards-grid-3,
+      .grid-2,
+      .grid-3 {
+        grid-template-columns: 1fr;
+        gap: 14px;
+      }
+
+      .card,
+      .notion-card {
+        min-width: 0;
+      }
+
+      .card-list,
+      .notion-list {
+        font-size: 17px;
+        line-height: 1.45;
+      }
+
+      .data-val {
+        font-size: 30px;
+      }
+
+      .slide-footer {
+        display: block;
+        font-size: 14px;
+      }
+
+      .controls,
+      .nav-controls {
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        width: 100%;
+        min-height: 64px;
+        padding: 8px 12px;
+        box-sizing: border-box;
+        justify-content: center;
+        gap: 6px;
+        z-index: 100;
+        background: var(--canvas, #fff);
+        border-top: 1px solid var(--border, #ddd);
+      }
+
+      .controls .btn,
+      .nav-controls .nav-btn {
+        min-height: 40px;
+        padding: 6px 10px;
+        font-size: 15px;
+      }
+
+      .controls>a {
+        display: none;
+      }
+
+      .slide-count {
+        font-size: 15px;
+        min-width: 42px;
+        text-align: center;
+      }
+    }
+
+    @media (max-width: 600px) {
+
+      .slide-header,
+      .content-body,
+      .slide-body,
+      .slide-title-area,
+      .notion-card,
+      .card,
+      .notion-list,
+      .card-list,
+      .metric-row {
+        min-width: 0;
+        max-width: 100%;
+        box-sizing: border-box;
+      }
+
+      .badge-row {
+        flex-wrap: wrap;
+        max-width: 100%;
+      }
+
+      .badge,
+      .header-note {
+        max-width: 100%;
+        font-size: 16px;
+        overflow-wrap: anywhere;
+      }
+
+      .notion-card,
+      .card {
+        padding: 20px;
+      }
+
+      .notion-list li,
+      .card-list li {
+        font-size: 18px;
+        overflow-wrap: anywhere;
+        word-break: normal;
+      }
+
+      .metric-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 4px;
+      }
+
+      .metric-label,
+      .metric-value {
+        max-width: 100%;
+        overflow-wrap: anywhere;
+      }
+    }
+  </style>
 </head>
+
 <body>
   <div class="frame">
     <main class="deck" aria-live="off">
-      <!-- Slide 1: Cover & Static Analysis Summary -->
       <section class="slide active" id="slide-1">
         <header class="slide-header">
           <div class="marker-wrap">
             <span class="marker-pill">ข้อมูลสมมติเพื่อการเรียน · สัปดาห์ที่ 2</span>
           </div>
           <h1>วิเคราะห์ DFD, Hotspots และพิมพ์เขียวใหม่</h1>
-          <p class="slide-lead">วิเคราะห์กระแสข้อมูล, ชี้เป้าจุดวิกฤตใน app_v1.py และออกแบบสถาปัตยกรรม Three-Tier Blueprint [ข้อมูลจำลองเพื่อการศึกษา]</p>
+          <p class="slide-lead">วิเคราะห์กระแสข้อมูล, ชี้เป้าจุดวิกฤตใน app_v1.py และออกแบบสถาปัตยกรรม Three-Tier
+            Blueprint [ข้อมูลจำลองเพื่อการศึกษา]</p>
         </header>
         <div class="slide-body">
           <div class="card subtle">
             <div class="card-title">ผลการวิเคราะห์ซอร์สโค้ดเชิงสถิต (Static Code Analysis Summary)</div>
             <ul class="card-list">
-              <li><strong>ขนาดและคะแนนคุณภาพ:</strong> โค้ดเดิมยาว 99 บรรทัด ได้คะแนน Pylint <strong>7.10 / 10</strong> ตรวจพบข้อบกพร่องตามมาตรฐาน PEP 8</li>
-              <li><strong>ความซับซ้อนของ main():</strong> Radon รายงาน Cyclomatic Complexity เท่ากับ <strong>14 (เกรด C)</strong> เนื่องจากรวมทุกอย่างในฟังก์ชันเดียว</li>
-              <li><strong>กิ่งสาขาและคำสั่งเกินเกณฑ์:</strong> พบคำเตือน R0912 (กิ่งตัดสินใจ 17 สาขา) และ R0915 (มี 55 คำสั่งในฟังก์ชันเดียว)</li>
-              <li><strong>ฟังก์ชันพื้นฐาน:</strong> ฟังก์ชัน <code>load()</code> ได้ CC = 2 (เกรด A) และ <code>save()</code> ได้ CC = 1 (เกรด A)</li>
+              <li><strong>ขนาดและคะแนนคุณภาพ:</strong> โค้ดเดิมยาว 99 บรรทัด ได้คะแนน Pylint <strong>7.10 / 10</strong>
+                ตรวจพบข้อบกพร่องตามมาตรฐาน PEP 8</li>
+              <li><strong>ความซับซ้อนของ main():</strong> Radon รายงาน Cyclomatic Complexity เท่ากับ <strong>14 (เกรด
+                  C)</strong> เนื่องจากรวมทุกอย่างในฟังก์ชันเดียว</li>
+              <li><strong>กิ่งสาขาและคำสั่งเกินเกณฑ์:</strong> พบคำเตือน R0912 (กิ่งตัดสินใจ 17 สาขา) และ R0915 (มี 55
+                คำสั่งในฟังก์ชันเดียว)</li>
+              <li><strong>ฟังก์ชันพื้นฐาน:</strong> ฟังก์ชัน <code>load()</code> ได้ CC = 2 (เกรด A) และ
+                <code>save()</code> ได้ CC = 1 (เกรด A)</li>
             </ul>
           </div>
         </div>
@@ -354,11 +553,24 @@
           <span class="notice">ใช้ลูกศร ซ้าย/ขวา หรือ Space เพื่อเปลี่ยนสไลด์</span>
         </footer>
       </section>
-
-      <!-- Slide 2: 3 Dangerous Hotspots -->
-      <section class="slide" id="slide-2"><header class="slide-header"><div class="marker-wrap"><span class="marker-pill">สัปดาห์ที่ 2</span><span class="marker-pill gray">สารบัญ</span></div><h1>สารบัญสไลด์</h1><p class="slide-lead">กดหัวข้อเพื่อกระโดดไปสไลด์นั้น</p></header><div class="slide-body"><div class="card"><ul class="card-list"><li><a href="#slide-1">วิเคราะห์ DFD, Hotspots และพิมพ์เขียวใหม่</a></li><li><a href="#slide-3">3 จุดอันตรายที่มีการผูกมัดแน่นและเปราะบางสูง</a></li><li><a href="#slide-4">Three-Tier Architecture และการวิวัฒนาการ Schema</a></li><li><a href="#slide-5">แยกข้อเท็จจริงออกจากสิ่งที่ยังเป็นแบบ</a></li></ul></div></div><footer class="slide-footer"><span class="notice">กดหัวข้อเพื่อกระโดดไปสไลด์นั้น</span></footer></section>
-
-      <!-- Slide 3: Proposed Three-Tier Architecture -->
+      <section class="slide" id="slide-2">
+        <header class="slide-header">
+          <div class="marker-wrap"><span class="marker-pill">สัปดาห์ที่ 2</span><span
+              class="marker-pill gray">สารบัญ</span></div>
+          <h1>สารบัญสไลด์</h1>
+          <p class="slide-lead">กดหัวข้อเพื่อกระโดดไปสไลด์นั้น</p>
+        </header>
+        <div class="slide-body">
+          <div class="card">
+            <ul class="card-list">
+              <li><a href="#slide-1">วิเคราะห์ DFD, Hotspots และพิมพ์เขียวใหม่</a></li>
+              <li><a href="#slide-3">3 จุดอันตรายที่มีการผูกมัดแน่นและเปราะบางสูง</a></li>
+              <li><a href="#slide-4">Three-Tier Architecture และการวิวัฒนาการ Schema</a></li>
+            </ul>
+          </div>
+        </div>
+        <footer class="slide-footer"><span class="notice">กดหัวข้อเพื่อกระโดดไปสไลด์นั้น</span></footer>
+      </section>
       <section class="slide" id="slide-3">
         <header class="slide-header">
           <div class="marker-wrap">
@@ -371,15 +583,18 @@
           <div class="cards-grid-3">
             <div class="card">
               <div class="card-title">Hotspot 1: ตัวแปรโกลบอล x</div>
-              <p class="card-text">ทุกกิจกรรมรุมอ่านเขียนตรง ไร้สกีมาป้องกัน (ใช้คีย์สั้น n, q, p, c) หากคีย์เปลี่ยนจะเกิด KeyError ทันที และทำให้เขียน Unit Test แยกไม่ได้</p>
+              <p class="card-text">ทุกกิจกรรมรุมอ่านเขียนตรง ไร้สกีมาป้องกัน (ใช้คีย์สั้น n, q, p, c)
+                หากคีย์เปลี่ยนจะเกิด KeyError ทันที และทำให้เขียน Unit Test แยกไม่ได้</p>
             </div>
             <div class="card">
               <div class="card-title">Hotspot 2: ฟังก์ชัน main()</div>
-              <p class="card-text">Monolithic Core รวม UI (print, input), ตรรกะธุรกิจ และ File I/O ไว้ในฟังก์ชันเดียว ความซับซ้อน CC=14 กิ่งเงื่อนไข 17 กิ่ง เสี่ยงบั๊กข้างเคียง</p>
+              <p class="card-text">Monolithic Core รวม UI (print, input), ตรรกะธุรกิจ และ File I/O ไว้ในฟังก์ชันเดียว
+                ความซับซ้อน CC=14 กิ่งเงื่อนไข 17 กิ่ง เสี่ยงบั๊กข้างเคียง</p>
             </div>
             <div class="card">
               <div class="card-title">Hotspot 3: Direct Casting</div>
-              <p class="card-text">แปลง int() และ float() ไร้ try-except เมื่อผู้ใช้พิมพ์ผิดแอปจะแครชทันที พร้อมช่องโหว่การใส่จำนวนติดลบเพื่อแอบเพิ่มสต็อกสินค้า</p>
+              <p class="card-text">แปลง int() และ float() ไร้ try-except เมื่อผู้ใช้พิมพ์ผิดแอปจะแครชทันที
+                พร้อมช่องโหว่การใส่จำนวนติดลบเพื่อแอบเพิ่มสต็อกสินค้า</p>
             </div>
           </div>
         </div>
@@ -387,8 +602,6 @@
           <span class="notice">อ้างอิง: Sprint1/week-2/Hotspot.md [ข้อมูลจำลอง]</span>
         </footer>
       </section>
-
-      <!-- Slide 4: Summary & Takeaways -->
       <section class="slide" id="slide-4">
         <header class="slide-header">
           <div class="marker-wrap">
@@ -402,9 +615,12 @@
             <div class="card">
               <div class="card-title">สถาปัตยกรรมแยก 3 เลเยอร์ (Three-Tier)</div>
               <ul class="card-list">
-                <li><strong>Presentation Layer:</strong> คอนโซล CLI รับอินพุต ตรวจสอบ Input Validation และแสดงผลหน้าจอเท่านั้น</li>
-                <li><strong>Domain Layer:</strong> คลาส <code>InventoryManager</code> ควบคุมตรรกะตัดสต็อก ตรวจสอบสินค้าคงเหลือ และคำนวณมูลค่า</li>
-                <li><strong>Data Layer:</strong> โมเดล <code>Product</code> กำหนดฟิลด์ชัดเจน ควบคุมการแปลง Object และจัดเก็บไฟล์ JSON</li>
+                <li><strong>Presentation Layer:</strong> คอนโซล CLI รับอินพุต ตรวจสอบ Input Validation
+                  และแสดงผลหน้าจอเท่านั้น</li>
+                <li><strong>Domain Layer:</strong> คลาส <code>InventoryManager</code> ควบคุมตรรกะตัดสต็อก
+                  ตรวจสอบสินค้าคงเหลือ และคำนวณมูลค่า</li>
+                <li><strong>Data Layer:</strong> โมเดล <code>Product</code> กำหนดฟิลด์ชัดเจน ควบคุมการแปลง Object
+                  และจัดเก็บไฟล์ JSON</li>
               </ul>
             </div>
             <div class="card">
@@ -412,7 +628,8 @@
               <ul class="card-list">
                 <li>เปลี่ยน JSON Schema จากคีย์สั้น (n, q, p, c) สู่ชื่อเต็ม (name, quantity, price, category)</li>
                 <li>รองรับ Backward Compatibility เพื่อแปลงข้อมูลเก่าอัตโนมัติ ป้องกันข้อมูลสูญหาย</li>
-                <li><strong>ข้อเท็จจริงสำคัญ:</strong> SQLite และ Member Discount ในสัปดาห์นี้เป็นเพียงแบบร่าง (Design-Only) ยังไม่ได้ส่งมอบจริง</li>
+                <li><strong>ข้อเท็จจริงสำคัญ:</strong> SQLite และ Member Discount ในสัปดาห์นี้เป็นเพียงแบบร่าง
+                  (Design-Only) ยังไม่ได้ส่งมอบจริง</li>
               </ul>
             </div>
           </div>
@@ -421,20 +638,20 @@
           <span class="notice">อ้างอิง: Sprint1/week-2/blueprint.md [ข้อมูลจำลอง]</span>
         </footer>
       </section>
-
-      <!-- Controls -->
       <div class="controls">
         <a href="index.html" class="btn" title="กลับหน้าสรุปเนื้อหาสัปดาห์ 2">หน้าเนื้อหา</a>
         <button type="button" class="btn" id="restart-btn">เริ่มใหม่</button>
         <button type="button" class="btn" id="prev-btn" aria-label="สไลด์ก่อนหน้า">ก่อนหน้า</button>
-        <span class="slide-count" id="slide-counter">1 / 4</span><span class="sr-only" aria-live="polite" id="slide-live" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap"></span>
+        <span class="slide-count" id="slide-counter">1 / 4</span><span class="sr-only" aria-live="polite"
+          id="slide-live"
+          style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap"></span>
         <button type="button" class="btn" id="next-btn" aria-label="สไลด์ถัดไป">ถัดไป</button>
       </div>
     </main>
   </div>
 
   <script>
-    (function() {
+    (function () {
       const slides = Array.from(document.querySelectorAll('.slide'));
       const counter = document.getElementById('slide-counter');
       const prevBtn = document.getElementById('prev-btn');
@@ -450,7 +667,8 @@
           current = h;
         }
       } else if (!fresh) {
-        const saved = localStorage.getItem(storageKey);
+        let saved = null;
+        try { saved = localStorage.getItem(storageKey); } catch (e) { }
         if (saved !== null) {
           const parsed = parseInt(saved, 10);
           if (!isNaN(parsed) && parsed >= 0 && parsed < slides.length) {
@@ -497,13 +715,19 @@
       const restartBtn = document.getElementById('restart-btn');
       if (restartBtn) {
         restartBtn.addEventListener('click', () => {
-          try { localStorage.removeItem(storageKey); } catch (e) {}
+          try { localStorage.removeItem(storageKey); } catch (e) { }
           showSlide(0);
         });
       }
 
       document.addEventListener('keydown', (e) => {
-        if (e.key === 'ArrowLeft') {
+        if (e.key === 'Home') {
+          e.preventDefault();
+          showSlide(0);
+        } else if (e.key === 'End') {
+          e.preventDefault();
+          showSlide(slides.length - 1);
+        } else if (e.key === 'ArrowLeft') {
           showSlide(current - 1);
         } else if (e.key === 'ArrowRight' || e.key === ' ') {
           e.preventDefault();
@@ -514,6 +738,7 @@
       showSlide(current);
     })();
   </script>
-    <script>window.addEventListener('hashchange',function(){location.reload();});</script>
+  <script>window.addEventListener('hashchange', function () { location.reload(); });</script>
 </body>
+
 </html>

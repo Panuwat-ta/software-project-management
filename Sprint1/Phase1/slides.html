@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="th">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -28,13 +29,16 @@
       --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
     }
 
-    *, *::before, *::after {
+    *,
+    *::before,
+    *::after {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
     }
 
-    html, body {
+    html,
+    body {
       width: 100%;
       height: 100%;
       overflow: hidden;
@@ -287,12 +291,15 @@
     }
 
     @media print {
-      body, .frame {
+
+      body,
+      .frame {
         background: #ffffff;
         padding: 0;
         display: block;
         height: auto;
       }
+
       .deck {
         width: 100vw;
         height: 56.25vw;
@@ -300,6 +307,7 @@
         box-shadow: none;
         border-radius: 0;
       }
+
       .slide {
         display: grid !important;
         break-after: page;
@@ -307,6 +315,7 @@
         height: 100vh;
         padding: 50px 70px;
       }
+
       .controls {
         display: none !important;
       }
@@ -318,13 +327,198 @@
         animation: none !important;
       }
     }
-  .content-body,.slide-body{overflow-y:auto;scrollbar-width:thin;min-height:0}
-    </style>
+
+    .content-body,
+    .slide-body {
+      overflow-y: auto;
+      scrollbar-width: thin;
+      min-height: 0
+    }
+
+    @media (max-width: 600px) {
+
+      html,
+      body {
+        overflow-x: hidden;
+        overflow-y: auto;
+      }
+
+      .frame,
+      .viewport-frame {
+        display: block;
+        width: 100%;
+        height: auto;
+        min-height: 100vh;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      .deck,
+      .deck-container {
+        width: 100%;
+        min-height: 100vh;
+        height: auto;
+        aspect-ratio: auto;
+        overflow: visible;
+        border: 0;
+        border-radius: 0;
+        box-shadow: none;
+        padding-bottom: 72px;
+        box-sizing: border-box;
+      }
+
+      .slide {
+        min-height: calc(100vh - 72px);
+        height: auto;
+        padding: 28px 20px;
+        gap: 16px;
+        box-sizing: border-box;
+      }
+
+      .slide h1 {
+        font-size: clamp(28px, 8vw, 38px);
+        line-height: 1.2;
+      }
+
+      .slide-title-area h2 {
+        font-size: clamp(26px, 7.5vw, 34px);
+        line-height: 1.2;
+      }
+
+      .slide-lead,
+      .slide-subtitle {
+        font-size: 18px;
+        line-height: 1.45;
+      }
+
+      .content-body,
+      .slide-body {
+        height: auto;
+        overflow: visible;
+        justify-content: flex-start;
+      }
+
+      .cards-grid-2,
+      .cards-grid-3,
+      .grid-2,
+      .grid-3 {
+        grid-template-columns: 1fr;
+        gap: 14px;
+      }
+
+      .card,
+      .notion-card {
+        min-width: 0;
+      }
+
+      .card-list,
+      .notion-list {
+        font-size: 17px;
+        line-height: 1.45;
+      }
+
+      .data-val {
+        font-size: 30px;
+      }
+
+      .slide-footer {
+        display: block;
+        font-size: 14px;
+      }
+
+      .controls,
+      .nav-controls {
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        width: 100%;
+        min-height: 64px;
+        padding: 8px 12px;
+        box-sizing: border-box;
+        justify-content: center;
+        gap: 6px;
+        z-index: 100;
+        background: var(--canvas, #fff);
+        border-top: 1px solid var(--border, #ddd);
+      }
+
+      .controls .btn,
+      .nav-controls .nav-btn {
+        min-height: 40px;
+        padding: 6px 10px;
+        font-size: 15px;
+      }
+
+      .controls>a {
+        display: none;
+      }
+
+      .slide-count {
+        font-size: 15px;
+        min-width: 42px;
+        text-align: center;
+      }
+    }
+
+    @media (max-width: 600px) {
+
+      .slide-header,
+      .content-body,
+      .slide-body,
+      .slide-title-area,
+      .notion-card,
+      .card,
+      .notion-list,
+      .card-list,
+      .metric-row {
+        min-width: 0;
+        max-width: 100%;
+        box-sizing: border-box;
+      }
+
+      .badge-row {
+        flex-wrap: wrap;
+        max-width: 100%;
+      }
+
+      .badge,
+      .header-note {
+        max-width: 100%;
+        font-size: 16px;
+        overflow-wrap: anywhere;
+      }
+
+      .notion-card,
+      .card {
+        padding: 20px;
+      }
+
+      .notion-list li,
+      .card-list li {
+        font-size: 18px;
+        overflow-wrap: anywhere;
+        word-break: normal;
+      }
+
+      .metric-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 4px;
+      }
+
+      .metric-label,
+      .metric-value {
+        max-width: 100%;
+        overflow-wrap: anywhere;
+      }
+    }
+  </style>
 </head>
+
 <body>
   <div class="frame">
     <main class="deck" aria-live="off">
-      <!-- Slide 1: Cover & Team Roles -->
       <section class="slide active" id="slide-1">
         <header class="slide-header">
           <div class="marker-wrap">
@@ -334,7 +528,7 @@
           <p class="slide-lead">รวมงานสัปดาห์ที่ 1–4 เป็นแผนปรับปรุงระบบคลังสินค้า CLI [ข้อมูลจำลองเพื่อการศึกษา]</p>
         </header>
         <div class="slide-body">
-<div class="card subtle">
+          <div class="card subtle">
             <div class="card-title">เป้าหมาย 4 ด้าน</div>
             <ul class="card-list">
               <li><strong>Stability</strong> — ทนทานต่อข้อผิดพลาด ไม่พังจาก input</li>
@@ -342,13 +536,31 @@
               <li><strong>Data Integrity</strong> — เซฟ JSON ปลอดภัย</li>
               <li><strong>Automated Testing</strong> — regression กันของเดิมพัง</li>
             </ul>
-          </div>        </div>
+          </div>
+        </div>
         <footer class="slide-footer">
           <span class="notice">ใช้ลูกศร ซ้าย/ขวา หรือ Space เพื่อเปลี่ยนสไลด์</span>
         </footer>
       </section>
 
-      <section class="slide" id="slide-2"><header class="slide-header"><div class="marker-wrap"><span class="marker-pill">Phase 1</span><span class="marker-pill gray">สารบัญ</span></div><h1>สารบัญสไลด์</h1><p class="slide-lead">กดหัวข้อเพื่อกระโดดไปสไลด์นั้น</p></header><div class="slide-body"><div class="card"><ul class="card-list"><li><a href="#slide-1">ข้อเสนอโครงการฉบับสมบูรณ์</a></li><li><a href="#slide-3">เฟสงานหลัก</a></li><li><a href="#slide-4">W1–W4 ใครทำอะไร</a></li><li><a href="#slide-5">เกราะป้องกันก่อนลงมือ</a></li></ul></div></div><footer class="slide-footer"><span class="notice">กดหัวข้อเพื่อกระโดดไปสไลด์นั้น</span></footer></section>
+      <section class="slide" id="slide-2">
+        <header class="slide-header">
+          <div class="marker-wrap"><span class="marker-pill">Phase 1</span><span class="marker-pill gray">สารบัญ</span>
+          </div>
+          <h1>สารบัญสไลด์</h1>
+          <p class="slide-lead">กดหัวข้อเพื่อกระโดดไปสไลด์นั้น</p>
+        </header>
+        <div class="slide-body">
+          <div class="card">
+            <ul class="card-list">
+              <li><a href="#slide-1">ข้อเสนอโครงการฉบับสมบูรณ์</a></li>
+              <li><a href="#slide-3">เฟสงานหลัก</a></li>
+              <li><a href="#slide-4">W1–W4 ใครทำอะไร</a></li>
+            </ul>
+          </div>
+        </div>
+        <footer class="slide-footer"><span class="notice">กดหัวข้อเพื่อกระโดดไปสไลด์นั้น</span></footer>
+      </section>
 
       <section class="slide" id="slide-3">
         <header class="slide-header">
@@ -359,7 +571,7 @@
           <p class="slide-lead">แบ่งงานเป็น 4 เฟสตาม proposal [ข้อมูลจำลอง]</p>
         </header>
         <div class="slide-body">
-<div class="card subtle">
+          <div class="card subtle">
             <div class="card-title">Phase 1–4</div>
             <ul class="card-list">
               <li><strong>เฟส 1:</strong> Refactoring &amp; Infrastructure — เลิก global ใช้ Class</li>
@@ -367,7 +579,8 @@
               <li><strong>เฟส 3:</strong> Discount &amp; Checkout — ตรรกะส่วนลด</li>
               <li><strong>เฟส 4:</strong> Exception &amp; QA — ดัก input + Unit Tests</li>
             </ul>
-          </div>        </div>
+          </div>
+        </div>
         <footer class="slide-footer">
           <span class="notice">ใช้ลูกศร ซ้าย/ขวา หรือ Space เพื่อเปลี่ยนสไลด์</span>
         </footer>
@@ -382,7 +595,7 @@
           <p class="slide-lead">สัปดาห์ที่ 1–2 วางแผน/ออกแบบ สัปดาห์ที่ 3–4 ลงมือ/ทดสอบ [ข้อมูลจำลอง]</p>
         </header>
         <div class="slide-body">
-<div class="card subtle">
+          <div class="card subtle">
             <div class="card-title">ไทม์ไลน์</div>
             <ul class="card-list">
               <li><strong>W1:</strong> วิเคราะห์โค้ดเดิม + Charter (Backlog/To Do)</li>
@@ -390,25 +603,26 @@
               <li><strong>W3:</strong> โค้ดสินค้า + Exception (Done/Review)</li>
               <li><strong>W4:</strong> PyTest + เล่ม Proposal (Done)</li>
             </ul>
-          </div>        </div>
+          </div>
+        </div>
         <footer class="slide-footer">
           <span class="notice">ใช้ลูกศร ซ้าย/ขวา หรือ Space เพื่อเปลี่ยนสไลด์</span>
         </footer>
       </section>
-
-      <!-- Controls -->
       <div class="controls">
         <a href="index.html" class="btn" title="กลับหน้าข้อเสนอ Phase 1">หน้าเนื้อหา</a>
         <button type="button" class="btn" id="restart-btn">เริ่มใหม่</button>
         <button type="button" class="btn" id="prev-btn" aria-label="สไลด์ก่อนหน้า">ก่อนหน้า</button>
-        <span class="slide-count" id="slide-counter">1 / 4</span><span class="sr-only" aria-live="polite" id="slide-live" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap"></span>
+        <span class="slide-count" id="slide-counter">1 / 4</span><span class="sr-only" aria-live="polite"
+          id="slide-live"
+          style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap"></span>
         <button type="button" class="btn" id="next-btn" aria-label="สไลด์ถัดไป">ถัดไป</button>
       </div>
     </main>
   </div>
 
   <script>
-    (function() {
+    (function () {
       const slides = Array.from(document.querySelectorAll('.slide'));
       const counter = document.getElementById('slide-counter');
       const prevBtn = document.getElementById('prev-btn');
@@ -424,7 +638,8 @@
           current = h;
         }
       } else if (!fresh) {
-        const saved = localStorage.getItem(storageKey);
+        let saved = null;
+        try { saved = localStorage.getItem(storageKey); } catch (e) { }
         if (saved !== null) {
           const parsed = parseInt(saved, 10);
           if (!isNaN(parsed) && parsed >= 0 && parsed < slides.length) {
@@ -471,13 +686,19 @@
       const restartBtn = document.getElementById('restart-btn');
       if (restartBtn) {
         restartBtn.addEventListener('click', () => {
-          try { localStorage.removeItem(storageKey); } catch (e) {}
+          try { localStorage.removeItem(storageKey); } catch (e) { }
           showSlide(0);
         });
       }
 
       document.addEventListener('keydown', (e) => {
-        if (e.key === 'ArrowLeft') {
+        if (e.key === 'Home') {
+          e.preventDefault();
+          showSlide(0);
+        } else if (e.key === 'End') {
+          e.preventDefault();
+          showSlide(slides.length - 1);
+        } else if (e.key === 'ArrowLeft') {
           showSlide(current - 1);
         } else if (e.key === 'ArrowRight' || e.key === ' ') {
           e.preventDefault();
@@ -488,6 +709,7 @@
       showSlide(current);
     })();
   </script>
-    <script>window.addEventListener('hashchange',function(){location.reload();});</script>
+  <script>window.addEventListener('hashchange', function () { location.reload(); });</script>
 </body>
+
 </html>

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="th">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,7 +15,7 @@
       --border-light: rgba(55, 53, 47, 0.09);
       --border-medium: rgba(55, 53, 47, 0.16);
       --border-card: rgba(55, 53, 47, 0.12);
-      
+
       --tag-gray-bg: #f1f1ef;
       --tag-gray-text: #5a5a58;
       --tag-blue-bg: #e8f3fc;
@@ -23,7 +24,7 @@
       --tag-orange-text: #9c4400;
       --tag-green-bg: #edf3ec;
       --tag-green-text: #448361;
-      
+
       --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans Thai", Helvetica, Arial, sans-serif;
       --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
     }
@@ -34,7 +35,8 @@
       padding: 0;
     }
 
-    html, body {
+    html,
+    body {
       width: 100%;
       height: 100%;
       margin: 0;
@@ -309,11 +311,14 @@
     }
 
     @media print {
-      body, .viewport-frame {
+
+      body,
+      .viewport-frame {
         height: auto !important;
         overflow: visible !important;
         background: transparent !important;
       }
+
       .deck-container {
         width: 100vw !important;
         height: 56.25vw !important;
@@ -321,12 +326,14 @@
         box-shadow: none !important;
         position: static !important;
       }
+
       .slide {
         display: grid !important;
         page-break-after: always;
         break-after: page;
         height: 100vh !important;
       }
+
       .nav-controls {
         display: none !important;
       }
@@ -337,14 +344,198 @@
         transition: none !important;
       }
     }
-  .content-body,.slide-body{overflow-y:auto;scrollbar-width:thin;min-height:0}
-    </style>
+
+    .content-body,
+    .slide-body {
+      overflow-y: auto;
+      scrollbar-width: thin;
+      min-height: 0
+    }
+
+    @media (max-width: 600px) {
+
+      html,
+      body {
+        overflow-x: hidden;
+        overflow-y: auto;
+      }
+
+      .frame,
+      .viewport-frame {
+        display: block;
+        width: 100%;
+        height: auto;
+        min-height: 100vh;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      .deck,
+      .deck-container {
+        width: 100%;
+        min-height: 100vh;
+        height: auto;
+        aspect-ratio: auto;
+        overflow: visible;
+        border: 0;
+        border-radius: 0;
+        box-shadow: none;
+        padding-bottom: 72px;
+        box-sizing: border-box;
+      }
+
+      .slide {
+        min-height: calc(100vh - 72px);
+        height: auto;
+        padding: 28px 20px;
+        gap: 16px;
+        box-sizing: border-box;
+      }
+
+      .slide h1 {
+        font-size: clamp(28px, 8vw, 38px);
+        line-height: 1.2;
+      }
+
+      .slide-title-area h2 {
+        font-size: clamp(26px, 7.5vw, 34px);
+        line-height: 1.2;
+      }
+
+      .slide-lead,
+      .slide-subtitle {
+        font-size: 18px;
+        line-height: 1.45;
+      }
+
+      .content-body,
+      .slide-body {
+        height: auto;
+        overflow: visible;
+        justify-content: flex-start;
+      }
+
+      .cards-grid-2,
+      .cards-grid-3,
+      .grid-2,
+      .grid-3 {
+        grid-template-columns: 1fr;
+        gap: 14px;
+      }
+
+      .card,
+      .notion-card {
+        min-width: 0;
+      }
+
+      .card-list,
+      .notion-list {
+        font-size: 17px;
+        line-height: 1.45;
+      }
+
+      .data-val {
+        font-size: 30px;
+      }
+
+      .slide-footer {
+        display: block;
+        font-size: 14px;
+      }
+
+      .controls,
+      .nav-controls {
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        width: 100%;
+        min-height: 64px;
+        padding: 8px 12px;
+        box-sizing: border-box;
+        justify-content: center;
+        gap: 6px;
+        z-index: 100;
+        background: var(--canvas, #fff);
+        border-top: 1px solid var(--border, #ddd);
+      }
+
+      .controls .btn,
+      .nav-controls .nav-btn {
+        min-height: 40px;
+        padding: 6px 10px;
+        font-size: 15px;
+      }
+
+      .controls>a {
+        display: none;
+      }
+
+      .slide-count {
+        font-size: 15px;
+        min-width: 42px;
+        text-align: center;
+      }
+    }
+
+    @media (max-width: 600px) {
+
+      .slide-header,
+      .content-body,
+      .slide-body,
+      .slide-title-area,
+      .notion-card,
+      .card,
+      .notion-list,
+      .card-list,
+      .metric-row {
+        min-width: 0;
+        max-width: 100%;
+        box-sizing: border-box;
+      }
+
+      .badge-row {
+        flex-wrap: wrap;
+        max-width: 100%;
+      }
+
+      .badge,
+      .header-note {
+        max-width: 100%;
+        font-size: 16px;
+        overflow-wrap: anywhere;
+      }
+
+      .notion-card,
+      .card {
+        padding: 20px;
+      }
+
+      .notion-list li,
+      .card-list li {
+        font-size: 18px;
+        overflow-wrap: anywhere;
+        word-break: normal;
+      }
+
+      .metric-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 4px;
+      }
+
+      .metric-label,
+      .metric-value {
+        max-width: 100%;
+        overflow-wrap: anywhere;
+      }
+    }
+  </style>
 </head>
+
 <body>
   <div class="viewport-frame">
     <main class="deck-container" aria-live="off">
-
-      <!-- Slide 1: Cover -->
       <section class="slide active" id="slide-1">
         <header class="slide-header">
           <div class="badge-row">
@@ -356,13 +547,15 @@
         <div class="content-body">
           <div class="slide-title-area">
             <h1>เส้นฐานงบประมาณ ความจุทีม และคุณภาพ ISO 14598</h1>
-            <p class="slide-subtitle">การอนุมัติเส้นฐานต้นทุน (Cost Baseline), การวางแผนความจุใน Sprint 1 และการตั้งเป้าหมายคุณภาพเชิงปริมาณ (ตัวเลขจำลองเพื่อการศึกษา)</p>
+            <p class="slide-subtitle">การอนุมัติเส้นฐานต้นทุน (Cost Baseline), การวางแผนความจุใน Sprint 1
+              และการตั้งเป้าหมายคุณภาพเชิงปริมาณ (ตัวเลขจำลองเพื่อการศึกษา)</p>
           </div>
           <div style="margin-top: 32px;">
             <div class="notion-card subtle">
               <div class="card-title">สาระสำคัญประจำสัปดาห์</div>
               <ul class="notion-list">
-                <li>อนุมัติเส้นฐานงบประมาณโครงการรวม 18,823 บาท (ตัวเลขจำลองเพื่อการศึกษา) พร้อมกำหนดเกณฑ์เฝ้าระวังผลต่าง</li>
+                <li>อนุมัติเส้นฐานงบประมาณโครงการรวม 18,823 บาท (ตัวเลขจำลองเพื่อการศึกษา)
+                  พร้อมกำหนดเกณฑ์เฝ้าระวังผลต่าง</li>
                 <li>คำนวณความจุการทำงานของทีม 3 คนในรอบ 2 สัปดาห์ รวมเป็น 36 Man-Hours</li>
                 <li>กำหนดเป้าหมายดัชนีชี้วัดคุณภาพตาม ISO/IEC 14598 และวางท่อส่ง CI/CD Quality Gate</li>
               </ul>
@@ -374,14 +567,65 @@
           <span class="footer-notice">ใช้ปุ่มลูกศรซ้าย/ขวา หรือ Spacebar เพื่อเปลี่ยนหน้าสไลด์</span>
         </footer>
       </section>
+      <section class="slide" id="slide-2">
+        <header class="slide-header">
+          <div class="badge-row"><span class="badge badge-gray">สัปดาห์ที่ 7</span><span
+              class="badge badge-green">สารบัญ</span></div><span class="header-note">Overview</span>
+        </header>
+        <div class="content-body">
+          <div class="slide-title-area">
+            <h2>สารบัญสไลด์</h2>
+            <p class="slide-subtitle">กดหัวข้อเพื่อกระโดดไปสไลด์นั้น</p>
+          </div>
+          <article class="notion-card">
+            <ul class="notion-list">
+              <li><a href="#slide-1">เส้นฐานงบประมาณ ความจุทีม และคุณภาพ ISO 14598</a></li>
+              <li><a href="#slide-3">เป้าหมายคุณภาพ ISO/IEC 14598</a></li>
+              <li><a href="#slide-4">ตารางสรุปงบประมาณอนุมัติ (Approved Cost Baseline)</a></li>
+              <li><a href="#slide-5">ความจุทีมและ Quality Gate</a></li>
+            </ul>
+          </article>
+        </div>
+        <footer class="slide-footer"><span class="notice">กดหัวข้อเพื่อกระโดดไปสไลด์นั้น</span></footer>
+      </section>
+      <section class="slide" id="slide-3">
+        <header class="slide-header">
+          <div class="badge-row">
+            <span class="badge badge-gray">สัปดาห์ที่ 07</span>
+            <span class="badge badge-blue">QUALITY TARGETS</span>
+          </div>
+          <span class="header-note">ข้อมูลจำลองเพื่อการเรียน</span>
+        </header>
+        <div class="content-body">
+          <div class="slide-title-area">
+            <h2>เป้าหมายคุณภาพตาม ISO/IEC 14598</h2>
+            <p class="slide-subtitle">เกณฑ์เป้าหมายสำหรับยกระดับจาก legacy code — ไม่ใช่ผลยืนยันว่าทำได้ครบแล้ว</p>
+          </div>
+          <div class="grid-2" style="margin-top: 24px;">
+            <article class="notion-card">
+              <div class="card-title">Maintainability และ Reliability</div>
+              <ul class="notion-list">
+                <li>Cyclomatic Complexity เป้าหมาย ≤ 8</li>
+                <li>ยกเลิก global state 100% และใช้ Class Instances</li>
+                <li>Code Coverage เป้าหมาย ≥ 85%</li>
+              </ul>
+            </article>
+            <article class="notion-card subtle">
+              <div class="card-title">Security และ CI</div>
+              <ul class="notion-list">
+                <li>Input Validation ด้วย try-except</li>
+                <li>SQLite ในอนาคตต้องใช้ parameterized query 100%</li>
+                <li>คุณภาพต้องผ่าน pytest ก่อน merge</li>
+              </ul>
+            </article>
+          </div>
+        </div>
+        <footer class="slide-footer">
+          <span class="footer-notice">อ้างอิงข้อมูล: ISO_14598_Quality_Report.md</span>
+          <span class="header-note">ข้อมูลจำลองเพื่อการเรียน</span>
+        </footer>
+      </section>
 
-      <!-- Slide 2: Cost Baseline -->
-      <section class="slide" id="slide-2"><header class="slide-header"><div class="badge-row"><span class="badge badge-gray">สัปดาห์ที่ 7</span><span class="badge badge-green">สารบัญ</span></div><span class="header-note">Overview</span></header><div class="content-body"><div class="slide-title-area"><h2>สารบัญสไลด์</h2><p class="slide-subtitle">กดหัวข้อเพื่อกระโดดไปสไลด์นั้น</p></div><article class="notion-card"><ul class="notion-list"><li><a href="#slide-1">เส้นฐานงบประมาณ ความจุทีม และคุณภาพ ISO 14598</a></li><li><a href="#slide-2">สารบัญสไลด์</a></li><li><a href="#slide-3">ตารางสรุปงบประมาณอนุมัติ (Approved Cost Baseline)</a></li><li><a href="#slide-4">เป้าหมายตัวชี้วัดเชิงปริมาณ</a></li><li><a href="#slide-5">ท่อส่งตรวจสอบคุณภาพ (Quality Gate)</a></li></ul></article></div><footer class="slide-footer"><span class="notice">กดหัวข้อเพื่อกระโดดไปสไลด์นั้น</span></footer></section>
-
-      <!-- Slide 3: Capacity Planning -->
-      <section class="slide" id="slide-3"><header class="slide-header"><div class="badge-row"><span class="badge badge-gray">สัปดาห์ที่ 7</span><span class="badge badge-green">สารบัญ</span></div><span class="header-note">Overview</span></header><div class="content-body"><div class="slide-title-area"><h2>สารบัญสไลด์</h2><p class="slide-subtitle">กดหัวข้อเพื่อกระโดดไปสไลด์นั้น</p></div><article class="notion-card"><ul class="notion-list"><li><a href="#slide-1">เส้นฐานงบประมาณ ความจุทีม และคุณภาพ ISO 14598</a></li><li><a href="#slide-2">ตารางสรุปงบประมาณอนุมัติ (Approved Cost Baseline)</a></li><li><a href="#slide-3">เกณฑ์เฝ้าระวังผลต่างงบประมาณ</a></li><li><a href="#slide-4">การวางแผนความจุทีมใน Sprint 1 (Capacity Planning)</a></li><li><a href="#slide-5">รายงานคุณภาพ ISO/IEC 14598 และ CI/CD Gate</a></li></ul></article></div><footer class="slide-footer"><span class="notice">กดหัวข้อเพื่อกระโดดไปสไลด์นั้น</span></footer></section>
-
-      <!-- Slide 4: ISO 14598 & CI/CD -->
       <section class="slide" id="slide-4">
         <header class="slide-header">
           <div class="badge-row">
@@ -391,7 +635,11 @@
           <span class="header-note">Approved Cost Baseline</span>
         </header>
         <div class="content-body">
-          <div class="slide-title-area"><h2>ตารางสรุปงบประมาณอนุมัติ (Approved Cost Baseline)</h2><p class="slide-subtitle">การจัดสรรงบประมาณโครงการ 18,823 บาท (ตัวเลขจำลองเพื่อการศึกษา)</p></div><div class="grid-2" style="margin-top: 24px;">
+          <div class="slide-title-area">
+            <h2>ตารางสรุปงบประมาณอนุมัติ (Approved Cost Baseline)</h2>
+            <p class="slide-subtitle">การจัดสรรงบประมาณโครงการ 18,823 บาท (ตัวเลขจำลองเพื่อการศึกษา)</p>
+          </div>
+          <div class="grid-2" style="margin-top: 24px;">
             <article class="notion-card">
               <div class="card-title">การจัดสรรงบประมาณที่อนุมัติ</div>
               <div class="metric-row">
@@ -415,18 +663,58 @@
                 <span class="metric-value">18,823 บาท (100.0%)</span>
               </div>
             </article>
-            </div>
+          </div>
         </div>
         <footer class="slide-footer">
-          <span class="footer-notice">ตัวเลขจำลองเพื่อการศึกษา (Fictional Coursework Data) · Cost_Baseline_and_Sprint_Plan.md</span>
+          <span class="footer-notice">ตัวเลขจำลองเพื่อการศึกษา (Fictional Coursework Data) ·
+            Cost_Baseline_and_Sprint_Plan.md</span>
           <span class="header-note">งบอนุมัติ 18,823 บาท</span>
         </footer>
       </section>
 
-      <!-- Fixed Navigation Controls -->
+      <section class="slide" id="slide-5">
+        <header class="slide-header">
+          <div class="badge-row">
+            <span class="badge badge-gray">สัปดาห์ที่ 07</span>
+            <span class="badge badge-blue">CAPACITY & CI</span>
+          </div>
+          <span class="header-note">ข้อมูลจำลองเพื่อการเรียน</span>
+        </header>
+        <div class="content-body">
+          <div class="slide-title-area">
+            <h2>ความจุทีมและ Quality Gate ก่อนรวมโค้ด</h2>
+            <p class="slide-subtitle">ใช้ความจุเป็นเพดานของ Sprint และใช้ CI เป็นด่านกันโค้ดที่ยังไม่ผ่านทดสอบ</p>
+          </div>
+          <div class="grid-2" style="margin-top: 24px;">
+            <article class="notion-card">
+              <div class="card-title">Capacity Planning</div>
+              <ul class="notion-list">
+                <li>ทีม 3 คน × 6 ชม. × 2 สัปดาห์ = 36 Man-Hours</li>
+                <li>ห้ามรับงานเกินความจุที่วางไว้</li>
+                <li>เกณฑ์งบ: 0–5% ปกติ, 5–10% เตือน, >10% ทบทวน scope</li>
+              </ul>
+            </article>
+            <article class="notion-card subtle">
+              <div class="card-title">Quality Gate</div>
+              <ul class="notion-list">
+                <li>GitHub Actions ติดตั้ง pytest==8.0.2 จาก requirements.txt</li>
+                <li>รัน test_app.py ทุก Pull Request</li>
+                <li>เทสต์ไม่ผ่าน: ห้าม merge จน Tech Lead ตรวจผ่าน</li>
+              </ul>
+            </article>
+          </div>
+        </div>
+        <footer class="slide-footer">
+          <span class="footer-notice">อ้างอิงข้อมูล: Cost_Baseline_and_Sprint_Plan.md ·
+            ISO_14598_Quality_Report.md</span>
+          <span class="header-note">ข้อมูลจำลองเพื่อการเรียน</span>
+        </footer>
+      </section>
+
       <nav class="nav-controls" aria-label="Slide Controls">
         <button type="button" class="nav-btn" id="prev">ก่อนหน้า</button>
-        <span class="slide-count" id="count">1 / 4</span><span class="sr-only" aria-live="polite" id="slide-live" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap"></span>
+        <span class="slide-count" id="count">1 / 5</span><span class="sr-only" aria-live="polite" id="slide-live"
+          style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap"></span>
         <button type="button" class="nav-btn" id="next">ถัดไป</button>
         <button type="button" class="nav-btn" id="restart">เริ่มใหม่</button>
       </nav>
@@ -466,7 +754,7 @@
       if (liveB) {
         liveB.textContent = 'สไลด์ ' + (currentIndex + 1) + ' จาก ' + slides.length;
       }
-      localStorage.setItem(storageKey, currentIndex);
+      try { localStorage.setItem(storageKey, currentIndex); } catch (e) { }
     }
 
     document.getElementById('prev').addEventListener('click', () => updateSlide(currentIndex - 1));
@@ -477,7 +765,13 @@
     });
 
     document.addEventListener('keydown', (e) => {
-      if (e.key === 'ArrowLeft') {
+      if (e.key === 'Home') {
+        e.preventDefault();
+        updateSlide(0);
+      } else if (e.key === 'End') {
+        e.preventDefault();
+        updateSlide(slides.length - 1);
+      } else if (e.key === 'ArrowLeft') {
         updateSlide(currentIndex - 1);
       } else if (e.key === 'ArrowRight' || e.key === ' ') {
         e.preventDefault();
@@ -487,6 +781,7 @@
 
     updateSlide(currentIndex);
   </script>
-    <script>window.addEventListener('hashchange',function(){location.reload();});</script>
+  <script>window.addEventListener('hashchange', function () { location.reload(); });</script>
 </body>
+
 </html>

@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="th">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>สัปดาห์ที่ 6: การสื่อสารและ To-Be Architecture | SPM</title>
   <link rel="stylesheet" href="../../theme.css">
 </head>
+
 <body>
   <header class="site-header">
     <div class="header-inner">
@@ -35,6 +37,28 @@
             <a href="../week-12/index.html">สัปดาห์ 12 <small>UAT &amp; Close-out</small></a>
           </div>
         </details>
+        <details class="nav-dropdown nav-slides-dropdown">
+          <summary class="nav-dropdown-summary">
+            <span>สไลด์</span>
+          </summary>
+          <div class="dropdown-menu">
+            <a href="../templates/index.html">เทมเพลตสไลด์ <small>เลือก 3 แบบ</small></a>
+            <a href="../sprint1-slides.html">สรุป Sprint 1 <small>Project close-out</small></a>
+            <a href="../Phase1/slides.html">Phase 1 <small>Planning proposal</small></a>
+            <a href="../week-1/slides.html">สัปดาห์ 1 <small>Charter & Legacy</small></a>
+            <a href="../week-2/slides.html">สัปดาห์ 2 <small>DFD & Blueprint</small></a>
+            <a href="../week-3/slides.html">สัปดาห์ 3 <small>DoD & RACI</small></a>
+            <a href="../week-4/slides.html">สัปดาห์ 4 <small>Refactor & Test</small></a>
+            <a href="../week-5/slides.html">สัปดาห์ 5 <small>Architecture & Budget</small></a>
+            <a href="../week-6/slides.html">สัปดาห์ 6 <small>DoD & To-Be</small></a>
+            <a href="../week-7/slides.html">สัปดาห์ 7 <small>Baseline & Quality</small></a>
+            <a href="../week-8/slides.html">สัปดาห์ 8 <small>CR-01 & Tracking</small></a>
+            <a href="../week-9/slides.html">สัปดาห์ 9 <small>EVM & Transition</small></a>
+            <a href="../week-10/slides.html">สัปดาห์ 10 <small>CCB & BUG-101</small></a>
+            <a href="../week-11/slides.html">สัปดาห์ 11 <small>Hardening & Freeze</small></a>
+            <a href="../week-12/slides.html">สัปดาห์ 12 <small>UAT & Close-out</small></a>
+          </div>
+        </details>
       </nav>
     </div>
   </header>
@@ -52,7 +76,8 @@
       <div class="page-header-block">
         <div class="notice-pill">ข้อมูลสมมติเพื่อการเรียน · W6 Documentation</div>
         <h1 class="page-title">สัปดาห์ที่ 6: เกณฑ์การสื่อสาร DoR/DoD และสถาปัตยกรรม To-Be</h1>
-        <p class="page-desc">กำหนดตารางการสื่อสารภายในทีม (Communication Matrix), เกณฑ์ DoR/DoD, กรณีศึกษาผลต่างงบประมาณ (Cost Variance) และสถาปัตยกรรม To-Be</p>
+        <p class="page-desc">กำหนดตารางการสื่อสารภายในทีม (Communication Matrix), เกณฑ์ DoR/DoD, กรณีศึกษาผลต่างงบประมาณ
+          (Cost Variance) และสถาปัตยกรรม To-Be</p>
         <div class="page-header-actions">
           <a class="btn btn-secondary" href="../week-6/slides.html">เปิดสไลด์ประกอบสัปดาห์ 6 &rarr;</a>
         </div>
@@ -107,8 +132,10 @@
 
       <section>
         <h2>2. เกณฑ์ความพร้อมและความสำเร็จ (DoR vs DoD)</h2>
-        <p><strong>Definition of Ready (DoR):</strong> ก่อนดึงการ์ดงานมาทำ ต้องมีรายละเอียดชัดเจน, ผ่านการประเมิน Hotspot, มีการระบุบทบาท RACI (R และ A) และแตก Branch ออกจาก <code>develop</code></p>
-        <p><strong>Definition of Done (DoD):</strong> งานจะเสร็จสมบูรณ์เมื่อผ่านการตรวจ Code Review จาก Tech Lead ตามมาตรฐาน PEP 8, ผ่าน Automated Tests 100%, รวมโค้ดเข้าสายหลัก และจัดทำเอกสารสรุปผลเรียบร้อย</p>
+        <p><strong>Definition of Ready (DoR):</strong> ก่อนดึงการ์ดงานมาทำ ต้องมีรายละเอียดชัดเจน, ผ่านการประเมิน
+          Hotspot, มีการระบุบทบาท RACI (R และ A) และแตก Branch ออกจาก <code>develop</code></p>
+        <p><strong>Definition of Done (DoD):</strong> งานจะเสร็จสมบูรณ์เมื่อผ่านการตรวจ Code Review จาก Tech Lead
+          ตามมาตรฐาน PEP 8, ผ่าน Automated Tests 100%, รวมโค้ดเข้าสายหลัก และจัดทำเอกสารสรุปผลเรียบร้อย</p>
       </section>
 
       <section>
@@ -117,10 +144,13 @@
         <p>การวิเคราะห์ตามหลักการ EVM ในเอกสาร <code>Cost_Variance_Analysis.md</code> เพื่อควบคุมต้นทุน:</p>
         <ul>
           <li><strong>มูลค่างานที่ทำเสร็จ (EV):</strong> 2,400 บาท (ประมาณการ 6 ชม. &times; 400 บาท/ชม.)</li>
-          <li><strong>ต้นทุนจริงที่เกิดขึ้น (AC):</strong> 4,000 บาท (เกิดปัญหาข้อมูลเก่าทำให้ใช้เวลา 10 ชม. &times; 400 บาท/ชม.)</li>
-          <li><strong>ผลต่างงบประมาณ:</strong> $CV = EV - AC = 2,400 - 4,000 = -1,600$ บาท (<strong>เกินงบประมาณ</strong>)</li>
+          <li><strong>ต้นทุนจริงที่เกิดขึ้น (AC):</strong> 4,000 บาท (เกิดปัญหาข้อมูลเก่าทำให้ใช้เวลา 10 ชม. &times; 400
+            บาท/ชม.)</li>
+          <li><strong>ผลต่างงบประมาณ:</strong> $CV = EV - AC = 2,400 - 4,000 = -1,600$ บาท
+            (<strong>เกินงบประมาณ</strong>)</li>
         </ul>
-        <p><em>แนวทางบริหาร:</em> PM แจ้งเตือนความเสี่ยง ดึงเงินสำรอง Contingency Reserve มาชดเชย และปรึกษา Tech Lead เพื่อทบทวนการออกแบบ Blueprint ป้องกันการแก้โค้ดซ้ำซ้อน</p>
+        <p><em>แนวทางบริหาร:</em> PM แจ้งเตือนความเสี่ยง ดึงเงินสำรอง Contingency Reserve มาชดเชย และปรึกษา Tech Lead
+          เพื่อทบทวนการออกแบบ Blueprint ป้องกันการแก้โค้ดซ้ำซ้อน</p>
       </section>
 
       <section>
@@ -128,7 +158,10 @@
         <div class="callout">
           <div class="callout-badge">DESIGN ONLY</div>
           <div class="callout-content">
-            <strong>สถานะสถาปัตยกรรม To-Be:</strong> ในเอกสาร <code>To_Be_Architecture.md</code> มีการระบุสถาปัตยกรรมคลังสินค้าใหม่ที่รวม SQLite, โมดูลระบบสมาชิก (Member Tier) และระบบคำนวณเงินสด (Checkout Engine) ซึ่งทั้งหมดในสัปดาห์นี้<strong>ยังคงเป็นแบบออกแบบเท่านั้น (Design-only)</strong> ยังไม่มีการเขียนโค้ดจริงใน Sprint 1
+            <strong>สถานะสถาปัตยกรรม To-Be:</strong> ในเอกสาร <code>To_Be_Architecture.md</code>
+            มีการระบุสถาปัตยกรรมคลังสินค้าใหม่ที่รวม SQLite, โมดูลระบบสมาชิก (Member Tier) และระบบคำนวณเงินสด (Checkout
+            Engine) ซึ่งทั้งหมดในสัปดาห์นี้<strong>ยังคงเป็นแบบออกแบบเท่านั้น (Design-only)</strong>
+            ยังไม่มีการเขียนโค้ดจริงใน Sprint 1
           </div>
         </div>
       </section>
@@ -152,5 +185,7 @@
       </div>
     </div>
   </footer>
+  <script src="../../site-nav.js" defer></script>
 </body>
+
 </html>

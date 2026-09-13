@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="th">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>สัปดาห์ที่ 8: คำขอ CR-01 และการติดตามงาน | SPM</title>
   <link rel="stylesheet" href="../../theme.css">
 </head>
+
 <body>
   <header class="site-header">
     <div class="header-inner">
@@ -35,6 +37,28 @@
             <a href="../week-12/index.html">สัปดาห์ 12 <small>UAT &amp; Close-out</small></a>
           </div>
         </details>
+        <details class="nav-dropdown nav-slides-dropdown">
+          <summary class="nav-dropdown-summary">
+            <span>สไลด์</span>
+          </summary>
+          <div class="dropdown-menu">
+            <a href="../templates/index.html">เทมเพลตสไลด์ <small>เลือก 3 แบบ</small></a>
+            <a href="../sprint1-slides.html">สรุป Sprint 1 <small>Project close-out</small></a>
+            <a href="../Phase1/slides.html">Phase 1 <small>Planning proposal</small></a>
+            <a href="../week-1/slides.html">สัปดาห์ 1 <small>Charter & Legacy</small></a>
+            <a href="../week-2/slides.html">สัปดาห์ 2 <small>DFD & Blueprint</small></a>
+            <a href="../week-3/slides.html">สัปดาห์ 3 <small>DoD & RACI</small></a>
+            <a href="../week-4/slides.html">สัปดาห์ 4 <small>Refactor & Test</small></a>
+            <a href="../week-5/slides.html">สัปดาห์ 5 <small>Architecture & Budget</small></a>
+            <a href="../week-6/slides.html">สัปดาห์ 6 <small>DoD & To-Be</small></a>
+            <a href="../week-7/slides.html">สัปดาห์ 7 <small>Baseline & Quality</small></a>
+            <a href="../week-8/slides.html">สัปดาห์ 8 <small>CR-01 & Tracking</small></a>
+            <a href="../week-9/slides.html">สัปดาห์ 9 <small>EVM & Transition</small></a>
+            <a href="../week-10/slides.html">สัปดาห์ 10 <small>CCB & BUG-101</small></a>
+            <a href="../week-11/slides.html">สัปดาห์ 11 <small>Hardening & Freeze</small></a>
+            <a href="../week-12/slides.html">สัปดาห์ 12 <small>UAT & Close-out</small></a>
+          </div>
+        </details>
       </nav>
     </div>
   </header>
@@ -52,7 +76,8 @@
       <div class="page-header-block">
         <div class="notice-pill">ข้อมูลสมมติเพื่อการเรียน · W8 Documentation</div>
         <h1 class="page-title">สัปดาห์ที่ 8: คำขอเปลี่ยนแปลง CR-01 และการติดตามสปรินต์ (Sprint 1 Tracking)</h1>
-        <p class="page-desc">วิเคราะห์ผลกระทบคำขอเพิ่ม Barcode &amp; Reorder Point (CR-01), บริหารการติดตามงานผ่าน Burndown Chart และการจัดการ Blocker บน Jira</p>
+        <p class="page-desc">วิเคราะห์ผลกระทบคำขอเพิ่ม Barcode &amp; Reorder Point (CR-01), บริหารการติดตามงานผ่าน
+          Burndown Chart และการจัดการ Blocker บน Jira</p>
         <div class="page-header-actions">
           <a class="btn btn-secondary" href="../week-8/slides.html">เปิดสไลด์ประกอบสัปดาห์ 8 &rarr;</a>
         </div>
@@ -62,26 +87,38 @@
         <h2>1. การวิเคราะห์ผลกระทบคำขอ CR-01 (CR-01 Impact Analysis)</h2>
         <p>อ้างอิงกระบวนการบริหารจัดการการเปลี่ยนแปลงตามมาตรฐาน ISO/IEC 14764:</p>
         <ul>
-          <li><strong>คำขอ (Change Request):</strong> ขอเพิ่มการจัดเก็บรหัสบาร์โค้ด (Barcode) และจุดสั่งซื้อสินค้าขั้นต่ำ (Reorder Point) จาก Sponsor</li>
-          <li><strong>ผลกระทบด้านต้นทุน (Cost Impact):</strong> เพิ่มงาน <strong>8 Man-Hours</strong> (ข้อมูลสมมติเพื่อการเรียน)</li>
-          <li><strong>ผลกระทบเชิงเทคนิค (Technical Impact):</strong> กระทบโมเดล <code>Product</code> (เพิ่มฟิลด์ <code>barcode</code>, <code>reorder_point</code>), <code>InventoryRepository</code> (การแปลงคีย์ JSON) และ <code>ConsoleUI</code></li>
+          <li><strong>คำขอ (Change Request):</strong> ขอเพิ่มการจัดเก็บรหัสบาร์โค้ด (Barcode)
+            และจุดสั่งซื้อสินค้าขั้นต่ำ (Reorder Point) จาก Sponsor</li>
+          <li><strong>ผลกระทบด้านต้นทุน (Cost Impact):</strong> เพิ่มงาน <strong>8 Man-Hours</strong>
+            (ข้อมูลสมมติเพื่อการเรียน)</li>
+          <li><strong>ผลกระทบเชิงเทคนิค (Technical Impact):</strong> กระทบโมเดล <code>Product</code> (เพิ่มฟิลด์
+            <code>barcode</code>, <code>reorder_point</code>), <code>InventoryRepository</code> (การแปลงคีย์ JSON) และ
+            <code>ConsoleUI</code></li>
           <li><strong>ผลกระทบด้านการทดสอบ (Test Impact):</strong> ต้องเขียน Unit Test เพิ่มอย่างน้อย 3 กรณีทดสอบ</li>
         </ul>
         <div class="callout">
           <div class="callout-badge">DECISION</div>
           <div class="callout-content">
-            <strong>มติการจัดการ CR-01:</strong> จัดคำขอนี้เป็น <strong>Normal Change</strong> โดยไม่รับเข้ามาทำทันทีกลาง Sprint 1 เพื่อป้องกัน Scope Creep และไม่กระทบต่อเป้าหมายหลักของการ Refactor แต่ให้นำผลการวิเคราะห์ไปจัดลำดับเข้าสู่ <strong>Sprint 2 Backlog</strong>
+            <strong>มติการจัดการ CR-01:</strong> จัดคำขอนี้เป็น <strong>Normal Change</strong>
+            โดยไม่รับเข้ามาทำทันทีกลาง Sprint 1 เพื่อป้องกัน Scope Creep และไม่กระทบต่อเป้าหมายหลักของการ Refactor
+            แต่ให้นำผลการวิเคราะห์ไปจัดลำดับเข้าสู่ <strong>Sprint 2 Backlog</strong>
           </div>
         </div>
       </section>
 
       <section>
         <h2>2. การติดตามงานและจัดการข้อติดขัดบน Jira (Active Board &amp; Blocker)</h2>
-        <p>เอกสาร <code>Sprint1_Tracking.md</code> ระบุหลักการควบคุมโครงการตามหลัก Agile Governance (Transparency, Inspection, Adaptation):</p>
+        <p>เอกสาร <code>Sprint1_Tracking.md</code> ระบุหลักการควบคุมโครงการตามหลัก Agile Governance (Transparency,
+          Inspection, Adaptation):</p>
         <ul>
-          <li><strong>Sprint Burndown Chart:</strong> ติดตามเส้นความคืบหน้าระหว่าง Ideal Line และ Actual Line จากการกด Log Work จริง</li>
-          <li><strong>การจัดการ Blocker:</strong> เมื่อพบปัญหาที่ไม่สามารถดำเนินงานต่อได้ (เช่น รอผล Peer Review เกิน 24 ชม.) สมาชิกจะกด <strong>Add Flag</strong> บนการ์ด Jira เพื่อให้การ์ดเปลี่ยนสีเป็นสัญญาณเตือน และ PM จะเข้าช่วยเหลือใน Daily Standup</li>
-          <li><strong>วินัย Refactoring:</strong> ปฏิบัติงานบน Branch <code>feature/refactor-core-architecture</code> ด้วย 4 เทคนิคของ Fowler (Rename, Extract Function, Extract Class, Encapsulate Field) โดยมีกฎเหล็กให้ PyTest ไฟเขียว 100% ตลอดกระบวนการ</li>
+          <li><strong>Sprint Burndown Chart:</strong> ติดตามเส้นความคืบหน้าระหว่าง Ideal Line และ Actual Line จากการกด
+            Log Work จริง</li>
+          <li><strong>การจัดการ Blocker:</strong> เมื่อพบปัญหาที่ไม่สามารถดำเนินงานต่อได้ (เช่น รอผล Peer Review เกิน 24
+            ชม.) สมาชิกจะกด <strong>Add Flag</strong> บนการ์ด Jira เพื่อให้การ์ดเปลี่ยนสีเป็นสัญญาณเตือน และ PM
+            จะเข้าช่วยเหลือใน Daily Standup</li>
+          <li><strong>วินัย Refactoring:</strong> ปฏิบัติงานบน Branch <code>feature/refactor-core-architecture</code>
+            ด้วย 4 เทคนิคของ Fowler (Rename, Extract Function, Extract Class, Encapsulate Field) โดยมีกฎเหล็กให้ PyTest
+            ไฟเขียว 100% ตลอดกระบวนการ</li>
         </ul>
       </section>
 
@@ -104,5 +141,7 @@
       </div>
     </div>
   </footer>
+  <script src="../../site-nav.js" defer></script>
 </body>
+
 </html>

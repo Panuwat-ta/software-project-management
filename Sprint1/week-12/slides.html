@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="th">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -28,13 +29,16 @@
       --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
     }
 
-    *, *::before, *::after {
+    *,
+    *::before,
+    *::after {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
     }
 
-    html, body {
+    html,
+    body {
       width: 100%;
       height: 100%;
       overflow: hidden;
@@ -333,12 +337,15 @@
     }
 
     @media print {
-      body, .frame {
+
+      body,
+      .frame {
         background: #ffffff;
         padding: 0;
         display: block;
         height: auto;
       }
+
       .deck {
         width: 100vw;
         height: 56.25vw;
@@ -346,6 +353,7 @@
         box-shadow: none;
         border-radius: 0;
       }
+
       .slide {
         display: grid !important;
         break-after: page;
@@ -353,6 +361,7 @@
         height: 100vh;
         padding: 50px 70px;
       }
+
       .controls {
         display: none !important;
       }
@@ -363,14 +372,198 @@
         transition: none !important;
       }
     }
-  .content-body,.slide-body{overflow-y:auto;scrollbar-width:thin;min-height:0}
-    </style>
+
+    .content-body,
+    .slide-body {
+      overflow-y: auto;
+      scrollbar-width: thin;
+      min-height: 0
+    }
+
+    @media (max-width: 600px) {
+
+      html,
+      body {
+        overflow-x: hidden;
+        overflow-y: auto;
+      }
+
+      .frame,
+      .viewport-frame {
+        display: block;
+        width: 100%;
+        height: auto;
+        min-height: 100vh;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      .deck,
+      .deck-container {
+        width: 100%;
+        min-height: 100vh;
+        height: auto;
+        aspect-ratio: auto;
+        overflow: visible;
+        border: 0;
+        border-radius: 0;
+        box-shadow: none;
+        padding-bottom: 72px;
+        box-sizing: border-box;
+      }
+
+      .slide {
+        min-height: calc(100vh - 72px);
+        height: auto;
+        padding: 28px 20px;
+        gap: 16px;
+        box-sizing: border-box;
+      }
+
+      .slide h1 {
+        font-size: clamp(28px, 8vw, 38px);
+        line-height: 1.2;
+      }
+
+      .slide-title-area h2 {
+        font-size: clamp(26px, 7.5vw, 34px);
+        line-height: 1.2;
+      }
+
+      .slide-lead,
+      .slide-subtitle {
+        font-size: 18px;
+        line-height: 1.45;
+      }
+
+      .content-body,
+      .slide-body {
+        height: auto;
+        overflow: visible;
+        justify-content: flex-start;
+      }
+
+      .cards-grid-2,
+      .cards-grid-3,
+      .grid-2,
+      .grid-3 {
+        grid-template-columns: 1fr;
+        gap: 14px;
+      }
+
+      .card,
+      .notion-card {
+        min-width: 0;
+      }
+
+      .card-list,
+      .notion-list {
+        font-size: 17px;
+        line-height: 1.45;
+      }
+
+      .data-val {
+        font-size: 30px;
+      }
+
+      .slide-footer {
+        display: block;
+        font-size: 14px;
+      }
+
+      .controls,
+      .nav-controls {
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        width: 100%;
+        min-height: 64px;
+        padding: 8px 12px;
+        box-sizing: border-box;
+        justify-content: center;
+        gap: 6px;
+        z-index: 100;
+        background: var(--canvas, #fff);
+        border-top: 1px solid var(--border, #ddd);
+      }
+
+      .controls .btn,
+      .nav-controls .nav-btn {
+        min-height: 40px;
+        padding: 6px 10px;
+        font-size: 15px;
+      }
+
+      .controls>a {
+        display: none;
+      }
+
+      .slide-count {
+        font-size: 15px;
+        min-width: 42px;
+        text-align: center;
+      }
+    }
+
+    @media (max-width: 600px) {
+
+      .slide-header,
+      .content-body,
+      .slide-body,
+      .slide-title-area,
+      .notion-card,
+      .card,
+      .notion-list,
+      .card-list,
+      .metric-row {
+        min-width: 0;
+        max-width: 100%;
+        box-sizing: border-box;
+      }
+
+      .badge-row {
+        flex-wrap: wrap;
+        max-width: 100%;
+      }
+
+      .badge,
+      .header-note {
+        max-width: 100%;
+        font-size: 16px;
+        overflow-wrap: anywhere;
+      }
+
+      .notion-card,
+      .card {
+        padding: 20px;
+      }
+
+      .notion-list li,
+      .card-list li {
+        font-size: 18px;
+        overflow-wrap: anywhere;
+        word-break: normal;
+      }
+
+      .metric-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 4px;
+      }
+
+      .metric-label,
+      .metric-value {
+        max-width: 100%;
+        overflow-wrap: anywhere;
+      }
+    }
+  </style>
 </head>
+
 <body>
   <div class="frame">
     <main class="deck" aria-live="off">
-
-      <!-- Slide 1: ภาพรวมสัปดาห์ที่ 12 -->
       <section class="slide active" id="slide-1">
         <header class="slide-header">
           <div class="marker-wrap">
@@ -378,7 +571,8 @@
             <span class="marker-pill gray">ข้อมูลสมมติเพื่อการเรียน</span>
           </div>
           <h1>การทดสอบ UAT และการปิดงานโครงการ</h1>
-          <p class="slide-lead">รายงาน Final EVM สรุป 3 Sprints, ผลการทดสอบ 25 passed, เกณฑ์ตรวจรับ UAT และเช็กลิสต์ความพร้อมปล่อย Release v2.0.0-evolution</p>
+          <p class="slide-lead">รายงาน Final EVM สรุป 3 Sprints, ผลการทดสอบ 25 passed, เกณฑ์ตรวจรับ UAT
+            และเช็กลิสต์ความพร้อมปล่อย แผนความพร้อมก่อนสร้าง tag v2.0.0-evolution</p>
         </header>
         <div class="slide-body">
           <div class="cards-grid-2">
@@ -404,19 +598,33 @@
           <span class="notice">สไลด์สรุปประกอบรายวิชาการจัดการโครงการซอฟต์แวร์ [ข้อมูลสมมติเพื่อการเรียน]</span>
         </footer>
       </section>
-
-      <!-- Slide 2: Final EVM และงบประมาณ -->
-      <section class="slide" id="slide-2"><header class="slide-header"><div class="marker-wrap"><span class="marker-pill">สัปดาห์ที่ 12</span><span class="marker-pill gray">สารบัญ</span></div><h1>สารบัญสไลด์</h1><p class="slide-lead">กดหัวข้อเพื่อกระโดดไปสไลด์นั้น</p></header><div class="slide-body"><div class="card"><ul class="card-list"><li><a href="#slide-1">การทดสอบ UAT และการปิดงานโครงการ</a></li><li><a href="#slide-3">สรุปผลลัพธ์โครงการตลอด 3 สปรินต์</a></li><li><a href="#slide-4">25 Passed Tests และด่านตรวจรับระบบ</a></li><li><a href="#slide-5">หลักฐานทดสอบไม่เท่ากับการอนุมัติปล่อย</a></li></ul></div></div><footer class="slide-footer"><span class="notice">กดหัวข้อเพื่อกระโดดไปสไลด์นั้น</span></footer></section>
-
-      <!-- Slide 3: 25 Passed Tests และสถานะตรวจรับ -->
+      <section class="slide" id="slide-2">
+        <header class="slide-header">
+          <div class="marker-wrap"><span class="marker-pill">สัปดาห์ที่ 12</span><span
+              class="marker-pill gray">สารบัญ</span></div>
+          <h1>สารบัญสไลด์</h1>
+          <p class="slide-lead">กดหัวข้อเพื่อกระโดดไปสไลด์นั้น</p>
+        </header>
+        <div class="slide-body">
+          <div class="card">
+            <ul class="card-list">
+              <li><a href="#slide-1">การทดสอบ UAT และการปิดงานโครงการ</a></li>
+              <li><a href="#slide-3">ผล EVM รวม 3 สปรินต์</a></li>
+              <li><a href="#slide-4">กระทบยอดเงินสำรองและปิดสัญญา</a></li>
+              <li><a href="#slide-5">25 Passed Tests ครอบคลุมงานที่ส่งมอบ</a></li>
+              <li><a href="#slide-6">เกณฑ์ UAT พร้อม แต่ยังรอลายเซ็น</a></li>
+              <li><a href="#slide-7">ก่อนสร้าง tag v2.0.0-evolution</a></li>
+            </ul>
+          </div>
+        </div>
+        <footer class="slide-footer"><span class="notice">กดหัวข้อเพื่อกระโดดไปสไลด์นั้น</span></footer>
+      </section>
       <section class="slide" id="slide-3">
         <header class="slide-header">
-          <div class="marker-wrap">
-            <span class="marker-pill">FINAL EVM</span>
-            <span class="marker-pill gray">ตัวเลขจำลอง</span>
-          </div>
-          <h1>สรุปผลลัพธ์โครงการตลอด 3 สปรินต์</h1>
-          <p class="slide-lead">รายงานดัชนี EVM และการกระทบยอดงบประมาณตามมาตรฐานสากล [ตัวเลขจำลอง]</p>
+          <div class="marker-wrap"><span class="marker-pill">FINAL EVM</span><span
+              class="marker-pill gray">ตัวเลขจำลอง</span></div>
+          <h1>ผล EVM รวม 3 สปรินต์</h1>
+          <p class="slide-lead">ตัวเลขแผน งานที่ได้รับ และต้นทุนจริง — แสดงแยกเพื่ออ่านบนจอโปรเจกเตอร์ได้ทัน</p>
         </header>
         <div class="slide-body">
           <div class="cards-grid-3">
@@ -424,122 +632,182 @@
               <div class="data-item">
                 <div class="data-label">Planned Value (PV)</div>
                 <div class="data-val">15,525 บาท</div>
-                <div class="data-sub">งบประมาณรวมตามแผนงาน (รวม CR-02)</div>
+                <div class="data-sub">งบประมาณรวมตามแผน (รวม CR-02)</div>
               </div>
             </div>
             <div class="card subtle">
               <div class="data-item">
                 <div class="data-label">Earned Value (EV)</div>
                 <div class="data-val">15,525 บาท</div>
-                <div class="data-sub">มูลค่างานผ่าน DoD และ UAT ครบ 100%</div>
+                <div class="data-sub">มูลค่างานตาม DoD และ UAT scenarios</div>
               </div>
             </div>
             <div class="card subtle">
               <div class="data-item">
                 <div class="data-label">Actual Cost (AC)</div>
                 <div class="data-val">16,100 บาท</div>
-                <div class="data-sub">ต้นทุนค่าแรงและค่าเครื่องมือที่ใช้จริง</div>
+                <div class="data-sub">ค่าแรงและค่าเครื่องมือที่ใช้จริง</div>
               </div>
             </div>
           </div>
           <div class="cards-grid-2">
             <div class="card">
-              <div class="card-title">ดัชนีประสิทธิภาพโครงการ (SPI &amp; CPI)</div>
+              <div class="card-title">Schedule Performance</div>
               <ul class="card-list">
-                <li><strong>Schedule Index (SPI):</strong> 1.00 (ส่งมอบงานตรงตามกำหนดเวลา 100%)</li>
-                <li><strong>Cost Index (CPI):</strong> 0.96 (ต้นทุนเกินงบ 3.7% คิดเป็น CV = -575 บาท)</li>
-                <li>ชดเชยค่าแรงส่วนเกินจากงบสำรอง Contingency Reserve ตามเกณฑ์อนุมัติ</li>
+                <li><strong>SPI 1.00:</strong> ส่งมอบตามกำหนดเวลา</li>
+                <li>PV เท่ากับ EV จึงไม่มีงานค้างตามแผนรวม</li>
               </ul>
             </div>
             <div class="card">
-              <div class="card-title">กระทบยอดเงินสำรองและการปิดสัญญา</div>
+              <div class="card-title">Cost Performance</div>
               <ul class="card-list">
-                <li>งบสำรองตั้งต้น 2,823 - CR-02 (1,350) - ส่วนเกินค่าแรง (575) = คงเหลือ 898 บาท</li>
-                <li>ค่าเครื่องมือรวม 780 บาท ต่ำกว่างบ 800 บาท ประหยัดได้ 20 บาท</li>
-                <li>ปิดปลดระวางทรัพยากรคลาวด์และ Mock Server ส่วนเกินเรียบร้อย</li>
+                <li><strong>CPI 0.96:</strong> เกินงบ 3.7%</li>
+                <li><strong>CV = −575 บาท:</strong> ชดเชยตามเกณฑ์เงินสำรอง</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <footer class="slide-footer"><span class="notice">อ้างอิงเอกสาร: Final_EVM.md · ข้อมูลสมมติเพื่อการเรียน</span>
+        </footer>
+      </section>
+
+      <section class="slide" id="slide-4">
+        <header class="slide-header">
+          <div class="marker-wrap"><span class="marker-pill">RECONCILIATION</span><span
+              class="marker-pill gray">ตัวเลขจำลอง</span></div>
+          <h1>กระทบยอดเงินสำรองและปิดสัญญา</h1>
+          <p class="slide-lead">แสดงเงินสำรองคงเหลือและต้นทุนเครื่องมือเป็นคนละประเด็น เพื่อไม่ปนกับ EVM</p>
+        </header>
+        <div class="slide-body">
+          <div class="cards-grid-2">
+            <div class="card">
+              <div class="card-title">Contingency Reserve คงเหลือ 898 บาท</div>
+              <ul class="card-list">
+                <li>ตั้งต้น 2,823 บาท</li>
+                <li>หัก CR-02 1,350 บาท และส่วนเกินค่าแรง 575 บาท</li>
+                <li>2,823 − 1,350 − 575 = <strong>898 บาท</strong></li>
+              </ul>
+            </div>
+            <div class="card">
+              <div class="card-title">ปิดสัญญาเครื่องมือ</div>
+              <ul class="card-list">
+                <li>ค่าเครื่องมือจริง 780 บาท จากงบ 800 บาท</li>
+                <li>ประหยัด 20 บาท และปิดทรัพยากรคลาวด์/Mock Server ส่วนเกิน</li>
+                <li>ตัวเลขทั้งหมดเป็นข้อมูลสมมติเพื่อการเรียน</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <footer class="slide-footer"><span class="notice">อ้างอิงเอกสาร: Final_EVM.md</span></footer>
+      </section>
+
+      <section class="slide" id="slide-5">
+        <header class="slide-header">
+          <div class="marker-wrap">
+            <span class="marker-pill">TESTING</span>
+            <span class="marker-pill gray">ข้อมูลสมมติเพื่อการเรียน</span>
+          </div>
+          <h1>25 Passed Tests ครอบคลุมงานที่ส่งมอบ</h1>
+          <p class="slide-lead">ผลทดสอบยืนยันความถูกต้องของโค้ด ไม่ใช่การอนุมัติปล่อยระบบ</p>
+        </header>
+        <div class="slide-body">
+          <div class="cards-grid-2">
+            <div class="card">
+              <div class="card-title">Full Regression Suite: 25 รายการ</div>
+              <ul class="card-list">
+                <li>5 Baseline Tests: คำนวณและตัดสต็อกสินค้าแบบดั้งเดิม</li>
+                <li>4 CR-01 Tests: รหัสบาร์โค้ดและ Reorder Point</li>
+                <li>6 CR-02 Tests: ส่งออก CSV พร้อมหัวตาราง</li>
+              </ul>
+            </div>
+            <div class="card">
+              <div class="card-title">ความเข้ากันได้และการใช้งานจริง</div>
+              <ul class="card-list">
+                <li>4 BUG-101 Tests: รับข้อมูลเก่าที่ไม่มีบาร์โค้ด</li>
+                <li>3 CLI + 3 Integration Tests: โมเดลทำงานร่วมกับไฟล์ได้</li>
+                <li>ผลที่ยืนยันได้: `pytest Sprint1/week-12/test_app.py -q` ผ่าน 25/25</li>
               </ul>
             </div>
           </div>
         </div>
         <footer class="slide-footer">
-          <span class="notice">อ้างอิงเอกสาร: Final_EVM.md · กรณีศึกษาการปิดโครงการตามมาตรฐาน PMBOK [ตัวเลขจำลอง]</span>
+          <span class="notice">อ้างอิงเอกสาร: test_app.py · Hardening_Report.md</span>
         </footer>
       </section>
 
-      <!-- Slide 4: ข้อสรุปและการส่งมอบ -->
-      <section class="slide" id="slide-4">
+      <section class="slide" id="slide-6">
         <header class="slide-header">
           <div class="marker-wrap">
-            <span class="marker-pill">TESTING &amp; RELEASE</span>
+            <span class="marker-pill">UAT</span>
             <span class="marker-pill gray">ข้อมูลสมมติเพื่อการเรียน</span>
           </div>
-          <h1>25 Passed Tests และด่านตรวจรับระบบ</h1>
-          <p class="slide-lead">การทดสอบความถูกต้องของระบบและความพร้อมในการส่งมอบซอฟต์แวร์</p>
+          <h1>เกณฑ์ UAT พร้อม แต่ยังรอลายเซ็น</h1>
+          <p class="slide-lead">แยกหลักฐานทดสอบที่มีออกจากหลักฐานอนุมัติที่ยังไม่พบ</p>
         </header>
         <div class="slide-body">
           <div class="cards-grid-2">
             <div class="card">
-              <div class="card-title">ชุดทดสอบ Full Regression 25 รายการ</div>
+              <div class="card-title">3 สถานการณ์รับรอง</div>
               <ul class="card-list">
-                <li>5 Baseline Tests: การคำนวณและตัดสต็อกสินค้าแบบดั้งเดิม</li>
-                <li>4 CR-01 Tests: รหัสบาร์โค้ด และการคำนวณ Reorder Point</li>
-                <li>6 CR-02 Tests: การส่งออกไฟล์ CSV พร้อมหัวตารางที่ถูกต้อง</li>
-                <li>4 BUG-101 Tests: การรับมือข้อมูลเก่าที่ไร้บาร์โค้ด (Backward Compatibility)</li>
-                <li>3 CLI Tests + 3 Integration Tests: การทำงานร่วมกันระหว่างโมเดลและไฟล์</li>
+                <li>รับสินค้า Milk เข้าคลัง</li>
+                <li>ตัดสต็อกจนถึง Reorder Alert</li>
+                <li>ส่งออก CSV แล้วเปิดอ่านใน Excel</li>
               </ul>
             </div>
             <div class="card">
-              <div class="card-title">ด่านตรวจรับ UAT และสถานะ Release</div>
+              <div class="card-title">สถานะหลักฐาน ณ วันปิดงาน</div>
               <ul class="card-list">
-                <li><strong>UAT 3 Scenarios:</strong> รับสินค้า Milk, ตัดสต็อกจน Alert, และส่งออก CSV ใน Excel</li>
-                <li><strong>สถานะ UAT Sign-off:</strong> จัดเตรียมเกณฑ์ครบถ้วน แต่ช่องลงนามทางการยังคงว่าง</li>
-                <li><strong>สถานะ Git Release Tag:</strong> จัดทำ CHANGELOG.md ครบถ้วน แต่ยังไม่มีแท็ก v2.0.0 บน main</li>
-                <li><strong>หนี้ทางเทคนิค:</strong> Flake8 E501 ยังเปิดอยู่ และ SQLite/Member ยังเป็นแบบออกแบบ</li>
+                <li>เกณฑ์ UAT ครบทั้ง 3 สถานการณ์</li>
+                <li><strong>หลักฐานไม่พบ:</strong> ช่อง UAT Sign-off ยังว่าง</li>
+                <li>จึงระบุได้เพียง “ทดสอบผ่าน” ไม่ใช่ “ได้รับอนุมัติปล่อย”</li>
               </ul>
             </div>
-            </div></div>
+          </div>
+        </div>
         <footer class="slide-footer">
-          <span class="notice">อ้างอิงเอกสาร: Release_Checklist.md และ UAT_Sign_Off_Sheet.md</span>
+          <span class="notice">อ้างอิงเอกสาร: UAT_Sign_Off_Sheet.md</span>
         </footer>
+      </section>
 
-      <section class="slide" id="slide-5">
+      <section class="slide" id="slide-7">
         <header class="slide-header">
           <div class="marker-wrap">
             <span class="marker-pill">RELEASE GATE</span>
             <span class="marker-pill gray">ข้อมูลสมมติเพื่อการเรียน</span>
           </div>
-          <h1>หลักฐานทดสอบไม่เท่ากับการอนุมัติปล่อย</h1>
-          <p class="slide-lead">แยก defect ที่ต้องแก้ก่อน merge ออกจาก scope ใหม่ที่ต้องรอ Future v3.0</p>
+          <h1>ก่อนสร้าง tag v2.0.0-evolution</h1>
+          <p class="slide-lead">แผนความพร้อมก่อนปล่อย ไม่ใช่สถานะที่ปล่อยแล้ว</p>
         </header>
         <div class="slide-body">
           <div class="cards-grid-2">
             <div class="card">
-              <div class="card-title">Defect vs New Scope</div>
+              <div class="card-title">งานที่ยังปิดไม่ครบ</div>
               <ul class="card-list">
-                <li><strong>UAT Defect:</strong> ไม่ตรงสเปก (เช่น ไม่เตือนเมื่อสต็อก ≤ reorder) → hotfix ก่อน merge</li>
-                <li><strong>New Scope:</strong> อยากได้เพิ่ม (เช่น ส่งอีเมลหาซัพพลายเออร์) → Future v3.0 ห้ามทำสัปดาห์นี้</li>
+                <li><strong>หลักฐานไม่พบ:</strong> ยังไม่มี Git tag `v2.0.0-evolution` บน main</li>
+                <li>Flake8 E501 ยังเปิดอยู่ และ SQLite/Member ยังเป็นแบบออกแบบ</li>
               </ul>
             </div>
             <div class="card">
-              <div class="card-title">3 เงื่อนไขก่อน merge เข้า main</div>
+              <div class="card-title">เงื่อนไขก่อน merge เข้า main</div>
               <ul class="card-list">
                 <li>UAT sign-off ครบ + pytest 25/25 เขียว + Tech Lead approve PR</li>
-                <li>tag v2.0.0-evolution + CHANGELOG 3 มิติ ISO 14764 (Corrective/Perfective/Preventive)</li>
+                <li>สร้าง tag v2.0.0-evolution และบันทึก CHANGELOG 3 มิติ ISO 14764</li>
+                <li>Defect ที่ผิดสเปกต้อง hotfix; scope ใหม่ย้ายไป Future v3.0</li>
               </ul>
             </div>
           </div>
         </div>
         <footer class="slide-footer">
-          <span class="notice">อ้างอิงเอกสาร: UAT_Sign_Off_Sheet.md · Release_Checklist.md · CHANGELOG.md</span>
+          <span class="notice">อ้างอิงเอกสาร: Release_Checklist.md · CHANGELOG.md · UAT_Sign_Off_Sheet.md</span>
         </footer>
       </section>
-
-      <!-- Controls -->
       <div class="controls">
         <a href="index.html" class="btn" title="กลับหน้าสรุปเนื้อหาสัปดาห์ 12">หน้าเนื้อหา</a>
         <button type="button" class="btn" id="restart-btn">เริ่มใหม่</button>
         <button type="button" class="btn" id="prev-btn" aria-label="สไลด์ก่อนหน้า">ก่อนหน้า</button>
-        <span class="slide-count" id="slide-counter">1 / 4</span><span class="sr-only" aria-live="polite" id="slide-live" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap"></span>
+        <span class="slide-count" id="slide-counter">1 / 7</span><span class="sr-only" aria-live="polite"
+          id="slide-live"
+          style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap"></span>
         <button type="button" class="btn" id="next-btn" aria-label="สไลด์ถัดไป">ถัดไป</button>
       </div>
 
@@ -547,7 +815,7 @@
   </div>
 
   <script>
-    (function() {
+    (function () {
       const slides = Array.from(document.querySelectorAll('.slide'));
       const counter = document.getElementById('slide-counter');
       const prevBtn = document.getElementById('prev-btn');
@@ -563,7 +831,8 @@
           current = h;
         }
       } else if (!fresh) {
-        const saved = localStorage.getItem(storageKey);
+        let saved = null;
+        try { saved = localStorage.getItem(storageKey); } catch (e) { }
         if (saved !== null) {
           const parsed = parseInt(saved, 10);
           if (!isNaN(parsed) && parsed >= 0 && parsed < slides.length) {
@@ -610,13 +879,19 @@
       const restartBtn = document.getElementById('restart-btn');
       if (restartBtn) {
         restartBtn.addEventListener('click', () => {
-          try { localStorage.removeItem(storageKey); } catch (e) {}
+          try { localStorage.removeItem(storageKey); } catch (e) { }
           showSlide(0);
         });
       }
 
       document.addEventListener('keydown', (e) => {
-        if (e.key === 'ArrowLeft') {
+        if (e.key === 'Home') {
+          e.preventDefault();
+          showSlide(0);
+        } else if (e.key === 'End') {
+          e.preventDefault();
+          showSlide(slides.length - 1);
+        } else if (e.key === 'ArrowLeft') {
           showSlide(current - 1);
         } else if (e.key === 'ArrowRight' || e.key === ' ') {
           e.preventDefault();
@@ -627,6 +902,7 @@
       showSlide(current);
     })();
   </script>
-    <script>window.addEventListener('hashchange',function(){location.reload();});</script>
+  <script>window.addEventListener('hashchange', function () { location.reload(); });</script>
 </body>
+
 </html>

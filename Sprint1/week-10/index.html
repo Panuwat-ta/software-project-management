@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="th">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>สัปดาห์ที่ 10: CCB, CR-02 และ BUG-101 | SPM</title>
   <link rel="stylesheet" href="../../theme.css">
 </head>
+
 <body>
   <header class="site-header">
     <div class="header-inner">
@@ -35,6 +37,28 @@
             <a href="../week-12/index.html">สัปดาห์ 12 <small>UAT &amp; Close-out</small></a>
           </div>
         </details>
+        <details class="nav-dropdown nav-slides-dropdown">
+          <summary class="nav-dropdown-summary">
+            <span>สไลด์</span>
+          </summary>
+          <div class="dropdown-menu">
+            <a href="../templates/index.html">เทมเพลตสไลด์ <small>เลือก 3 แบบ</small></a>
+            <a href="../sprint1-slides.html">สรุป Sprint 1 <small>Project close-out</small></a>
+            <a href="../Phase1/slides.html">Phase 1 <small>Planning proposal</small></a>
+            <a href="../week-1/slides.html">สัปดาห์ 1 <small>Charter & Legacy</small></a>
+            <a href="../week-2/slides.html">สัปดาห์ 2 <small>DFD & Blueprint</small></a>
+            <a href="../week-3/slides.html">สัปดาห์ 3 <small>DoD & RACI</small></a>
+            <a href="../week-4/slides.html">สัปดาห์ 4 <small>Refactor & Test</small></a>
+            <a href="../week-5/slides.html">สัปดาห์ 5 <small>Architecture & Budget</small></a>
+            <a href="../week-6/slides.html">สัปดาห์ 6 <small>DoD & To-Be</small></a>
+            <a href="../week-7/slides.html">สัปดาห์ 7 <small>Baseline & Quality</small></a>
+            <a href="../week-8/slides.html">สัปดาห์ 8 <small>CR-01 & Tracking</small></a>
+            <a href="../week-9/slides.html">สัปดาห์ 9 <small>EVM & Transition</small></a>
+            <a href="../week-10/slides.html">สัปดาห์ 10 <small>CCB & BUG-101</small></a>
+            <a href="../week-11/slides.html">สัปดาห์ 11 <small>Hardening & Freeze</small></a>
+            <a href="../week-12/slides.html">สัปดาห์ 12 <small>UAT & Close-out</small></a>
+          </div>
+        </details>
       </nav>
     </div>
   </header>
@@ -52,7 +76,8 @@
       <div class="page-header-block">
         <div class="notice-pill">ข้อมูลสมมติเพื่อการเรียน · W10 Documentation</div>
         <h1 class="page-title">สัปดาห์ที่ 10: คำขอฉุกเฉิน CR-02, การประชุม CCB และการแก้ไข BUG-101</h1>
-        <p class="page-desc">กระบวนการ Fast-track Change Request CR-02 (ส่งออกรายงาน CSV), การประชุมคณะกรรมการควบคุมการเปลี่ยนแปลง (CCB) และการวิเคราะห์รากเหง้าข้อบกพร่อง BUG-101 ด้วย 5 Whys</p>
+        <p class="page-desc">กระบวนการ Fast-track Change Request CR-02 (ส่งออกรายงาน CSV),
+          การประชุมคณะกรรมการควบคุมการเปลี่ยนแปลง (CCB) และการวิเคราะห์รากเหง้าข้อบกพร่อง BUG-101 ด้วย 5 Whys</p>
         <div class="page-header-actions">
           <a class="btn btn-secondary" href="../week-10/slides.html">เปิดสไลด์ประกอบสัปดาห์ 10 &rarr;</a>
         </div>
@@ -61,28 +86,36 @@
       <section>
         <h2>1. คำขอเปลี่ยนแปลงฉุกเฉิน CR-02 (Emergency CSV Export)</h2>
         <div class="notice-pill">ข้อมูลสมมติเพื่อการเรียน · Fictional Educational Data</div>
-        <p>ตามมาตรฐาน ISO/IEC 14764 เมื่อมีคำขอด่วนเพื่อนำไปเปิดใน Excel ป้องกันสินค้าขาดสต็อก ทีมต้องไม่กระโดดไปแก้โค้ดโดยไร้การควบคุม:</p>
+        <p>ตามมาตรฐาน ISO/IEC 14764 เมื่อมีคำขอด่วนเพื่อนำไปเปิดใน Excel ป้องกันสินค้าขาดสต็อก
+          ทีมต้องไม่กระโดดไปแก้โค้ดโดยไร้การควบคุม:</p>
         <ul>
-          <li><strong>การออกแบบ:</strong> สร้างคลาสเฉพาะ <code>CsvReportExporter</code> ทำงานแบบ Static Method ไร้ State ไม่ผูกมัดกับ UI</li>
-          <li><strong>Header ของไฟล์ CSV:</strong> <code>ProductID,ProductName,Barcode,Quantity,ReorderPoint,Price</code> รองรับ UTF-8</li>
-          <li><strong>ประมาณการงาน (Effort):</strong> 4.5 Man-Hours (Senior Dev 2.0, Dev 1.0, QA 1.5 ชม.) คิดเป็นต้นทุน <strong>1,350 บาท</strong> (@ 300 บาท/ชม.)</li>
-          <li><strong>มติที่ประชุม CCB:</strong> อนุมัติ Option A ให้ทำใน Sprint 2 โดยดึงงบจาก <strong>Contingency Reserve</strong> จำนวน 1,350 บาท</li>
+          <li><strong>การออกแบบ:</strong> สร้างคลาสเฉพาะ <code>CsvReportExporter</code> ทำงานแบบ Static Method ไร้ State
+            ไม่ผูกมัดกับ UI</li>
+          <li><strong>Header ของไฟล์ CSV:</strong>
+            <code>ProductID,ProductName,Barcode,Quantity,ReorderPoint,Price</code> รองรับ UTF-8</li>
+          <li><strong>ประมาณการงาน (Effort):</strong> 4.5 Man-Hours (Senior Dev 2.0, Dev 1.0, QA 1.5 ชม.) คิดเป็นต้นทุน
+            <strong>1,350 บาท</strong> (@ 300 บาท/ชม.)</li>
+          <li><strong>มติที่ประชุม CCB:</strong> อนุมัติ Option A ให้ทำใน Sprint 2 โดยดึงงบจาก <strong>Contingency
+              Reserve</strong> จำนวน 1,350 บาท</li>
         </ul>
       </section>
 
       <section>
         <h2>2. การบันทึกและแก้ไขข้อบกพร่อง BUG-101 (KeyError 'barcode')</h2>
-        <p>พบข้อบกพร่องเมื่อนำไฟล์ <code>data.json</code> สกีมาเก่าที่สร้างจากสัปดาห์ที่ 1 (ไม่มีฟิลด์ <code>barcode</code>) มาโหลด โปรแกรมจะเกิด Runtime Exception และล่มทันที:</p>
-        
+        <p>พบข้อบกพร่องเมื่อนำไฟล์ <code>data.json</code> สกีมาเก่าที่สร้างจากสัปดาห์ที่ 1 (ไม่มีฟิลด์
+          <code>barcode</code>) มาโหลด โปรแกรมจะเกิด Runtime Exception และล่มทันที:</p>
+
         <div class="callout">
           <div class="callout-badge">5 WHYS</div>
           <div class="callout-content">
             <strong>การวิเคราะห์สาเหตุที่แท้จริง (Root Cause Analysis):</strong><br>
-            1. ทำไมเกิด KeyError? &rarr; หาคีย์ <code>barcode</code> ไม่เจอ เพราะโค้ดดึงค่าตรงๆ <code>item['barcode']</code><br>
+            1. ทำไมเกิด KeyError? &rarr; หาคีย์ <code>barcode</code> ไม่เจอ เพราะโค้ดดึงค่าตรงๆ
+            <code>item['barcode']</code><br>
             2. ทำไมหาไม่เจอ? &rarr; ไฟล์ข้อมูลเก่าสร้างจาก W1 ยังไม่มีฟิลด์นี้<br>
             3. ทำไมอ่านข้อมูลเก่าไม่ได้? &rarr; ขาดตรรกะ Migration<br>
             4. ทำไมไม่มี Fallback? &rarr; ผู้พัฒนาสันนิษฐานว่าข้อมูลต้องเป็นสกีมาใหม่เสมอ<br>
-            5. <strong>Root Cause:</strong> ขาดกลไก Data Validation และ Default Fallback ในชั้น <code>InventoryRepository</code>
+            5. <strong>Root Cause:</strong> ขาดกลไก Data Validation และ Default Fallback ในชั้น
+            <code>InventoryRepository</code>
           </div>
         </div>
 
@@ -90,7 +123,8 @@
         <pre><code># ไม่ใช้วิธีปิด Error ลอยๆ (try-except pass) แต่ใส่ Fallback ชัดเจน
 code = item.get('barcode', '')
 reorder_pt = item.get('reorder_point', 5)</code></pre>
-        <p><strong>Defect-Driven Testing:</strong> เขียน Test Case จำลองบั๊กใน <code>test_app.py</code> ให้รัน Fail ก่อน (RED) แล้วแก้โค้ดให้รันผ่าน (GREEN) พร้อมบรรจุเข้า Regression Suite ถาวร</p>
+        <p><strong>Defect-Driven Testing:</strong> เขียน Test Case จำลองบั๊กใน <code>test_app.py</code> ให้รัน Fail ก่อน
+          (RED) แล้วแก้โค้ดให้รันผ่าน (GREEN) พร้อมบรรจุเข้า Regression Suite ถาวร</p>
       </section>
 
       <div class="deck-banner">
@@ -112,5 +146,7 @@ reorder_pt = item.get('reorder_point', 5)</code></pre>
       </div>
     </div>
   </footer>
+  <script src="../../site-nav.js" defer></script>
 </body>
+
 </html>

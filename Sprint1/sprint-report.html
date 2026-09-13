@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="th">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>รายงานปิด Sprint 1 | ระบบจัดการสินค้าคงคลังแบบ CLI</title>
   <link rel="stylesheet" href="../theme.css">
 </head>
+
 <body>
   <header class="site-header">
     <div class="header-inner">
@@ -35,12 +37,34 @@
             <a href="week-12/index.html">สัปดาห์ 12 <small>UAT &amp; Close-out</small></a>
           </div>
         </details>
+        <details class="nav-dropdown nav-slides-dropdown">
+          <summary class="nav-dropdown-summary">
+            <span>สไลด์</span>
+          </summary>
+          <div class="dropdown-menu">
+            <a href="templates/index.html">เทมเพลตสไลด์ <small>เลือก 3 แบบ</small></a>
+            <a href="sprint1-slides.html">สรุป Sprint 1 <small>Project close-out</small></a>
+            <a href="Phase1/slides.html">Phase 1 <small>Planning proposal</small></a>
+            <a href="week-1/slides.html">สัปดาห์ 1 <small>Charter & Legacy</small></a>
+            <a href="week-2/slides.html">สัปดาห์ 2 <small>DFD & Blueprint</small></a>
+            <a href="week-3/slides.html">สัปดาห์ 3 <small>DoD & RACI</small></a>
+            <a href="week-4/slides.html">สัปดาห์ 4 <small>Refactor & Test</small></a>
+            <a href="week-5/slides.html">สัปดาห์ 5 <small>Architecture & Budget</small></a>
+            <a href="week-6/slides.html">สัปดาห์ 6 <small>DoD & To-Be</small></a>
+            <a href="week-7/slides.html">สัปดาห์ 7 <small>Baseline & Quality</small></a>
+            <a href="week-8/slides.html">สัปดาห์ 8 <small>CR-01 & Tracking</small></a>
+            <a href="week-9/slides.html">สัปดาห์ 9 <small>EVM & Transition</small></a>
+            <a href="week-10/slides.html">สัปดาห์ 10 <small>CCB & BUG-101</small></a>
+            <a href="week-11/slides.html">สัปดาห์ 11 <small>Hardening & Freeze</small></a>
+            <a href="week-12/slides.html">สัปดาห์ 12 <small>UAT & Close-out</small></a>
+          </div>
+        </details>
       </nav>
     </div>
   </header>
 
   <main class="main-wrapper">
-    <div class="content-container">
+    <div class="content-container report-container">
       <nav class="breadcrumb">
         <a href="../index.html">หน้าแรก</a>
         <span class="breadcrumb-sep">/</span>
@@ -50,26 +74,42 @@
       <div class="page-header-block">
         <div class="notice-pill">ข้อมูลสมมติเพื่อการเรียน · Fictional Coursework</div>
         <h1 class="page-title">รายงานปิด Sprint 1 — ระบบจัดการสินค้าคงคลังแบบ CLI</h1>
-        <p class="page-desc">สรุปหลักฐาน รายงานผลลัพธ์การดำเนินงาน 13 หมวดตาม <code>Sprint1/sprint1.md</code> เพื่อปิดรอบการพัฒนาและวางแผนส่งต่อ Sprint 2</p>
+        <p class="page-desc">สรุปหลักฐาน รายงานผลลัพธ์การดำเนินงาน 13 หมวดตาม <code>Sprint1/sprint1.md</code>
+          เพื่อปิดรอบการพัฒนาและวางแผนส่งต่อ Sprint 2</p>
+        <p><a class="btn btn-primary" href="sprint1-slides.html">เปิดสไลด์สรุป Sprint 1</a></p>
       </div>
 
-      <!-- Section 1 -->
-      <section>
+      <nav class="report-toc" aria-label="สารบัญรายงาน Sprint 1">
+        <a href="#outcome">ผลลัพธ์และสิ่งส่งมอบ</a>
+        <a href="#evidence">การทดสอบและ EVM</a>
+        <a href="#readiness">UAT และสถานะปล่อย</a>
+        <a href="#pending">งานคงค้าง</a>
+        <a href="#evidence-index">ดัชนีหลักฐาน</a>
+      </nav>
+      <section id="scope">
         <h2>1. วัตถุประสงค์และขอบเขต Sprint 1</h2>
-        <p>เป้าหมายหลักจาก Project Charter คือการเพิ่มความเสถียรของโปรแกรม CLI, ปรับโครงสร้างเพื่อนำตัวแปรโกลบอล <code>x</code> ออกและแยกโมดูลอย่างเป็นระเบียบ, รักษาความถูกต้องของข้อมูลด้วยการเขียน JSON แบบอะตอมมิก (Safe Atomic Write) และเพิ่มการทดสอบอัตโนมัติ (Automated Testing)</p>
-        <p>การทบทวนระบบดั้งเดิม (<code>week-1/app_v1.py</code>) พบข้อจำกัดสำคัญ ได้แก่ โครงสร้างแบบ Monolithic 5 เมนู ใช้ตัวแปรโกลบอล <code>db</code> และ <code>x</code>, มีการแปลงชนิดข้อมูลด้วย <code>int()</code> และ <code>float()</code> โดยไม่มีบล็อก <code>try-except</code> และยอมรับค่าตัวเลขติดลบ ซึ่งเสี่ยงต่อการล่มกะทันหัน</p>
+        <p>เป้าหมายหลักจาก Project Charter คือการเพิ่มความเสถียรของโปรแกรม CLI, ปรับโครงสร้างเพื่อนำตัวแปรโกลบอล
+          <code>x</code> ออกและแยกโมดูลอย่างเป็นระเบียบ, รักษาความถูกต้องของข้อมูลด้วยการเขียน JSON แบบอะตอมมิก (Safe
+          Atomic Write) และเพิ่มการทดสอบอัตโนมัติ (Automated Testing)
+        </p>
+        <p>การทบทวนระบบดั้งเดิม (<code>week-1/app_v1.py</code>) พบข้อจำกัดสำคัญ ได้แก่ โครงสร้างแบบ Monolithic 5 เมนู
+          ใช้ตัวแปรโกลบอล <code>db</code> และ <code>x</code>, มีการแปลงชนิดข้อมูลด้วย <code>int()</code> และ
+          <code>float()</code> โดยไม่มีบล็อก <code>try-except</code> และยอมรับค่าตัวเลขติดลบ ซึ่งเสี่ยงต่อการล่มกะทันหัน
+        </p>
         <div class="callout">
           <div class="callout-badge">STATUS</div>
           <div class="callout-content">
-            ข้อมูลการติดตามที่ยืนยันจาก Jira: Sprint 1 (ID 45) ปิดแล้ว มี 20 issues สถานะ Done ภายใต้เวอร์ชัน <code>v2.0.0</code> ส่วน Sprint 2 (ID 48) ยังเปิดเพื่อพัฒนา v3.0 แบบ SQLite และงานระบบสมาชิก (Member System) ต่อไป ข้อมูลตัวเลขเชิงแผนงานและต้นทุนทั้งหมดเป็นข้อมูลสมมติเพื่อการเรียน
+            ข้อมูลการติดตามที่ยืนยันจาก Jira: Sprint 1 (ID 45) ปิดแล้ว มี 20 issues สถานะ Done ภายใต้เวอร์ชัน
+            <code>v2.0.0</code> ส่วน Sprint 2 (ID 48) ยังเปิดเพื่อพัฒนา v3.0 แบบ SQLite และงานระบบสมาชิก (Member System)
+            ต่อไป ข้อมูลตัวเลขเชิงแผนงานและต้นทุนทั้งหมดเป็นข้อมูลสมมติเพื่อการเรียน
           </div>
         </div>
       </section>
-
-      <!-- Section 2 -->
-      <section>
+      <section id="team">
         <h2>2. ทีมและบทบาทหน้าที่</h2>
-        <p>อ้างอิงบทบาทหน้าที่จาก <code>README.md</code> และการกำหนดความรับผิดชอบตาม RACI Matrix ใน <code>Sprint1/week-3/raci.md</code>:</p>
+        <p>อ้างอิงบทบาทหน้าที่จาก <code>README.md</code> และการกำหนดความรับผิดชอบตาม RACI Matrix ใน
+          <code>Sprint1/week-3/raci.md</code>:
+        </p>
         <div class="table-wrap">
           <table>
             <thead>
@@ -83,7 +123,8 @@
               <tr>
                 <td><strong>นาย ภานุวัฒน์ ต๋าคำ (Panuwat)</strong></td>
                 <td>PM / Developer</td>
-                <td>บริหารจัดการภาพรวม กำหนดกรอบเวลา ประสานงาน และดำเนินการพัฒนาโค้ด Input Validation และ Atomic Save</td>
+                <td>บริหารจัดการภาพรวม กำหนดกรอบเวลา ประสานงาน และดำเนินการพัฒนาโค้ด Input Validation และ Atomic Save
+                </td>
               </tr>
               <tr>
                 <td><strong>นาย เอกพันธ์ ทศทิศรังสรรค์ (Ekkapan)</strong></td>
@@ -93,34 +134,63 @@
               <tr>
                 <td><strong>นาย ณฐภาพ สายหล้า (Nattapap)</strong></td>
                 <td>Tech Lead / Architect</td>
-                <td>ออกแบบสถาปัตยกรรม To-Be ตรวจสอบคุณภาพโค้ด (Code Review) ตามมาตรฐาน PEP 8 และอนุมัติ Pull Request</td>
+                <td>ออกแบบสถาปัตยกรรม To-Be ตรวจสอบคุณภาพโค้ด (Code Review) ตามมาตรฐาน PEP 8 และอนุมัติ Pull Request
+                </td>
               </tr>
             </tbody>
           </table>
         </div>
       </section>
-
-      <!-- Section 3 -->
-      <section>
+      <section id="weekly-summary">
         <h2>3. สรุปงานรายสัปดาห์ W1 - W12</h2>
         <ul>
-          <li><strong>W1:</strong> จัดทำกฎบัตร ขอบเขต และความเข้าใจระบบเดิมใน <code>week-1/Project-Charter.md</code>, <code>week-1/scope.md</code>, <code>week-1/doc.md</code> โดยใช้ <code>week-1/app_v1.py</code> เป็นฐานเปรียบเทียบความเสี่ยง</li>
-          <li><strong>W2:</strong> วิเคราะห์กระแสข้อมูลและจุดอันตรายใน <code>week-2/DFD.md</code>, <code>week-2/Hotspot.md</code>, <code>week-2/Static-Analysis.md</code> และ <code>week-2/blueprint.md</code> โดย <code>week-2/Member-Discount.md</code> เป็นงานออกแบบต่อยอด ไม่ใช่ฟังก์ชันที่ส่งมอบแล้ว</li>
-          <li><strong>W3:</strong> พัฒนาโค้ดปรับโครงสร้างและกำหนดเกณฑ์ความสำเร็จใน <code>week-3/app_v2.py</code>, <code>week-3/dod.md</code>, <code>week-3/raci.md</code> พร้อมชุดทดสอบอัตโนมัติ</li>
-          <li><strong>W4:</strong> ทดสอบและปรับปรุงเวอร์ชัน refactor ใน <code>week-4/app.py</code> และ <code>week-4/test_app.py</code> (จากการตรวจสอบไฟล์พบว่า <code>week-3/app_v2.py</code>, <code>week-4/app.py</code> และ <code>app.py</code> ที่รากรีโปเหมือนกันทุกไบต์)</li>
-          <li><strong>W5:</strong> บันทึกการประเมินสถาปัตยกรรม คุณภาพ และตารางต้นทุนใน <code>week-5/architecture.md</code>, <code>week-5/iso25010_evaluation.md</code>, <code>week-5/budget_worksheet.md</code></li>
-          <li><strong>W6:</strong> จัดทำเกณฑ์การสื่อสาร/DoD และสถาปัตยกรรมเป้าหมายใน <code>week-6/Communication_Matrix_and_DoD.md</code> กับ <code>week-6/To_Be_Architecture.md</code> (SQLite, Member tier และ Checkout เป็นแบบออกแบบเท่านั้น)</li>
-          <li><strong>W7:</strong> จัดทำ baseline และแผน Sprint ใน <code>week-7/Cost_Baseline_and_Sprint_Plan.md</code> และรายงานคุณภาพใน <code>week-7/ISO_14598_Quality_Report.md</code></li>
-          <li><strong>W8:</strong> วิเคราะห์ผลกระทบ CR-01 และติดตาม Sprint ใน <code>week-8/CR-01_Impact_Analysis.md</code> และ <code>week-8/Sprint1_Tracking.md</code> (CR-01 จัดเป็น Normal Change ส่งต่อทำใน Sprint 2)</li>
-          <li><strong>W9:</strong> สรุป EVM Sprint 1 ถอดบทเรียน และส่งต่องานใน <code>week-9/EVM_Sprint1.md</code>, <code>week-9/Retrospective_Sprint1.md</code> และ <code>week-9/Sprint_Transition.md</code></li>
-          <li><strong>W10:</strong> บันทึกการตัดสินใจ CR-02 และการแก้ข้อบกพร่อง BUG-101 ใน <code>week-10/CR-02_Impact_Decision_Form.md</code>, <code>week-10/CCB_Meeting_Minutes.md</code>, <code>week-10/Defect_Log_BUG-101.md</code>, <code>week-10/Contingency_Reserve_Log.md</code></li>
-          <li><strong>W11:</strong> ควบคุมคุณภาพและแช่แข็งขอบเขตใน <code>week-11/Hardening_Report.md</code>, <code>week-11/Flow_Metrics.md</code> และ <code>week-11/Scope_Freeze_Agreement.md</code></li>
-          <li><strong>W12:</strong> รวมการวิวัฒนาการผลิตภัณฑ์ หลักฐานทดสอบ EVM และการเตรียมปล่อยใน <code>week-12/app.py</code>, <code>week-12/test_app.py</code>, <code>week-12/CHANGELOG.md</code>, <code>week-12/Final_EVM.md</code>, <code>week-12/UAT_Sign_Off_Sheet.md</code> และ <code>week-12/Release_Checklist.md</code></li>
+          <li><strong>W1:</strong> จัดทำกฎบัตร ขอบเขต และความเข้าใจระบบเดิมใน <code>week-1/Project-Charter.md</code>,
+            <code>week-1/scope.md</code>, <code>week-1/doc.md</code> โดยใช้ <code>week-1/app_v1.py</code>
+            เป็นฐานเปรียบเทียบความเสี่ยง
+          </li>
+          <li><strong>W2:</strong> วิเคราะห์กระแสข้อมูลและจุดอันตรายใน <code>week-2/DFD.md</code>,
+            <code>week-2/Hotspot.md</code>, <code>week-2/Static-Analysis.md</code> และ <code>week-2/blueprint.md</code>
+            โดย <code>week-2/Member-Discount.md</code> เป็นงานออกแบบต่อยอด ไม่ใช่ฟังก์ชันที่ส่งมอบแล้ว
+          </li>
+          <li><strong>W3:</strong> พัฒนาโค้ดปรับโครงสร้างและกำหนดเกณฑ์ความสำเร็จใน <code>week-3/app_v2.py</code>,
+            <code>week-3/dod.md</code>, <code>week-3/raci.md</code> พร้อมชุดทดสอบอัตโนมัติ
+          </li>
+          <li><strong>W4:</strong> ทดสอบและปรับปรุงเวอร์ชัน refactor ใน <code>week-4/app.py</code> และ
+            <code>week-4/test_app.py</code> (จากการตรวจสอบไฟล์พบว่า <code>week-3/app_v2.py</code>,
+            <code>week-4/app.py</code> และ <code>app.py</code> ที่รากรีโปเหมือนกันทุกไบต์)
+          </li>
+          <li><strong>W5:</strong> บันทึกการประเมินสถาปัตยกรรม คุณภาพ และตารางต้นทุนใน
+            <code>week-5/architecture.md</code>, <code>week-5/iso25010_evaluation.md</code>,
+            <code>week-5/budget_worksheet.md</code>
+          </li>
+          <li><strong>W6:</strong> จัดทำเกณฑ์การสื่อสาร/DoD และสถาปัตยกรรมเป้าหมายใน
+            <code>week-6/Communication_Matrix_and_DoD.md</code> กับ <code>week-6/To_Be_Architecture.md</code> (SQLite,
+            Member tier และ Checkout เป็นแบบออกแบบเท่านั้น)
+          </li>
+          <li><strong>W7:</strong> จัดทำ baseline และแผน Sprint ใน <code>week-7/Cost_Baseline_and_Sprint_Plan.md</code>
+            และรายงานคุณภาพใน <code>week-7/ISO_14598_Quality_Report.md</code></li>
+          <li><strong>W8:</strong> วิเคราะห์ผลกระทบ CR-01 และติดตาม Sprint ใน
+            <code>week-8/CR-01_Impact_Analysis.md</code> และ <code>week-8/Sprint1_Tracking.md</code> (CR-01 จัดเป็น
+            Normal Change ส่งต่อทำใน Sprint 2)
+          </li>
+          <li><strong>W9:</strong> สรุป EVM Sprint 1 ถอดบทเรียน และส่งต่องานใน <code>week-9/EVM_Sprint1.md</code>,
+            <code>week-9/Retrospective_Sprint1.md</code> และ <code>week-9/Sprint_Transition.md</code>
+          </li>
+          <li><strong>W10:</strong> บันทึกการตัดสินใจ CR-02 และการแก้ข้อบกพร่อง BUG-101 ใน
+            <code>week-10/CR-02_Impact_Decision_Form.md</code>, <code>week-10/CCB_Meeting_Minutes.md</code>,
+            <code>week-10/Defect_Log_BUG-101.md</code>, <code>week-10/Contingency_Reserve_Log.md</code>
+          </li>
+          <li><strong>W11:</strong> ควบคุมคุณภาพและแช่แข็งขอบเขตใน <code>week-11/Hardening_Report.md</code>,
+            <code>week-11/Flow_Metrics.md</code> และ <code>week-11/Scope_Freeze_Agreement.md</code>
+          </li>
+          <li><strong>W12:</strong> รวมการวิวัฒนาการผลิตภัณฑ์ หลักฐานทดสอบ EVM และการเตรียมปล่อยใน
+            <code>week-12/app.py</code>, <code>week-12/test_app.py</code>, <code>week-12/CHANGELOG.md</code>,
+            <code>week-12/Final_EVM.md</code>, <code>week-12/UAT_Sign_Off_Sheet.md</code> และ
+            <code>week-12/Release_Checklist.md</code>
+          </li>
         </ul>
       </section>
-
-      <!-- Section 4 -->
-      <section>
+      <section id="outcome">
         <h2>4. สิ่งที่ส่งมอบ (Deliverables)</h2>
         <div class="table-wrap">
           <table>
@@ -135,22 +205,30 @@
               <tr>
                 <td><span class="badge badge-green">Delivered</span></td>
                 <td>โค้ด refactor: <code>Product</code>, <code>InventoryManager</code>, <code>InventoryCLI</code></td>
-                <td><code>InventoryManager</code> บันทึกไฟล์ผ่านไฟล์ชั่วคราวและ <code>os.replace</code> รองรับคีย์เก่า <code>n</code>/<code>q</code>/<code>p</code>/<code>c</code> และมีระบบ Input Validation</td>
+                <td><code>InventoryManager</code> บันทึกไฟล์ผ่านไฟล์ชั่วคราวและ <code>os.replace</code> รองรับคีย์เก่า
+                  <code>n</code>/<code>q</code>/<code>p</code>/<code>c</code> และมีระบบ Input Validation
+                </td>
               </tr>
               <tr>
                 <td><span class="badge badge-green">Delivered</span></td>
                 <td>ความเข้ากันได้กับข้อมูลเก่าและการแก้ BUG-101</td>
-                <td>ใช้ <code>dict.get('barcode', '')</code> fallback สำหรับ <code>barcode</code> ทำให้โหลดข้อมูลเก่าได้โดยไม่เกิด <code>KeyError</code></td>
+                <td>ใช้ <code>dict.get('barcode', '')</code> fallback สำหรับ <code>barcode</code>
+                  ทำให้โหลดข้อมูลเก่าได้โดยไม่เกิด <code>KeyError</code></td>
               </tr>
               <tr>
                 <td><span class="badge badge-green">Delivered</span></td>
                 <td>การวิวัฒนาการ W12 (Barcode, Alert, CSV)</td>
-                <td><code>barcode</code> ค่าเริ่มต้นสตริงว่าง, <code>reorder_point</code> ค่าเริ่มต้น 5, แจ้งเตือนสต็อกต่ำด้วย <code>&lt;=</code>, และ <code>CsvReportExporter</code> มีหัวตาราง <code>ProductID,ProductName,Barcode,Quantity,ReorderPoint,Price</code></td>
+                <td><code>barcode</code> ค่าเริ่มต้นสตริงว่าง, <code>reorder_point</code> ค่าเริ่มต้น 5,
+                  แจ้งเตือนสต็อกต่ำด้วย <code>&lt;=</code>, และ <code>CsvReportExporter</code> มีหัวตาราง
+                  <code>ProductID,ProductName,Barcode,Quantity,ReorderPoint,Price</code>
+                </td>
               </tr>
               <tr>
                 <td><span class="badge badge-orange">ออกแบบเท่านั้น</span></td>
                 <td>SQLite, Member tiers และ Checkout Flow</td>
-                <td>อยู่ใน <code>week-2/blueprint.md</code>, <code>week-2/Member-Discount.md</code>, <code>week-6/To_Be_Architecture.md</code> (ยังไม่ได้ implement ในโค้ดจริง)</td>
+                <td>อยู่ใน <code>week-2/blueprint.md</code>, <code>week-2/Member-Discount.md</code>,
+                  <code>week-6/To_Be_Architecture.md</code> (ยังไม่ได้ implement ในโค้ดจริง)
+                </td>
               </tr>
               <tr>
                 <td><span class="badge badge-gray">คงค้าง</span></td>
@@ -160,11 +238,11 @@
             </tbody>
           </table>
         </div>
-        <p style="font-size: 0.875rem; color: var(--color-text-secondary);">ค่ารายงาน Static Analysis ที่รายงานไว้เดิม: LOC 99 บรรทัด, Pylint 7.10/10 และความซับซ้อนของ <code>main()</code> CC 14 ระดับ C (เป็นค่าที่รายงานไว้เดิม ไม่ได้วัดซ้ำในรายงานฉบับนี้)</p>
+        <p style="font-size: 0.875rem; color: var(--color-text-secondary);">ค่ารายงาน Static Analysis ที่รายงานไว้เดิม:
+          LOC 99 บรรทัด, Pylint 7.10/10 และความซับซ้อนของ <code>main()</code> CC 14 ระดับ C (เป็นค่าที่รายงานไว้เดิม
+          ไม่ได้วัดซ้ำในรายงานฉบับนี้)</p>
       </section>
-
-      <!-- Section 5 -->
-      <section>
+      <section id="evidence">
         <h2>5. หลักฐานทดสอบ (Testing Evidence)</h2>
         <div class="table-wrap">
           <table>
@@ -197,18 +275,21 @@
 
         <div class="doc-img-wrap">
           <img src="../img/test1.png" alt="ผลรันชุดทดสอบ week-12 25 passed บนสาขา phase2">
-          <div class="doc-img-caption">ภาพ: ผลรัน <code>python -m pytest test_app.py -q</code> ใน week-12 ผ่าน 25 passed (หลักฐานชุดวิวัฒนาการ)</div>
+          <div class="doc-img-caption">ภาพ: ผลรัน <code>python -m pytest test_app.py -q</code> ใน week-12 ผ่าน 25 passed
+            (หลักฐานชุดวิวัฒนาการ)</div>
         </div>
 
-        <p>หมายเหตุการทดสอบ: ต้องรันสองชุดแยกกัน เนื่องจากการสั่ง collect ร่วมกันจะชนกันจากชื่อไฟล์ร่วม <code>test_app.py</code> หลักฐานด้านความแข็งแกร่งยืนยันการเขียนแบบอะตอมมิกและการจับข้อยกเว้นแบบเจาะจง การสแกน Bandit สะอาด ขณะที่ Flake8 ยังรายงานรายการ line-length <code>E501</code> จึงยังไม่ถือว่าสะอาดครบทุกกฎ lint (เป็นหนี้ทางเทคนิคคงค้าง)</p>
+        <p>หมายเหตุการทดสอบ: ต้องรันสองชุดแยกกัน เนื่องจากการสั่ง collect ร่วมกันจะชนกันจากชื่อไฟล์ร่วม
+          <code>test_app.py</code> หลักฐานด้านความแข็งแกร่งยืนยันการเขียนแบบอะตอมมิกและการจับข้อยกเว้นแบบเจาะจง การสแกน
+          Bandit สะอาด ขณะที่ Flake8 ยังรายงานรายการ line-length <code>E501</code> จึงยังไม่ถือว่าสะอาดครบทุกกฎ lint
+          (เป็นหนี้ทางเทคนิคคงค้าง)
+        </p>
       </section>
-
-      <!-- Section 6 -->
-      <section>
+      <section id="evm">
         <h2>6. EVM และงบประมาณ (Earned Value Management)</h2>
         <div class="notice-pill">ข้อมูลสมมติเพื่อการเรียน · Fictional Educational Data</div>
         <p>ตัวเลขทุกตารางในหัวข้อนี้เป็นข้อมูลสมมติเพื่อการเรียน และใช้เพื่อสรุปการควบคุมโครงการในรายวิชาเท่านั้น</p>
-        
+
         <div class="table-wrap">
           <table>
             <thead>
@@ -246,7 +327,8 @@
           </table>
         </div>
 
-        <p>Sprint 1 ล่าช้าและเกินงบตาม SV/CV ข้างต้น ส่วนผลรวมสุดท้ายตรงตามแผนด้านเวลา (SPI 1.00) แต่เกินงบ 575 บาท หรือ 3.7% ซึ่งครอบคลุมด้วยเงินสำรองความเสี่ยง ข้อมูลสมมติเพื่อการเรียน</p>
+        <p>Sprint 1 ล่าช้าและเกินงบตาม SV/CV ข้างต้น ส่วนผลรวมสุดท้ายตรงตามแผนด้านเวลา (SPI 1.00) แต่เกินงบ 575 บาท หรือ
+          3.7% ซึ่งครอบคลุมด้วยเงินสำรองความเสี่ยง ข้อมูลสมมติเพื่อการเรียน</p>
 
         <div class="table-wrap">
           <table>
@@ -281,11 +363,11 @@
             </tbody>
           </table>
         </div>
-        <p style="font-size: 0.875rem; color: var(--color-text-secondary);">หมายเหตุข้อระวัง: ต้องไม่รวมตัวเลขคนละชุดเข้าด้วยกัน Worksheet ของ Week 5 ระบุ 39,100 THB และ transcript ระบุ 15,525 THB ซึ่งต่างจาก baseline ที่อนุมัติ 18,823 THB ทั้งหมดเป็นข้อมูลสมมติเพื่อการเรียนที่มีฐานการคำนวณต่างกัน</p>
+        <p style="font-size: 0.875rem; color: var(--color-text-secondary);">หมายเหตุข้อระวัง:
+          ต้องไม่รวมตัวเลขคนละชุดเข้าด้วยกัน Worksheet ของ Week 5 ระบุ 39,100 THB และ transcript ระบุ 15,525 THB
+          ซึ่งต่างจาก baseline ที่อนุมัติ 18,823 THB ทั้งหมดเป็นข้อมูลสมมติเพื่อการเรียนที่มีฐานการคำนวณต่างกัน</p>
       </section>
-
-      <!-- Section 7 -->
-      <section>
+      <section id="changes">
         <h2>7. สรุป Change Requests และ Defect</h2>
         <div class="table-wrap">
           <table>
@@ -305,60 +387,71 @@
               <tr>
                 <td><strong>BUG-101</strong></td>
                 <td><code>KeyError: 'barcode'</code> เมื่อ JSON เก่าไม่มีฟิลด์</td>
-                <td>วิเคราะห์รากเหง้าด้วย 5 Whys แก้ด้วย <code>dict.get('barcode', '')</code> fallback ในชั้น Repository เพื่อรองรับ Backward Compatibility</td>
+                <td>วิเคราะห์รากเหง้าด้วย 5 Whys แก้ด้วย <code>dict.get('barcode', '')</code> fallback ในชั้น Repository
+                  เพื่อรองรับ Backward Compatibility</td>
               </tr>
               <tr>
                 <td><strong>CR-02</strong></td>
                 <td>ส่งออกรายงาน CSV สินค้าสต็อกต่ำฉุกเฉิน</td>
-                <td>ผ่านความเห็นชอบจาก CCB; 4.5 ชั่วโมง &times; 300 THB/ชั่วโมง = 1,350 THB เบิกจากงบสำรอง Contingency Reserve (ข้อมูลสมมติเพื่อการเรียน)</td>
+                <td>ผ่านความเห็นชอบจาก CCB; 4.5 ชั่วโมง &times; 300 THB/ชั่วโมง = 1,350 THB เบิกจากงบสำรอง Contingency
+                  Reserve (ข้อมูลสมมติเพื่อการเรียน)</td>
               </tr>
             </tbody>
           </table>
         </div>
-        <p>CR-02 ใช้คลาสแยกหน้าที่ <code>CsvReportExporter</code> ตามหลัก Single Responsibility Principle และมีหัวตาราง CSV ตามที่ระบุในหัวข้อสิ่งที่ส่งมอบ การอนุมัติและค่าใช้จ่ายในตารางเป็นข้อมูลสมมติเพื่อการเรียน</p>
+        <p>CR-02 ใช้คลาสแยกหน้าที่ <code>CsvReportExporter</code> ตามหลัก Single Responsibility Principle และมีหัวตาราง
+          CSV ตามที่ระบุในหัวข้อสิ่งที่ส่งมอบ การอนุมัติและค่าใช้จ่ายในตารางเป็นข้อมูลสมมติเพื่อการเรียน</p>
       </section>
-
-      <!-- Section 8 -->
-      <section>
+      <section id="readiness">
         <h2>8. UAT และความพร้อมปล่อย (UAT &amp; Release Readiness)</h2>
-        <p>เอกสาร <code>UAT_Sign_Off_Sheet.md</code> กำหนดสถานการณ์ UAT-SC01 ถึง UAT-SC03 ได้แก่ การรับสินค้า, ตัดสต็อกให้ถึงจุดแจ้งเตือน และส่งออก CSV เพื่อตรวจใน Excel</p>
+        <p>เอกสาร <code>UAT_Sign_Off_Sheet.md</code> กำหนดสถานการณ์ UAT-SC01 ถึง UAT-SC03 ได้แก่ การรับสินค้า,
+          ตัดสต็อกให้ถึงจุดแจ้งเตือน และส่งออก CSV เพื่อตรวจใน Excel</p>
         <div class="callout">
           <div class="callout-badge">NOTICE</div>
           <div class="callout-content">
-            <strong>สถานะการลงนาม UAT:</strong> ช่องลายเซ็นของผู้ทดสอบ (ลูกค้าสมมุติ) และ Tech Lead ในเอกสาร <code>UAT_Sign_Off_Sheet.md</code> ยังคงว่าง สถานะปัจจุบันคือรอการลงนามยอมรับอย่างเป็นทางการ (Pending Formal Acceptance) จึงยังไม่ถือว่า UAT sign-off เสร็จสมบูรณ์<br><br>
-            <strong>สถานะ Git Release Tag:</strong> เอกสาร <code>CHANGELOG.md</code> สำหรับ <code>v2.0.0-evolution</code> จัดเตรียมไว้เรียบร้อยแล้ว แต่ยังไม่มี Git tag <code>v2.0.0-evolution</code> บนสาขา <code>main</code> แท็กที่พบในระบบปัจจุบันคือ <code>v1.0.0</code> เท่านั้น ความพร้อมในการปล่อยจึงอยู่ในระดับ "เตรียมเอกสารและทดสอบผ่านแล้ว แต่รอ formal sign-off, การรวมสายตาม release checklist และการติดแท็กทางการ"
+            <strong>สถานะการลงนาม UAT:</strong> ช่องลายเซ็นของผู้ทดสอบ (ลูกค้าสมมุติ) และ Tech Lead ในเอกสาร
+            <code>UAT_Sign_Off_Sheet.md</code> ยังคงว่าง สถานะปัจจุบันคือรอการลงนามยอมรับอย่างเป็นทางการ (Pending Formal
+            Acceptance) จึงยังไม่ถือว่า UAT sign-off เสร็จสมบูรณ์<br><br>
+            <strong>สถานะ Git Release Tag:</strong> เอกสาร <code>CHANGELOG.md</code> สำหรับ
+            <code>v2.0.0-evolution</code> จัดเตรียมไว้เรียบร้อยแล้ว แต่ยังไม่มี Git tag <code>v2.0.0-evolution</code>
+            บนสาขา <code>main</code> แท็กที่พบในระบบปัจจุบันคือ <code>v1.0.0</code> เท่านั้น
+            ความพร้อมในการปล่อยจึงอยู่ในระดับ "เตรียมเอกสารและทดสอบผ่านแล้ว แต่รอ formal sign-off, การรวมสายตาม release
+            checklist และการติดแท็กทางการ"
           </div>
         </div>
       </section>
-
-      <!-- Section 9 -->
-      <section>
+      <section id="risks">
         <h2>9. ความเสี่ยง ข้อจำกัด และหนี้เทคนิค (Technical Debt)</h2>
         <ul>
-          <li><strong>ความเข้ากันได้ของข้อมูล JSON:</strong> ข้อมูล JSON เก่ายังมีความเสี่ยงด้าน Compatibility การทำ fallback ในปัจจุบันช่วยบรรเทา BUG-101 แต่ยังไม่ใช่ระบบ Schema Migration เต็มรูปแบบ</li>
-          <li><strong>หนี้รูปแบบโค้ด (Linting):</strong> การตรวจสอบด้วย Flake8 ยังมีรายการ line-length <code>E501</code> คงค้างอยู่ แม้ว่าการสแกนด้วย Bandit จะสะอาดและมีกลไก Atomic Write แล้ว</li>
-          <li><strong>ฟังก์ชันที่ยังเป็นแบบออกแบบ:</strong> ฐานข้อมูล SQLite, ระบบสมาชิก (Member tiers) และขั้นตอนชำระเงิน (Checkout) ยังคงเป็นแบบออกแบบเท่านั้น ไม่ควรนำเสนอว่าเป็นฟังก์ชันที่พัฒนาเสร็จแล้ว</li>
-          <li><strong>สถานะการลงนามและแท็ก:</strong> การลงนาม UAT Formal Sign-off และ Git Release Tag ยังคงค้างอยู่ ทำให้การปล่อยซอฟต์แวร์สู่สายหลักยังไม่สมบูรณ์</li>
+          <li><strong>ความเข้ากันได้ของข้อมูล JSON:</strong> ข้อมูล JSON เก่ายังมีความเสี่ยงด้าน Compatibility การทำ
+            fallback ในปัจจุบันช่วยบรรเทา BUG-101 แต่ยังไม่ใช่ระบบ Schema Migration เต็มรูปแบบ</li>
+          <li><strong>หนี้รูปแบบโค้ด (Linting):</strong> การตรวจสอบด้วย Flake8 ยังมีรายการ line-length <code>E501</code>
+            คงค้างอยู่ แม้ว่าการสแกนด้วย Bandit จะสะอาดและมีกลไก Atomic Write แล้ว</li>
+          <li><strong>ฟังก์ชันที่ยังเป็นแบบออกแบบ:</strong> ฐานข้อมูล SQLite, ระบบสมาชิก (Member tiers)
+            และขั้นตอนชำระเงิน (Checkout) ยังคงเป็นแบบออกแบบเท่านั้น ไม่ควรนำเสนอว่าเป็นฟังก์ชันที่พัฒนาเสร็จแล้ว</li>
+          <li><strong>สถานะการลงนามและแท็ก:</strong> การลงนาม UAT Formal Sign-off และ Git Release Tag ยังคงค้างอยู่
+            ทำให้การปล่อยซอฟต์แวร์สู่สายหลักยังไม่สมบูรณ์</li>
         </ul>
       </section>
-
-      <!-- Section 10 -->
-      <section>
+      <section id="next-sprint">
         <h2>10. แผนงานต่อใน Sprint 2</h2>
         <ul>
           <li>นำแบบออกแบบ SQLite v3.0 มาวางแผนพัฒนาและเขียน Unit Tests โดยไม่อ้างว่าเสร็จแล้ว</li>
-          <li>พัฒนาระบบสมาชิก (Member tiers) และตรรกะ Checkout ตาม <code>blueprint.md</code>, <code>Member-Discount.md</code> และ To-Be Architecture</li>
+          <li>พัฒนาระบบสมาชิก (Member tiers) และตรรกะ Checkout ตาม <code>blueprint.md</code>,
+            <code>Member-Discount.md</code> และ To-Be Architecture
+          </li>
           <li>จัดการงาน CR-01 ตามแผนของ Sprint 2 และรักษาชุด Regression Tests สำหรับข้อมูล Legacy</li>
-          <li>ดำเนินการตามขั้นตอน Formal UAT Sign-off, ตรวจสอบด่านใน Release Checklist และสร้าง Git Tag <code>v2.0.0-evolution</code> เมื่อเงื่อนไขครบ</li>
+          <li>ดำเนินการตามขั้นตอน Formal UAT Sign-off, ตรวจสอบด่านใน Release Checklist และสร้าง Git Tag
+            <code>v2.0.0-evolution</code> เมื่อเงื่อนไขครบ
+          </li>
           <li>แก้ไขรายการ Flake8 <code>E501</code> ที่ยังค้างอยู่ และรักษาผลการสแกนความปลอดภัย Bandit ให้ผ่าน 100%</li>
         </ul>
       </section>
-
-      <!-- Section 11 -->
-      <section>
+      <section id="review">
         <h2>11. การทบทวนสปรินต์ (Sprint Review &amp; Retrospective)</h2>
-        <p>Sprint 1 ปิดแล้วโดยมี 20 issues สถานะ Done ภายใต้เวอร์ชัน <code>v2.0.0</code> (ข้อมูลสมมติเพื่อการเรียน) ส่วนผลการเดโมต่อหน้าผู้รับการสาธิต วันเวลา ผู้เข้าร่วม และการอนุมัติ: <strong>หลักฐานไม่พบ</strong></p>
-        
+        <p>Sprint 1 ปิดแล้วโดยมี 20 issues สถานะ Done ภายใต้เวอร์ชัน <code>v2.0.0</code> (ข้อมูลสมมติเพื่อการเรียน)
+          ส่วนผลการเดโมต่อหน้าผู้รับการสาธิต วันเวลา ผู้เข้าร่วม และการอนุมัติ: <strong>หลักฐานไม่พบ</strong></p>
+
         <div class="table-wrap">
           <table>
             <thead>
@@ -371,12 +464,14 @@
             <tbody>
               <tr>
                 <td>สิ่งที่จะสาธิต</td>
-                <td>สคริปต์ใน Transition กำหนดให้แสดงโครงสร้าง Product, Repository, Service รัน PyTest ทดลองเพิ่ม/ลดสต็อกและคำนวณราคารวม</td>
+                <td>สคริปต์ใน Transition กำหนดให้แสดงโครงสร้าง Product, Repository, Service รัน PyTest
+                  ทดลองเพิ่ม/ลดสต็อกและคำนวณราคารวม</td>
                 <td>เป็นขอบเขตของสคริปต์เดโม ไม่ใช่หลักฐานยืนยันว่าเดโมเกิดขึ้นครบทุกขั้นตอนต่อหน้าผู้ประเมิน</td>
               </tr>
               <tr>
                 <td>ผลการทดสอบที่ผ่าน</td>
-                <td>Transition บันทึก regression ผ่าน 4 tests ใน 0.12 วินาที (ข้อมูลสมมติเพื่อการเรียน) รายงานปัจจุบันยืนยัน week-12 ผ่าน 25 tests</td>
+                <td>Transition บันทึก regression ผ่าน 4 tests ใน 0.12 วินาที (ข้อมูลสมมติเพื่อการเรียน)
+                  รายงานปัจจุบันยืนยัน week-12 ผ่าน 25 tests</td>
                 <td>ยืนยันความพร้อมทดสอบตามหลักฐาน แต่การรับรองจาก Sponsor: <strong>หลักฐานไม่พบ</strong></td>
               </tr>
               <tr>
@@ -397,16 +492,18 @@
           <div class="callout-badge">RETRO</div>
           <div class="callout-content">
             <strong>Mad / Sad / Glad จาก Retrospective Sprint 1:</strong><br>
-            • <strong>Mad:</strong> เสียเวลามากกับ Merge Conflict จากการผ่าตัดโครงสร้างใหญ่ จนทำให้ SV &minus;1,000 บาท และ CV &minus;1,200 บาท (ข้อมูลสมมติเพื่อการเรียน)<br>
-            • <strong>Sad:</strong> ประเมินงาน refactor ต่ำเกินไปเนื่องจากหนี้ทางเทคนิคที่ซ่อนอยู่ใน <code>app_v1.py</code><br>
-            • <strong>Glad:</strong> ชุดทดสอบ PyTest สามารถตรวจจับข้อบกพร่องได้ก่อนการส่งมอบ และทีมร่วมมือกันแก้ไข conflict ได้สำเร็จ<br>
-            • <strong>Action Item สู่ Sprint 2:</strong> แจ้ง blocker ใน Daily Standup ทุกวัน, ตรวจ Peer Review ภายใน 12 ชั่วโมงหลังแจ้งเตือน และเริ่มใช้แนวทาง Test-Driven Refinement (TDR)
+            • <strong>Mad:</strong> เสียเวลามากกับ Merge Conflict จากการผ่าตัดโครงสร้างใหญ่ จนทำให้ SV &minus;1,000 บาท
+            และ CV &minus;1,200 บาท (ข้อมูลสมมติเพื่อการเรียน)<br>
+            • <strong>Sad:</strong> ประเมินงาน refactor ต่ำเกินไปเนื่องจากหนี้ทางเทคนิคที่ซ่อนอยู่ใน
+            <code>app_v1.py</code><br>
+            • <strong>Glad:</strong> ชุดทดสอบ PyTest สามารถตรวจจับข้อบกพร่องได้ก่อนการส่งมอบ และทีมร่วมมือกันแก้ไข
+            conflict ได้สำเร็จ<br>
+            • <strong>Action Item สู่ Sprint 2:</strong> แจ้ง blocker ใน Daily Standup ทุกวัน, ตรวจ Peer Review ภายใน 12
+            ชั่วโมงหลังแจ้งเตือน และเริ่มใช้แนวทาง Test-Driven Refinement (TDR)
           </div>
         </div>
       </section>
-
-      <!-- Section 12 -->
-      <section>
+      <section id="pending">
         <h2>12. ตารางงานค้างและงานยกยอด (Carryover &amp; Pending Tasks)</h2>
         <div class="table-wrap">
           <table>
@@ -464,11 +561,10 @@
             </tbody>
           </table>
         </div>
-        <p style="font-size: 0.875rem; color: var(--color-text-secondary);">หมายเหตุ: งาน CR-01 (Barcode &amp; Reorder Point) ถือว่าส่งมอบแล้วใน <code>week-12/app.py</code> พร้อมชุดทดสอบอัตโนมัติ ไม่ใช่งานยกยอด</p>
+        <p style="font-size: 0.875rem; color: var(--color-text-secondary);">หมายเหตุ: งาน CR-01 (Barcode &amp; Reorder
+          Point) ถือว่าส่งมอบแล้วใน <code>week-12/app.py</code> พร้อมชุดทดสอบอัตโนมัติ ไม่ใช่งานยกยอด</p>
       </section>
-
-      <!-- Section 13 -->
-      <section>
+      <section id="evidence-index">
         <h2>13. ภาคผนวก ดัชนีหลักฐานอ้างอิง (Evidence Index)</h2>
         <div class="table-wrap">
           <table>
@@ -485,15 +581,22 @@
               </tr>
               <tr>
                 <td>Charter และระบบเดิม</td>
-                <td><code>Sprint1/week-1/Project-Charter.md</code>, <code>Sprint1/week-1/scope.md</code>, <code>Sprint1/week-1/doc.md</code>, <code>Sprint1/week-1/app_v1.py</code></td>
+                <td><code>Sprint1/week-1/Project-Charter.md</code>, <code>Sprint1/week-1/scope.md</code>,
+                  <code>Sprint1/week-1/doc.md</code>, <code>Sprint1/week-1/app_v1.py</code>
+                </td>
               </tr>
               <tr>
                 <td>การวิเคราะห์และแบบออกแบบ</td>
-                <td><code>Sprint1/week-2/DFD.md</code>, <code>Sprint1/week-2/Hotspot.md</code>, <code>Sprint1/week-2/Static-Analysis.md</code>, <code>Sprint1/week-2/blueprint.md</code>, <code>Sprint1/week-2/Member-Discount.md</code></td>
+                <td><code>Sprint1/week-2/DFD.md</code>, <code>Sprint1/week-2/Hotspot.md</code>,
+                  <code>Sprint1/week-2/Static-Analysis.md</code>, <code>Sprint1/week-2/blueprint.md</code>,
+                  <code>Sprint1/week-2/Member-Discount.md</code>
+                </td>
               </tr>
               <tr>
                 <td>โค้ดและเกณฑ์งาน refactor</td>
-                <td><code>Sprint1/week-3/app_v2.py</code>, <code>Sprint1/week-3/dod.md</code>, <code>Sprint1/week-4/app.py</code>, <code>app.py</code>, <code>test_app.py</code></td>
+                <td><code>Sprint1/week-3/app_v2.py</code>, <code>Sprint1/week-3/dod.md</code>,
+                  <code>Sprint1/week-4/app.py</code>, <code>app.py</code>, <code>test_app.py</code>
+                </td>
               </tr>
               <tr>
                 <td>แผนบูรณาการ</td>
@@ -505,19 +608,31 @@
               </tr>
               <tr>
                 <td>การติดตามและ EVM Sprint 1</td>
-                <td><code>Sprint1/week-8/CR-01_Impact_Analysis.md</code>, <code>Sprint1/week-8/Sprint1_Tracking.md</code>, <code>Sprint1/week-9/EVM_Sprint1.md</code>, <code>Sprint1/week-9/Sprint_Transition.md</code></td>
+                <td><code>Sprint1/week-8/CR-01_Impact_Analysis.md</code>,
+                  <code>Sprint1/week-8/Sprint1_Tracking.md</code>, <code>Sprint1/week-9/EVM_Sprint1.md</code>,
+                  <code>Sprint1/week-9/Sprint_Transition.md</code>
+                </td>
               </tr>
               <tr>
                 <td>Change Requests และข้อบกพร่อง</td>
-                <td><code>Sprint1/week-10/CR-02_Impact_Decision_Form.md</code>, <code>Sprint1/week-10/CCB_Meeting_Minutes.md</code>, <code>Sprint1/week-10/Defect_Log_BUG-101.md</code>, <code>Sprint1/week-10/Contingency_Reserve_Log.md</code></td>
+                <td><code>Sprint1/week-10/CR-02_Impact_Decision_Form.md</code>,
+                  <code>Sprint1/week-10/CCB_Meeting_Minutes.md</code>,
+                  <code>Sprint1/week-10/Defect_Log_BUG-101.md</code>,
+                  <code>Sprint1/week-10/Contingency_Reserve_Log.md</code>
+                </td>
               </tr>
               <tr>
                 <td>Hardening และการแช่แข็งขอบเขต</td>
-                <td><code>Sprint1/week-11/Hardening_Report.md</code>, <code>Sprint1/week-11/Flow_Metrics.md</code>, <code>Sprint1/week-11/Scope_Freeze_Agreement.md</code></td>
+                <td><code>Sprint1/week-11/Hardening_Report.md</code>, <code>Sprint1/week-11/Flow_Metrics.md</code>,
+                  <code>Sprint1/week-11/Scope_Freeze_Agreement.md</code>
+                </td>
               </tr>
               <tr>
                 <td>Release, EVM สุดท้าย และ UAT</td>
-                <td><code>Sprint1/week-12/app.py</code>, <code>Sprint1/week-12/test_app.py</code>, <code>Sprint1/week-12/CHANGELOG.md</code>, <code>Sprint1/week-12/Final_EVM.md</code>, <code>Sprint1/week-12/UAT_Sign_Off_Sheet.md</code>, <code>Sprint1/week-12/Release_Checklist.md</code></td>
+                <td><code>Sprint1/week-12/app.py</code>, <code>Sprint1/week-12/test_app.py</code>,
+                  <code>Sprint1/week-12/CHANGELOG.md</code>, <code>Sprint1/week-12/Final_EVM.md</code>,
+                  <code>Sprint1/week-12/UAT_Sign_Off_Sheet.md</code>, <code>Sprint1/week-12/Release_Checklist.md</code>
+                </td>
               </tr>
             </tbody>
           </table>
@@ -529,7 +644,7 @@
           <div class="deck-banner-title">สไลด์นำเสนอสรุปโครงการ</div>
           <div class="deck-banner-sub">ดูสไลด์สรุปเนื้อหาและวิวัฒนาการโครงการรายสัปดาห์</div>
         </div>
-        <a class="btn btn-secondary" href="week-12/slides.html">ดูสไลด์สัปดาห์ 12 (Release) &rarr;</a>
+        <a class="btn btn-secondary" href="sprint1-slides.html">เปิดสไลด์สรุป Sprint 1 &rarr;</a>
       </div>
     </div>
   </main>
@@ -543,5 +658,7 @@
       </div>
     </div>
   </footer>
+  <script src="../site-nav.js" defer></script>
 </body>
+
 </html>

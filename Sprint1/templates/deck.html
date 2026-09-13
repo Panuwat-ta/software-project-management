@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="ตัวอย่างเทมเพลตสไลด์">
+  <title>ตัวอย่างเทมเพลตสไลด์</title>
+  <link rel="stylesheet" href="templates.css">
+</head>
+<body class="template-deck" data-template="evidence">
+  <header class="deck-header">
+    <a class="back-link" href="index.html">← เทมเพลตทั้งหมด</a>
+    <span id="template-name" aria-live="polite"></span>
+    <span id="slide-counter" aria-live="polite">1 / 5</span>
+  </header>
+  <main class="deck-frame" aria-label="ตัวอย่างเทมเพลตสไลด์">
+    <section class="slide active" id="slide-1">
+      <div class="cover-layout">
+        <div><p class="slide-label">ชื่อรายวิชา / ชื่อทีม</p><h1>ชื่อโครงการ<br>ที่กระชับและชัดเจน</h1><p class="slide-lead">คำอธิบายสั้นหนึ่งประโยคที่บอกผู้ฟังว่าสไลด์ชุดนี้จะตอบคำถามอะไร</p></div>
+        <p class="cover-meta">ภาคเรียน / วันที่นำเสนอ<br>สมาชิกทีม</p>
+      </div>
+    </section>
+    <section class="slide" id="slide-2">
+      <div class="content-layout"><div><h2>บริบทและเป้าหมาย</h2><p class="slide-lead">อธิบายปัญหาที่โครงการต้องแก้ และเกณฑ์ที่ใช้ตัดสินความสำเร็จ</p></div><ul class="rule-list"><li><strong>ปัญหา</strong><span>สรุปอุปสรรคหรือความเสี่ยงที่พบ</span></li><li><strong>เป้าหมาย</strong><span>บอกผลลัพธ์ที่ทีมต้องการให้เกิด</span></li><li><strong>ขอบเขต</strong><span>ระบุสิ่งที่อยู่ในและนอกงานนี้</span></li></ul></div>
+    </section>
+    <section class="slide" id="slide-3">
+      <h2>หลักฐานที่ใช้ยืนยันผล</h2>
+      <table><thead><tr><th>ประเด็น</th><th>หลักฐาน</th><th>สถานะ</th></tr></thead><tbody><tr><td>คุณภาพโค้ด</td><td>ผลทดสอบหรือการตรวจทาน</td><td>ระบุผลจริง</td></tr><tr><td>การส่งมอบ</td><td>เอกสารหรือ artefact ที่ตรวจย้อนกลับได้</td><td>ระบุผลจริง</td></tr><tr><td>งานคงค้าง</td><td>เงื่อนไขที่ยังต้องปิด</td><td>ระบุให้ตรงไปตรงมา</td></tr></tbody></table>
+    </section>
+    <section class="slide" id="slide-4">
+      <div class="content-layout"><div><h2>ผลลัพธ์และตัวชี้วัด</h2><p class="slide-lead">ใช้ตัวเลขเฉพาะที่ผู้ฟังต้องจำ พร้อมระบุหน่วยและที่มาของข้อมูลเสมอ</p></div><div class="metrics"><div><b>00</b><span>ตัวชี้วัดแรก</span></div><div><b>00</b><span>ตัวชี้วัดที่สอง</span></div><div><b>00%</b><span>ตัวชี้วัดที่สาม</span></div></div></div>
+    </section>
+    <section class="slide" id="slide-5">
+      <div class="cover-layout"><div><h2>ข้อสรุปและขั้นถัดไป</h2><p class="slide-lead">สรุปสิ่งที่ทีมพิสูจน์ได้ สิ่งที่ยังคงค้าง และการตัดสินใจที่ต้องทำต่อจากนี้</p></div><ol class="next-steps"><li>ยืนยันผลลัพธ์ด้วยหลักฐาน</li><li>ระบุความเสี่ยงหรือข้อจำกัดที่เหลือ</li><li>กำหนดเจ้าของและวันติดตามงานถัดไป</li></ol></div>
+    </section>
+  </main>
+  <footer class="deck-controls"><button id="previous" type="button" aria-label="สไลด์ก่อนหน้า">← ก่อนหน้า</button><button id="next" type="button" aria-label="สไลด์ถัดไป">ถัดไป →</button></footer>
+  <script>
+const templates = {
+  evidence: "หลักฐานชัดเจน",
+  executive: "สรุปผู้บริหาร",
+  editorial: "รายงานเชิงเรื่องเล่า",
+  minimal: "ห้องเรียนมินิมัล",
+  print: "เอกสารประกอบการพิมพ์"
+};
+const selected = new URLSearchParams(window.location.search).get("template");
+const template = Object.hasOwn(templates, selected) ? selected : "evidence";
+document.body.dataset.template = template;
+document.title = `${templates[template]} | เทมเพลตสไลด์`;
+document.querySelector("#template-name").textContent = templates[template];
+const slides = [...document.querySelectorAll(".slide")];
+const count = document.querySelector("#slide-counter");
+const storageKey = `spm-central-template-${template}`;
+function slideFromHash() {
+  const match = /#slide-(\d+)/.exec(window.location.hash || "");
+  if (!match) return null;
+  const index = Number.parseInt(match[1], 10) - 1;
+  return Number.isInteger(index) && index >= 0 && index < slides.length ? index : null;
+}
+function storedSlide() {
+  try {
+    const value = window.localStorage.getItem(storageKey);
+    if (value === null) return null;
+    const index = Number.parseInt(value, 10);
+    return Number.isInteger(index) && index >= 0 && index < slides.length ? index : null;
+  } catch (error) {
+    return null;
+  }
+}
+function rememberSlide(index) {
+  try {
+    window.localStorage.setItem(storageKey, String(index));
+  } catch (error) {
+  }
+}
+let current = slideFromHash() ?? storedSlide() ?? 0;
+function show(index) {
+  current = (index + slides.length) % slides.length;
+  slides.forEach((slide, position) => slide.classList.toggle("active", position === current));
+  count.textContent = `${current + 1} / ${slides.length}`;
+  rememberSlide(current);
+  try {
+    window.history.replaceState(null, "", `#slide-${current + 1}`);
+  } catch (error) {
+  }
+}
+function showFromHash() {
+  const index = slideFromHash();
+  if (index !== null) show(index);
+}
+document.querySelector("#previous").addEventListener("click", () => show(current - 1));
+document.querySelector("#next").addEventListener("click", () => show(current + 1));
+document.addEventListener("keydown", (event) => {
+  if (event.key === "ArrowRight" || event.key === "PageDown" || event.key === " ") {
+    event.preventDefault();
+    show(current + 1);
+  }
+  if (event.key === "ArrowLeft" || event.key === "PageUp") {
+    event.preventDefault();
+    show(current - 1);
+  }
+  if (event.key === 'Home') {
+    event.preventDefault();
+    show(0);
+  }
+  if (event.key === 'End') {
+    event.preventDefault();
+    show(slides.length - 1);
+  }
+});
+window.addEventListener("hashchange", showFromHash);
+show(current);
+  </script>
+</body>
+</html>

@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="th">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>พอร์ทัลเอกสารโครงการ | ระบบจัดการสินค้าคงคลังแบบ CLI</title>
   <link rel="stylesheet" href="theme.css">
 </head>
+
 <body>
   <header class="site-header">
     <div class="header-inner">
@@ -18,7 +20,7 @@
         <a class="nav-item" href="Sprint1/sprint-report.html">รายงานปิด Sprint 1</a>
         <details class="nav-dropdown">
           <summary class="nav-dropdown-summary">
-            <span>เอกสารสัปดาห์ (1-12)</span>
+            <span>เอกสารสัปดาห์</span>
           </summary>
           <div class="dropdown-menu">
             <a href="Sprint1/week-1/index.html">สัปดาห์ 1 <small>Charter &amp; Legacy</small></a>
@@ -35,6 +37,28 @@
             <a href="Sprint1/week-12/index.html">สัปดาห์ 12 <small>UAT &amp; Close-out</small></a>
           </div>
         </details>
+        <details class="nav-dropdown nav-slides-dropdown">
+          <summary class="nav-dropdown-summary">
+            <span>สไลด์</span>
+          </summary>
+          <div class="dropdown-menu">
+            <a href="Sprint1/templates/index.html">เทมเพลตสไลด์ <small>เลือก 3 แบบ</small></a>
+            <a href="Sprint1/sprint1-slides.html">สรุป Sprint 1 <small>Project close-out</small></a>
+            <a href="Sprint1/Phase1/slides.html">Phase 1 <small>Planning proposal</small></a>
+            <a href="Sprint1/week-1/slides.html">สัปดาห์ 1 <small>Charter & Legacy</small></a>
+            <a href="Sprint1/week-2/slides.html">สัปดาห์ 2 <small>DFD & Blueprint</small></a>
+            <a href="Sprint1/week-3/slides.html">สัปดาห์ 3 <small>DoD & RACI</small></a>
+            <a href="Sprint1/week-4/slides.html">สัปดาห์ 4 <small>Refactor & Test</small></a>
+            <a href="Sprint1/week-5/slides.html">สัปดาห์ 5 <small>Architecture & Budget</small></a>
+            <a href="Sprint1/week-6/slides.html">สัปดาห์ 6 <small>DoD & To-Be</small></a>
+            <a href="Sprint1/week-7/slides.html">สัปดาห์ 7 <small>Baseline & Quality</small></a>
+            <a href="Sprint1/week-8/slides.html">สัปดาห์ 8 <small>CR-01 & Tracking</small></a>
+            <a href="Sprint1/week-9/slides.html">สัปดาห์ 9 <small>EVM & Transition</small></a>
+            <a href="Sprint1/week-10/slides.html">สัปดาห์ 10 <small>CCB & BUG-101</small></a>
+            <a href="Sprint1/week-11/slides.html">สัปดาห์ 11 <small>Hardening & Freeze</small></a>
+            <a href="Sprint1/week-12/slides.html">สัปดาห์ 12 <small>UAT & Close-out</small></a>
+          </div>
+        </details>
       </nav>
     </div>
   </header>
@@ -44,7 +68,8 @@
       <div class="page-header-block">
         <div class="notice-pill">ข้อมูลสมมติเพื่อการเรียน · Fictional Coursework</div>
         <h1 class="page-title">ระบบจัดการสินค้าคงคลังแบบ CLI</h1>
-        <p class="page-desc">พอร์ทัลรายงานผลการดำเนินงาน การปรับปรุงโครงสร้างสถาปัตยกรรม การทดสอบอัตโนมัติ และการปิด Sprint ประจำรายวิชา Software Project Management (SPM)</p>
+        <p class="page-desc">พอร์ทัลรายงานผลการดำเนินงาน การปรับปรุงโครงสร้างสถาปัตยกรรม การทดสอบอัตโนมัติ และการปิด
+          Sprint ประจำรายวิชา Software Project Management (SPM)</p>
         <div class="page-header-actions">
           <a class="btn btn-primary" href="Sprint1/sprint-report.html">อ่านรายงานปิด Sprint 1</a>
           <a class="btn btn-secondary" href="Sprint1/Phase1/index.html">ข้อเสนอ Phase 1</a>
@@ -52,7 +77,8 @@
         </div>
       </div>
 
-      <p class="page-desc">สารบัญ: <a href="#objectives">วัตถุประสงค์</a> · <a href="#team">ทีม</a> · <a href="#weeks-section">รายสัปดาห์ W1–W12</a> · <a href="Sprint1/sprint-report.html">รายงานปิด Sprint</a></p>
+      <p class="page-desc">สารบัญ: <a href="#objectives">วัตถุประสงค์</a> · <a href="#team">ทีม</a> · <a
+          href="#weeks-section">รายสัปดาห์ W1–W12</a> · <a href="Sprint1/sprint-report.html">รายงานปิด Sprint</a></p>
 
       <section style="margin-bottom: 48px;" id="objectives">
         <h2>วัตถุประสงค์โครงการ (Project Objectives)</h2>
@@ -60,7 +86,8 @@
           <article class="card">
             <div class="card-title">1. ปรับปรุงเสถียรภาพการทำงาน</div>
             <div class="card-body">
-              ทำให้ระบบทนทานต่อข้อผิดพลาด (Fault Tolerance) ป้องกันโปรแกรมล่มจากการรับข้อมูลนำเข้าผิดประเภท (Crash Prevention) และดักจับค่าขยะหรือตัวเลขติดลบ
+              ทำให้ระบบทนทานต่อข้อผิดพลาด (Fault Tolerance) ป้องกันโปรแกรมล่มจากการรับข้อมูลนำเข้าผิดประเภท (Crash
+              Prevention) และดักจับค่าขยะหรือตัวเลขติดลบ
             </div>
             <div class="card-meta">
               <span class="badge badge-blue">Stability</span>
@@ -70,7 +97,8 @@
           <article class="card">
             <div class="card-title">2. ปรับปรุงโครงสร้างโค้ด</div>
             <div class="card-body">
-              ทำความสะอาดโค้ดดั้งเดิม (Clean Code) กำจัดการใช้ตัวแปรโกลบอล <code>x</code> แยก Business Logic ออกจาก Presentation Layer และจัดระบบตามหลัก OOP
+              ทำความสะอาดโค้ดดั้งเดิม (Clean Code) กำจัดการใช้ตัวแปรโกลบอล <code>x</code> แยก Business Logic ออกจาก
+              Presentation Layer และจัดระบบตามหลัก OOP
             </div>
             <div class="card-meta">
               <span class="badge badge-green">Architecture</span>
@@ -80,7 +108,8 @@
           <article class="card">
             <div class="card-title">3. รักษาความสมบูรณ์ของข้อมูล</div>
             <div class="card-body">
-              ปรับปรุงกระบวนการบันทึกไฟล์ JSON ให้ปลอดภัยด้วยวิธี Safe Atomic Write (เขียนลง Temp แล้วสลับด้วย <code>os.replace</code>) ป้องกันข้อมูลสูญหาย
+              ปรับปรุงกระบวนการบันทึกไฟล์ JSON ให้ปลอดภัยด้วยวิธี Safe Atomic Write (เขียนลง Temp แล้วสลับด้วย
+              <code>os.replace</code>) ป้องกันข้อมูลสูญหาย
             </div>
             <div class="card-meta">
               <span class="badge badge-orange">Integrity</span>
@@ -90,7 +119,8 @@
           <article class="card">
             <div class="card-title">4. สร้างระบบทดสอบอัตโนมัติ</div>
             <div class="card-body">
-              จัดทำชุดทดสอบอัตโนมัติด้วย PyTest ครอบคลุมฟังก์ชันคำนวณและกรณีขอบเขต (Boundary Cases) เพื่อทำ Regression Testing ป้องกันข้อผิดพลาดเดิมย้อนกลับมา
+              จัดทำชุดทดสอบอัตโนมัติด้วย PyTest ครอบคลุมฟังก์ชันคำนวณและกรณีขอบเขต (Boundary Cases) เพื่อทำ Regression
+              Testing ป้องกันข้อผิดพลาดเดิมย้อนกลับมา
             </div>
             <div class="card-meta">
               <span class="badge badge-blue">Testing</span>
@@ -102,7 +132,8 @@
 
       <section style="margin-bottom: 48px;" id="team">
         <h2>สมาชิกในโครงการและบทบาทหน้าที่ (Project Members &amp; Roles)</h2>
-        <p style="color: var(--color-text-secondary); font-size: 0.9375rem;">อ้างอิงจาก <code>README.md</code> และการกำหนดความรับผิดชอบตาม RACI Matrix ใน <code>Sprint1/week-3/raci.md</code></p>
+        <p style="color: var(--color-text-secondary); font-size: 0.9375rem;">อ้างอิงจาก <code>README.md</code>
+          และการกำหนดความรับผิดชอบตาม RACI Matrix ใน <code>Sprint1/week-3/raci.md</code></p>
         <div class="table-wrap">
           <table>
             <thead>
@@ -118,7 +149,8 @@
                 <td><code>6754210044-3</code></td>
                 <td>
                   <strong>Project Manager / Developer</strong><br>
-                  บริหารจัดการภาพรวมโครงการ กำหนดกรอบเวลา (Timeline) ติดตามความคืบหน้าของทีม ประสานงาน แก้ไขบั๊ก และพัฒนาระบบตามที่ได้รับมอบหมาย รวมถึงเขียนโค้ด Input Validation และ Atomic Save
+                  บริหารจัดการภาพรวมโครงการ กำหนดกรอบเวลา (Timeline) ติดตามความคืบหน้าของทีม ประสานงาน แก้ไขบั๊ก
+                  และพัฒนาระบบตามที่ได้รับมอบหมาย รวมถึงเขียนโค้ด Input Validation และ Atomic Save
                 </td>
               </tr>
               <tr>
@@ -126,7 +158,8 @@
                 <td><code>67543210050-0</code></td>
                 <td>
                   <strong>QA / Tester</strong><br>
-                  ออกแบบกรณีการทดสอบ (Test Cases) ครอบคลุมการทำงานทั่วไปและกรณีขอบเขตอันตราย (Edge Cases) จัดทำเอกสารชุดทดสอบ และเขียนสคริปต์ Automated Unit Testing ด้วย PyTest
+                  ออกแบบกรณีการทดสอบ (Test Cases) ครอบคลุมการทำงานทั่วไปและกรณีขอบเขตอันตราย (Edge Cases)
+                  จัดทำเอกสารชุดทดสอบ และเขียนสคริปต์ Automated Unit Testing ด้วย PyTest
                 </td>
               </tr>
               <tr>
@@ -134,7 +167,8 @@
                 <td><code>67543210054-2</code></td>
                 <td>
                   <strong>Tech Lead / Architect</strong><br>
-                  ออกแบบแนวทางการปรับโครงสร้างโค้ด (Refactoring Architecture) ตรวจสอบคุณภาพโค้ด (Code Review) กำหนดแนวทางปฏิบัติตามมาตรฐาน PEP 8 และทำหน้าที่กดอนุมัติ (Approve) Pull Request เข้าคลังหลัก
+                  ออกแบบแนวทางการปรับโครงสร้างโค้ด (Refactoring Architecture) ตรวจสอบคุณภาพโค้ด (Code Review)
+                  กำหนดแนวทางปฏิบัติตามมาตรฐาน PEP 8 และทำหน้าที่กดอนุมัติ (Approve) Pull Request เข้าคลังหลัก
                 </td>
               </tr>
             </tbody>
@@ -144,13 +178,16 @@
 
       <section id="weeks-section">
         <h2>คลังเอกสารรายสัปดาห์ (Weeks 1 - 12)</h2>
-        <p style="color: var(--color-text-secondary); font-size: 0.9375rem;">สรุปหลักฐาน รายงานการวิเคราะห์ และแผนงานในแต่ละสัปดาห์ พร้อมสไลด์นำเสนอประกอบ ตัวเลขงบคนละชุดมีฐานต่างกัน: 39,100 = W5 worksheet · 18,823 = W7 baseline ที่อนุมัติ · 15,525 = ขอบเขต EVM (ทั้งหมดสมมติเพื่อการเรียน)</p>
-        
+        <p style="color: var(--color-text-secondary); font-size: 0.9375rem;">สรุปหลักฐาน รายงานการวิเคราะห์
+          และแผนงานในแต่ละสัปดาห์ พร้อมสไลด์นำเสนอประกอบ ตัวเลขงบคนละชุดมีฐานต่างกัน: 39,100 = W5 worksheet · 18,823 =
+          W7 baseline ที่อนุมัติ · 15,525 = ขอบเขต EVM (ทั้งหมดสมมติเพื่อการเรียน)</p>
+
         <div class="card-grid">
           <div class="card">
             <div class="card-title">สัปดาห์ที่ 1: วางแผนและทบทวนระบบเดิม</div>
             <div class="card-body">
-              จัดทำ Project Charter, Scope of Work และวิเคราะห์ความเสี่ยงเริ่มต้นของระบบเดิมที่ใช้ตัวแปรโกลบอล <code>x</code>
+              จัดทำ Project Charter, Scope of Work และวิเคราะห์ความเสี่ยงเริ่มต้นของระบบเดิมที่ใช้ตัวแปรโกลบอล
+              <code>x</code>
             </div>
             <div class="card-meta">
               <a href="Sprint1/week-1/index.html">อ่านเอกสาร &rarr;</a>
@@ -194,7 +231,8 @@
           <div class="card">
             <div class="card-title">สัปดาห์ที่ 5: สถาปัตยกรรมและงบประมาณ</div>
             <div class="card-body">
-              ออกแบบ As-is vs To-be Architecture, ประเมินคุณภาพ ISO 25010 และจัดทำ Budget Worksheet (39,100 THB ข้อมูลสมมติเพื่อการเรียน)
+              ออกแบบ As-is vs To-be Architecture, ประเมินคุณภาพ ISO 25010 และจัดทำ Budget Worksheet (39,100 THB
+              ข้อมูลสมมติเพื่อการเรียน)
             </div>
             <div class="card-meta">
               <a href="Sprint1/week-5/index.html">อ่านเอกสาร &rarr;</a>
@@ -205,7 +243,8 @@
           <div class="card">
             <div class="card-title">สัปดาห์ที่ 6: เกณฑ์การสื่อสารและ To-Be Architecture</div>
             <div class="card-body">
-              กำหนด Communication Matrix, เกณฑ์ DoR/DoD และออกแบบ To-Be Architecture รองรับ SQLite และ Member System (แบบออกแบบเท่านั้น)
+              กำหนด Communication Matrix, เกณฑ์ DoR/DoD และออกแบบ To-Be Architecture รองรับ SQLite และ Member System
+              (แบบออกแบบเท่านั้น)
             </div>
             <div class="card-meta">
               <a href="Sprint1/week-6/index.html">อ่านเอกสาร &rarr;</a>
@@ -216,7 +255,8 @@
           <div class="card">
             <div class="card-title">สัปดาห์ที่ 7: ต้นทุนงบประมาณ Baseline และคุณภาพ</div>
             <div class="card-body">
-              อนุมัติ Cost Baseline 18,823 THB (ข้อมูลสมมติเพื่อการเรียน) และรายงานคุณภาพ ISO/IEC 14598 กำหนดท่อส่ง CI/CD
+              อนุมัติ Cost Baseline 18,823 THB (ข้อมูลสมมติเพื่อการเรียน) และรายงานคุณภาพ ISO/IEC 14598 กำหนดท่อส่ง
+              CI/CD
             </div>
             <div class="card-meta">
               <a href="Sprint1/week-7/index.html">อ่านเอกสาร &rarr;</a>
@@ -227,7 +267,8 @@
           <div class="card">
             <div class="card-title">สัปดาห์ที่ 8: คำขอ CR-01 และการติดตามงาน</div>
             <div class="card-body">
-              วิเคราะห์ผลกระทบ CR-01 Barcode &amp; Reorder Point (+8 Man-Hours ข้อมูลสมมติเพื่อการเรียน) และติดตามผ่าน Burndown บน Jira
+              วิเคราะห์ผลกระทบ CR-01 Barcode &amp; Reorder Point (+8 Man-Hours ข้อมูลสมมติเพื่อการเรียน) และติดตามผ่าน
+              Burndown บน Jira
             </div>
             <div class="card-meta">
               <a href="Sprint1/week-8/index.html">อ่านเอกสาร &rarr;</a>
@@ -238,7 +279,8 @@
           <div class="card">
             <div class="card-title">สัปดาห์ที่ 9: วิเคราะห์ EVM และส่งต่องาน</div>
             <div class="card-body">
-              สรุป EVM Sprint 1: SV -1,000, CV -1,200 (ข้อมูลสมมติเพื่อการเรียน), ถอดบทเรียน Retrospective และวางแผนเปิด Sprint 2
+              สรุป EVM Sprint 1: SV -1,000, CV -1,200 (ข้อมูลสมมติเพื่อการเรียน), ถอดบทเรียน Retrospective และวางแผนเปิด
+              Sprint 2
             </div>
             <div class="card-meta">
               <a href="Sprint1/week-9/index.html">อ่านเอกสาร &rarr;</a>
@@ -249,7 +291,8 @@
           <div class="card">
             <div class="card-title">สัปดาห์ที่ 10: คำขอฉุกเฉิน CR-02 และแก้ BUG-101</div>
             <div class="card-body">
-              อนุมัติ CR-02 CSV Export ผ่าน CCB ดึงเงินสำรอง 1,350 THB (ข้อมูลสมมติเพื่อการเรียน) และแก้ BUG-101 KeyError barcode ด้วย 5 Whys
+              อนุมัติ CR-02 CSV Export ผ่าน CCB ดึงเงินสำรอง 1,350 THB (ข้อมูลสมมติเพื่อการเรียน) และแก้ BUG-101
+              KeyError barcode ด้วย 5 Whys
             </div>
             <div class="card-meta">
               <a href="Sprint1/week-10/index.html">อ่านเอกสาร &rarr;</a>
@@ -260,7 +303,8 @@
           <div class="card">
             <div class="card-title">สัปดาห์ที่ 11: การปรับโค้ดแข็งแกร่งและแช่แข็งขอบเขต</div>
             <div class="card-body">
-              รายงาน Hardening: กำจัด 3 Code Smells, บังคับใช้ Atomic Save, Bandit สะอาดแต่ Flake8 ค้าง E501 และตกลง Scope Freeze ที่ 29 Points
+              รายงาน Hardening: กำจัด 3 Code Smells, บังคับใช้ Atomic Save, Bandit สะอาดแต่ Flake8 ค้าง E501 และตกลง
+              Scope Freeze ที่ 29 Points
             </div>
             <div class="card-meta">
               <a href="Sprint1/week-11/index.html">อ่านเอกสาร &rarr;</a>
@@ -271,7 +315,8 @@
           <div class="card">
             <div class="card-title">สัปดาห์ที่ 12: ปิดงาน UAT, Final EVM และ Release</div>
             <div class="card-body">
-              ชุดทดสอบผ่าน 25 passed, สรุป Final EVM (CV -575 ข้อมูลสมมติเพื่อการเรียน), เตรียม UAT Sign-off Sheet และ Release Checklist
+              ชุดทดสอบผ่าน 25 passed, สรุป Final EVM (CV -575 ข้อมูลสมมติเพื่อการเรียน), เตรียม UAT Sign-off Sheet และ
+              Release Checklist
             </div>
             <div class="card-meta">
               <a href="Sprint1/week-12/index.html">อ่านเอกสาร &rarr;</a>
@@ -285,7 +330,10 @@
         <div class="callout">
           <div class="callout-badge">NOTE</div>
           <div class="callout-content">
-            <strong>ความโปร่งใสของข้อมูลโครงการ (Content Honesty):</strong> ข้อมูลทั้งหมดจัดทำขึ้นเพื่อการศึกษาในรายวิชา Software Project Management ตัวเลขงบประมาณ, EVM, Velocity, Story Points ทั้งหมดเป็นข้อมูลสมมติเพื่อการเรียน ฟังก์ชัน SQLite, Member System และ Checkout อยู่ในสถานะแบบออกแบบเท่านั้น และสถานะ UAT Formal Sign-off ยังรอการลงนามอย่างเป็นทางการ
+            <strong>ความโปร่งใสของข้อมูลโครงการ (Content Honesty):</strong> ข้อมูลทั้งหมดจัดทำขึ้นเพื่อการศึกษาในรายวิชา
+            Software Project Management ตัวเลขงบประมาณ, EVM, Velocity, Story Points ทั้งหมดเป็นข้อมูลสมมติเพื่อการเรียน
+            ฟังก์ชัน SQLite, Member System และ Checkout อยู่ในสถานะแบบออกแบบเท่านั้น และสถานะ UAT Formal Sign-off
+            ยังรอการลงนามอย่างเป็นทางการ
           </div>
         </div>
       </section>
@@ -294,12 +342,16 @@
 
   <footer class="site-footer">
     <div class="footer-inner">
-      <div>แหล่งข้อมูลหลัก: <code>README.md</code>, <code>Sprint1/sprint1.md</code> และเอกสาร <code>Sprint1/week-N/</code></div>
+      <div>แหล่งข้อมูลหลัก: <code>README.md</code>, <code>Sprint1/sprint1.md</code> และเอกสาร
+        <code>Sprint1/week-N/</code>
+      </div>
       <div class="footer-links">
         <a href="index.html">หน้าแรก</a>
         <a href="Sprint1/sprint-report.html">รายงานปิด Sprint 1</a>
       </div>
     </div>
   </footer>
+  <script src="site-nav.js" defer></script>
 </body>
+
 </html>
