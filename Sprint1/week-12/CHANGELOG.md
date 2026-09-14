@@ -39,5 +39,5 @@
 - **Corrective:** สืบสวนรากเหง้าปัญหา (RCA) และแก้ไขบั๊ก Legacy Data Schema (BUG-101)
 - **Perfective:** พัฒนาฟีเจอร์บาร์โค้ด (CR-01) และระบบออกรายงาน CSV (CR-02) ตามความต้องการใหม่
 
-หลักฐานปล่อย: UAT 3 Scenarios ผ่าน 100% (ลงนามครบ), Full Suite PyTest 25 tests
+หลักฐานปล่อย: UAT 3 Scenarios ผ่าน 100%, Full Suite PyTest 25 tests
 ผ่าน 100% บนสาขา main, Git Tag `v2.0.0-evolution` (Annotated Tag พร้อมชื่อผู้สร้าง วันเวลา Metadata)

@@ -1,744 +1,306 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="th">
-
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>สไลด์สัปดาห์ที่ 2: วิเคราะห์และออกแบบระบบใหม่ | SPM</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>สไลด์สัปดาห์ที่ 2 | CLI Inventory Management</title>
   <style>
-    :root {
-      --canvas: #ffffff;
-      --surface: #f6f5f4;
-      --surface-card: #ffffff;
-      --surface-subtle: #f8f8f7;
-      --text: rgba(0, 0, 0, 0.95);
-      --text-secondary: #615d59;
-      --text-muted: #8c8780;
-      --border: rgba(0, 0, 0, 0.1);
-      --border-subtle: rgba(0, 0, 0, 0.06);
-      --accent: #0075de;
-      --accent-hover: #005bab;
-      --badge-blue-bg: #f2f9ff;
-      --badge-blue-text: #097fe8;
-      --badge-gray-bg: #f1f1ef;
-      --badge-gray-text: #615d59;
-      --badge-green-bg: #ebf5ee;
-      --badge-green-text: #1b7a3a;
-      --shadow-card: rgba(0, 0, 0, 0.04) 0px 4px 18px, rgba(0, 0, 0, 0.02) 0px 1px 3px;
-      --font-sans: "Noto Sans Thai", "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-    }
-
-    *,
-    *::before,
-    *::after {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    html,
-    body {
-      width: 100%;
-      height: 100%;
-      overflow: hidden;
-      background-color: var(--surface);
-      color: var(--text);
-      font-family: var(--font-sans);
-      -webkit-font-smoothing: antialiased;
-      line-height: 1.5;
-    }
-
-    .frame {
-      width: 100vw;
-      height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 16px;
-      box-sizing: border-box;
-    }
-
-    .deck {
-      width: min(calc(100vw - 32px), calc((100vh - 32px) * 16 / 9));
-      height: min(calc(100vh - 32px), calc((100vw - 32px) * 9 / 16));
-      aspect-ratio: 16 / 9;
-      background: var(--canvas);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      box-shadow: var(--shadow-card);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .slide {
-      display: none;
-      width: 100%;
-      height: 100%;
-      padding: 4.5% 6%;
-      grid-template-rows: auto 1fr auto;
-      gap: 22px;
-      box-sizing: border-box;
-    }
-
-    .slide.active {
-      display: grid;
-    }
-
-    .slide-header {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .marker-wrap {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .marker-pill {
-      font-size: 24px;
-      font-weight: 600;
-      color: var(--badge-blue-text);
-      background: var(--badge-blue-bg);
-      padding: 4px 16px;
-      border-radius: 9999px;
-      display: inline-block;
-      letter-spacing: -0.01em;
-    }
-
-    .marker-pill.gray {
-      color: var(--badge-gray-text);
-      background: var(--badge-gray-bg);
-    }
-
-    .slide h1 {
-      font-size: clamp(38px, 3.8vw, 58px);
-      line-height: 1.15;
-      letter-spacing: -0.02em;
-      font-weight: 700;
-      color: var(--text);
-      margin: 0;
-    }
-
-    .slide-lead {
-      font-size: clamp(24px, 1.7vw, 28px);
-      line-height: 1.45;
-      color: var(--text-secondary);
-      margin: 0;
-    }
-
-    .slide-body {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      gap: 18px;
-      height: 100%;
-      overflow: hidden;
-    }
-
-    .cards-grid-2 {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 18px;
-    }
-
-    .cards-grid-3 {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 18px;
-    }
-
-    .card {
-      background: var(--surface-card);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 20px 22px;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-
-    .card.subtle {
-      background: var(--surface-subtle);
-    }
-
-    .card-title {
-      font-size: 26px;
-      font-weight: 700;
-      color: var(--text);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .card-text {
-      font-size: clamp(24px, 1.4vw, 25px);
-      line-height: 1.45;
-      color: var(--text-secondary);
-    }
-
-    .card-list {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-
-    .card-list li {
-      font-size: clamp(24px, 1.4vw, 25px);
-      line-height: 1.4;
-      color: var(--text-secondary);
-      position: relative;
-      padding-left: 22px;
-    }
-
-    .card-list li::before {
-      content: "•";
-      position: absolute;
-      left: 6px;
-      color: var(--accent);
-      font-weight: bold;
-    }
-
-    .callout {
-      background: var(--surface-subtle);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 22px 26px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .callout-title {
-      font-size: 26px;
-      font-weight: 700;
-      color: var(--text);
-    }
-
-    .callout-body {
-      font-size: clamp(24px, 1.55vw, 27px);
-      line-height: 1.5;
-      color: var(--text-secondary);
-    }
-
-    .slide-footer {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      border-top: 1px solid var(--border-subtle);
-      padding-top: 14px;
-    }
-
-    .notice {
-      font-size: 24px;
-      color: var(--text-muted);
-    }
-
-    .controls {
-      position: absolute;
-      right: 4.5%;
-      bottom: 3.5%;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      z-index: 20;
-    }
-
-    .btn {
-      font-family: inherit;
-      font-size: 24px;
-      font-weight: 500;
-      background: #ffffff;
-      color: var(--text);
-      border: 1px solid var(--border);
-      border-radius: 9999px;
-      padding: 6px 18px;
-      cursor: pointer;
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.15s ease;
-      line-height: 1.2;
-    }
-
-    .btn:hover {
-      border-color: var(--accent);
-      color: var(--accent);
-    }
-
-    .btn:focus-visible {
-      outline: 2px solid var(--accent);
-      outline-offset: 2px;
-    }
-
-    .slide-count {
-      font-size: 24px;
-      font-family: var(--font-mono);
-      color: var(--text-secondary);
-      font-weight: 500;
-      min-width: 65px;
-      text-align: center;
-    }
-
-    code {
-      font-family: var(--font-mono);
-      font-size: 24px;
-      background: var(--badge-gray-bg);
-      padding: 2px 6px;
-      border-radius: 4px;
-      color: var(--text);
-    }
-
-    @media print {
-
-      body,
-      .frame {
-        background: #ffffff;
-        padding: 0;
-        display: block;
-        height: auto;
-      }
-
-      .deck {
-        width: 100vw;
-        height: 56.25vw;
-        border: none;
-        box-shadow: none;
-        border-radius: 0;
-      }
-
-      .slide {
-        display: grid !important;
-        break-after: page;
-        page-break-after: always;
-        height: 100vh;
-        padding: 50px 70px;
-      }
-
-      .controls {
-        display: none !important;
-      }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      * {
-        transition: none !important;
-        animation: none !important;
-      }
-    }
-
-    .content-body,
-    .slide-body {
-      overflow-y: auto;
-      scrollbar-width: thin;
-      min-height: 0
-    }
-
-    @media (max-width: 600px) {
-
-      html,
-      body {
-        overflow-x: hidden;
-        overflow-y: auto;
-      }
-
-      .frame,
-      .viewport-frame {
-        display: block;
-        width: 100%;
-        height: auto;
-        min-height: 100vh;
-        padding: 0;
-        box-sizing: border-box;
-      }
-
-      .deck,
-      .deck-container {
-        width: 100%;
-        min-height: 100vh;
-        height: auto;
-        aspect-ratio: auto;
-        overflow: visible;
-        border: 0;
-        border-radius: 0;
-        box-shadow: none;
-        padding-bottom: 72px;
-        box-sizing: border-box;
-      }
-
-      .slide {
-        min-height: calc(100vh - 72px);
-        height: auto;
-        padding: 28px 20px;
-        gap: 16px;
-        box-sizing: border-box;
-      }
-
-      .slide h1 {
-        font-size: clamp(28px, 8vw, 38px);
-        line-height: 1.2;
-      }
-
-      .slide-title-area h2 {
-        font-size: clamp(26px, 7.5vw, 34px);
-        line-height: 1.2;
-      }
-
-      .slide-lead,
-      .slide-subtitle {
-        font-size: 18px;
-        line-height: 1.45;
-      }
-
-      .content-body,
-      .slide-body {
-        height: auto;
-        overflow: visible;
-        justify-content: flex-start;
-      }
-
-      .cards-grid-2,
-      .cards-grid-3,
-      .grid-2,
-      .grid-3 {
-        grid-template-columns: 1fr;
-        gap: 14px;
-      }
-
-      .card,
-      .notion-card {
-        min-width: 0;
-      }
-
-      .card-list,
-      .notion-list {
-        font-size: 17px;
-        line-height: 1.45;
-      }
-
-      .data-val {
-        font-size: 30px;
-      }
-
-      .slide-footer {
-        display: block;
-        font-size: 14px;
-      }
-
-      .controls,
-      .nav-controls {
-        position: fixed;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        width: 100%;
-        min-height: 64px;
-        padding: 8px 12px;
-        box-sizing: border-box;
-        justify-content: center;
-        gap: 6px;
-        z-index: 100;
-        background: var(--canvas, #fff);
-        border-top: 1px solid var(--border, #ddd);
-      }
-
-      .controls .btn,
-      .nav-controls .nav-btn {
-        min-height: 40px;
-        padding: 6px 10px;
-        font-size: 15px;
-      }
-
-      .controls>a {
-        display: none;
-      }
-
-      .slide-count {
-        font-size: 15px;
-        min-width: 42px;
-        text-align: center;
-      }
-    }
-
-    @media (max-width: 600px) {
-
-      .slide-header,
-      .content-body,
-      .slide-body,
-      .slide-title-area,
-      .notion-card,
-      .card,
-      .notion-list,
-      .card-list,
-      .metric-row {
-        min-width: 0;
-        max-width: 100%;
-        box-sizing: border-box;
-      }
-
-      .badge-row {
-        flex-wrap: wrap;
-        max-width: 100%;
-      }
-
-      .badge,
-      .header-note {
-        max-width: 100%;
-        font-size: 16px;
-        overflow-wrap: anywhere;
-      }
-
-      .notion-card,
-      .card {
-        padding: 20px;
-      }
-
-      .notion-list li,
-      .card-list li {
-        font-size: 18px;
-        overflow-wrap: anywhere;
-        word-break: normal;
-      }
-
-      .metric-row {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 4px;
-      }
-
-      .metric-label,
-      .metric-value {
-        max-width: 100%;
-        overflow-wrap: anywhere;
-      }
-    }
+/* หลักฐานชัดเจน: สกัดจาก Sprint1/templates/templates.css (เฉพาะส่วน evidence) */
+:root {
+  --font: "Noto Sans Thai", "Leelawadee UI", system-ui, sans-serif;
+  --serif: "TH Sarabun New", "Angsana New", Georgia, serif;
+  --bg: #e7eeee;
+  --paper: #fff;
+  --ink: #122a38;
+  --muted: #49616b;
+  --accent: #0867a1;
+  --line: #bfd0d4;
+  --soft: #e8f3f8;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: var(--font);
+  color: var(--ink);
+  background: var(--bg);
+  font-size: 24px;
+  line-height: 1.5;
+}
+a:focus-visible, button:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 3px;
+}
+.template-deck {
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  background: var(--bg);
+}
+.deck-header, .deck-controls {
+  width: min(1440px, calc(100% - 48px));
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  color: var(--muted);
+  font-size: 14px;
+}
+.deck-header { padding: 18px 0; }
+.back-link { color: var(--accent); font-weight: 700; text-decoration: none; }
+.deck-controls { padding: 18px 0; }
+.deck-controls button {
+  min-height: 44px;
+  padding: 10px 16px;
+  border: 1px solid var(--line);
+  background: var(--paper);
+  color: var(--ink);
+  font: 700 15px var(--font);
+  cursor: pointer;
+}
+.deck-controls button:disabled { opacity: .35; cursor: default; }
+.deck-controls button:hover:not(:disabled) {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+.deck-frame {
+  width: min(1440px, calc(100vw - 48px), calc((100vh - 132px) * 16 / 9));
+  aspect-ratio: 16/9;
+  margin: auto;
+  overflow: hidden;
+  background: var(--paper);
+  box-shadow: 0 18px 46px rgb(18 42 56 / 18%);
+}
+.slide {
+  display: none;
+  height: 100%;
+  padding: 3.5% 4.5%;
+  align-content: center;
+  font-size: 24px;
+  line-height: 1.5;
+}
+.slide.active { display: grid; }
+.slide h1, .slide h2 {
+  margin: 0;
+  letter-spacing: -.04em;
+  line-height: 1.08;
+}
+.slide h1 { font-size: clamp(36px, 5vw, 76px); }
+.slide h2 { font-size: clamp(24px, 2.4vw, 34px); }
+.slide p, .slide li { font-size: 24px; line-height: 1.5; }
+.slide td, .slide th { font-size: 20px; line-height: 1.45; }
+.slide-label {
+  margin: 0 0 20px;
+  color: var(--accent);
+  font-weight: 800;
+  font-size: 24px;
+}
+.slide-lead {
+  max-width: 50ch;
+  margin: 10px 0 0;
+  color: var(--muted);
+  font-size: clamp(24px, 1.8vw, 26px);
+  line-height: 1.45;
+}
+.cover-layout, .content-layout {
+  display: grid;
+  grid-template-columns: 1.12fr .88fr;
+  gap: 7%;
+  align-items: center;
+}
+.cover-meta {
+  margin: 0;
+  padding: 14px 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  color: var(--muted);
+  line-height: 1.7;
+  font-size: 24px;
+}
+.rule-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--line);
+}
+.rule-list li {
+  display: grid;
+  grid-template-columns: 32% 1fr;
+  gap: 18px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--line);
+  font-size: 24px;
+}
+.rule-list strong { color: var(--accent); }
+table {
+  width: 100%;
+  margin-top: 16px;
+  border-collapse: collapse;
+  font-size: 24px;
+}
+th {
+  padding: 8px 14px;
+  background: var(--ink);
+  color: #fff;
+  text-align: left;
+  font-size: 24px;
+}
+td {
+  padding: 8px 14px;
+  border-bottom: 1px solid var(--line);
+  font-size: 24px;
+}
+tbody tr:nth-child(even) { background: #f3f7f7; }
+.metrics {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+.metrics div { padding: 14px 18px; border-right: 1px solid var(--line); }
+.metrics div:last-child { border: 0; }
+.metrics b { display: block; font-size: clamp(26px, 3.2vw, 44px); letter-spacing: -.05em; }
+.metrics span { display: block; margin-top: 9px; color: var(--muted); font-size: 24px; }
+.next-steps { margin: 0; padding-left: 1.2em; }
+.next-steps li {
+  padding: 8px 0;
+  color: var(--muted);
+  font-size: clamp(24px, 1.6vw, 26px);
+}
+@media (max-width: 720px) {
+  .deck-header, .deck-controls { width: calc(100% - 32px); flex-wrap: wrap; }
+  .deck-frame { width: 100%; aspect-ratio: auto; overflow: visible; box-shadow: none; }
+  .slide { height: auto; min-height: 70vh; padding: 6%; }
+  .cover-layout, .content-layout { grid-template-columns: 1fr; gap: 20px; }
+  .cover-meta { padding: 14px 0; }
+  .rule-list li { grid-template-columns: 1fr; gap: 4px; padding: 10px 0; }
+  .metrics { grid-template-columns: 1fr; }
+  .metrics div { padding: 12px 9px; border-right: 0; border-bottom: 1px solid var(--line); }
+  .metrics div:last-child { border-bottom: 0; }
+  th, td { padding: 8px 10px; }
+  .deck-controls button { padding: 8px 12px; }
+}
+@media print {
+  .template-deck { display: block; background: #fff; }
+  .deck-header, .deck-controls { display: none; }
+  .deck-frame { width: 100%; aspect-ratio: auto; overflow: visible; box-shadow: none; }
+  .slide { display: grid; break-after: page; height: auto; }
+}
+@media (prefers-reduced-motion: reduce) {
+  * { scroll-behavior: auto !important; }
+}
   </style>
 </head>
-
-<body>
-  <div class="frame">
-    <main class="deck" aria-live="off">
-      <section class="slide active" id="slide-1">
-        <header class="slide-header">
-          <div class="marker-wrap">
-            <span class="marker-pill">ข้อมูลสมมติเพื่อการเรียน · สัปดาห์ที่ 2</span>
-          </div>
-          <h1>วิเคราะห์ DFD, Hotspots และพิมพ์เขียวใหม่</h1>
-          <p class="slide-lead">วิเคราะห์กระแสข้อมูล, ชี้เป้าจุดวิกฤตใน app_v1.py และออกแบบสถาปัตยกรรม Three-Tier
-            Blueprint [ข้อมูลจำลองเพื่อการศึกษา]</p>
-        </header>
-        <div class="slide-body">
-          <div class="card subtle">
-            <div class="card-title">ผลการวิเคราะห์ซอร์สโค้ดเชิงสถิต (Static Code Analysis Summary)</div>
-            <ul class="card-list">
-              <li><strong>ขนาดและคะแนนคุณภาพ:</strong> โค้ดเดิมยาว 99 บรรทัด ได้คะแนน Pylint <strong>7.10 / 10</strong>
-                ตรวจพบข้อบกพร่องตามมาตรฐาน PEP 8</li>
-              <li><strong>ความซับซ้อนของ main():</strong> Radon รายงาน Cyclomatic Complexity เท่ากับ <strong>14 (เกรด
-                  C)</strong> เนื่องจากรวมทุกอย่างในฟังก์ชันเดียว</li>
-              <li><strong>กิ่งสาขาและคำสั่งเกินเกณฑ์:</strong> พบคำเตือน R0912 (กิ่งตัดสินใจ 17 สาขา) และ R0915 (มี 55
-                คำสั่งในฟังก์ชันเดียว)</li>
-              <li><strong>ฟังก์ชันพื้นฐาน:</strong> ฟังก์ชัน <code>load()</code> ได้ CC = 2 (เกรด A) และ
-                <code>save()</code> ได้ CC = 1 (เกรด A)</li>
-            </ul>
-          </div>
-        </div>
-        <footer class="slide-footer">
-          <span class="notice">ใช้ลูกศร ซ้าย/ขวา หรือ Space เพื่อเปลี่ยนสไลด์</span>
-        </footer>
-      </section>
-      <section class="slide" id="slide-2">
-        <header class="slide-header">
-          <div class="marker-wrap"><span class="marker-pill">สัปดาห์ที่ 2</span><span
-              class="marker-pill gray">สารบัญ</span></div>
-          <h1>สารบัญสไลด์</h1>
-          <p class="slide-lead">กดหัวข้อเพื่อกระโดดไปสไลด์นั้น</p>
-        </header>
-        <div class="slide-body">
-          <div class="card">
-            <ul class="card-list">
-              <li><a href="#slide-1">วิเคราะห์ DFD, Hotspots และพิมพ์เขียวใหม่</a></li>
-              <li><a href="#slide-3">3 จุดอันตรายที่มีการผูกมัดแน่นและเปราะบางสูง</a></li>
-              <li><a href="#slide-4">Three-Tier Architecture และการวิวัฒนาการ Schema</a></li>
-            </ul>
-          </div>
-        </div>
-        <footer class="slide-footer"><span class="notice">กดหัวข้อเพื่อกระโดดไปสไลด์นั้น</span></footer>
-      </section>
-      <section class="slide" id="slide-3">
-        <header class="slide-header">
-          <div class="marker-wrap">
-            <span class="marker-pill">การวิเคราะห์จุดวิกฤต (Dangerous Hotspots)</span>
-          </div>
-          <h1>3 จุดอันตรายที่มีการผูกมัดแน่นและเปราะบางสูง</h1>
-          <p class="slide-lead">วิเคราะห์จาก Hotspot.md เพื่อป้องกันไม่ให้การแก้โค้ดส่งผลกระทบลูกโซ่ [ข้อมูลจำลอง]</p>
-        </header>
-        <div class="slide-body">
-          <div class="cards-grid-3">
-            <div class="card">
-              <div class="card-title">Hotspot 1: ตัวแปรโกลบอล x</div>
-              <p class="card-text">ทุกกิจกรรมรุมอ่านเขียนตรง ไร้สกีมาป้องกัน (ใช้คีย์สั้น n, q, p, c)
-                หากคีย์เปลี่ยนจะเกิด KeyError ทันที และทำให้เขียน Unit Test แยกไม่ได้</p>
-            </div>
-            <div class="card">
-              <div class="card-title">Hotspot 2: ฟังก์ชัน main()</div>
-              <p class="card-text">Monolithic Core รวม UI (print, input), ตรรกะธุรกิจ และ File I/O ไว้ในฟังก์ชันเดียว
-                ความซับซ้อน CC=14 กิ่งเงื่อนไข 17 กิ่ง เสี่ยงบั๊กข้างเคียง</p>
-            </div>
-            <div class="card">
-              <div class="card-title">Hotspot 3: Direct Casting</div>
-              <p class="card-text">แปลง int() และ float() ไร้ try-except เมื่อผู้ใช้พิมพ์ผิดแอปจะแครชทันที
-                พร้อมช่องโหว่การใส่จำนวนติดลบเพื่อแอบเพิ่มสต็อกสินค้า</p>
-            </div>
-          </div>
-        </div>
-        <footer class="slide-footer">
-          <span class="notice">อ้างอิง: Sprint1/week-2/Hotspot.md [ข้อมูลจำลอง]</span>
-        </footer>
-      </section>
-      <section class="slide" id="slide-4">
-        <header class="slide-header">
-          <div class="marker-wrap">
-            <span class="marker-pill">พิมพ์เขียวสถาปัตยกรรม (Architecture Blueprint)</span>
-          </div>
-          <h1>Three-Tier Architecture และการวิวัฒนาการ Schema</h1>
-          <p class="slide-lead">แยกส่วนความรับผิดชอบ (Separation of Concerns) ตาม blueprint.md [ข้อมูลจำลอง]</p>
-        </header>
-        <div class="slide-body">
-          <div class="cards-grid-2">
-            <div class="card">
-              <div class="card-title">สถาปัตยกรรมแยก 3 เลเยอร์ (Three-Tier)</div>
-              <ul class="card-list">
-                <li><strong>Presentation Layer:</strong> คอนโซล CLI รับอินพุต ตรวจสอบ Input Validation
-                  และแสดงผลหน้าจอเท่านั้น</li>
-                <li><strong>Domain Layer:</strong> คลาส <code>InventoryManager</code> ควบคุมตรรกะตัดสต็อก
-                  ตรวจสอบสินค้าคงเหลือ และคำนวณมูลค่า</li>
-                <li><strong>Data Layer:</strong> โมเดล <code>Product</code> กำหนดฟิลด์ชัดเจน ควบคุมการแปลง Object
-                  และจัดเก็บไฟล์ JSON</li>
-              </ul>
-            </div>
-            <div class="card">
-              <div class="card-title">Schema Evolution &amp; ข้อเท็จจริงสำคัญ</div>
-              <ul class="card-list">
-                <li>เปลี่ยน JSON Schema จากคีย์สั้น (n, q, p, c) สู่ชื่อเต็ม (name, quantity, price, category)</li>
-                <li>รองรับ Backward Compatibility เพื่อแปลงข้อมูลเก่าอัตโนมัติ ป้องกันข้อมูลสูญหาย</li>
-                <li><strong>ข้อเท็จจริงสำคัญ:</strong> SQLite และ Member Discount ในสัปดาห์นี้เป็นเพียงแบบร่าง
-                  (Design-Only) ยังไม่ได้ส่งมอบจริง</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-        <footer class="slide-footer">
-          <span class="notice">อ้างอิง: Sprint1/week-2/blueprint.md [ข้อมูลจำลอง]</span>
-        </footer>
-      </section>
-      <div class="controls">
-        <a href="index.html" class="btn" title="กลับหน้าสรุปเนื้อหาสัปดาห์ 2">หน้าเนื้อหา</a>
-        <button type="button" class="btn" id="restart-btn">เริ่มใหม่</button>
-        <button type="button" class="btn" id="prev-btn" aria-label="สไลด์ก่อนหน้า">ก่อนหน้า</button>
-        <span class="slide-count" id="slide-counter">1 / 4</span><span class="sr-only" aria-live="polite"
-          id="slide-live"
-          style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap"></span>
-        <button type="button" class="btn" id="next-btn" aria-label="สไลด์ถัดไป">ถัดไป</button>
+<body class="template-deck">
+  <header class="deck-header">
+    <a class="back-link" href="index.html">← กลับเอกสารสัปดาห์ที่ 2</a>
+    <span id="slide-counter" aria-live="polite">1 / 5</span>
+  </header>
+  <main class="deck-frame" aria-label="สไลด์สัปดาห์ที่ 2">
+    <section class="slide active" id="slide-1">
+      <div class="cover-layout">
+        <div><p class="slide-label">สัปดาห์ที่ 2 · วิวัฒนาการและออกแบบใหม่</p><h1>กระแสข้อมูล จุดอันตราย และพิมพ์เขียว</h1><p class="slide-lead">สไลด์ชุดนี้ตอบว่าระบบเดิมไหลอย่างไร เสี่ยงตรงจุดใด และจะปรับโครงสร้างอย่างไร</p></div>
+        <p class="cover-meta">วิชา Software Evolution and Maintenance · สัปดาห์ที่ 2<br>เอกสาร: DFD.md, Hotspot.md, Static-Analysis.md, blueprint.md, Member-Discount.md</p>
       </div>
-    </main>
-  </div>
-
+    </section>
+    <section class="slide" id="slide-2">
+      <div class="content-layout"><div><h2>DFD Level 0 ชี้ว่าระบบเดิมมีผู้ใช้รายเดียว</h2><p class="slide-lead">ที่มา: DFD.md หมวด 2 — เอนทิตีภายนอกมีผู้ใช้รายเดียว</p></div><ul class="rule-list"><li><strong>ขาเข้า</strong><span>รหัสเมนู ข้อมูลสินค้า จำนวนที่ตัดสต็อก</span></li><li><strong>ระบบ</strong><span>กระบวนการ 0 ระบบจัดการคลังสินค้า v1.0</span></li><li><strong>ขาออก</strong><span>รายการสินค้า ผลทำรายการ เตือนยอดต่ำ</span></li></ul></div>
+    </section>
+    <section class="slide" id="slide-3">
+      <h2>6 โพรเซส P1–P6 ไหลผ่านตัวแปร global x ตัวเดียว</h2>
+      <p class="slide-lead">ที่มา: DFD.md หมวด 3–4 ผ่านตัวแปร global x และไฟล์ data.json</p>
+      <table><thead><tr><th>กระบวนการ</th><th>หน้าที่</th><th>บันทึกไฟล์</th></tr></thead><tbody><tr><td>P1 load</td><td>อ่าน data.json เข้า x</td><td>เริ่มโปรแกรมครั้งเดียว</td></tr><tr><td>P2 show_all</td><td>อ่าน x แสดงสินค้าบนจอ</td><td>ไม่บันทึก</td></tr><tr><td>P3 add_update</td><td>รับข้อมูลผู้ใช้ อัปเดต x สั่ง P6</td><td>บันทึกทันที</td></tr><tr><td>P4 cut_stock</td><td>ตรวจสต็อก หักยอด เตือนต่ำกว่า 5</td><td>บันทึกทันที</td></tr><tr><td>P5 check_check</td><td>คำนวณมูลค่ารวม แจ้งต่ำกว่า 10</td><td>ไม่บันทึก</td></tr><tr><td>P6 save</td><td>เขียน x ลง data.json</td><td>เมื่อ P3/P4 สั่ง</td></tr></tbody></table>
+    </section>
+    <section class="slide" id="slide-4">
+      <h2>3 hotspot ผูกแน่นจนต้องแก้ก่อนแตะโค้ด</h2>
+      <p class="slide-lead">ที่มา: Hotspot.md — จุดผูกมัดแน่นและเปราะบางใน app_v1.py</p>
+      <table><thead><tr><th>จุด</th><th>ทำไมอันตราย</th><th>ทางแก้</th></tr></thead><tbody><tr><td>global x</td><td>ทุกส่วนรุมอ่านเขียน เสี่ยง KeyError เทสต์ยาก</td><td>ครอบด้วยคลาส Product และ InventoryManager</td></tr><tr><td>main() ก้อนเดียว</td><td>รวม UI ตรรกะ สั่งเซฟ CC 14 แก้เมนูหนึ่งกระทบอีกเมนู</td><td>แยกชั้นให้ main เหลือคุมโฟลว์</td></tr><tr><td>แปลงค่าตรง int/float</td><td>กรอกผิดชนิดล่มทันที ไม่ดักค่าติดลบ</td><td>helper ตรวจ input ด้วย try-except</td></tr></tbody></table>
+    </section>
+    <section class="slide" id="slide-5">
+      <div class="content-layout"><div><h2>วิเคราะห์สถิตฟ้องว่า main ซับซ้อนเกินเกณฑ์ที่ CC 14</h2><p class="slide-lead">ที่มา: Static-Analysis.md — Pylint และ Radon</p></div><div class="metrics"><div><b>99</b><span>บรรทัดโค้ด LOC</span></div><div><b>7.10</b><span>คะแนน Pylint เต็ม 10</span></div><div><b>14</b><span>ความซับซ้อน main เกรด C</span></div></div><table><thead><tr><th>ประเด็นรอง</th><th>ค่าที่พบ</th></tr></thead><tbody><tr><td>R0912 กิ่งเงื่อนไขเกิน</td><td>17 กิ่ง เกินเกณฑ์</td></tr><tr><td>R0915 คำสั่งเกิน</td><td>55 คำสั่ง เกินเกณฑ์</td></tr><tr><td>ไม่ระบุ encoding</td><td>ความรุนแรง High</td></tr></tbody></table></div>
+    </section>
+    <section class="slide" id="slide-6">
+      <div class="content-layout"><div><h2>พิมพ์เขียวแยก 3 ชั้นพาโค้ดพ้น global x</h2><p class="slide-lead">ที่มา: blueprint.md และ Member-Discount.md</p></div><ul class="rule-list"><li><strong>แสดงผล</strong><span>CLI รับ input และตรวจความถูกต้องเท่านั้น</span></li><li><strong>ธุรกิจ</strong><span>InventoryManager กับ Product คุมตรรกะและสคีมา</span></li><li><strong>ข้อมูล</strong><span>วันนี้ JSON รองรับสคีมาเก่า ภายหลังย้าย SQLite (ACID)</span></li><li><strong>สมาชิก</strong><span>4 ระดับ Regular 0% Silver 5% Gold 10% Platinum 15% เป็นเพียงแบบออกแบบ ยังไม่ลงโค้ด</span></li></ul></div>
+    </section>
+    <section class="slide" id="slide-7">
+      <div class="cover-layout"><div><h2>พิมพ์เขียวพร้อมแล้ว ลงมือปรับโครงสร้างสัปดาห์ที่ 3</h2><p class="slide-lead">พิมพ์เขียวพร้อมใช้ลงมือปรับโครงสร้างในสัปดาห์ที่ 3</p></div><ol class="next-steps"><li>แยก 3 ชั้นตามพิมพ์เขียว พร้อมแปลงสคีมาเก่าอัตโนมัติ</li><li>คงระบบสมาชิกไว้เพียงแบบออกแบบ ยังไม่ลงโค้ด</li><li>ลงมือทำ TASK-01–15 บนบอร์ดภายใต้ DoD และ RACI (ที่มา: trello.md)</li></ol></div>
+    </section>
+  </main>
+  <footer class="deck-controls"><button id="previous" type="button" aria-label="สไลด์ก่อนหน้า">← ก่อนหน้า</button><button id="next" type="button" aria-label="สไลด์ถัดไป">ถัดไป →</button></footer>
   <script>
-    (function () {
-      const slides = Array.from(document.querySelectorAll('.slide'));
-      const counter = document.getElementById('slide-counter');
-      const prevBtn = document.getElementById('prev-btn');
-      const nextBtn = document.getElementById('next-btn');
-      const storageKey = 'spm-site-agy-w2-slide';
-
-      let current = 0;
-      const fresh = /[?&]fresh=1/.test(location.search);
-      const hashMatch = /#slide-(\d+)/.exec(location.hash);
-      if (hashMatch) {
-        const h = parseInt(hashMatch[1], 10) - 1;
-        if (!isNaN(h) && h >= 0 && h < slides.length) {
-          current = h;
-        }
-      } else if (!fresh) {
-        let saved = null;
-        try { saved = localStorage.getItem(storageKey); } catch (e) { }
-        if (saved !== null) {
-          const parsed = parseInt(saved, 10);
-          if (!isNaN(parsed) && parsed >= 0 && parsed < slides.length) {
-            current = parsed;
-          }
-        }
-      }
-
-      function showSlide(index) {
-        if (index < 0) index = slides.length - 1;
-        if (index >= slides.length) index = 0;
-        current = index;
-
-        slides.forEach((slide, idx) => {
-          slide.classList.toggle('active', idx === current);
-        });
-
-        if (counter) {
-          counter.textContent = (current + 1) + ' / ' + slides.length;
-        }
-        try {
-          history.replaceState(null, '', '#slide-' + (current + 1));
-        } catch (e) {
-          // Ignore history errors
-        }
-        var live = document.getElementById('slide-live');
-        if (live) {
-          live.textContent = 'สไลด์ ' + (current + 1) + ' จาก ' + slides.length;
-        }
-
-        try {
-          localStorage.setItem(storageKey, current.toString());
-        } catch (e) {
-          // Ignore localStorage errors
-        }
-      }
-
-      if (prevBtn) {
-        prevBtn.addEventListener('click', () => showSlide(current - 1));
-      }
-      if (nextBtn) {
-        nextBtn.addEventListener('click', () => showSlide(current + 1));
-      }
-      const restartBtn = document.getElementById('restart-btn');
-      if (restartBtn) {
-        restartBtn.addEventListener('click', () => {
-          try { localStorage.removeItem(storageKey); } catch (e) { }
-          showSlide(0);
-        });
-      }
-
-      document.addEventListener('keydown', (e) => {
-        if (e.key === 'Home') {
-          e.preventDefault();
-          showSlide(0);
-        } else if (e.key === 'End') {
-          e.preventDefault();
-          showSlide(slides.length - 1);
-        } else if (e.key === 'ArrowLeft') {
-          showSlide(current - 1);
-        } else if (e.key === 'ArrowRight' || e.key === ' ') {
-          e.preventDefault();
-          showSlide(current + 1);
-        }
-      });
-
-      showSlide(current);
-    })();
+(function () {
+  var slides = Array.prototype.slice.call(document.querySelectorAll(".slide"));
+  var count = document.querySelector("#slide-counter");
+  var storageKey = "spm-week-2-evidence";
+  function slideFromHash() {
+    var match = /#slide-(\d+)/.exec(window.location.hash || "");
+    if (!match) return null;
+    var index = parseInt(match[1], 10) - 1;
+    return (index >= 0 && index < slides.length) ? index : null;
+  }
+  function storedSlide() {
+    try {
+      var value = window.localStorage.getItem(storageKey);
+      if (value === null) return null;
+      var index = parseInt(value, 10);
+      return (index >= 0 && index < slides.length) ? index : null;
+    } catch (error) {
+      return null;
+    }
+  }
+  function rememberSlide(index) {
+    try {
+      window.localStorage.setItem(storageKey, String(index));
+    } catch (error) {
+    }
+  }
+  var current = slideFromHash();
+  if (current === null) current = storedSlide();
+  if (current === null) current = 0;
+  function show(index) {
+    current = Math.min(Math.max(index, 0), slides.length - 1);
+    slides.forEach(function (slide, position) {
+      slide.classList.toggle("active", position === current);
+    });
+    count.textContent = (current + 1) + " / " + slides.length;
+    previousBtn.disabled = current === 0;
+    nextBtn.disabled = current === slides.length - 1;
+    rememberSlide(current);
+    try {
+      window.history.replaceState(null, "", "#slide-" + (current + 1));
+    } catch (error) {
+    }
+  }
+  function showFromHash() {
+    var index = slideFromHash();
+    if (index !== null) show(index);
+  }
+  var previousBtn = document.querySelector("#previous");
+  var nextBtn = document.querySelector("#next");
+  previousBtn.addEventListener("click", function () { show(current - 1); });
+  nextBtn.addEventListener("click", function () { show(current + 1); });
+  document.addEventListener("keydown", function (event) {
+    if (event.key === "ArrowRight" || event.key === "PageDown" || event.key === " ") {
+      event.preventDefault();
+      show(current + 1);
+    }
+    if (event.key === "ArrowLeft" || event.key === "PageUp") {
+      event.preventDefault();
+      show(current - 1);
+    }
+    if (event.key === "Home") {
+      event.preventDefault();
+      show(0);
+    }
+    if (event.key === "End") {
+      event.preventDefault();
+      show(slides.length - 1);
+    }
+  });
+  window.addEventListener("hashchange", showFromHash);
+  show(current);
+})();
   </script>
-  <script>window.addEventListener('hashchange', function () { location.reload(); });</script>
 </body>
-
 </html>

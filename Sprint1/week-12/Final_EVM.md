@@ -69,7 +69,6 @@ Epic 2 (Evolution) ปิดงาน Barcode, Alert, CSV
    แล้วกด Complete Sprint 3 บน Jira
 2. ดึงหลักฐาน Velocity Chart (Commitment vs Completed 3 Sprints)
    และ Epic Burndown (แตะ 0) ใส่เล่มรายงาน
-3. PM นำเล่ม Final EVM + Velocity + Procurement Sheet + ใบรับรอง UAT
-   เข้าพบอาจารย์ (Sponsor) ลงนาม Phase 3 Completion Certificate
+3. PM รวบรวมเล่ม Final EVM + Velocity + Procurement Sheet + ผล UAT ปิด Phase 3
    (Deliverables: Refactored Layered Architecture, Barcode, Reorder Alerts,
    CSV Export, Full CI/CD — 25 tests ผ่าน 100%, Tag v2.0.0-evolution)

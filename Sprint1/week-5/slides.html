@@ -1,778 +1,297 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="th">
-
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>สไลด์สัปดาห์ที่ 5 | สถาปัตยกรรม คุณภาพ ISO 25010 และงบประมาณ</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>สไลด์สัปดาห์ที่ 5 | CLI Inventory Management</title>
   <style>
     :root {
-      --bg-page: #f7f6f3;
-      --bg-card: #ffffff;
-      --bg-callout: #fbfbfa;
-      --ink-primary: #37352f;
-      --ink-secondary: #6f6a63;
-      --border-light: rgba(55, 53, 47, 0.09);
-      --border-medium: rgba(55, 53, 47, 0.16);
-      --border-card: rgba(55, 53, 47, 0.12);
-
-      --tag-gray-bg: #f1f1ef;
-      --tag-gray-text: #5a5a58;
-      --tag-blue-bg: #e8f3fc;
-      --tag-blue-text: #0b6e99;
-      --tag-orange-bg: #faebdd;
-      --tag-orange-text: #9c4400;
-      --tag-green-bg: #edf3ec;
-      --tag-green-text: #448361;
-
-      --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans Thai", Helvetica, Arial, sans-serif;
-      --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+      --font: "Noto Sans Thai", "Leelawadee UI", system-ui, sans-serif;
+      --serif: "TH Sarabun New", "Angsana New", Georgia, serif;
+      --bg: #e7eeee;
+      --paper: #fff;
+      --ink: #122a38;
+      --muted: #49616b;
+      --accent: #0867a1;
+      --line: #bfd0d4;
+      --soft: #e8f3f8;
     }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    html,
+    * { box-sizing: border-box; }
     body {
-      width: 100%;
-      height: 100%;
       margin: 0;
-      padding: 0;
-      overflow: hidden;
-      background-color: var(--bg-page);
-      color: var(--ink-primary);
-      font-family: var(--font-sans);
-      -webkit-font-smoothing: antialiased;
+      font-family: var(--font);
+      color: var(--ink);
+      background: var(--bg);
+      font-size: 24px;
+      line-height: 1.5;
     }
-
-    .viewport-frame {
-      width: 100vw;
-      height: 100vh;
+    a:focus-visible, button:focus-visible {
+      outline: 3px solid var(--accent);
+      outline-offset: 3px;
+    }
+    .back-link { color: var(--accent); font-weight: 700; text-decoration: none; }
+    .template-deck {
+      min-height: 100vh;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      background: var(--bg);
+    }
+    .deck-header, .deck-controls {
+      width: min(1440px, calc(100% - 48px));
+      margin: auto;
       display: flex;
       align-items: center;
-      justify-content: center;
+      justify-content: space-between;
+      gap: 18px;
+      color: var(--muted);
+      font-size: 18px;
     }
-
-    .deck-container {
-      width: min(100vw, 177.78vh);
-      height: min(56.25vw, 100vh);
-      background-color: #ffffff;
-      position: relative;
+    .deck-header { padding: 18px 0; }
+    .deck-controls { padding: 18px 0; }
+    .deck-controls button {
+      min-height: 44px;
+      padding: 10px 16px;
+      border: 1px solid var(--line);
+      background: var(--paper);
+      color: var(--ink);
+      font: 700 18px var(--font);
+      cursor: pointer;
+    }
+    .deck-controls button:disabled { opacity: .35; cursor: default; }
+.deck-controls button:hover:not(:disabled) {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+    }
+    .deck-frame {
+      width: min(1440px, calc(100vw - 48px), calc((100vh - 132px) * 16 / 9));
+      aspect-ratio: 16/9;
+      margin: auto;
       overflow: hidden;
-      border: 1px solid var(--border-light);
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+      background: var(--paper);
+      box-shadow: 0 18px 46px rgb(18 42 56 / 18%);
     }
-
     .slide {
       display: none;
-      width: 100%;
       height: 100%;
-      padding: 56px 80px 100px 80px;
-      grid-template-rows: auto 1fr auto;
-      gap: 24px;
+      padding: 3.5% 4.5%;
+      align-content: center;
+      font-size: clamp(24px, 1.8vw, 28px);
     }
-
-    .slide.active {
-      display: grid;
+    .slide.active { display: grid; }
+    .slide h1, .slide h2 {
+      margin: 0;
+      letter-spacing: -.04em;
+      line-height: 1.08;
     }
-
-    .slide-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
+    .slide h1 { font-size: clamp(36px, 5vw, 76px); }
+    .slide h2 { font-size: clamp(24px, 2.4vw, 34px); }
+    .slide-label {
+      margin: 0 0 20px;
+      color: var(--accent);
+      font-weight: 800;
     }
-
-    .badge-row {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      font-size: 24px;
-      font-weight: 500;
-      padding: 6px 14px;
-      border-radius: 6px;
-      line-height: 1.3;
-    }
-
-    .badge-gray {
-      background-color: var(--tag-gray-bg);
-      color: var(--tag-gray-text);
-    }
-
-    .badge-blue {
-      background-color: var(--tag-blue-bg);
-      color: var(--tag-blue-text);
-    }
-
-    .badge-orange {
-      background-color: var(--tag-orange-bg);
-      color: var(--tag-orange-text);
-    }
-
-    .badge-green {
-      background-color: var(--tag-green-bg);
-      color: var(--tag-green-text);
-    }
-
-    .header-note {
-      font-size: 24px;
-      color: var(--ink-secondary);
-    }
-
-    .slide-title-area {
-      margin-top: 4px;
-    }
-
-    .slide-title-area h1 {
-      font-size: clamp(44px, 4vw, 68px);
-      font-weight: 700;
-      line-height: 1.2;
-      letter-spacing: -0.02em;
-      color: var(--ink-primary);
-      margin-bottom: 12px;
-    }
-
-    .slide-title-area h2 {
-      font-size: clamp(36px, 3.2vw, 52px);
-      font-weight: 600;
-      line-height: 1.25;
-      letter-spacing: -0.01em;
-      color: var(--ink-primary);
-      margin-bottom: 10px;
-    }
-
-    .slide-subtitle {
-      font-size: clamp(24px, 1.8vw, 30px);
-      line-height: 1.5;
-      color: var(--ink-secondary);
+    .slide-lead {
       max-width: 50ch;
+      margin: 10px 0 0;
+      color: var(--muted);
+      font-size: clamp(24px, 1.8vw, 26px);
+      line-height: 1.45;
     }
-
-    .content-body {
-      align-self: center;
-      width: 100%;
-    }
-
-    .grid-2 {
+    .cover-layout, .content-layout {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 28px;
-      width: 100%;
-    }
-
-    .notion-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border-card);
-      border-radius: 8px;
-      padding: 26px 30px;
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-    }
-
-    .notion-card.subtle {
-      background: var(--bg-callout);
-      border-color: var(--border-light);
-    }
-
-    .card-title {
-      font-size: 28px;
-      font-weight: 600;
-      color: var(--ink-primary);
-      display: flex;
+      grid-template-columns: 1.12fr .88fr;
+      gap: 7%;
       align-items: center;
-      justify-content: space-between;
     }
-
-    .card-desc {
-      font-size: 24px;
-      line-height: 1.55;
-      color: var(--ink-primary);
+    .cover-meta {
+      margin: 0;
+      padding: 14px 0;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      color: var(--muted);
+      line-height: 1.7;
     }
-
-    .notion-list {
+    .rule-list {
+      margin: 0;
+      padding: 0;
       list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
+      border-top: 1px solid var(--line);
     }
-
-    .notion-list li {
-      font-size: 24px;
-      line-height: 1.55;
-      color: var(--ink-primary);
-      position: relative;
-      padding-left: 28px;
-    }
-
-    .notion-list li::before {
-      content: "-";
-      position: absolute;
-      left: 8px;
-      color: var(--ink-secondary);
-      font-weight: bold;
-    }
-
-    .metric-row {
-      display: flex;
-      align-items: baseline;
-      justify-content: space-between;
+    .rule-list li {
+      display: grid;
+      grid-template-columns: 32% 1fr;
+      gap: 18px;
       padding: 10px 0;
-      border-bottom: 1px solid var(--border-light);
+      border-bottom: 1px solid var(--line);
+    }
+    .rule-list strong { color: var(--accent); }
+    table {
+      width: 100%;
+      margin-top: 16px;
+      border-collapse: collapse;
+      font-size: clamp(20px, 1.5vw, 24px);
+    }
+    th {
+      padding: 8px 14px;
+      background: var(--ink);
+      color: #fff;
+      text-align: left;
+    }
+    td {
+      padding: 8px 14px;
+      border-bottom: 1px solid var(--line);
+    }
+    tbody tr:nth-child(even) { background: #f3f7f7; }
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+    .metrics div { padding: 14px 18px; border-right: 1px solid var(--line); }
+    .metrics div:last-child { border: 0; }
+    .metrics b { display: block; font-size: clamp(26px, 3.2vw, 44px); letter-spacing: -.05em; }
+    .metrics span { display: block; margin-top: 9px; color: var(--muted); }
+    .next-steps { margin: 0; padding-left: 1.2em; }
+    .next-steps li {
+      padding: 8px 0;
+      color: var(--muted);
       font-size: 24px;
     }
-
-    .metric-row:last-child {
-      border-bottom: none;
+    @media (max-width: 720px) {
+      .deck-header, .deck-controls { width: calc(100% - 32px); flex-wrap: wrap; }
+      .deck-frame { width: 100%; aspect-ratio: auto; overflow: visible; box-shadow: none; }
+      .slide { height: auto; min-height: 70vh; padding: 6%; }
+      .cover-layout, .content-layout { grid-template-columns: 1fr; gap: 20px; }
+      .cover-meta { padding: 14px 0; }
+      .rule-list li { grid-template-columns: 1fr; gap: 4px; padding: 10px 0; }
+      .metrics { grid-template-columns: 1fr; }
+      .metrics div { padding: 12px 9px; border-right: 0; border-bottom: 1px solid var(--line); }
+      .metrics div:last-child { border-bottom: 0; }
+      th, td { padding: 8px 10px; }
+      .deck-controls button { padding: 8px 12px; }
     }
-
-    .metric-label {
-      color: var(--ink-secondary);
-    }
-
-    .metric-value {
-      font-weight: 600;
-      font-family: var(--font-mono);
-      color: var(--ink-primary);
-    }
-
-    .slide-footer {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      border-top: 1px solid var(--border-light);
-      padding-top: 14px;
-    }
-
-    .footer-notice {
-      font-size: 24px;
-      color: var(--ink-secondary);
-    }
-
-    .nav-controls {
-      position: absolute;
-      right: 48px;
-      bottom: 24px;
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      z-index: 10;
-    }
-
-    .nav-btn {
-      font-family: var(--font-sans);
-      font-size: 24px;
-      font-weight: 500;
-      background: #ffffff;
-      color: var(--ink-primary);
-      border: 1px solid var(--border-medium);
-      border-radius: 6px;
-      padding: 8px 20px;
-      cursor: pointer;
-      transition: all 0.15s ease;
-    }
-
-    .nav-btn:hover {
-      background: var(--tag-gray-bg);
-      border-color: var(--ink-secondary);
-    }
-
-    .nav-btn:focus-visible {
-      outline: 2px solid var(--tag-blue-text);
-      outline-offset: 2px;
-    }
-
-    .slide-count {
-      font-family: var(--font-mono);
-      font-size: 24px;
-      font-weight: 500;
-      color: var(--ink-secondary);
-      min-width: 80px;
-      text-align: center;
-    }
-
-    .doc-link {
-      font-size: 24px;
-      color: var(--tag-blue-text);
-      text-decoration: none;
-      font-weight: 500;
-    }
-
-    .doc-link:hover {
-      text-decoration: underline;
-    }
-
     @media print {
-
-      body,
-      .viewport-frame {
-        height: auto !important;
-        overflow: visible !important;
-        background: transparent !important;
-      }
-
-      .deck-container {
-        width: 100vw !important;
-        height: 56.25vw !important;
-        border: none !important;
-        box-shadow: none !important;
-        position: static !important;
-      }
-
-      .slide {
-        display: grid !important;
-        page-break-after: always;
-        break-after: page;
-        height: 100vh !important;
-      }
-
-      .nav-controls {
-        display: none !important;
-      }
+      .template-deck { display: block; background: #fff; }
+      .deck-header, .deck-controls { display: none; }
+      .deck-frame { width: 100%; aspect-ratio: auto; overflow: visible; box-shadow: none; }
+      .slide { display: grid; break-after: page; height: auto; }
     }
-
     @media (prefers-reduced-motion: reduce) {
-      * {
-        transition: none !important;
-      }
-    }
-
-    .content-body,
-    .slide-body {
-      overflow-y: auto;
-      scrollbar-width: thin;
-      min-height: 0
-    }
-
-    @media (max-width: 600px) {
-
-      html,
-      body {
-        overflow-x: hidden;
-        overflow-y: auto;
-      }
-
-      .frame,
-      .viewport-frame {
-        display: block;
-        width: 100%;
-        height: auto;
-        min-height: 100vh;
-        padding: 0;
-        box-sizing: border-box;
-      }
-
-      .deck,
-      .deck-container {
-        width: 100%;
-        min-height: 100vh;
-        height: auto;
-        aspect-ratio: auto;
-        overflow: visible;
-        border: 0;
-        border-radius: 0;
-        box-shadow: none;
-        padding-bottom: 72px;
-        box-sizing: border-box;
-      }
-
-      .slide {
-        min-height: calc(100vh - 72px);
-        height: auto;
-        padding: 28px 20px;
-        gap: 16px;
-        box-sizing: border-box;
-      }
-
-      .slide h1 {
-        font-size: clamp(28px, 8vw, 38px);
-        line-height: 1.2;
-      }
-
-      .slide-title-area h2 {
-        font-size: clamp(26px, 7.5vw, 34px);
-        line-height: 1.2;
-      }
-
-      .slide-lead,
-      .slide-subtitle {
-        font-size: 18px;
-        line-height: 1.45;
-      }
-
-      .content-body,
-      .slide-body {
-        height: auto;
-        overflow: visible;
-        justify-content: flex-start;
-      }
-
-      .cards-grid-2,
-      .cards-grid-3,
-      .grid-2,
-      .grid-3 {
-        grid-template-columns: 1fr;
-        gap: 14px;
-      }
-
-      .card,
-      .notion-card {
-        min-width: 0;
-      }
-
-      .card-list,
-      .notion-list {
-        font-size: 17px;
-        line-height: 1.45;
-      }
-
-      .data-val {
-        font-size: 30px;
-      }
-
-      .slide-footer {
-        display: block;
-        font-size: 14px;
-      }
-
-      .controls,
-      .nav-controls {
-        position: fixed;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        width: 100%;
-        min-height: 64px;
-        padding: 8px 12px;
-        box-sizing: border-box;
-        justify-content: center;
-        gap: 6px;
-        z-index: 100;
-        background: var(--canvas, #fff);
-        border-top: 1px solid var(--border, #ddd);
-      }
-
-      .controls .btn,
-      .nav-controls .nav-btn {
-        min-height: 40px;
-        padding: 6px 10px;
-        font-size: 15px;
-      }
-
-      .controls>a {
-        display: none;
-      }
-
-      .slide-count {
-        font-size: 15px;
-        min-width: 42px;
-        text-align: center;
-      }
-    }
-
-    @media (max-width: 600px) {
-
-      .slide-header,
-      .content-body,
-      .slide-body,
-      .slide-title-area,
-      .notion-card,
-      .card,
-      .notion-list,
-      .card-list,
-      .metric-row {
-        min-width: 0;
-        max-width: 100%;
-        box-sizing: border-box;
-      }
-
-      .badge-row {
-        flex-wrap: wrap;
-        max-width: 100%;
-      }
-
-      .badge,
-      .header-note {
-        max-width: 100%;
-        font-size: 16px;
-        overflow-wrap: anywhere;
-      }
-
-      .notion-card,
-      .card {
-        padding: 20px;
-      }
-
-      .notion-list li,
-      .card-list li {
-        font-size: 18px;
-        overflow-wrap: anywhere;
-        word-break: normal;
-      }
-
-      .metric-row {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 4px;
-      }
-
-      .metric-label,
-      .metric-value {
-        max-width: 100%;
-        overflow-wrap: anywhere;
-      }
+      * { scroll-behavior: auto !important; }
     }
   </style>
 </head>
-
-<body>
-  <div class="viewport-frame">
-    <main class="deck-container" aria-live="off">
-      <section class="slide active" id="slide-1">
-        <header class="slide-header">
-          <div class="badge-row">
-            <span class="badge badge-gray">Software Project Management · สัปดาห์ที่ 05</span>
-            <span class="badge badge-orange">ข้อมูลจำลองเพื่อการเรียน</span>
-          </div>
-          <span class="header-note">W5 Documentation</span>
-        </header>
-        <div class="content-body">
-          <div class="slide-title-area">
-            <h1>สถาปัตยกรรม คุณภาพ ISO 25010 และงบประมาณ</h1>
-            <p class="slide-subtitle">การเปรียบเทียบสถาปัตยกรรม As-is สู่ To-be,
-              การประเมินคุณภาพซอฟต์แวร์ตามกรอบมาตรฐานสากล และการจัดทำงบประมาณโครงการ (ตัวเลขจำลองเพื่อการศึกษา)</p>
-          </div>
-          <div style="margin-top: 32px;">
-            <div class="notion-card subtle">
-              <div class="card-title">สาระสำคัญประจำสัปดาห์</div>
-              <ul class="notion-list">
-                <li>วิเคราะห์จุดเสี่ยงของสคริปต์เดิมที่ใช้ JSON พร้อมวางผังคลาสใหม่แบบ OOP รองรับ SQLite</li>
-                <li>ประเมินคุณภาพ 8 ด้านตาม ISO/IEC 25010 ชี้ชัดจุดบกพร่องด้าน Reliability และ Maintainability</li>
-                <li>จัดทำแผ่นงานงบประมาณโครงการรวม 39,100 บาท (ตัวเลขจำลองเพื่อการศึกษา) พร้อมสำรองความเสี่ยง 15%</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-        <footer class="slide-footer">
-          <a href="index.html" class="doc-link">&larr; กลับสู่เอกสารสัปดาห์ 5</a>
-          <span class="footer-notice">ใช้ปุ่มลูกศรซ้าย/ขวา หรือ Spacebar เพื่อเปลี่ยนหน้าสไลด์</span>
-        </footer>
-      </section>
-      <section class="slide" id="slide-2">
-        <header class="slide-header">
-          <div class="badge-row"><span class="badge badge-gray">สัปดาห์ที่ 5</span><span
-              class="badge badge-green">สารบัญ</span></div><span class="header-note">Overview</span>
-        </header>
-        <div class="content-body">
-          <div class="slide-title-area">
-            <h2>สารบัญสไลด์</h2>
-            <p class="slide-subtitle">กดหัวข้อเพื่อกระโดดไปสไลด์นั้น</p>
-          </div>
-          <article class="notion-card">
-            <ul class="notion-list">
-              <li><a href="#slide-1">สถาปัตยกรรม คุณภาพ ISO 25010 และงบประมาณ</a></li>
-              <li><a href="#slide-3">วิวัฒนาการจาก Monolithic สู่ Modular Clean Architecture</a></li>
-              <li><a href="#slide-4">ผลการประเมินคุณภาพตามมาตรฐาน ISO/IEC 25010</a></li>
-              <li><a href="#slide-5">สรุปแผ่นงานงบประมาณโครงการ (Budget Worksheet)</a></li>
-            </ul>
-          </article>
-        </div>
-        <footer class="slide-footer"><span class="notice">กดหัวข้อเพื่อกระโดดไปสไลด์นั้น</span></footer>
-      </section>
-      <section class="slide" id="slide-3">
-        <header class="slide-header">
-          <div class="badge-row">
-            <span class="badge badge-gray">สัปดาห์ที่ 05</span>
-            <span class="badge badge-blue">สถาปัตยกรรมระบบ</span>
-          </div>
-          <span class="header-note">As-is vs To-be Architecture</span>
-        </header>
-        <div class="content-body">
-          <div class="slide-title-area">
-            <h2>วิวัฒนาการจาก Monolithic สู่ Modular Clean Architecture</h2>
-            <p class="slide-subtitle">แก้ปัญหาจุดเสี่ยงข้อมูลเสียหายด้วยการแยกเลเยอร์และใช้ฐานข้อมูลเชิงสัมพันธ์</p>
-          </div>
-          <div class="grid-2" style="margin-top: 24px;">
-            <article class="notion-card">
-              <div class="card-title">
-                <span>ระบบเดิม (As-is Monolithic)</span>
-                <span class="badge badge-orange">จุดเสี่ยงสูง</span>
-              </div>
-              <ul class="notion-list">
-                <li>รวมส่วนติดต่อผู้ใช้ ตรรกะธุรกิจ และการเข้าถึงไฟล์ไว้ในสคริปต์เดียว (app_v1.py)</li>
-                <li>พึ่งพาตัวแปรโกลบอล x และ db ขาดการห่อหุ้มข้อมูล (Data Encapsulation)</li>
-                <li>เขียนบันทึกทับไฟล์ JSON โดยตรง เสี่ยงข้อมูลพังเสียหายเมื่อโปรแกรมหยุดชะงัก</li>
-              </ul>
-            </article>
-            <article class="notion-card">
-              <div class="card-title">
-                <span>ระบบใหม่ (To-be Design)</span>
-                <span class="badge badge-green">มาตรฐาน OOP</span>
-              </div>
-              <ul class="notion-list">
-                <li>แบ่ง 3 เลเยอร์: Presentation (SystemCLI), Service และ Repository</li>
-                <li>จัดการฐานข้อมูลผ่าน DatabaseManager แบบ Singleton Pattern ป้องกันการแย่งใช้ไฟล์</li>
-                <li>รองรับ ACID Transactions ด้วย SQLite และคำนวณส่วนลดสมาชิกด้วย Strategy Pattern</li>
-              </ul>
-            </article>
-          </div>
-        </div>
-        <footer class="slide-footer">
-          <span class="footer-notice">อ้างอิงข้อมูล: architecture.md (สัปดาห์ที่ 5)</span>
-          <span class="header-note">ข้อมูลจำลองเพื่อการเรียน</span>
-        </footer>
-      </section>
-      <section class="slide" id="slide-4">
-        <header class="slide-header">
-          <div class="badge-row">
-            <span class="badge badge-gray">สัปดาห์ที่ 05</span>
-            <span class="badge badge-blue">การประเมินคุณภาพ</span>
-          </div>
-          <span class="header-note">ISO/IEC 25010 Quality Framework</span>
-        </header>
-        <div class="content-body">
-          <div class="slide-title-area">
-            <h2>ผลการประเมินคุณภาพตามมาตรฐาน ISO/IEC 25010</h2>
-            <p class="slide-subtitle">3 ด้านวิกฤตที่ต้องแก้ไขทันที (ตัวเลขจำลองเพื่อการศึกษา)</p>
-          </div>
-          <div class="grid-2" style="margin-top: 24px;">
-            <article class="notion-card">
-              <div class="card-title">
-                <span>3 ด้านวิกฤตที่ต้องได้รับการแก้ไขทันที</span>
-                <span class="badge badge-gray">ข้อบกพร่อง</span>
-              </div>
-              <ul class="notion-list">
-                <li>Reliability (ความน่าเชื่อถือ): เสี่ยงข้อมูลสูญหายสูงจากการขาดระบบ Transaction ในการเขียนไฟล์</li>
-                <li>Security (ความปลอดภัย): ไร้ระบบยืนยันตัวตน และบันทึกข้อมูลแบบข้อความธรรมดา (Plain-text)</li>
-                <li>Maintainability (การบำรุงรักษา): โค้ดรวมในไฟล์เดียว ตัวแปรไม่เป็นไปตามข้อกำหนด PEP 8</li>
-              </ul>
-            </article>
-          </div>
-        </div>
-        <footer class="slide-footer">
-          <span class="footer-notice">อ้างอิงข้อมูล: iso25010_evaluation.md (สัปดาห์ที่ 5)</span>
-          <span class="header-note">ข้อมูลจำลองเพื่อการเรียน</span>
-        </footer>
-      </section>
-
-      <section class="slide" id="slide-5">
-        <header class="slide-header">
-          <div class="badge-row">
-            <span class="badge badge-gray">สัปดาห์ที่ 05</span>
-            <span class="badge badge-blue">งบประมาณ</span>
-          </div>
-          <span class="header-note">ข้อมูลจำลองเพื่อการเรียน</span>
-        </header>
-        <div class="content-body">
-          <div class="slide-title-area">
-            <h2>สรุปแผ่นงานงบประมาณโครงการ</h2>
-            <p class="slide-subtitle">ตัวเลขจำลองจาก Budget Worksheet — แยกต้นทุนฐานและเงินสำรองความเสี่ยงให้ตรวจสอบได้
-            </p>
-          </div>
-          <div class="grid-2" style="margin-top: 24px;">
-            <article class="notion-card">
-              <div class="card-title">ต้นทุนฐาน 34,000 บาท</div>
-              <ul class="notion-list">
-                <li>ค่าแรงทางตรง: 31,000 บาท</li>
-                <li>โครงสร้างพื้นฐานและซอฟต์แวร์: 3,000 บาท</li>
-                <li>WBS รวม 40 Man-Hours</li>
-              </ul>
-            </article>
-            <article class="notion-card subtle">
-              <div class="card-title">งบประมาณรวม 39,100 บาท</div>
-              <ul class="notion-list">
-                <li>Base Cost: 34,000 บาท</li>
-                <li>Contingency Reserve 15%: 5,100 บาท</li>
-                <li>Total Budget: 39,100 บาท</li>
-              </ul>
-            </article>
-          </div>
-        </div>
-        <footer class="slide-footer">
-          <span class="footer-notice">อ้างอิงข้อมูล: budget_worksheet.md</span>
-          <span class="header-note">ข้อมูลจำลองเพื่อการเรียน</span>
-        </footer>
-      </section>
-
-      <nav class="nav-controls" aria-label="Slide Controls">
-        <button type="button" class="nav-btn" id="prev">ก่อนหน้า</button>
-        <span class="slide-count" id="count">1 / 5</span><span class="sr-only" aria-live="polite" id="slide-live"
-          style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap"></span>
-        <button type="button" class="nav-btn" id="next">ถัดไป</button>
-        <button type="button" class="nav-btn" id="restart">เริ่มใหม่</button>
-      </nav>
-
-    </main>
-  </div>
-
+<body class="template-deck" data-template="evidence">
+  <header class="deck-header">
+    <a class="back-link" href="index.html">← กลับเอกสารสัปดาห์ที่ 5</a>
+    <span id="slide-counter" aria-live="polite">1 / 7</span>
+  </header>
+  <main class="deck-frame" aria-label="สไลด์สัปดาห์ที่ 5">
+<section class="slide active" id="slide-1">
+<div class="cover-layout"><div><p class="slide-label">สัปดาห์ที่ 5 · สถาปัตยกรรมและงบประมาณ</p><h1>จากระบบเดิมถึงเป้าใหม่พร้อมงบคุมได้</h1><p class="slide-lead">สัปดาห์นี้ตอบ 3 คำถาม: ระบบเดิมไปต่อได้หรือไม่ เป้าใหม่อยู่ตรงไหน และงบเท่าไร [ข้อมูลจำลองเพื่อการศึกษา]</p></div><p class="cover-meta">เอกสาร: architecture.md<br>iso25010_evaluation.md<br>budget_worksheet.md</p></div>
+</section>
+<section class="slide" id="slide-2">
+<div class="content-layout"><div><h2>ระบบเดิม (As-Is) เป็นสคริปต์เดี่ยวที่ไฟล์พังได้</h2><p class="slide-lead">ที่มา: architecture.md ผัง flowchart — จุดเสี่ยงสีแดง 2 จุดที่โหลดและบันทึก</p></div><ul class="rule-list"><li><strong>โหลด/บันทึก</strong><span>อ่าน data.json ทั้งไฟล์ เขียนทับทั้งไฟล์เมื่อเพิ่มหรือเบิก</span></li><li><strong>เมนู 4 ทาง</strong><span>แสดง เพิ่ม เบิก จบ วนลูปกับ dictionary ในหน่วยความจำ</span></li><li><strong>ไร้เกราะ</strong><span>ไม่ดัก input ผิด ไม่มี transaction ไฟดับไฟล์พังได้</span></li></ul></div>
+</section>
+<section class="slide" id="slide-3">
+<h2>เป้าใหม่แยก 5 คลาสบน SQLite กันข้อมูลหาย</h2>
+<p class="slide-lead">ที่มา: architecture.md แผนภาพ UML — ระบบสมาชิก 4 ระดับยังเป็นแบบออกแบบ</p>
+<table><thead><tr><th>คลาส</th><th>บทบาท</th><th>หมายเหตุ</th></tr></thead><tbody><tr><td>SystemCLI</td><td>Facade รับเมนูประสานงาน</td><td>start display handle</td></tr><tr><td>DatabaseManager</td><td>Singleton เชื่อมต่อเดียว</td><td>commit rollback close</td></tr><tr><td>ProductManager</td><td>Service ดูแลสต็อก</td><td>validate ก่อนอัปเดต</td></tr><tr><td>MemberSystem</td><td>Strategy ส่วนลด 4 ระดับ</td><td>Regular Silver Gold Platinum</td></tr><tr><td>CheckoutProcess</td><td>Controller คิดเงินออกใบเสร็จ</td><td>คำนวณราคาสุทธิ</td></tr></tbody></table>
+</section>
+<section class="slide" id="slide-4">
+<h2>WBS 8 งานใช้เวลาประเมินรวม 40 ชั่วโมง</h2>
+<p class="slide-lead">ที่มา: budget_worksheet.md — เวลาประเมิน ไม่ใช่เวลาจริง</p>
+<table><thead><tr><th>รหัส</th><th>งาน</th><th>ชม.</th></tr></thead><tbody><tr><td>WBS-01</td><td>ออกแบบ To-Be และ class diagram</td><td>5</td></tr><tr><td>WBS-02</td><td>ตั้ง SQLite ย้ายข้อมูลจาก JSON</td><td>5</td></tr><tr><td>WBS-03</td><td>คลาส DatabaseManager Singleton</td><td>4</td></tr><tr><td>WBS-04</td><td>ProductManager จัดการสต็อก</td><td>4</td></tr><tr><td>WBS-05</td><td>MemberSystem สมาชิกและส่วนลด</td><td>4</td></tr><tr><td>WBS-06</td><td>SystemCLI Facade หน้าจอผู้ใช้</td><td>3</td></tr><tr><td>WBS-07</td><td>รวมระบบและทดสอบ integration</td><td>10</td></tr><tr><td>WBS-08</td><td>ตรวจคุณภาพโค้ดและเอกสารสรุป</td><td>5</td></tr></tbody></table>
+</section>
+<section class="slide" id="slide-5">
+<h2>ต้นทุนแรงงานประเมินไว้ 31,000 บาท</h2>
+<p class="slide-lead">ที่มา: budget_worksheet.md [ข้อมูลจำลองเพื่อการศึกษา]</p>
+<table><thead><tr><th>รายการ</th><th>ยอด (บาท)</th></tr></thead><tbody><tr><td>แรงงาน PM 500x20 ชม</td><td>10,000</td></tr><tr><td>แรงงาน Tech Lead 600x25 ชม</td><td>15,000</td></tr><tr><td>แรงงาน QA 400x15 ชม</td><td>6,000</td></tr><tr><td>รวมแรงงาน 60 ชม 31,000</td><td>31,000</td></tr></tbody></table>
+</section>
+<section class="slide" id="slide-6">
+<h2>งบโครงการรวม 39,100 บาทพร้อมสำรอง 15 เปอร์เซ็นต์</h2>
+<p class="slide-lead">ที่มา: budget_worksheet.md [ข้อมูลจำลองเพื่อการศึกษา] — คนละฐานคิดกับงบฐาน 18,823 ของสัปดาห์ที่ 7</p>
+<table><thead><tr><th>รายการ</th><th>ยอด (บาท)</th></tr></thead><tbody><tr><td>โครงสร้างพื้นฐาน cloud CI license</td><td>3,000</td></tr><tr><td>ฐานต้นทุนรวม</td><td>34,000</td></tr><tr><td>สำรองเสี่ยง 15 เปอร์เซ็นต์</td><td>5,100</td></tr><tr><td>งบโครงการรวม</td><td>39,100</td></tr><tr><td>งบฐานอนุมัติสัปดาห์ที่ 7</td><td>18,823</td></tr></tbody></table>
+</section>
+<section class="slide" id="slide-7">
+<h2>ISO 25010 verdict: 3 ด้านต่ำต้องรื้อ</h2>
+<p class="slide-lead">ที่มา: iso25010_evaluation.md ประเมิน app_v1.py — คำตัดสิน: Reliability Security Maintainability ต่ำ ต้องย้าย SQLite แบบ OOP</p>
+<table><thead><tr><th>ด้าน</th><th>ผลประเมิน</th></tr></thead><tbody><tr><td>Functional</td><td>พื้นฐานได้ ขาดสมาชิกและกันติดลบ</td></tr><tr><td>Performance</td><td>ไฟล์เล็กเร็ว โตแล้วโหลดทั้งไฟล์ช้า</td></tr><tr><td>Compatibility</td><td>ข้ามแพลตฟอร์ม ไม่มี API เชื่อมต่อ</td></tr><tr><td>Usability</td><td>CLI ยาก ไม่มี validation หลุดง่าย</td></tr><tr><td>Reliability</td><td>ต่ำมาก ไม่มี transaction ไฟล์พังได้</td></tr><tr><td>Security</td><td>ต่ำมาก plain-text ไร้ auth</td></tr><tr><td>Maintainability</td><td>ต่ำมาก monolith ไม่ตาม PEP 8</td></tr><tr><td>Portability</td><td>มี Python รันได้ทุก OS</td></tr></tbody></table>
+</section>
+<section class="slide" id="slide-8">
+<div class="cover-layout"><div><h2>ยึดเวิร์กชีตเป็นกรอบ เทียบเวลาจริงบน Trello</h2><p class="slide-lead">ยึดเวิร์กชีตเป็นกรอบ เทียบเวลาจริงใน Trello [ข้อมูลจำลองเพื่อการศึกษา]</p></div><ol class="next-steps"><li>ตั้ง Trello custom fields: Estimated Actual Cost ทุกการ์ด</li><li>สมาชิกบันทึก Actual Hours เมื่อเสร็จเพื่อเทียบประเมิน (ที่มา: work.md ครบทุกรายการ)</li><li>ทบทวน To-Be กับ Tech Lead ก่อนย้ายฐานข้อมูลจริง</li></ol></div>
+</section>
+</main>
+  <footer class="deck-controls"><button id="previous" type="button" aria-label="สไลด์ก่อนหน้า">← ก่อนหน้า</button><button id="next" type="button" aria-label="สไลด์ถัดไป">ถัดไป →</button></footer>
   <script>
-    const slides = Array.from(document.querySelectorAll('.slide'));
-    const storageKey = 'spm-site-week-5-slide';
-    let currentIndex = 0;
-    (function initPos() {
-      const fresh = /[?&]fresh=1/.test(location.search);
-      const m = /#slide-(\d+)/.exec(location.hash);
-      if (m) {
-        const h = parseInt(m[1], 10) - 1;
-        if (!isNaN(h) && h >= 0 && h < slides.length) { currentIndex = h; return; }
-      }
-      if (!fresh) {
-        try {
-          const s = Number(localStorage.getItem(storageKey)) || 0;
-          currentIndex = Math.max(0, Math.min(slides.length - 1, s));
-        } catch (e) { /* storage unavailable */ }
-      }
-    })();
-
-    function updateSlide(index) {
-      currentIndex = (index + slides.length) % slides.length;
-      slides.forEach((slide, idx) => {
-        slide.classList.toggle('active', idx === currentIndex);
-      });
-      document.getElementById('count').textContent = (currentIndex + 1) + ' / ' + slides.length;
-      try {
-        history.replaceState(null, '', '#slide-' + (currentIndex + 1));
-      } catch (e) { /* ignore */ }
-      var liveB = document.getElementById('slide-live');
-      if (liveB) {
-        liveB.textContent = 'สไลด์ ' + (currentIndex + 1) + ' จาก ' + slides.length;
-      }
-      try { localStorage.setItem(storageKey, currentIndex); } catch (e) { }
-    }
-
-    document.getElementById('prev').addEventListener('click', () => updateSlide(currentIndex - 1));
-    document.getElementById('next').addEventListener('click', () => updateSlide(currentIndex + 1));
-    document.getElementById('restart').addEventListener('click', () => {
-      try { localStorage.removeItem(storageKey); } catch (e) { /* ignore */ }
-      updateSlide(0);
-    });
-
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Home') {
-        e.preventDefault();
-        updateSlide(0);
-      } else if (e.key === 'End') {
-        e.preventDefault();
-        updateSlide(slides.length - 1);
-      } else if (e.key === 'ArrowLeft') {
-        updateSlide(currentIndex - 1);
-      } else if (e.key === 'ArrowRight' || e.key === ' ') {
-        e.preventDefault();
-        updateSlide(currentIndex + 1);
-      }
-    });
-
-    updateSlide(currentIndex);
+const slides = [...document.querySelectorAll(".slide")];
+const count = document.querySelector("#slide-counter");
+const storageKey = "spm-week-5-evidence";
+function slideFromHash() {
+  const match = /#slide-(\d+)/.exec(window.location.hash || "");
+  if (!match) return null;
+  const index = Number.parseInt(match[1], 10) - 1;
+  return Number.isInteger(index) && index >= 0 && index < slides.length ? index : null;
+}
+function storedSlide() {
+  try {
+    const value = window.localStorage.getItem(storageKey);
+    if (value === null) return null;
+    const index = Number.parseInt(value, 10);
+    return Number.isInteger(index) && index >= 0 && index < slides.length ? index : null;
+  } catch (error) {
+    return null;
+  }
+}
+function rememberSlide(index) {
+  try {
+    window.localStorage.setItem(storageKey, String(index));
+  } catch (error) {
+  }
+}
+let current = slideFromHash() ?? storedSlide() ?? 0;
+function show(index) {
+  current = Math.min(Math.max(index, 0), slides.length - 1);
+  slides.forEach((slide, position) => slide.classList.toggle("active", position === current));
+  count.textContent = `${current + 1} / ${slides.length}`;
+  previousBtn.disabled = current === 0;
+  nextBtn.disabled = current === slides.length - 1;
+  rememberSlide(current);
+  try {
+    window.history.replaceState(null, "", `#slide-${current + 1}`);
+  } catch (error) {
+  }
+}
+function showFromHash() {
+  const index = slideFromHash();
+  if (index !== null) show(index);
+}
+var previousBtn = document.querySelector("#previous");
+var nextBtn = document.querySelector("#next");
+previousBtn.addEventListener("click", () => show(current - 1));
+nextBtn.addEventListener("click", () => show(current + 1));
+document.addEventListener("keydown", (event) => {
+  if (event.key === "ArrowRight" || event.key === "PageDown" || event.key === " ") {
+    event.preventDefault();
+    show(current + 1);
+  }
+  if (event.key === "ArrowLeft" || event.key === "PageUp") {
+    event.preventDefault();
+    show(current - 1);
+  }
+  if (event.key === "Home") {
+    event.preventDefault();
+    show(0);
+  }
+  if (event.key === "End") {
+    event.preventDefault();
+    show(slides.length - 1);
+  }
+});
+window.addEventListener("hashchange", showFromHash);
+show(current);
   </script>
-  <script>window.addEventListener('hashchange', function () { location.reload(); });</script>
 </body>
-
 </html>

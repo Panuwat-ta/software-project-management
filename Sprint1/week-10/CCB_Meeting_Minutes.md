@@ -7,7 +7,6 @@
 | วาระการประชุม (Agenda) | พิจารณาคำขอด่วน CR-02 (ขอส่งออก CSV รายงานสต็อกต่ำทันที) + รับทราบ BUG-101 |
 | ข้อมูลนำเข้า (Inputs) | `Defect_Log_BUG-101.md`, `CR-02_Impact_Decision_Form.md` (ตัวเลข 4.5 Man-Hours / ประมาณ 1,350 บาท) |
 | คณะกรรมการ CCB (Members) | Sponsor / อาจารย์ (อำนาจสูงสุดด้านงบประมาณ+ทิศทางธุรกิจ) • User Representative (คุณค่า+การใช้งานจริง) • Project Manager (ผลกระทบเวลา+งบประมาณ+ทรัพยากร) • Tech Lead (สถาปัตยกรรม+ความเสี่ยงเชิงโค้ด) |
-| การลงนามรับรอง | Project Manager + Sponsor (อาจารย์) ลงนามร่วมกันเป็นหลักฐานแนบรายงาน |
 
 ## สรุปการอภิปราย (Discussion Summary)
 1. **BUG-101:** ยืนยันรุนแรงระดับ Critical/Major (โปรแกรม Crash เมื่อเจอข้อมูลเก่าไร้ `barcode`); รากเหง้าคือขาด Data Validation + Default Fallback ในชั้น `InventoryRepository`; วิธีแก้คือ `dict.get('barcode', '')`
@@ -15,9 +14,9 @@
 3. ชั่งน้ำหนัก **Option A: Approve in Sprint 2** (ได้ CSV ทันที แต่ดึงสำรอง 1,350 บาท + เสี่ยงงาน Barcode หลุด) เทียบกับ **Option B: Defer to Sprint 3** (รักษา Focus 100% ไม่ต้องโอที แต่ลูกค้ารอ 1 สัปดาห์ ใช้จดมือชั่วคราว)
 
 ## มติที่ประชุม (Decision — เลือก 1 ใน 3)
-- [ ]  **Approve (อนุมัติ):** ยอมรับทันที โดยตกลงดึงงบจาก Contingency Reserve หรือขยายเวลา Sprint 2
-- [ ]  **Defer (เลื่อนการทำ):** ยกยอดไปเปิดเป็นการ์ด Task แรกของ Sprint 3
-- [ ]  **Reject (ปฏิเสธ):** ไม่คุ้มค่าทางธุรกิจ หรือเสี่ยงให้โครงการหลักล้มเหลวรุนแรง
+-  **Approve (อนุมัติ):** ยอมรับทันที โดยตกลงดึงงบจาก Contingency Reserve หรือขยายเวลา Sprint 2
+-  **Defer (เลื่อนการทำ):** ยกยอดไปเปิดเป็นการ์ด Task แรกของ Sprint 3
+-  **Reject (ปฏิเสธ):** ไม่คุ้มค่าทางธุรกิจ หรือเสี่ยงให้โครงการหลักล้มเหลวรุนแรง
 - **BUG-101:** อนุมัติให้แก้ที่ราก (`dict.get` Fallback ใน Repository) พร้อม Defect-Driven Test เป็นเกราะถาวร
 - **ข้อตกลงร่วม (หากอนุมัติ CR-02):** อนุมัติ **4.5 Man-Hours @ 300 THB/ชม.** (1,350 บาท จาก Contingency Reserve ที่ตั้งไว้ในสัปดาห์ที่ 5)
 
@@ -38,6 +37,6 @@
 - **Tools:** เช็คโควต้า GitHub Actions ไม่เกิน 2,000 นาทีฟรี/เดือน (Unit Test CSV ทำให้ CI รันบ่อยขึ้น); ตรวจว่าไฟล์ CSV ชั่วคราวไม่กิน Disk Space กระทบค่า Cloud Server
 
 ## รายการที่ต้องดำเนินการ (Action Items)
-- [ ] PM: ถือ CR-02 Impact Analysis Form เข้าพบ Sponsor นำเสนอตัวเลข 4.5 Man-Hours + ผลกระทบ Iron Triangle เสนอ Option A vs B รับมติและขอลายเซ็น
-- [ ] Dev: พัฒนาวิธีแก้ BUG-101 + คลาส `CsvReportExporter` บน Branch `feature/cr02-csv-export` รัน Full Suite ผ่าน 100% แล้ว Push
-- [ ] PM: ตัดยอด Contingency Reserve + อัปเดต Log + ปรับ Forecast/Swapping + สื่อสารทีม
+- PM: ถือ CR-02 Impact Analysis Form เข้าพบ Sponsor นำเสนอตัวเลข 4.5 Man-Hours + ผลกระทบ Iron Triangle เสนอ Option A vs B รับมติและขอลายเซ็น
+- Dev: พัฒนาวิธีแก้ BUG-101 + คลาส `CsvReportExporter` บน Branch `feature/cr02-csv-export` รัน Full Suite ผ่าน 100% แล้ว Push
+- PM: ตัดยอด Contingency Reserve + อัปเดต Log + ปรับ Forecast/Swapping + สื่อสารทีม

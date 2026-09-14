@@ -1,715 +1,100 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="th">
-
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>สไลด์ Phase 1: ข้อเสนอโครงการ | SPM</title>
-  <style>
-    :root {
-      --canvas: #ffffff;
-      --surface: #f6f5f4;
-      --surface-card: #ffffff;
-      --surface-subtle: #f8f8f7;
-      --text: rgba(0, 0, 0, 0.95);
-      --text-secondary: #615d59;
-      --text-muted: #8c8780;
-      --border: rgba(0, 0, 0, 0.1);
-      --border-subtle: rgba(0, 0, 0, 0.06);
-      --accent: #0075de;
-      --accent-hover: #005bab;
-      --badge-blue-bg: #f2f9ff;
-      --badge-blue-text: #097fe8;
-      --badge-gray-bg: #f1f1ef;
-      --badge-gray-text: #615d59;
-      --badge-green-bg: #ebf5ee;
-      --badge-green-text: #1b7a3a;
-      --shadow-card: rgba(0, 0, 0, 0.04) 0px 4px 18px, rgba(0, 0, 0, 0.02) 0px 1px 3px;
-      --font-sans: "Noto Sans Thai", "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-    }
-
-    *,
-    *::before,
-    *::after {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    html,
-    body {
-      width: 100%;
-      height: 100%;
-      overflow: hidden;
-      background-color: var(--surface);
-      color: var(--text);
-      font-family: var(--font-sans);
-      -webkit-font-smoothing: antialiased;
-      line-height: 1.5;
-    }
-
-    .frame {
-      width: 100vw;
-      height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 16px;
-      box-sizing: border-box;
-    }
-
-    .deck {
-      width: min(calc(100vw - 32px), calc((100vh - 32px) * 16 / 9));
-      height: min(calc(100vh - 32px), calc((100vw - 32px) * 9 / 16));
-      aspect-ratio: 16 / 9;
-      background: var(--canvas);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      box-shadow: var(--shadow-card);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .slide {
-      display: none;
-      width: 100%;
-      height: 100%;
-      padding: 4.5% 6%;
-      grid-template-rows: auto 1fr auto;
-      gap: 22px;
-      box-sizing: border-box;
-    }
-
-    .slide.active {
-      display: grid;
-    }
-
-    .slide-header {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .marker-wrap {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .marker-pill {
-      font-size: 24px;
-      font-weight: 600;
-      color: var(--badge-blue-text);
-      background: var(--badge-blue-bg);
-      padding: 4px 16px;
-      border-radius: 9999px;
-      display: inline-block;
-      letter-spacing: -0.01em;
-    }
-
-    .marker-pill.gray {
-      color: var(--badge-gray-text);
-      background: var(--badge-gray-bg);
-    }
-
-    .slide h1 {
-      font-size: clamp(38px, 3.8vw, 58px);
-      line-height: 1.15;
-      letter-spacing: -0.02em;
-      font-weight: 700;
-      color: var(--text);
-      margin: 0;
-    }
-
-    .slide-lead {
-      font-size: clamp(24px, 1.7vw, 28px);
-      line-height: 1.45;
-      color: var(--text-secondary);
-      margin: 0;
-    }
-
-    .slide-body {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      gap: 18px;
-      height: 100%;
-      overflow: hidden;
-    }
-
-    .cards-grid-2 {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 18px;
-    }
-
-    .card {
-      background: var(--surface-card);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 20px 22px;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-
-    .card.subtle {
-      background: var(--surface-subtle);
-    }
-
-    .card-title {
-      font-size: 26px;
-      font-weight: 700;
-      color: var(--text);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .card-text {
-      font-size: clamp(24px, 1.45vw, 26px);
-      line-height: 1.45;
-      color: var(--text-secondary);
-    }
-
-    .card-list {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-
-    .card-list li {
-      font-size: clamp(24px, 1.4vw, 25px);
-      line-height: 1.4;
-      color: var(--text-secondary);
-      position: relative;
-      padding-left: 22px;
-    }
-
-    .card-list li::before {
-      content: "•";
-      position: absolute;
-      left: 6px;
-      color: var(--accent);
-      font-weight: bold;
-    }
-
-    .callout {
-      background: var(--surface-subtle);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 22px 26px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .callout-title {
-      font-size: 26px;
-      font-weight: 700;
-      color: var(--text);
-    }
-
-    .callout-body {
-      font-size: clamp(24px, 1.55vw, 27px);
-      line-height: 1.5;
-      color: var(--text-secondary);
-    }
-
-    .slide-footer {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      border-top: 1px solid var(--border-subtle);
-      padding-top: 14px;
-    }
-
-    .notice {
-      font-size: 24px;
-      color: var(--text-muted);
-    }
-
-    .controls {
-      position: absolute;
-      right: 4.5%;
-      bottom: 3.5%;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      z-index: 20;
-    }
-
-    .btn {
-      font-family: inherit;
-      font-size: 24px;
-      font-weight: 500;
-      background: #ffffff;
-      color: var(--text);
-      border: 1px solid var(--border);
-      border-radius: 9999px;
-      padding: 6px 18px;
-      cursor: pointer;
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.15s ease;
-      line-height: 1.2;
-    }
-
-    .btn:hover {
-      border-color: var(--accent);
-      color: var(--accent);
-    }
-
-    .btn:focus-visible {
-      outline: 2px solid var(--accent);
-      outline-offset: 2px;
-    }
-
-    .slide-count {
-      font-size: 24px;
-      font-family: var(--font-mono);
-      color: var(--text-secondary);
-      font-weight: 500;
-      min-width: 65px;
-      text-align: center;
-    }
-
-    code {
-      font-family: var(--font-mono);
-      font-size: 24px;
-      background: var(--badge-gray-bg);
-      padding: 2px 6px;
-      border-radius: 4px;
-      color: var(--text);
-    }
-
-    @media print {
-
-      body,
-      .frame {
-        background: #ffffff;
-        padding: 0;
-        display: block;
-        height: auto;
-      }
-
-      .deck {
-        width: 100vw;
-        height: 56.25vw;
-        border: none;
-        box-shadow: none;
-        border-radius: 0;
-      }
-
-      .slide {
-        display: grid !important;
-        break-after: page;
-        page-break-after: always;
-        height: 100vh;
-        padding: 50px 70px;
-      }
-
-      .controls {
-        display: none !important;
-      }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      * {
-        transition: none !important;
-        animation: none !important;
-      }
-    }
-
-    .content-body,
-    .slide-body {
-      overflow-y: auto;
-      scrollbar-width: thin;
-      min-height: 0
-    }
-
-    @media (max-width: 600px) {
-
-      html,
-      body {
-        overflow-x: hidden;
-        overflow-y: auto;
-      }
-
-      .frame,
-      .viewport-frame {
-        display: block;
-        width: 100%;
-        height: auto;
-        min-height: 100vh;
-        padding: 0;
-        box-sizing: border-box;
-      }
-
-      .deck,
-      .deck-container {
-        width: 100%;
-        min-height: 100vh;
-        height: auto;
-        aspect-ratio: auto;
-        overflow: visible;
-        border: 0;
-        border-radius: 0;
-        box-shadow: none;
-        padding-bottom: 72px;
-        box-sizing: border-box;
-      }
-
-      .slide {
-        min-height: calc(100vh - 72px);
-        height: auto;
-        padding: 28px 20px;
-        gap: 16px;
-        box-sizing: border-box;
-      }
-
-      .slide h1 {
-        font-size: clamp(28px, 8vw, 38px);
-        line-height: 1.2;
-      }
-
-      .slide-title-area h2 {
-        font-size: clamp(26px, 7.5vw, 34px);
-        line-height: 1.2;
-      }
-
-      .slide-lead,
-      .slide-subtitle {
-        font-size: 18px;
-        line-height: 1.45;
-      }
-
-      .content-body,
-      .slide-body {
-        height: auto;
-        overflow: visible;
-        justify-content: flex-start;
-      }
-
-      .cards-grid-2,
-      .cards-grid-3,
-      .grid-2,
-      .grid-3 {
-        grid-template-columns: 1fr;
-        gap: 14px;
-      }
-
-      .card,
-      .notion-card {
-        min-width: 0;
-      }
-
-      .card-list,
-      .notion-list {
-        font-size: 17px;
-        line-height: 1.45;
-      }
-
-      .data-val {
-        font-size: 30px;
-      }
-
-      .slide-footer {
-        display: block;
-        font-size: 14px;
-      }
-
-      .controls,
-      .nav-controls {
-        position: fixed;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        width: 100%;
-        min-height: 64px;
-        padding: 8px 12px;
-        box-sizing: border-box;
-        justify-content: center;
-        gap: 6px;
-        z-index: 100;
-        background: var(--canvas, #fff);
-        border-top: 1px solid var(--border, #ddd);
-      }
-
-      .controls .btn,
-      .nav-controls .nav-btn {
-        min-height: 40px;
-        padding: 6px 10px;
-        font-size: 15px;
-      }
-
-      .controls>a {
-        display: none;
-      }
-
-      .slide-count {
-        font-size: 15px;
-        min-width: 42px;
-        text-align: center;
-      }
-    }
-
-    @media (max-width: 600px) {
-
-      .slide-header,
-      .content-body,
-      .slide-body,
-      .slide-title-area,
-      .notion-card,
-      .card,
-      .notion-list,
-      .card-list,
-      .metric-row {
-        min-width: 0;
-        max-width: 100%;
-        box-sizing: border-box;
-      }
-
-      .badge-row {
-        flex-wrap: wrap;
-        max-width: 100%;
-      }
-
-      .badge,
-      .header-note {
-        max-width: 100%;
-        font-size: 16px;
-        overflow-wrap: anywhere;
-      }
-
-      .notion-card,
-      .card {
-        padding: 20px;
-      }
-
-      .notion-list li,
-      .card-list li {
-        font-size: 18px;
-        overflow-wrap: anywhere;
-        word-break: normal;
-      }
-
-      .metric-row {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 4px;
-      }
-
-      .metric-label,
-      .metric-value {
-        max-width: 100%;
-        overflow-wrap: anywhere;
-      }
-    }
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="สไลด์ข้อเสนอวางแผนบูรณาการ Phase 1 ระบบคลังสินค้า CLI">
+<title>สไลด์ Phase 1: ข้อเสนอวางแผนบูรณาการ | SPM</title>
+<style>
+:root{--font:"Noto Sans Thai","Leelawadee UI",system-ui,sans-serif;--bg:#e7eeee;--paper:#fff;--ink:#122a38;--muted:#49616b;--accent:#0867a1;--line:#bfd0d4;--soft:#e8f3f8}
+*{box-sizing:border-box}
+body{margin:0;font-family:var(--font);color:var(--ink);background:var(--bg);min-height:100vh;display:grid;grid-template-rows:auto 1fr auto}
+a:focus-visible,button:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+.deck-header,.deck-controls{width:min(1440px,calc(100% - 48px));margin:auto;display:flex;align-items:center;justify-content:space-between;gap:18px;color:var(--muted);font-size:14px}
+.deck-header{padding:18px 0}
+.deck-controls{padding:18px 0}
+.back-link{color:var(--accent);font-weight:700;text-decoration:none}
+.deck-controls button{min-height:44px;padding:10px 16px;border:1px solid var(--line);background:var(--paper);color:var(--ink);font:700 15px var(--font);cursor:pointer}
+.deck-controls button:disabled{opacity:.35;cursor:default}.deck-controls button:hover:not(:disabled){background:var(--accent);border-color:var(--accent);color:#fff}
+.deck-frame{width:min(1440px,calc(100vw - 48px),calc((100vh - 132px) * 16 / 9));aspect-ratio:16/9;margin:auto;overflow:hidden;background:var(--paper);box-shadow:0 18px 46px rgb(18 42 56 / 18%)}
+.slide{display:none;height:100%;padding:3.5% 4.5%;align-content:center}
+.slide.active{display:grid}
+.slide h1{margin:0;letter-spacing:-.04em;line-height:1.08;font-size:clamp(36px,5vw,76px)}
+.slide h2{margin:0;letter-spacing:-.04em;line-height:1.08;font-size:clamp(24px,2.4vw,34px)}
+.slide-label{margin:0 0 20px;color:var(--accent);font-weight:800}
+.slide-lead{max-width:50ch;margin:10px 0 0;color:var(--muted);font-size:clamp(17px,1.8vw,26px);line-height:1.45}
+.cover-meta{margin:0;padding:14px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);color:var(--muted);line-height:1.7}
+.cover-layout,.content-layout{display:grid;grid-template-columns:1.12fr .88fr;gap:7%;align-items:center}
+.rule-list{margin:0;padding:0;list-style:none;border-top:1px solid var(--line)}
+.rule-list li{display:grid;grid-template-columns:32% 1fr;gap:18px;padding:10px 0;border-bottom:1px solid var(--line)}
+.rule-list strong{color:var(--accent)}
+table{width:100%;margin-top:16px;border-collapse:collapse;font-size:clamp(14px,1.45vw,21px)}
+th{padding:8px 14px;font-size:20px;background:var(--ink);color:#fff;text-align:left}
+td{padding:8px 14px;font-size:20px;border-bottom:1px solid var(--line)}
+tbody tr:nth-child(even){background:#f3f7f7}
+.metrics{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.metrics div{padding:14px 18px;border-right:1px solid var(--line)}
+.metrics div:last-child{border:0}
+.metrics b{display:block;font-size:clamp(26px,3.2vw,44px);letter-spacing:-.05em}
+.metrics span{display:block;margin-top:9px;color:var(--muted)}
+.next-steps{margin:0;padding-left:1.2em}
+.next-steps li{padding:8px 0;color:var(--muted);font-size:clamp(16px,1.6vw,24px)}
+@media (max-width:720px){.deck-header,.deck-controls{width:calc(100% - 32px);flex-wrap:wrap}.deck-frame{width:100%;aspect-ratio:auto;overflow:visible;box-shadow:none}.slide{height:auto;min-height:70vh}.cover-layout,.content-layout{grid-template-columns:1fr;gap:20px}.rule-list li{grid-template-columns:1fr;gap:4px}.metrics{grid-template-columns:1fr}th,td{padding:8px 10px}}
+@media print{.deck-header,.deck-controls{display:none}.deck-frame{width:100%;aspect-ratio:auto;overflow:visible;box-shadow:none}.slide{display:grid;break-after:page;height:auto}}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto !important}}
+</style>
 </head>
-
 <body>
-  <div class="frame">
-    <main class="deck" aria-live="off">
-      <section class="slide active" id="slide-1">
-        <header class="slide-header">
-          <div class="marker-wrap">
-            <span class="marker-pill">ข้อมูลสมมติเพื่อการเรียน · Phase 1</span>
-          </div>
-          <h1>ข้อเสนอโครงการฉบับสมบูรณ์</h1>
-          <p class="slide-lead">รวมงานสัปดาห์ที่ 1–4 เป็นแผนปรับปรุงระบบคลังสินค้า CLI [ข้อมูลจำลองเพื่อการศึกษา]</p>
-        </header>
-        <div class="slide-body">
-          <div class="card subtle">
-            <div class="card-title">เป้าหมาย 4 ด้าน</div>
-            <ul class="card-list">
-              <li><strong>Stability</strong> — ทนทานต่อข้อผิดพลาด ไม่พังจาก input</li>
-              <li><strong>Refactoring</strong> — ยุบโค้ดซ้ำ แยกโมดูลชัดเจน</li>
-              <li><strong>Data Integrity</strong> — เซฟ JSON ปลอดภัย</li>
-              <li><strong>Automated Testing</strong> — regression กันของเดิมพัง</li>
-            </ul>
-          </div>
-        </div>
-        <footer class="slide-footer">
-          <span class="notice">ใช้ลูกศร ซ้าย/ขวา หรือ Space เพื่อเปลี่ยนสไลด์</span>
-        </footer>
-      </section>
-
-      <section class="slide" id="slide-2">
-        <header class="slide-header">
-          <div class="marker-wrap"><span class="marker-pill">Phase 1</span><span class="marker-pill gray">สารบัญ</span>
-          </div>
-          <h1>สารบัญสไลด์</h1>
-          <p class="slide-lead">กดหัวข้อเพื่อกระโดดไปสไลด์นั้น</p>
-        </header>
-        <div class="slide-body">
-          <div class="card">
-            <ul class="card-list">
-              <li><a href="#slide-1">ข้อเสนอโครงการฉบับสมบูรณ์</a></li>
-              <li><a href="#slide-3">เฟสงานหลัก</a></li>
-              <li><a href="#slide-4">W1–W4 ใครทำอะไร</a></li>
-            </ul>
-          </div>
-        </div>
-        <footer class="slide-footer"><span class="notice">กดหัวข้อเพื่อกระโดดไปสไลด์นั้น</span></footer>
-      </section>
-
-      <section class="slide" id="slide-3">
-        <header class="slide-header">
-          <div class="marker-wrap">
-            <span class="marker-pill">ขอบเขต 4 เฟส (WBS)</span>
-          </div>
-          <h1>เฟสงานหลัก</h1>
-          <p class="slide-lead">แบ่งงานเป็น 4 เฟสตาม proposal [ข้อมูลจำลอง]</p>
-        </header>
-        <div class="slide-body">
-          <div class="card subtle">
-            <div class="card-title">Phase 1–4</div>
-            <ul class="card-list">
-              <li><strong>เฟส 1:</strong> Refactoring &amp; Infrastructure — เลิก global ใช้ Class</li>
-              <li><strong>เฟส 2:</strong> Member Database — โมเดลสมาชิก + Atomic Write</li>
-              <li><strong>เฟส 3:</strong> Discount &amp; Checkout — ตรรกะส่วนลด</li>
-              <li><strong>เฟส 4:</strong> Exception &amp; QA — ดัก input + Unit Tests</li>
-            </ul>
-          </div>
-        </div>
-        <footer class="slide-footer">
-          <span class="notice">ใช้ลูกศร ซ้าย/ขวา หรือ Space เพื่อเปลี่ยนสไลด์</span>
-        </footer>
-      </section>
-
-      <section class="slide" id="slide-4">
-        <header class="slide-header">
-          <div class="marker-wrap">
-            <span class="marker-pill">ตารางเวลา + Trello</span>
-          </div>
-          <h1>W1–W4 ใครทำอะไร</h1>
-          <p class="slide-lead">สัปดาห์ที่ 1–2 วางแผน/ออกแบบ สัปดาห์ที่ 3–4 ลงมือ/ทดสอบ [ข้อมูลจำลอง]</p>
-        </header>
-        <div class="slide-body">
-          <div class="card subtle">
-            <div class="card-title">ไทม์ไลน์</div>
-            <ul class="card-list">
-              <li><strong>W1:</strong> วิเคราะห์โค้ดเดิม + Charter (Backlog/To Do)</li>
-              <li><strong>W2:</strong> DFD + เสี่ยง + แผนเลิก Global (Done)</li>
-              <li><strong>W3:</strong> โค้ดสินค้า + Exception (Done/Review)</li>
-              <li><strong>W4:</strong> PyTest + เล่ม Proposal (Done)</li>
-            </ul>
-          </div>
-        </div>
-        <footer class="slide-footer">
-          <span class="notice">ใช้ลูกศร ซ้าย/ขวา หรือ Space เพื่อเปลี่ยนสไลด์</span>
-        </footer>
-      </section>
-      <div class="controls">
-        <a href="index.html" class="btn" title="กลับหน้าข้อเสนอ Phase 1">หน้าเนื้อหา</a>
-        <button type="button" class="btn" id="restart-btn">เริ่มใหม่</button>
-        <button type="button" class="btn" id="prev-btn" aria-label="สไลด์ก่อนหน้า">ก่อนหน้า</button>
-        <span class="slide-count" id="slide-counter">1 / 4</span><span class="sr-only" aria-live="polite"
-          id="slide-live"
-          style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap"></span>
-        <button type="button" class="btn" id="next-btn" aria-label="สไลด์ถัดไป">ถัดไป</button>
-      </div>
-    </main>
-  </div>
-
-  <script>
-    (function () {
-      const slides = Array.from(document.querySelectorAll('.slide'));
-      const counter = document.getElementById('slide-counter');
-      const prevBtn = document.getElementById('prev-btn');
-      const nextBtn = document.getElementById('next-btn');
-      const storageKey = 'spm-site-agy-phase1-slide';
-
-      let current = 0;
-      const fresh = /[?&]fresh=1/.test(location.search);
-      const hashMatch = /#slide-(\d+)/.exec(location.hash);
-      if (hashMatch) {
-        const h = parseInt(hashMatch[1], 10) - 1;
-        if (!isNaN(h) && h >= 0 && h < slides.length) {
-          current = h;
-        }
-      } else if (!fresh) {
-        let saved = null;
-        try { saved = localStorage.getItem(storageKey); } catch (e) { }
-        if (saved !== null) {
-          const parsed = parseInt(saved, 10);
-          if (!isNaN(parsed) && parsed >= 0 && parsed < slides.length) {
-            current = parsed;
-          }
-        }
-      }
-
-      function showSlide(index) {
-        if (index < 0) index = slides.length - 1;
-        if (index >= slides.length) index = 0;
-        current = index;
-
-        slides.forEach((slide, idx) => {
-          slide.classList.toggle('active', idx === current);
-        });
-
-        if (counter) {
-          counter.textContent = (current + 1) + ' / ' + slides.length;
-        }
-        try {
-          history.replaceState(null, '', '#slide-' + (current + 1));
-        } catch (e) {
-          // Ignore history errors
-        }
-        var live = document.getElementById('slide-live');
-        if (live) {
-          live.textContent = 'สไลด์ ' + (current + 1) + ' จาก ' + slides.length;
-        }
-
-        try {
-          localStorage.setItem(storageKey, current.toString());
-        } catch (e) {
-          // Ignore localStorage errors
-        }
-      }
-
-      if (prevBtn) {
-        prevBtn.addEventListener('click', () => showSlide(current - 1));
-      }
-      if (nextBtn) {
-        nextBtn.addEventListener('click', () => showSlide(current + 1));
-      }
-      const restartBtn = document.getElementById('restart-btn');
-      if (restartBtn) {
-        restartBtn.addEventListener('click', () => {
-          try { localStorage.removeItem(storageKey); } catch (e) { }
-          showSlide(0);
-        });
-      }
-
-      document.addEventListener('keydown', (e) => {
-        if (e.key === 'Home') {
-          e.preventDefault();
-          showSlide(0);
-        } else if (e.key === 'End') {
-          e.preventDefault();
-          showSlide(slides.length - 1);
-        } else if (e.key === 'ArrowLeft') {
-          showSlide(current - 1);
-        } else if (e.key === 'ArrowRight' || e.key === ' ') {
-          e.preventDefault();
-          showSlide(current + 1);
-        }
-      });
-
-      showSlide(current);
-    })();
-  </script>
-  <script>window.addEventListener('hashchange', function () { location.reload(); });</script>
+<header class="deck-header"><a class="back-link" href="index.html">← เอกสาร Phase 1</a><span id="slide-counter" aria-live="polite">1 / 7</span></header>
+<main class="deck-frame" aria-label="สไลด์ข้อเสนอวางแผนบูรณาการ Phase 1">
+<section class="slide active" id="slide-1">
+<div class="cover-layout"><div><p class="slide-label">Phase 1 · Integrated Planning proposal</p><h1>คลัง CLI เสถียรดูแลรักษาได้</h1><p class="slide-lead">proposal ฉบับรวมสัปดาห์ 1 ถึง 4: charter scope, WBS 4 เฟส, ตารางเวลา Trello, ความเสี่ยง risk 4 ข้อ, DFD และ PyTest</p></div><p class="cover-meta">เอกสาร: Integrated_Planning_Proposal.md<br>CLI Inventory Management System<br>รายวิชา Software Project Management</p></div>
+</section>
+<section class="slide" id="slide-2">
+<h2>Charter ตั้ง 4 เป้าขับงาน 4 เฟสตาม WBS</h2>
+<p class="slide-lead">ที่มา: Integrated_Planning_Proposal.md ส่วนที่ 1 Project Charter และ Final Scope WBS</p>
+<table><thead><tr><th>WBS</th><th>เฟสงาน</th><th>งานหลัก</th></tr></thead><tbody><tr><td>เฟส 1</td><td>รากฐานโครงสร้าง</td><td>แยก members.json ใช้ class แทน global</td></tr><tr><td>เฟส 2</td><td>ฐานข้อมูลสมาชิก</td><td>โมเดลสมาชิก LOAD SAVE แบบ atomic</td></tr><tr><td>เฟส 3</td><td>ส่วนลดและขาย</td><td>discount engine checkout ตรวจก่อนหักสต็อก</td></tr><tr><td>เฟส 4</td><td>ดักผิดพลาด QA</td><td>ดัก input เสีย degradation unit tests</td></tr></tbody></table>
+</section>
+<section class="slide" id="slide-3">
+<h2>ตารางเวลา 4 สัปดาห์เดินบนบอร์ด Trello</h2>
+<p class="slide-lead">ที่มา: Integrated_Planning_Proposal.md ส่วนที่ 2 Time Schedule ติดตามบน Trello</p>
+<table><thead><tr><th>สัปดาห์</th><th>เฟสงาน</th><th>สถานะ Trello</th></tr></thead><tbody><tr><td>สัปดาห์ที่ 1</td><td>รากฐาน Charter Scope</td><td>Backlog To Do</td></tr><tr><td>สัปดาห์ที่ 2</td><td>ฐานสมาชิก DFD risk</td><td>Done</td></tr><tr><td>สัปดาห์ที่ 3</td><td>ส่วนลด ขาย ดักผิดพลาด</td><td>Done Review</td></tr><tr><td>สัปดาห์ที่ 4</td><td>PyTest proposal รวม</td><td>Done</td></tr></tbody></table>
+</section>
+<section class="slide" id="slide-4">
+<h2>ความเสี่ยง 4 ข้อมีแผนรับมือก่อนลงมือ refactor</h2>
+<p class="slide-lead">ที่มา: Integrated_Planning_Proposal.md ส่วนที่ 3 Risk Matrix ก่อนลงมือ refactor</p>
+<table><thead><tr><th>risk</th><th>ผลกระทบ</th><th>แผนรับมือ</th></tr></thead><tbody><tr><td>global state ขัดกัน</td><td>เขียนทับไม่ตั้งใจ คำนวณผิด</td><td>แปลง OOP แยก logic จาก CLI</td></tr><tr><td>ไฟล์เสียหายตอนเซฟ</td><td>dump ตรง ไฟดับข้อมูลหาย</td><td>atomic write ผ่านไฟล์ชั่วคราว</td></tr><tr><td>ชนิดข้อมูลผิด</td><td>ตัวอักษรแทนเลข ValueError ล่ม</td><td>ตรวจ input ดัก try-except</td></tr><tr><td>ภาษาไทยเพี้ยน</td><td>ไม่ระบุ encoding อ่านผิด OS</td><td>อ่านเขียน UTF-8 เสมอ</td></tr></tbody></table>
+</section>
+<section class="slide" id="slide-5">
+<div class="content-layout"><div><h2>ข้อมูลไหล 6 โพรเซสผ่านตัวแปร x ตัวเดียว</h2><p class="slide-lead">ที่มา: Integrated_Planning_Proposal.md ส่วนที่ 4 เชื่อมผู้ใช้ ตัวแปร x และ data.json</p></div><ul class="rule-list"><li><strong>P1 P2 โหลดแสดง</strong><span>load จาก data.json ลง x แล้ว show_all บนจอ</span></li><li><strong>P3 P4 เพิ่มตัด</strong><span>add_update และ cut_stock อัปเดต x แล้วสั่ง save</span></li><li><strong>P5 P6 สรุปเซฟ</strong><span>check_check สรุปรายงาน save เขียนทับแบบปลอดภัย</span></li></ul></div>
+</section>
+<section class="slide" id="slide-6">
+<div class="content-layout"><div><h2>PyTest 3 เคสล็อกพฤติกรรมตัดสต็อกกัน regression</h2><p class="slide-lead">ที่มา: Integrated_Planning_Proposal.md ส่วนที่ 4 กัน regression จุดตัดสต็อก</p></div><ul class="rule-list"><li><strong>ทางปกติ</strong><span>ตัด 5 จาก 20 เหลือ 15 สำเร็จ</span></li><li><strong>เบิกเกินสต็อก</strong><span>ตัด 15 จาก 10 ล้มเหลว กันค่าติดลบ</span></li><li><strong>ID ไม่มีในระบบ</strong><span>ตัดรหัส 999 ล้มเหลวแจ้งไม่พบสินค้า</span></li></ul></div>
+</section>
+<section class="slide" id="slide-7">
+<div class="cover-layout"><div><h2>Proposal พร้อมเดิน Phase 1 ตาม WBS 4 เฟส</h2><p class="slide-lead">ยึด WBS 4 เฟส เดินงานบน Trello เฝ้า risk 4 ข้อ</p></div><ol class="next-steps"><li>ยืนยัน Safe Save ที่ P6 ก่อนเริ่ม refactor</li><li>ล็อกพฤติกรรมตัดสต็อกด้วย PyTest 3 เคส</li><li>เริ่ม Phase 1 ตาม WBS บนบอร์ด Trello</li></ol></div>
+</section>
+</main>
+<footer class="deck-controls"><button id="previous" type="button" aria-label="สไลด์ก่อนหน้า">← ก่อนหน้า</button><button id="next" type="button" aria-label="สไลด์ถัดไป">ถัดไป →</button></footer>
+<script>
+(function(){
+var slides=Array.prototype.slice.call(document.querySelectorAll(".slide"));
+var count=document.getElementById("slide-counter");
+var storageKey="spm-phase1-evidence";
+function slideFromHash(){var m=/#slide-(\d+)/.exec(window.location.hash||"");if(!m)return null;var i=parseInt(m[1],10)-1;return(i>=0&&i<slides.length)?i:null;}
+function storedSlide(){try{var v=window.localStorage.getItem(storageKey);if(v===null)return null;var i=parseInt(v,10);return(i>=0&&i<slides.length)?i:null;}catch(err){return null;}}
+function rememberSlide(i){try{window.localStorage.setItem(storageKey,String(i));}catch(err){}}
+var current=slideFromHash();if(current===null)current=storedSlide();if(current===null)current=0;
+function show(i){current=Math.min(Math.max(i,0),slides.length-1);slides.forEach(function(s,n){s.classList.toggle("active",n===current);});if(count)count.textContent=(current+1)+" / "+slides.length;previousBtn.disabled=current===0;nextBtn.disabled=current===slides.length-1;rememberSlide(current);try{window.history.replaceState(null,"","#slide-"+(current+1));}catch(err){}}
+function showFromHash(){var i=slideFromHash();if(i!==null)show(i);}
+var previousBtn=document.getElementById("previous");
+var nextBtn=document.getElementById("next");
+previousBtn.addEventListener("click",function(){show(current-1);});
+nextBtn.addEventListener("click",function(){show(current+1);});
+document.addEventListener("keydown",function(e){if(e.key==="ArrowRight"||e.key==="PageDown"||e.key===" "){e.preventDefault();show(current+1);}else if(e.key==="ArrowLeft"||e.key==="PageUp"){e.preventDefault();show(current-1);}else if(e.key==="Home"){e.preventDefault();show(0);}else if(e.key==="End"){e.preventDefault();show(slides.length-1);}});
+window.addEventListener("hashchange",showFromHash);
+show(current);
+})();
+</script>
 </body>
-
 </html>

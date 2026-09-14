@@ -1,908 +1,302 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="th">
-
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>สไลด์สัปดาห์ที่ 12: ปิดงาน UAT, Final EVM และ Release | SPM</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>สไลด์สัปดาห์ที่ 12 | CLI Inventory Management</title>
   <style>
     :root {
-      --canvas: #ffffff;
-      --surface: #f6f5f4;
-      --surface-card: #ffffff;
-      --surface-subtle: #f8f8f7;
-      --text: rgba(0, 0, 0, 0.95);
-      --text-secondary: #615d59;
-      --text-muted: #8c8780;
-      --border: rgba(0, 0, 0, 0.1);
-      --border-subtle: rgba(0, 0, 0, 0.06);
-      --accent: #0075de;
-      --accent-hover: #005bab;
-      --badge-blue-bg: #f2f9ff;
-      --badge-blue-text: #097fe8;
-      --badge-gray-bg: #f1f1ef;
-      --badge-gray-text: #615d59;
-      --badge-green-bg: #ebf5ee;
-      --badge-green-text: #1b7a3a;
-      --shadow-card: rgba(0, 0, 0, 0.04) 0px 4px 18px, rgba(0, 0, 0, 0.02) 0px 1px 3px;
-      --font-sans: "Noto Sans Thai", "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      --font: "Noto Sans Thai", "Leelawadee UI", system-ui, sans-serif;
+      --serif: "TH Sarabun New", "Angsana New", Georgia, serif;
+      --bg: #e7eeee;
+      --paper: #fff;
+      --ink: #122a38;
+      --muted: #49616b;
+      --accent: #0867a1;
+      --line: #bfd0d4;
+      --soft: #e8f3f8;
     }
-
-    *,
-    *::before,
-    *::after {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    html,
+    * { box-sizing: border-box; }
     body {
-      width: 100%;
-      height: 100%;
-      overflow: hidden;
-      background-color: var(--surface);
-      color: var(--text);
-      font-family: var(--font-sans);
-      -webkit-font-smoothing: antialiased;
-      line-height: 1.5;
+      margin: 0;
+      font-family: var(--font);
+      color: var(--ink);
+      background: var(--bg);
     }
-
-    .frame {
-      width: 100vw;
-      height: 100vh;
+    a:focus-visible, button:focus-visible {
+      outline: 3px solid var(--accent);
+      outline-offset: 3px;
+    }
+    .back-link { color: var(--accent); font-weight: 700; text-decoration: none; }
+    .template-deck {
+      min-height: 100vh;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      background: var(--bg);
+    }
+    .deck-header, .deck-controls {
+      width: min(1440px, calc(100% - 48px));
+      margin: auto;
       display: flex;
       align-items: center;
-      justify-content: center;
-      padding: 16px;
-      box-sizing: border-box;
+      justify-content: space-between;
+      gap: 18px;
+      color: var(--muted);
+      font-size: 14px;
     }
-
-    .deck {
-      width: min(calc(100vw - 32px), calc((100vh - 32px) * 16 / 9));
-      height: min(calc(100vh - 32px), calc((100vw - 32px) * 9 / 16));
-      aspect-ratio: 16 / 9;
-      background: var(--canvas);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      box-shadow: var(--shadow-card);
-      position: relative;
+    .deck-header { padding: 18px 0; }
+    .deck-controls { padding: 18px 0; }
+    .deck-controls button {
+      min-height: 44px;
+      padding: 10px 16px;
+      border: 1px solid var(--line);
+      background: var(--paper);
+      color: var(--ink);
+      font: 700 15px var(--font);
+      cursor: pointer;
+    }
+    .deck-controls button:disabled { opacity: .35; cursor: default; }
+.deck-controls button:hover:not(:disabled) {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+    }
+    .deck-frame {
+      width: min(1440px, calc(100vw - 48px), calc((100vh - 132px) * 16 / 9));
+      aspect-ratio: 16/9;
+      margin: auto;
       overflow: hidden;
+      background: var(--paper);
+      box-shadow: 0 18px 46px rgb(18 42 56 / 18%);
     }
-
     .slide {
       display: none;
-      width: 100%;
       height: 100%;
-      padding: 4.5% 6%;
-      grid-template-rows: auto 1fr auto;
-      gap: 22px;
-      box-sizing: border-box;
+      padding: 3.5% 4.5%;
+      align-content: center;
     }
-
-    .slide.active {
-      display: grid;
-    }
-
-    .slide-header {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .marker-wrap {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .marker-pill {
-      font-size: 24px;
-      font-weight: 600;
-      color: var(--badge-blue-text);
-      background: var(--badge-blue-bg);
-      padding: 4px 16px;
-      border-radius: 9999px;
-      display: inline-block;
-      letter-spacing: -0.01em;
-    }
-
-    .marker-pill.gray {
-      color: var(--badge-gray-text);
-      background: var(--badge-gray-bg);
-    }
-
-    .marker-pill.green {
-      color: var(--badge-green-text);
-      background: var(--badge-green-bg);
-    }
-
-    .slide h1 {
-      font-size: clamp(38px, 3.8vw, 58px);
-      line-height: 1.15;
-      letter-spacing: -0.02em;
-      font-weight: 700;
-      color: var(--text);
+    .slide.active { display: grid; }
+    .slide h1, .slide h2 {
       margin: 0;
+      letter-spacing: -.04em;
+      line-height: 1.08;
     }
-
+    .slide h1 { font-size: clamp(36px, 5vw, 76px); }
+    .slide h2 { font-size: clamp(24px, 2.4vw, 34px); }
+    .slide-label {
+      margin: 0 0 20px;
+      color: var(--accent);
+      font-weight: 800;
+    }
     .slide-lead {
-      font-size: clamp(24px, 1.7vw, 28px);
+      max-width: 50ch;
+      margin: 10px 0 0;
+      color: var(--muted);
+      font-size: clamp(17px, 1.8vw, 26px);
       line-height: 1.45;
-      color: var(--text-secondary);
-      margin: 0;
     }
-
-    .slide-body {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      gap: 18px;
-      height: 100%;
-      overflow: hidden;
-    }
-
-    .cards-grid-2 {
+    .cover-layout, .content-layout {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 18px;
-    }
-
-    .cards-grid-3 {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 16px;
-    }
-
-    .card {
-      background: var(--surface-card);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 20px 22px;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-
-    .card.subtle {
-      background: var(--surface-subtle);
-    }
-
-    .card-title {
-      font-size: 26px;
-      font-weight: 700;
-      color: var(--text);
-      display: flex;
+      grid-template-columns: 1.12fr .88fr;
+      gap: 7%;
       align-items: center;
-      justify-content: space-between;
     }
-
-    .card-text {
-      font-size: clamp(24px, 1.4vw, 25px);
-      line-height: 1.45;
-      color: var(--text-secondary);
+    .cover-meta {
+      margin: 0;
+      padding: 14px 0;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      color: var(--muted);
+      line-height: 1.7;
     }
-
-    .card-list {
-      list-style: none;
+    .rule-list {
+      margin: 0;
       padding: 0;
-      margin: 0;
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
+      list-style: none;
+      border-top: 1px solid var(--line);
     }
-
-    .card-list li {
-      font-size: clamp(24px, 1.4vw, 25px);
-      line-height: 1.4;
-      color: var(--text-secondary);
-      position: relative;
-      padding-left: 22px;
+    .rule-list li {
+      display: grid;
+      grid-template-columns: 32% 1fr;
+      gap: 18px;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--line);
     }
-
-    .card-list li::before {
-      content: "•";
-      position: absolute;
-      left: 6px;
-      color: var(--accent);
-      font-weight: bold;
+    .rule-list strong { color: var(--accent); }
+    table {
+      width: 100%;
+      margin-top: 16px;
+      border-collapse: collapse;
+      font-size: clamp(14px, 1.45vw, 21px);
     }
-
-    .data-item {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
+    th {
+      padding: 8px 14px;
+      background: var(--ink);
+      color: #fff;
+      text-align: left;
     }
-
-    .data-label {
-      font-size: 24px;
-      color: var(--text-secondary);
-      font-weight: 500;
+    td {
+      padding: 8px 14px;
+      border-bottom: 1px solid var(--line);
     }
-
-    .data-val {
-      font-size: clamp(28px, 2.3vw, 36px);
-      font-weight: 700;
-      font-family: var(--font-mono);
-      color: var(--text);
+    tbody tr:nth-child(even) { background: #f3f7f7; }
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
     }
-
-    .data-sub {
-      font-size: 24px;
-      color: var(--text-muted);
-      line-height: 1.35;
+    .metrics div { padding: 14px 18px; border-right: 1px solid var(--line); }
+    .metrics div:last-child { border: 0; }
+    .metrics b { display: block; font-size: clamp(26px, 3.2vw, 44px); letter-spacing: -.05em; }
+    .metrics span { display: block; margin-top: 9px; color: var(--muted); }
+    .next-steps { margin: 0; padding-left: 1.2em; }
+    .next-steps li {
+      padding: 8px 0;
+      color: var(--muted);
+      font-size: clamp(16px, 1.6vw, 24px);
     }
-
-    .callout {
-      background: var(--surface-subtle);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 22px 26px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
+    .slide-label, .slide-lead, .cover-meta, .rule-list li, .next-steps li, .metrics span, table { font-size: clamp(24px, 1.6vw, 26px); }
+    @media (max-width: 720px) {
+      .deck-header, .deck-controls { width: calc(100% - 32px); flex-wrap: wrap; }
+      .deck-frame { width: 100%; aspect-ratio: auto; overflow: visible; box-shadow: none; }
+      .slide { height: auto; min-height: 70vh; }
+      .slide { padding: 6%; }
+      .cover-layout, .content-layout { grid-template-columns: 1fr; gap: 20px; }
+      .cover-meta { padding: 14px 0; }
+      .rule-list li { grid-template-columns: 1fr; gap: 4px; padding: 10px 0; }
+      .metrics { grid-template-columns: 1fr; }
+      .metrics div { padding: 12px 9px; border-right: 0; border-bottom: 1px solid var(--line); }
+      .metrics div:last-child { border-bottom: 0; }
+      th, td { padding: 8px 10px; }
+      .deck-controls button { padding: 8px 12px; }
     }
-
-    .callout-title {
-      font-size: 26px;
-      font-weight: 700;
-      color: var(--text);
-    }
-
-    .callout-body {
-      font-size: clamp(24px, 1.55vw, 27px);
-      line-height: 1.5;
-      color: var(--text-secondary);
-    }
-
-    .slide-footer {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      border-top: 1px solid var(--border-subtle);
-      padding-top: 14px;
-    }
-
-    .notice {
-      font-size: 24px;
-      color: var(--text-muted);
-    }
-
-    .controls {
-      position: absolute;
-      right: 4.5%;
-      bottom: 3.5%;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      z-index: 20;
-    }
-
-    .btn {
-      font-family: inherit;
-      font-size: 24px;
-      font-weight: 500;
-      background: #ffffff;
-      color: var(--text);
-      border: 1px solid var(--border);
-      border-radius: 9999px;
-      padding: 6px 18px;
-      cursor: pointer;
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.15s ease;
-      line-height: 1.2;
-    }
-
-    .btn:hover {
-      border-color: var(--accent);
-      color: var(--accent);
-    }
-
-    .btn:focus-visible {
-      outline: 2px solid var(--accent);
-      outline-offset: 2px;
-    }
-
-    .slide-count {
-      font-size: 24px;
-      font-family: var(--font-mono);
-      color: var(--text-secondary);
-      font-weight: 500;
-      min-width: 65px;
-      text-align: center;
-    }
-
-    code {
-      font-family: var(--font-mono);
-      font-size: 24px;
-      background: var(--badge-gray-bg);
-      padding: 2px 6px;
-      border-radius: 4px;
-      color: var(--text);
-    }
-
-    .badge-status {
-      font-size: 24px;
-      font-weight: 600;
-      color: var(--badge-green-text);
-      background: var(--badge-green-bg);
-      padding: 2px 10px;
-      border-radius: 4px;
-      display: inline-block;
-    }
-
     @media print {
-
-      body,
-      .frame {
-        background: #ffffff;
-        padding: 0;
-        display: block;
-        height: auto;
-      }
-
-      .deck {
-        width: 100vw;
-        height: 56.25vw;
-        border: none;
-        box-shadow: none;
-        border-radius: 0;
-      }
-
-      .slide {
-        display: grid !important;
-        break-after: page;
-        page-break-after: always;
-        height: 100vh;
-        padding: 50px 70px;
-      }
-
-      .controls {
-        display: none !important;
-      }
+      .template-deck { display: block; background: #fff; }
+      .deck-header, .deck-controls { display: none; }
+      .deck-frame { width: 100%; aspect-ratio: auto; overflow: visible; box-shadow: none; }
+      .slide { display: grid; break-after: page; height: auto; }
     }
-
     @media (prefers-reduced-motion: reduce) {
-      * {
-        transition: none !important;
-      }
-    }
-
-    .content-body,
-    .slide-body {
-      overflow-y: auto;
-      scrollbar-width: thin;
-      min-height: 0
-    }
-
-    @media (max-width: 600px) {
-
-      html,
-      body {
-        overflow-x: hidden;
-        overflow-y: auto;
-      }
-
-      .frame,
-      .viewport-frame {
-        display: block;
-        width: 100%;
-        height: auto;
-        min-height: 100vh;
-        padding: 0;
-        box-sizing: border-box;
-      }
-
-      .deck,
-      .deck-container {
-        width: 100%;
-        min-height: 100vh;
-        height: auto;
-        aspect-ratio: auto;
-        overflow: visible;
-        border: 0;
-        border-radius: 0;
-        box-shadow: none;
-        padding-bottom: 72px;
-        box-sizing: border-box;
-      }
-
-      .slide {
-        min-height: calc(100vh - 72px);
-        height: auto;
-        padding: 28px 20px;
-        gap: 16px;
-        box-sizing: border-box;
-      }
-
-      .slide h1 {
-        font-size: clamp(28px, 8vw, 38px);
-        line-height: 1.2;
-      }
-
-      .slide-title-area h2 {
-        font-size: clamp(26px, 7.5vw, 34px);
-        line-height: 1.2;
-      }
-
-      .slide-lead,
-      .slide-subtitle {
-        font-size: 18px;
-        line-height: 1.45;
-      }
-
-      .content-body,
-      .slide-body {
-        height: auto;
-        overflow: visible;
-        justify-content: flex-start;
-      }
-
-      .cards-grid-2,
-      .cards-grid-3,
-      .grid-2,
-      .grid-3 {
-        grid-template-columns: 1fr;
-        gap: 14px;
-      }
-
-      .card,
-      .notion-card {
-        min-width: 0;
-      }
-
-      .card-list,
-      .notion-list {
-        font-size: 17px;
-        line-height: 1.45;
-      }
-
-      .data-val {
-        font-size: 30px;
-      }
-
-      .slide-footer {
-        display: block;
-        font-size: 14px;
-      }
-
-      .controls,
-      .nav-controls {
-        position: fixed;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        width: 100%;
-        min-height: 64px;
-        padding: 8px 12px;
-        box-sizing: border-box;
-        justify-content: center;
-        gap: 6px;
-        z-index: 100;
-        background: var(--canvas, #fff);
-        border-top: 1px solid var(--border, #ddd);
-      }
-
-      .controls .btn,
-      .nav-controls .nav-btn {
-        min-height: 40px;
-        padding: 6px 10px;
-        font-size: 15px;
-      }
-
-      .controls>a {
-        display: none;
-      }
-
-      .slide-count {
-        font-size: 15px;
-        min-width: 42px;
-        text-align: center;
-      }
-    }
-
-    @media (max-width: 600px) {
-
-      .slide-header,
-      .content-body,
-      .slide-body,
-      .slide-title-area,
-      .notion-card,
-      .card,
-      .notion-list,
-      .card-list,
-      .metric-row {
-        min-width: 0;
-        max-width: 100%;
-        box-sizing: border-box;
-      }
-
-      .badge-row {
-        flex-wrap: wrap;
-        max-width: 100%;
-      }
-
-      .badge,
-      .header-note {
-        max-width: 100%;
-        font-size: 16px;
-        overflow-wrap: anywhere;
-      }
-
-      .notion-card,
-      .card {
-        padding: 20px;
-      }
-
-      .notion-list li,
-      .card-list li {
-        font-size: 18px;
-        overflow-wrap: anywhere;
-        word-break: normal;
-      }
-
-      .metric-row {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 4px;
-      }
-
-      .metric-label,
-      .metric-value {
-        max-width: 100%;
-        overflow-wrap: anywhere;
-      }
+      * { scroll-behavior: auto !important; }
     }
   </style>
 </head>
-
-<body>
-  <div class="frame">
-    <main class="deck" aria-live="off">
-      <section class="slide active" id="slide-1">
-        <header class="slide-header">
-          <div class="marker-wrap">
-            <span class="marker-pill">SPM WEEK 12</span>
-            <span class="marker-pill gray">ข้อมูลสมมติเพื่อการเรียน</span>
-          </div>
-          <h1>การทดสอบ UAT และการปิดงานโครงการ</h1>
-          <p class="slide-lead">รายงาน Final EVM สรุป 3 Sprints, ผลการทดสอบ 25 passed, เกณฑ์ตรวจรับ UAT
-            และเช็กลิสต์ความพร้อมปล่อย แผนความพร้อมก่อนสร้าง tag v2.0.0-evolution</p>
-        </header>
-        <div class="slide-body">
-          <div class="cards-grid-2">
-            <div class="card">
-              <div class="card-title">การกระทบยอดโครงการ (Final Reconciliation)</div>
-              <ul class="card-list">
-                <li>สรุปตัวเลข EVM รวม 3 Sprints: PV 15,525 / EV 15,525 / AC 16,100 บาท</li>
-                <li>ปิดสัญญาจัดซื้อจัดจ้างเครื่องมือจริง 780 บาท (ต่ำกว่างบประมาณ 800 บาท)</li>
-                <li>กระทบยอดเงินสำรองความเสี่ยงคงเหลือสุทธิ 898 บาท ควบคุมงบได้ 100%</li>
-              </ul>
-            </div>
-            <div class="card">
-              <div class="card-title">การตรวจรับและการปล่อยระบบ (Release Gate)</div>
-              <ul class="card-list">
-                <li>ผ่านการทดสอบ Full Regression Suite 25 tests ครบถ้วนและไร้ข้อผิดพลาด</li>
-                <li>ตรวจรับ UAT ครอบคลุม 3 สถานการณ์ทางธุรกิจ (รับของ, ตัดสต็อก, ส่งออก CSV)</li>
-                <li>เปิดเผยความจริง: ช่องลงนาม UAT ยังว่าง และยังไม่มีแท็ก v2.0.0 บนสาย main</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-        <footer class="slide-footer">
-          <span class="notice">สไลด์สรุปประกอบรายวิชาการจัดการโครงการซอฟต์แวร์ [ข้อมูลสมมติเพื่อการเรียน]</span>
-        </footer>
-      </section>
-      <section class="slide" id="slide-2">
-        <header class="slide-header">
-          <div class="marker-wrap"><span class="marker-pill">สัปดาห์ที่ 12</span><span
-              class="marker-pill gray">สารบัญ</span></div>
-          <h1>สารบัญสไลด์</h1>
-          <p class="slide-lead">กดหัวข้อเพื่อกระโดดไปสไลด์นั้น</p>
-        </header>
-        <div class="slide-body">
-          <div class="card">
-            <ul class="card-list">
-              <li><a href="#slide-1">การทดสอบ UAT และการปิดงานโครงการ</a></li>
-              <li><a href="#slide-3">ผล EVM รวม 3 สปรินต์</a></li>
-              <li><a href="#slide-4">กระทบยอดเงินสำรองและปิดสัญญา</a></li>
-              <li><a href="#slide-5">25 Passed Tests ครอบคลุมงานที่ส่งมอบ</a></li>
-              <li><a href="#slide-6">เกณฑ์ UAT พร้อม แต่ยังรอลายเซ็น</a></li>
-              <li><a href="#slide-7">ก่อนสร้าง tag v2.0.0-evolution</a></li>
-            </ul>
-          </div>
-        </div>
-        <footer class="slide-footer"><span class="notice">กดหัวข้อเพื่อกระโดดไปสไลด์นั้น</span></footer>
-      </section>
-      <section class="slide" id="slide-3">
-        <header class="slide-header">
-          <div class="marker-wrap"><span class="marker-pill">FINAL EVM</span><span
-              class="marker-pill gray">ตัวเลขจำลอง</span></div>
-          <h1>ผล EVM รวม 3 สปรินต์</h1>
-          <p class="slide-lead">ตัวเลขแผน งานที่ได้รับ และต้นทุนจริง — แสดงแยกเพื่ออ่านบนจอโปรเจกเตอร์ได้ทัน</p>
-        </header>
-        <div class="slide-body">
-          <div class="cards-grid-3">
-            <div class="card subtle">
-              <div class="data-item">
-                <div class="data-label">Planned Value (PV)</div>
-                <div class="data-val">15,525 บาท</div>
-                <div class="data-sub">งบประมาณรวมตามแผน (รวม CR-02)</div>
-              </div>
-            </div>
-            <div class="card subtle">
-              <div class="data-item">
-                <div class="data-label">Earned Value (EV)</div>
-                <div class="data-val">15,525 บาท</div>
-                <div class="data-sub">มูลค่างานตาม DoD และ UAT scenarios</div>
-              </div>
-            </div>
-            <div class="card subtle">
-              <div class="data-item">
-                <div class="data-label">Actual Cost (AC)</div>
-                <div class="data-val">16,100 บาท</div>
-                <div class="data-sub">ค่าแรงและค่าเครื่องมือที่ใช้จริง</div>
-              </div>
-            </div>
-          </div>
-          <div class="cards-grid-2">
-            <div class="card">
-              <div class="card-title">Schedule Performance</div>
-              <ul class="card-list">
-                <li><strong>SPI 1.00:</strong> ส่งมอบตามกำหนดเวลา</li>
-                <li>PV เท่ากับ EV จึงไม่มีงานค้างตามแผนรวม</li>
-              </ul>
-            </div>
-            <div class="card">
-              <div class="card-title">Cost Performance</div>
-              <ul class="card-list">
-                <li><strong>CPI 0.96:</strong> เกินงบ 3.7%</li>
-                <li><strong>CV = −575 บาท:</strong> ชดเชยตามเกณฑ์เงินสำรอง</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-        <footer class="slide-footer"><span class="notice">อ้างอิงเอกสาร: Final_EVM.md · ข้อมูลสมมติเพื่อการเรียน</span>
-        </footer>
-      </section>
-
-      <section class="slide" id="slide-4">
-        <header class="slide-header">
-          <div class="marker-wrap"><span class="marker-pill">RECONCILIATION</span><span
-              class="marker-pill gray">ตัวเลขจำลอง</span></div>
-          <h1>กระทบยอดเงินสำรองและปิดสัญญา</h1>
-          <p class="slide-lead">แสดงเงินสำรองคงเหลือและต้นทุนเครื่องมือเป็นคนละประเด็น เพื่อไม่ปนกับ EVM</p>
-        </header>
-        <div class="slide-body">
-          <div class="cards-grid-2">
-            <div class="card">
-              <div class="card-title">Contingency Reserve คงเหลือ 898 บาท</div>
-              <ul class="card-list">
-                <li>ตั้งต้น 2,823 บาท</li>
-                <li>หัก CR-02 1,350 บาท และส่วนเกินค่าแรง 575 บาท</li>
-                <li>2,823 − 1,350 − 575 = <strong>898 บาท</strong></li>
-              </ul>
-            </div>
-            <div class="card">
-              <div class="card-title">ปิดสัญญาเครื่องมือ</div>
-              <ul class="card-list">
-                <li>ค่าเครื่องมือจริง 780 บาท จากงบ 800 บาท</li>
-                <li>ประหยัด 20 บาท และปิดทรัพยากรคลาวด์/Mock Server ส่วนเกิน</li>
-                <li>ตัวเลขทั้งหมดเป็นข้อมูลสมมติเพื่อการเรียน</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-        <footer class="slide-footer"><span class="notice">อ้างอิงเอกสาร: Final_EVM.md</span></footer>
-      </section>
-
-      <section class="slide" id="slide-5">
-        <header class="slide-header">
-          <div class="marker-wrap">
-            <span class="marker-pill">TESTING</span>
-            <span class="marker-pill gray">ข้อมูลสมมติเพื่อการเรียน</span>
-          </div>
-          <h1>25 Passed Tests ครอบคลุมงานที่ส่งมอบ</h1>
-          <p class="slide-lead">ผลทดสอบยืนยันความถูกต้องของโค้ด ไม่ใช่การอนุมัติปล่อยระบบ</p>
-        </header>
-        <div class="slide-body">
-          <div class="cards-grid-2">
-            <div class="card">
-              <div class="card-title">Full Regression Suite: 25 รายการ</div>
-              <ul class="card-list">
-                <li>5 Baseline Tests: คำนวณและตัดสต็อกสินค้าแบบดั้งเดิม</li>
-                <li>4 CR-01 Tests: รหัสบาร์โค้ดและ Reorder Point</li>
-                <li>6 CR-02 Tests: ส่งออก CSV พร้อมหัวตาราง</li>
-              </ul>
-            </div>
-            <div class="card">
-              <div class="card-title">ความเข้ากันได้และการใช้งานจริง</div>
-              <ul class="card-list">
-                <li>4 BUG-101 Tests: รับข้อมูลเก่าที่ไม่มีบาร์โค้ด</li>
-                <li>3 CLI + 3 Integration Tests: โมเดลทำงานร่วมกับไฟล์ได้</li>
-                <li>ผลที่ยืนยันได้: `pytest Sprint1/week-12/test_app.py -q` ผ่าน 25/25</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-        <footer class="slide-footer">
-          <span class="notice">อ้างอิงเอกสาร: test_app.py · Hardening_Report.md</span>
-        </footer>
-      </section>
-
-      <section class="slide" id="slide-6">
-        <header class="slide-header">
-          <div class="marker-wrap">
-            <span class="marker-pill">UAT</span>
-            <span class="marker-pill gray">ข้อมูลสมมติเพื่อการเรียน</span>
-          </div>
-          <h1>เกณฑ์ UAT พร้อม แต่ยังรอลายเซ็น</h1>
-          <p class="slide-lead">แยกหลักฐานทดสอบที่มีออกจากหลักฐานอนุมัติที่ยังไม่พบ</p>
-        </header>
-        <div class="slide-body">
-          <div class="cards-grid-2">
-            <div class="card">
-              <div class="card-title">3 สถานการณ์รับรอง</div>
-              <ul class="card-list">
-                <li>รับสินค้า Milk เข้าคลัง</li>
-                <li>ตัดสต็อกจนถึง Reorder Alert</li>
-                <li>ส่งออก CSV แล้วเปิดอ่านใน Excel</li>
-              </ul>
-            </div>
-            <div class="card">
-              <div class="card-title">สถานะหลักฐาน ณ วันปิดงาน</div>
-              <ul class="card-list">
-                <li>เกณฑ์ UAT ครบทั้ง 3 สถานการณ์</li>
-                <li><strong>หลักฐานไม่พบ:</strong> ช่อง UAT Sign-off ยังว่าง</li>
-                <li>จึงระบุได้เพียง “ทดสอบผ่าน” ไม่ใช่ “ได้รับอนุมัติปล่อย”</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-        <footer class="slide-footer">
-          <span class="notice">อ้างอิงเอกสาร: UAT_Sign_Off_Sheet.md</span>
-        </footer>
-      </section>
-
-      <section class="slide" id="slide-7">
-        <header class="slide-header">
-          <div class="marker-wrap">
-            <span class="marker-pill">RELEASE GATE</span>
-            <span class="marker-pill gray">ข้อมูลสมมติเพื่อการเรียน</span>
-          </div>
-          <h1>ก่อนสร้าง tag v2.0.0-evolution</h1>
-          <p class="slide-lead">แผนความพร้อมก่อนปล่อย ไม่ใช่สถานะที่ปล่อยแล้ว</p>
-        </header>
-        <div class="slide-body">
-          <div class="cards-grid-2">
-            <div class="card">
-              <div class="card-title">งานที่ยังปิดไม่ครบ</div>
-              <ul class="card-list">
-                <li><strong>หลักฐานไม่พบ:</strong> ยังไม่มี Git tag `v2.0.0-evolution` บน main</li>
-                <li>Flake8 E501 ยังเปิดอยู่ และ SQLite/Member ยังเป็นแบบออกแบบ</li>
-              </ul>
-            </div>
-            <div class="card">
-              <div class="card-title">เงื่อนไขก่อน merge เข้า main</div>
-              <ul class="card-list">
-                <li>UAT sign-off ครบ + pytest 25/25 เขียว + Tech Lead approve PR</li>
-                <li>สร้าง tag v2.0.0-evolution และบันทึก CHANGELOG 3 มิติ ISO 14764</li>
-                <li>Defect ที่ผิดสเปกต้อง hotfix; scope ใหม่ย้ายไป Future v3.0</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-        <footer class="slide-footer">
-          <span class="notice">อ้างอิงเอกสาร: Release_Checklist.md · CHANGELOG.md · UAT_Sign_Off_Sheet.md</span>
-        </footer>
-      </section>
-      <div class="controls">
-        <a href="index.html" class="btn" title="กลับหน้าสรุปเนื้อหาสัปดาห์ 12">หน้าเนื้อหา</a>
-        <button type="button" class="btn" id="restart-btn">เริ่มใหม่</button>
-        <button type="button" class="btn" id="prev-btn" aria-label="สไลด์ก่อนหน้า">ก่อนหน้า</button>
-        <span class="slide-count" id="slide-counter">1 / 7</span><span class="sr-only" aria-live="polite"
-          id="slide-live"
-          style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap"></span>
-        <button type="button" class="btn" id="next-btn" aria-label="สไลด์ถัดไป">ถัดไป</button>
+<body class="template-deck">
+  <header class="deck-header">
+    <a class="back-link" href="index.html">← กลับเอกสารสัปดาห์ที่ 12</a>
+    <span id="slide-counter" aria-live="polite">1 / 9</span>
+  </header>
+  <main class="deck-frame" aria-label="สไลด์สัปดาห์ที่ 12">
+    <section class="slide active" id="slide-1">
+      <div class="cover-layout">
+        <div><p class="slide-label">สัปดาห์ที่ 12 · CLI Inventory Management</p><h1>ปิด UAT<br>สรุป EVM ปล่อยรีลีส</h1><p class="slide-lead">ชุดนี้ตอบว่าระบบพร้อมใช้งานจริงหรือไม่ เหลืออะไรค้าง</p></div>
+        <p class="cover-meta">Final EVM · Release Checklist<br>UAT Sign-off · CHANGELOG<br>ข้อมูลสมมติเพื่อการเรียน</p>
       </div>
-
-    </main>
-  </div>
-
+    </section>
+    <section class="slide" id="slide-2">
+      <div class="content-layout"><div><h2>ปิดรีลีสตรงเวลาต้องแยกบั๊กออกจากงานงอก</h2><p class="slide-lead">รีลีส v2.0.0-evolution ต้องตรงเวลาในงบ แยกบั๊กกับงานงอก</p></div><ul class="rule-list"><li><strong>ปัญหา</strong><span>ปิดงานให้ตรงเวลา แยกบั๊กกับงานงอกก่อนปล่อย</span></li><li><strong>เป้าหมาย</strong><span>UAT ครบ เทสต์เขียว ผ่านเช็กลิสต์ 3 ด่าน</span></li><li><strong>ขอบเขต</strong><span>ในงาน SC01 SC02 SC03 EVM รีลีส งานใหม่ไปรอบหน้า</span></li></ul></div>
+    </section>
+    <section class="slide" id="slide-3">
+      <h2>SC01 กับ SC02 ครอบคลุมวงจรจริงตั้งแต่รับถึงขาย</h2>
+      <p class="slide-lead">ที่มา: UAT_Sign_Off_Sheet.md จำลองวงจรจริง End-to-End</p>
+      <table><thead><tr><th>ID</th><th>ขั้นตอน</th><th>เกณฑ์ผ่าน</th></tr></thead><tbody><tr><td>SC01 ผู้จัดการคลัง</td><td>รับ Milk (885) 10 ชิ้น ROP 5</td><td>บันทึกสำเร็จ ไร้ Crash</td></tr><tr><td>SC02 แคชเชียร์</td><td>ตัด 6 เหลือ 4 ต่ำกว่า ROP</td><td>ขึ้นเตือนสต็อกต่ำทันที</td></tr></tbody></table>
+    </section>
+    <section class="slide" id="slide-4">
+      <div class="content-layout"><div><h2>SC03 ยืนยัน CSV ได้ครบตามเกณฑ์ Excel</h2><p class="slide-lead">ที่มา: UAT_Sign_Off_Sheet.md</p></div><ul class="rule-list"><li><strong>SC03 จัดซื้อ</strong><span>ส่งออก CSV เปิดใน Excel คอลัมน์ Barcode ครบข้อมูลต่ำถูก</span></li><li><strong>แยกบั๊กกับงานใหม่</strong><span>ไม่เตือนทั้งที่ต่ำกว่า ROP คือบั๊กแก้ก่อน merge ขอฟีเจอร์เพิ่มไป v3.0</span></li><li><strong>ผลทางเทคนิค</strong><span>SC01–SC03 ผ่านตามเกณฑ์ บันทึกใน UAT_Sign_Off_Sheet.md</span></li></ul></div>
+    </section>
+    <section class="slide" id="slide-5">
+      <h2>ผ่าน 3 ด่านครบจึง merge ติดแท็กรีลีสได้</h2>
+      <p class="slide-lead">ที่มา: Release_Checklist.md ครบก่อน merge เข้า main</p>
+      <table><thead><tr><th>ด่าน</th><th>เงื่อนไข</th><th>หลักฐาน</th></tr></thead><tbody><tr><td>ด่าน 1 UAT ครบ</td><td>SC01-03 ครบ แยก defect กับ scope แล้ว</td><td>ผลใน UAT_Sign_Off_Sheet</td></tr><tr><td>ด่าน 2 เทสต์เขียวอนุมัติ</td><td>pytest 25 ผ่าน 100% PR develop ไป main</td><td>CI เขียว Tech Lead กด merge</td></tr><tr><td>ด่าน 3 merge tag log</td><td>tag v2.0.0-evolution CHANGELOG ครบ</td><td>main คือ Gold Master</td></tr></tbody></table>
+    </section>
+    <section class="slide" id="slide-6">
+      <h2>CHANGELOG บันทึกครบ 3 มิติซ่อมบำรุงแล้ว</h2>
+      <p class="slide-lead">ที่มา: CHANGELOG.md รุ่น 2.0.0-evolution วันที่ 2026-08-31</p>
+      <table><thead><tr><th>หมวด</th><th>เนื้อหา</th></tr></thead><tbody><tr><td>Added</td><td>Barcode Reorder Alert CSV Export เมนู 5</td></tr><tr><td>Changed</td><td>Repository Pattern สคีมา barcode reorder_point เมนูออก 5 ไป 6</td></tr><tr><td>Removed Fixed</td><td>ลบ global x แก้ BUG-101 รับคีย์สั้น n q p c ค่าเริ่มว่างกับ 5</td></tr><tr><td>corrective perfective preventive</td><td>แก้ BUG-101 เพิ่ม CR-01 CR-02 กันพังด้วยสถาปัตยกรรมใหม่</td></tr></tbody></table>
+    </section>
+    <section class="slide" id="slide-7">
+      <h2>EVM ปิดตรงเวลา SPI 1.00 สำรองเหลือ 898</h2>
+      <p class="slide-lead">ที่มา: Final_EVM.md [ข้อมูลจำลองเพื่อการศึกษา]</p>
+      <table><thead><tr><th>ตัวแปร</th><th>ค่า</th><th>ความหมาย</th></tr></thead><tbody><tr><td>PV กับ EV</td><td>15,525 กับ 15,525</td><td>SPI 1.00 ตรงเวลา 100%</td></tr><tr><td>AC</td><td>16,100</td><td>CPI 0.96 เกินงบ 3.7%</td></tr><tr><td>CV กับ SV</td><td>-575 กับ 0</td><td>ชดเชยด้วยสำรอง</td></tr><tr><td>สำรองคงเหลือ</td><td>2,823-1,350-575 = 898</td><td>ไม่ติดลบ ไม่ขอเพิ่ม</td></tr></tbody></table>
+    </section>
+    <section class="slide" id="slide-8">
+      <h2>เทสต์ 25 เคสผ่านครบ 100% ทั้ง 6 กลุ่ม</h2>
+      <p class="slide-lead">ที่มา: test_app.py 25 tests ผ่าน 100%</p>
+      <table><thead><tr><th>กลุ่ม</th><th>จำนวน</th><th>ขอบเขต</th></tr></thead><tbody><tr><td>baseline</td><td>5</td><td>คำนวณ ตัดสต็อก เพิ่มสินค้า</td></tr><tr><td>CR-01</td><td>4</td><td>barcode เริ่มว่าง round-trip CSV มี barcode</td></tr><tr><td>CR-02</td><td>6</td><td>reorder_point boundary alert header CSV ว่าง</td></tr><tr><td>BUG-101</td><td>4</td><td>คีย์สั้น ค่าเริ่ม โหลดไฟล์เก่า ชื่อว่าง</td></tr><tr><td>CLI</td><td>3</td><td>แสดงรายการ เมนูผิด ส่งออกไฟล์</td></tr><tr><td>integration</td><td>3</td><td>เซฟโหลดคงฟิลด์ ตัดแล้วเตือน atomic ไม่เหลือ tmp</td></tr></tbody></table>
+    </section>
+    <section class="slide" id="slide-9">
+      <div class="cover-layout"><div><h2>งานเทคนิคครบแล้วเหลือแท็กรีลีส</h2><p class="slide-lead">งานเทคนิคครบ แท็กรอปิดตามขั้น</p></div><ol class="next-steps"><li>ปิดผล UAT SC01 SC02 SC03 ลงเอกสาร</li><li>ผ่าน 3 ด่านแล้วค่อย merge ติดแท็กรีลีส</li><li>หนี้ค้าง E501 กับงานออกแบบยกไปรอบถัดไป</li></ol></div>
+    </section>
+  </main>
+  <footer class="deck-controls"><button id="previous" type="button" aria-label="สไลด์ก่อนหน้า">← ก่อนหน้า</button><button id="next" type="button" aria-label="สไลด์ถัดไป">ถัดไป →</button></footer>
   <script>
-    (function () {
-      const slides = Array.from(document.querySelectorAll('.slide'));
-      const counter = document.getElementById('slide-counter');
-      const prevBtn = document.getElementById('prev-btn');
-      const nextBtn = document.getElementById('next-btn');
-      const storageKey = 'spm-site-agy-w12-slide';
-
-      let current = 0;
-      const fresh = /[?&]fresh=1/.test(location.search);
-      const hashMatch = /#slide-(\d+)/.exec(location.hash);
-      if (hashMatch) {
-        const h = parseInt(hashMatch[1], 10) - 1;
-        if (!isNaN(h) && h >= 0 && h < slides.length) {
-          current = h;
-        }
-      } else if (!fresh) {
-        let saved = null;
-        try { saved = localStorage.getItem(storageKey); } catch (e) { }
-        if (saved !== null) {
-          const parsed = parseInt(saved, 10);
-          if (!isNaN(parsed) && parsed >= 0 && parsed < slides.length) {
-            current = parsed;
-          }
-        }
-      }
-
-      function showSlide(index) {
-        if (index < 0) index = slides.length - 1;
-        if (index >= slides.length) index = 0;
-        current = index;
-
-        slides.forEach((slide, idx) => {
-          slide.classList.toggle('active', idx === current);
-        });
-
-        if (counter) {
-          counter.textContent = (current + 1) + ' / ' + slides.length;
-        }
-        try {
-          history.replaceState(null, '', '#slide-' + (current + 1));
-        } catch (e) {
-          // Ignore history errors
-        }
-        var live = document.getElementById('slide-live');
-        if (live) {
-          live.textContent = 'สไลด์ ' + (current + 1) + ' จาก ' + slides.length;
-        }
-
-        try {
-          localStorage.setItem(storageKey, current.toString());
-        } catch (e) {
-          // Ignore localStorage errors
-        }
-      }
-
-      if (prevBtn) {
-        prevBtn.addEventListener('click', () => showSlide(current - 1));
-      }
-      if (nextBtn) {
-        nextBtn.addEventListener('click', () => showSlide(current + 1));
-      }
-      const restartBtn = document.getElementById('restart-btn');
-      if (restartBtn) {
-        restartBtn.addEventListener('click', () => {
-          try { localStorage.removeItem(storageKey); } catch (e) { }
-          showSlide(0);
-        });
-      }
-
-      document.addEventListener('keydown', (e) => {
-        if (e.key === 'Home') {
-          e.preventDefault();
-          showSlide(0);
-        } else if (e.key === 'End') {
-          e.preventDefault();
-          showSlide(slides.length - 1);
-        } else if (e.key === 'ArrowLeft') {
-          showSlide(current - 1);
-        } else if (e.key === 'ArrowRight' || e.key === ' ') {
-          e.preventDefault();
-          showSlide(current + 1);
-        }
-      });
-
-      showSlide(current);
-    })();
+const slides = [...document.querySelectorAll(".slide")];
+const count = document.querySelector("#slide-counter");
+const storageKey = "spm-week-12-evidence";
+function slideFromHash() {
+  const match = /#slide-(\d+)/.exec(window.location.hash || "");
+  if (!match) return null;
+  const index = Number.parseInt(match[1], 10) - 1;
+  return Number.isInteger(index) && index >= 0 && index < slides.length ? index : null;
+}
+function storedSlide() {
+  try {
+    const value = window.localStorage.getItem(storageKey);
+    if (value === null) return null;
+    const index = Number.parseInt(value, 10);
+    return Number.isInteger(index) && index >= 0 && index < slides.length ? index : null;
+  } catch (error) {
+    return null;
+  }
+}
+function rememberSlide(index) {
+  try {
+    window.localStorage.setItem(storageKey, String(index));
+  } catch (error) {
+  }
+}
+let current = slideFromHash() ?? storedSlide() ?? 0;
+function show(index) {
+  current = Math.min(Math.max(index, 0), slides.length - 1);
+  slides.forEach((slide, position) => slide.classList.toggle("active", position === current));
+  count.textContent = `${current + 1} / ${slides.length}`;
+  previousBtn.disabled = current === 0;
+  nextBtn.disabled = current === slides.length - 1;
+  rememberSlide(current);
+  try {
+    window.history.replaceState(null, "", `#slide-${current + 1}`);
+  } catch (error) {
+  }
+}
+function showFromHash() {
+  const index = slideFromHash();
+  if (index !== null) show(index);
+}
+var previousBtn = document.querySelector("#previous");
+var nextBtn = document.querySelector("#next");
+previousBtn.addEventListener("click", () => show(current - 1));
+nextBtn.addEventListener("click", () => show(current + 1));
+document.addEventListener("keydown", (event) => {
+  if (event.key === "ArrowRight" || event.key === "PageDown" || event.key === " ") {
+    event.preventDefault();
+    show(current + 1);
+  }
+  if (event.key === "ArrowLeft" || event.key === "PageUp") {
+    event.preventDefault();
+    show(current - 1);
+  }
+  if (event.key === "Home") {
+    event.preventDefault();
+    show(0);
+  }
+  if (event.key === "End") {
+    event.preventDefault();
+    show(slides.length - 1);
+  }
+});
+window.addEventListener("hashchange", showFromHash);
+show(current);
   </script>
-  <script>window.addEventListener('hashchange', function () { location.reload(); });</script>
 </body>
-
 </html>
