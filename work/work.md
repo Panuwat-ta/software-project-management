@@ -23,6 +23,11 @@
 
 [week12](https://docs.google.com/presentation/d/1AoKy2aD8yaYc8V8iT4TMHfZgW5neppryw7odxesZ5gI/edit?usp=sharing)
 
+[week13](https://docs.google.com/presentation/d/1MWNhiTyBxg0Fi80uYYx1PE1BiwpyoSSfngxRiz3B_4A/edit?slide=id.p1#slide=id.p1)
+
+[week14](https://docs.google.com/presentation/d/1U_dllte6EwHMFsExG_H5e6koYuUeCNyGc3cKwOkJlvI/edit?slide=id.p1#slide=id.p1)
+
+[week15](https://docs.google.com/presentation/d/1rOFvq2Pq5tWJeoIDJWGl0015E7fjdF5OZ-RW4Xv71aA/edit?slide=id.p1#slide=id.p1)
 
 # Software Project Management
 [week1](https://docs.google.com/presentation/d/1Yzs8hRvAsaw9mvI0VlCaqaLyNs1S_I4-akI3WuaIr2g/edit?slide=id.p1#slide=id.p1)
@@ -48,3 +53,9 @@
 [week11](https://docs.google.com/presentation/d/1Hr-uiAXfqfiBoYLTwXhW2bXX0nXc630bwSvll69kk-Q/edit?usp=sharing)
 
 [week12](https://docs.google.com/presentation/d/1w8rfYj7nDqLGmgHTJ7FWX1J4k8kzG25OY3hDSd-FBYk/edit?usp=sharing)
+
+[week13](https://docs.google.com/presentation/d/1bxrZOYk6qZMk_9ZsoyUKO4ofuUkghaRrOvagapQhO60/edit?slide=id.p1#slide=id.p1)
+
+[week14](https://docs.google.com/presentation/d/1BDzpmexhn3EHZV17FQfjAcNF5d1VBf4mONc4zCXn7ZI/edit?slide=id.p1#slide=id.p1)
+
+[week15](https://docs.google.com/presentation/d/1rlsLcvajcoV7bEKw3bU3n9O3oZMOkaiDutx6iSAecL8/edit?slide=id.p1#slide=id.p1)

@@ -1,0 +1,285 @@
+WEEK 14: PACKAGING, DISASTER RECOVERY & AUDIT
+ENGSE225: Pre-Closure Audit
+“การรับรองมาตรฐานทางวิศวกรรมขั้นสุดท้าย การทดสอบความทนทานต่อภัยพิบัติ และการส่งมอบเอกสารประวัติตามกรอบ ISO/IEC 14764 และ ISO/IEC 25010”
+Academic Framework: ISO/IEC/IEEE 12207:2017 - Clause 6.4.10: Transition Process
+ENGSE225: SOFTWARE EVOLUTION AND MAINTENANCE WEEK 14 MASTERCLASS
+
+1. Package Distribution
+สร้างและตรวจสอบชุดกระจายโค้ดสำเร็จรูป (sdist, .whl, Dockerfile) ตามมาตรฐาน ISO 12207
+2. Dependency Audit
+ตรวจสอบความปลอดภัยของ Third-Party Libraries ด้วย pip-audit สแกนฐานข้อมูล CVE
+3. Disaster Recovery
+ซักซ้อมแผน Rollback & Recovery จำลองฐานข้อมูลพัง และทดสอบถอยเวอร์ชันบน Git
+4. Complete Dossier
+จัดทำและส่งมอบแฟ้มเอกสารประวัติวิศวกรรมบำรุงรักษาฉบับสมบูรณ์ตาม ISO/IEC 14764
+WEEKLY COURSE OBJECTIVES ENGSE225
+เป้าหมายการเรียนรู้ประจำสัปดาห์
+
+สัปดาห์ที่ 13 (สิ่งที่ทำผ่านมา)
+ทดสอบติดตั้งบน Clean Environment, รัน Smoke/Regression และร่างคู่มือปฏิบัติการเบื้องต้น
+ส่งมอบ Technical KPIs (Coverage 94%, Zero Defects) ให้ PM ลง Project Scorecard
+สัปดาห์ที่ 14 (สัปดาห์นี้ ⭐)
+นำระบบเข้าสู่ด่านตรวจวิศวกรรมขั้นสูงสุด (Engineering Stress & Security Test)
+พิสูจน์ความทนทานต่อภัยพิบัติ (Resilience) และส่งมอบแฟ้ม Dossier 100% ก่อน Final Defense
+ENGINEERING TRANSITION GATE ด่านตรวจรับรองมาตรฐานขั้นสุดท้าย
+ด่านตรวจรับรองมาตรฐานวิศวกรรม
+
+SOFTWARE PACKAGING STANDARDS การบรรจุภัณฑ์ซอฟต์แวร์มาตรฐาน
+การบรรจุภัณฑ์ส่งมอบซอฟต์แวร์
+Source Distribution (.tar.gz): ไฟล์โค้ดต้นฉบับและสคริปต์ติดตั้ง
+Wheel Binary (.whl): ไบนารีแพ็กเกจที่ติดตั้งรวดเร็วโดยไม่ต้องคอมไพล์ซ้ำ
+Container Image: รวม Runtime, OS Libs และ Code ในแพ็กเกจเดียว
+
+[build-system]
+"setuptools>=61.0"
+"setuptools.build_meta"
+[project]
+"mini-inventory-system"
+"2.0.0"
+"Engineering Team"
+"eng@university.ac.th"
+"Evolved Mini Inventory System with Barcode & CSV Support"
+"colorama>=0.4.6"
+Standard Build Workflow
+ใช้คำสั่ง python -m build เพื่อสร้างแพ็กเกจส่งมอบมาตรฐาน
+สร้างไฟล์ .tar.gz และ .whl ลงในโฟลเดอร์ dist/ พร้อมเผยแพร่บน PyPI หรือส่งมอบให้ลูกค้า
+MODERN PYTHON PACKAGING การสร้างแพ็กเกจด้วย PYPROJECT.TOML
+การสร้างชุดติดตั้งด้วย pyproject.toml
+
+FROM
+WORKDIR
+# แคช Dependencies เพื่อเร่งความเร็วในการติดตั้ง
+COPY
+RUN
+COPY
+ENV
+"/app/data/inventory_db.json"
+CMD
+"python"
+"app.py"
+Zero Incompatibility
+ขจัดปัญหา OS Incompatibility อย่างเด็ดขาดด้วย Docker Image
+ผู้ดูแลระบบคนใหม่พิมพ์เพียงคำสั่งเดียว ระบบจะทำงานบนคอนเทนเนอร์พร้อมกันทุกแพลตฟอร์ม (Windows, Linux, macOS)
+CONTAINERIZED DELIVERY การบรรจุลง DOCKER CONTAINER
+การบรรจุลง Docker Container
+
+SUPPLY CHAIN SECURITY การสแกนความปลอดภัยด้วย PIP-AUDIT
+การตรวจช่องโหว่ Dependencies
+PyPI Advisory Database: ฐานข้อมูลช่องโหว่ความปลอดภัย
+Automated Scan: ตรวจเทียบช่องโหว่ของทุกแพ็กเกจ
+Audit Gate: ต้องได้สถานะ Zero CVEs ก่อนผ่านด่านส่งมอบ
+
+ตรวจพบช่องโหว่ (Vulnerability)
+ตรวจพบแพ็กเกจเวอร์ชันเก่าที่มีช่องโหว่ความปลอดภัยระดับ CVE
+มาตรการแก้ไขของวิศวกร
+1. อัปเกรดเวอร์ชันใน requirements.txt เป็น 1.26.5
+2. สั่งรัน pytest ซ้ำ ยืนยันตรรกะระบบไม่พัง
+3. สั่งรัน pip-audit อีกครั้งจนได้ Zero CVEs 🟢
+VULNERABILITY REMEDIATION ผลการตรวจความปลอดภัยด้วย PIP-AUDIT
+การแก้ไขช่องโหว่ความปลอดภัย
+
+Recoverability (ISO/IEC 25010): ความสามารถของระบบในการกู้คืนข้อมูลและนำระบบกลับสู่สภาวะปกติเมื่อเกิดเหตุขัดข้อง:
+Case 1: Data Corruption
+จำลองกรณีไฟล์ฐานข้อมูล inventory_db.json เสียหาย บิดเบี้ยว หรือถูกลบทิ้งกะทันหัน ระบบต้องกู้คืนจาก Backup อัตโนมัติ
+Case 2: Production Rollback
+จำลองกรณีโค้ด v2.0.0 เกิดข้อผิดพลาดวิกฤตบน Production ต้องสามารถถอยกลับสู่ Baseline v1.0.0 ได้อย่างปลอดภัยไร้รอยต่อ
+ISO/IEC 25010 RELIABILITY การทดสอบความทนทานต่อภัยพิบัติ
+ความทนทานต่อภัยพิบัติ (Resilience)
+
+1. Rolling Auto-Backup
+ทุกครั้งก่อนที่ InventoryRepository จะบันทึกไฟล์ใหม่ ระบบจะทำสำเนาไฟล์เดิมเป็น inventory_db.json.bak อัตโนมัติ
+รับประกันว่ามีข้อมูลสำรองล่าสุด 1 ก้าวเสมอ
+2. Automated Fallback
+หากไฟล์หลักเกิดเสียหาย (json.JSONDecodeError) ระบบจะสลับไปโหลดจากไฟล์สำรอง .bak ทันที
+ระบบไม่เกิดแครช และกู้คืนข้อมูลกลับมาได้ 100%
+FAULT-TOLERANT ARCHITECTURE กลไก AUTO-BACKUP & FALLBACK
+กลไก Auto-Backup & Fallback
+
+def
+test_repository_disaster_recovery_fallback
+# 1. Arrange: สร้างไฟล์สำรองดี และไฟล์หลักพัง (Corrupted)
+"inventory.json"
+"inventory.json.bak"
+'{"P01": {"name": "Item A", "quantity": 10, "price": 100.0}}'
+'{ INVALID CORRUPTED JSON DATA... }'
+# พัง
+# 2. Act: โหลดข้อมูลผ่าน Repository
+# 3. Assert: ระบบต้องกู้คืนจากไฟล์สำรองสำเร็จ
+assert
+"P01"
+in
+assert
+"P01"
+"Item A"
+Drill Pass Guarantee
+การเขียนชุดทดสอบเจาะจงสถานการณ์ภัยพิบัติ (Disaster Recovery Test)
+พิสูจน์ว่าระบบมีภูมิคุ้มกันความล้มเหลว (Resilience) และสามารถส่งมอบสู่สภาพแวดล้อมจริงได้อย่างมั่นใจ
+DRILL TESTING WITH PYTEST การซ้อมจำลองไฟล์ข้อมูลพัง
+การซ้อมจำลองไฟล์ข้อมูลพัง
+
+NON-DESTRUCTIVE SCM ROLLBACK กระบวนการย้อนคืนเวอร์ชันฉุกเฉิน
+การย้อนคืนเวอร์ชันฉุกเฉิน
+ห้ามใช้ git reset --hard: ลบประวัติงานและทำให้ Commit เสียหาย
+ต้องใช้ git revert: สร้าง Commit ย้อนกลับอย่างปลอดภัย ไม่ทำลายประวัติ
+
+# 1. จำลองสถานการณ์ฉุกเฉินบนสาย main
+# 2. ทำการ Revert Merge Commit ของเวอร์ชัน 2.0.0
+# 3. รันชุดทดสอบความปลอดภัยของระบบเวอร์ชันเดิม
+# 4. สร้างแท็กฉุกเฉินสำหรับเวอร์ชัน Rollback
+"Emergency rollback to baseline v1.0.0"
+Recovery Time Objective (RTO)
+การซ้อม Drill ในห้องแล็บช่วยให้นักศึกษาวัดเวลาที่ใช้จริงในการกู้คืนระบบ (RTO)
+บันทึกผลการทดสอบลงในแบบฟอร์ม Disaster Recovery Test Report
+GIT ENGINE ROLLBACK COMMANDS คำสั่ง GIT สำหรับการซ้อม ROLLBACK
+คำสั่ง Git สำหรับการซ้อม Rollback
+
+ISO/IEC 14764 RECORDS โครงสร้างแฟ้มประวัติการบำรุงรักษา
+โครงสร้างแฟ้มประวัติการบำรุงรักษา
+ภาคที่ 1: การประเมินคุณภาพเชิงเปรียบเทียบ (Metrics Audit)
+ภาคที่ 2: เมทริกซ์การตรวจสอบย้อนกลับ (Traceability)
+ภาคที่ 3: คู่มือการส่งมอบสำหรับผู้ดูแลระบบ (Admin Manual)
+
+Code Metric
+As-Is (v1.0.0)
+Target
+Actual (v2.0.0)
+ISO 25010
+Max Complexity v(G)
+22 (Critical)
+ 8
+6 (Low)
+🟢 ผ่านเกณฑ์
+Coupling (CBO)
+N/A (Global)
+ 4
+3 (Low)
+🟢 ผ่านเกณฑ์
+Global Variables
+2 (x, db)
+0
+0 (Zero)
+🟢 ปราศจาก Side Effects
+Test Coverage
+15%
+ 90%
+94%
+🏆 สูงกว่าเป้าหมาย
+Dependency CVEs
+3 CVEs
+0
+0 (Zero)
+🟢 Security Verified
+EMPIRICAL QUALITY VERIFICATION ตารางเปรียบเทียบดัชนีคุณภาพเชิงปริมาณ
+ตารางเปรียบเทียบดัชนีคุณภาพจริง
+
+CR & Bug Traceability
+Audit Compliance
+แผนผังเชื่อมโยงตั้งแต่ข้อกำหนดทางธุรกิจไปจนถึงบรรทัดโค้ดและชุดทดสอบ ยืนยันความโปร่งใสทางวิศวกรรม 100% ตามมาตรฐานสากล
+CR-01 (Barcode): Product, Service ➔ Commit a4f81c2 ➔ test_barcode_alert()
+CR-02 (CSV Export): CsvReportExporter ➔ Commit c9b72e1 ➔ test_csv_export()
+BUG-101 (Legacy JSON): InventoryRepository ➔ Commit e3d45f9 ➔ test_legacy_fallback()
+DOSSIER COMPONENT 2 เมทริกซ์การตรวจสอบย้อนกลับ
+เมทริกซ์การตรวจสอบย้อนกลับ (Traceability)
+
+Architecture & Emergency SOP
+Migration & Escalation
+Architecture Topology: ไดอะแกรมแสดงสถาปัตยกรรมและโครงสร้างไฟล์
+Emergency SOP: คู่มือการสั่ง Restart ระบบ และขั้นตอนการกู้คืนไฟล์สำรอง
+Database Migration Guide: แนวทางการเพิ่มฟิลด์ในไฟล์ JSON ปลอดภัย
+Escalation Path: รายชื่อผู้พัฒนาและบทบาทความรับผิดชอบเดิม
+DOSSIER COMPONENT 3 คู่มือการส่งมอบระบบ (HANDOVER MANUAL)
+คู่มือการส่งมอบระบบสำหรับผู้ดูแล
+
+Workshop: "Package Distribution, Rollback Drill & Final Engineering Audit"
+1. Packaging
+สร้างแพ็กเกจ Wheel (.whl) และ Docker Container Image สำเร็จรูป
+2. pip-audit
+สแกนความปลอดภัย dependencies บันทึกผลเป็น Zero CVEs Report
+3. Rollback Drill
+ซักซ้อมแผนกู้คืนไฟล์ข้อมูลพัง และทดสอบ Git Revert Rollback
+4. Pre-Audit
+นำส่งเล่ม Complete Maintenance Dossier ให้อาจารย์ตรวจรับรอง
+PRACTICAL LAB ACTIVITY แนะนำกิจกรรม WORKSHOP วันนี้
+แนะนำกิจกรรม Workshop วันนี้
+
+# 1. ติดตั้งเครื่องมือ Build
+# 2. สั่งแพ็กเกจระบบเป็น Wheel File
+# 3. ตรวจสอบไฟล์ในโฟลเดอร์ dist/
+# ผลลัพธ์: mini_inventory_system-2.0.0-py3-none-any.whl
+# 4. ทดสอบสร้าง Docker Container
+Distribution Verification
+ตรวจสอบว่าโฟลเดอร์ dist/ มีไฟล์ .whl และ .tar.gz ถูกต้อง
+และทดสอบรัน docker run -it mini-inventory:v2.0.0 เพื่อยืนยันว่าโปรแกรมเปิดใช้งานได้ทันที
+WORKSHOP EXECUTION STEP 1 ขั้นตอน 1: สร้าง WHEEL และ DOCKER
+ขั้นตอน 1: สร้าง Wheel และ Docker
+
+# 1. ติดตั้ง pip-audit
+# 2. สั่งสแกนและส่งออกผลเป็นไฟล์ JSON
+# 3. ตรวจสอบผลลัพธ์
+Zero CVEs Certified
+ตรวจสอบไฟล์ security_report.json ยืนยันว่าไม่มีรายการช่องโหว่ CVE ตกค้าง
+แคปเจอร์หน้าจอรายงานผลลัพธ์เพื่อนำไปแนบเป็นหลักฐานในเล่ม Maintenance Dossier
+WORKSHOP EXECUTION STEP 2 ขั้นตอน 2: รันการสแกน PIP-AUDIT
+ขั้นตอน 2: รันการสแกน pip-audit
+
+Data Corruption Drill
+ทดลองลบปีกกาปิดท้ายใน inventory_db.json ➔ รันโปรแกรม ➔ ตรวจสอบว่าระบบกู้คืนข้อมูลจาก .bak ได้สำเร็จ
+Git Rollback Drill
+ทดลองสั่ง git revert จำลองการถอยเวอร์ชัน ➔ รัน PyTest ตรวจสอบความถูกต้อง ➔ บันทึก Recovery Time ลงแบบฟอร์ม
+WORKSHOP EXECUTION STEP 3 ขั้นตอน 3: ซ้อมแผนกู้คืนระบบ
+ขั้นตอน 3: ซักซ้อมแผนกู้คืนระบบ
+
+เช็คลิสต์ตรวจความสมบูรณ์
+Pre-Audit Approval
+อาจารย์ตรวจประเมินเล่มเอกสาร Dossier และลงลายเซ็นรับรองรอบ Pre-Audit เพื่ออนุญาตให้กลุ่มเข้าสู่การพิทชิ่ง Final Defense ในสัปดาห์ที่ 15
+ตาราง Code Metrics (As-Is vs To-Be) มีข้อมูลประจักษ์ครบ
+Traceability Matrix เชื่อมโยงครบทุก CR และบั๊ก
+รายงาน pip-audit และผลการซ้อม Rollback สมบูรณ์
+WORKSHOP EXECUTION STEP 4 ขั้นตอน 4: ตรวจรับรอง PRE-AUDIT
+ขั้นตอน 4: ตรวจรับรอง Pre-Audit
+
+ชิ้นงาน 1: รายงานผลการซ้อมแผนกู้คืนระบบและความปลอดภัย (Disaster Recovery & Dependency Security Report)
+ชิ้นงาน 2: แฟ้มประวัติการบำรุงรักษาระบบฉบับสมบูรณ์ (Complete Maintenance Dossier) 3 ภาคตาม ISO/IEC 14764
+ชิ้นงาน 3: ชุดแพ็กเกจส่งมอบมาตรฐาน (Distribution Package: Wheel File ใน dist/ และ Dockerfile)
+PHASE 4.2 TECHNICAL DELIVERABLES เช็คลิสต์สิ่งส่งมอบสัปดาห์ 14
+เช็คลิสต์สิ่งส่งมอบสัปดาห์ 14
+
+ผลสำเร็จทางเทคนิค
+ความเสถียรของระบบ ผลการลดหนี้ทางเทคนิค (Complexity ลดเหลือ 6), Zero Vulnerabilities และความพร้อมของแผนกู้คืนระบบ
+คำนวณความคุ้มค่า Maintenance ROI
+ส่งมอบข้อมูลให้ PM นำไปคำนวณมูลค่าความคุ้มค่าของการลงทุน (Benefit Realization & Maintenance ROI) ในวิชา ENGSE202 ช่วง 3 ชั่วโมงหลัง
+CROSS-COURSE ALIGNMENT สะพานส่งต่องานสู่วิชา ENGSE202
+สะพานส่งต่องานสู่วิชา ENGSE202
+
+Distribution Integrity
+ซอฟต์แวร์ที่ดีต้องส่งมอบในรูปแบบมาตรฐาน (Wheel/Docker) ที่ติดตั้งได้ทันที
+Resilience & Recovery
+ความน่าเชื่อถือวัดกันที่ระบบสามารถกู้คืนข้อมูลกลับมาได้เร็วแค่ไหนยามเกิดภัยพิบัติ
+Engineering Artifact
+แฟ้ม Dossier ตาม ISO 14764 คือหลักฐานการันตีความยั่งยืนของซอฟต์แวร์
+SESSION RECAP สรุปบทเรียนประจำสัปดาห์ที่ 14
+สรุปบทเรียนประจำสัปดาห์ที่ 14
+
+ช่วงถาม-ตอบ (Q&A Session)
+“วิศวกรซอฟต์แวร์ที่แท้จริง ไม่ได้ส่งมอบแค่งานที่เสร็จ แต่ส่งมอบระบบที่มีความทนทาน ปลอดภัย และมีคู่มือที่พร้อมให้ผู้อื่นสืบทอดต่อไปได้อย่างมั่นคง”
+เตรียมความพร้อมสำหรับการนำเสนอสด (Live Installation Demo & Final Defense) ในสัปดาห์ที่ 15
+ENGSE225: SOFTWARE EVOLUTION AND MAINTENANCE Q&A & DISCUSSION
+
+ISO/IEC/IEEE. (2017). Systems and software engineering — Software life cycle processes (ISO/IEC/IEEE Standard No. 12207:2017).
+ISO/IEC. (2006). Software Engineering — Software Life Cycle Processes — Maintenance (ISO/IEC Standard No. 14764:2006).
+ISO/IEC. (2011). Systems and software engineering — Systems and software Quality Requirements and Evaluation (SQuaRE) — System and software quality models (ISO/IEC Standard No. 25010:2011).
+Chidamber, S. R., & Kemerer, C. F. (1994). A metrics suite for object oriented design. IEEE Transactions on Software Engineering, 20(6), 476-493.
+Chacon, S., & Straub, B. (2014). Pro Git (2nd ed.). Apress.
+Wheeler, D. A. (2020). Securing Open Source Software: Linux Foundation Guidelines.
+SOFTWARE ENGINEERING BIBLIOGRAPHY เอกสารอ้างอิงทางวิชาการ
+เอกสารอ้างอิงทางวิชาการ
+
+https://media2.dev.to/dynamic/image/width=800%2Cheight=%2Cfit=scale-down%2Cgravity=auto%2Cformat=auto/https%3A%2F%2Fdev-to-uploads.s3.amazonaws.com%2Fuploads%2Farticles%2Frvvizek0gpig1ixxo8km.png
+Source: dev.to
+https://cybersecmagazine.com/wp-content/uploads/2026/06/Top-12-OT-Vulnerability-Scanners-for-SCADA-and-PLCs-1024x535.jpeg
+Source: cybersecmagazine.com
+https://www.freecodecamp.org/news/content/images/2021/08/image-112.png
+Source: www.freecodecamp.org
+https://www.altexsoft.com/static/content-image/2024/7/3c5df12b-9892-45b4-9eee-1ba06362e132.jpg
+Source: www.altexsoft.com
+Image Sources

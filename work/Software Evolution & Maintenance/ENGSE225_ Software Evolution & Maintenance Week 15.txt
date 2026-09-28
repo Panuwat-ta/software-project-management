@@ -1,0 +1,302 @@
+WEEK 15: LIVE DEMO, TECHNICAL DEFENSE & CLOSURE
+ENGSE225: Final Defense & Handover
+“การปิดฉากวงจรวิวัฒนาการซอฟต์แวร์ การส่งมอบ Production Baseline (v2.0.0-evolution) และการส่งมอบแฟ้มประวัติวิศวกรรมบำรุงรักษาตามมาตรฐาน ISO/IEC 12207 และ ISO/IEC 14764”
+Academic Framework: ISO/IEC/IEEE 12207:2017 - Clause 6.4.10: Transition & 6.4.11: Validation Processes
+ENGSE225: SOFTWARE EVOLUTION AND MAINTENANCE WEEK 15 GRAND FINALE
+
+1. Live Clean Install
+สาธิตการติดตั้งระบบสดจาก Tag v2.0.0-evolution บนสภาพแวดล้อมใหม่ต่อหน้าคณะกรรมการ
+2. Live Testing & Cov
+รัน PyTest Full Regression สด แสดงผลผ่าน 100% พร้อมรายงาน Coverage $\ge 90\%$
+3. Repository Handover
+ส่งมอบกรรมสิทธิ์ คลังซอร์สโค้ด และ Credentials ตามกรอบ ISO/IEC 12207
+4. Dossier Sign-off
+ส่งมอบแฟ้มประวัติวิศวกรรมบำรุงรักษาฉบับสมบูรณ์ และขอรับลายเซ็นรับรองอย่างเป็นทางการ
+WEEKLY COURSE OBJECTIVES ENGSE225
+เป้าหมายการเรียนรู้สัปดาห์ 15
+
+สัปดาห์ 1-4 (Phase 1)
+ขุดค้นสปาเก็ตตีโค้ด app_v1.py, ระบุหนี้เทคนิค global x, ปักหมุด v1.0.0-baseline
+สัปดาห์ 5-7 (Phase 2)
+ออกแบบ To-Be Architecture (Repository), ประเมิน ISO 25010 และตั้งท่อ CI/CD
+สัปดาห์ 8-12 (Phase 3)
+ผ่าตัด Refactoring, พัฒนา CR-01 Barcode และ CR-02 CSV, ผ่าน UAT ปักหมุด v2.0.0
+สัปดาห์ 13-15 (Phase 4 ⭐)
+Clean Deployment, ซ้อมกู้ภัย Rollback และสอบพิทชิ่งส่งมอบสดในวันนี้
+15-WEEK CAPSTONE ROADMAP เส้นทางวิวัฒนาการ 15 สัปดาห์
+เส้นทางวิวัฒนาการ 15 สัปดาห์
+
+Transition Process (ISO/IEC 12207:2017 Clause 6.4.10): การส่งมอบซอฟต์แวร์ที่ผ่านการรับรองให้ผู้ปฏิบัติการดูแลต่ออย่างยั่งยืนผ่าน 3 เสาหลัก:
+1. Artifacts Handover
+ส่งมอบคลังซอร์สโค้ด, ชุดทดสอบ PyTest, สคริปต์ Build/Deploy และ Release Packages (Wheel, Docker)
+2. Operational Handover
+ส่งมอบสิทธิ์ดูแลระบบ, การตั้งค่า Environment Variables, และแผนรับมือภัยพิบัติ
+3. Knowledge Handover
+ส่งมอบคู่มือ Operations Manual, แฟ้มประวัติบำรุงรักษา Dossier, และพิมพ์เขียวสถาปัตยกรรม As-Built
+🏆 ผู้ดูแลระบบคนใหม่สามารถดำเนินงานต่อได้ทันทีโดยไม่ต้องพึ่งพาทีมเดิม
+ISO/IEC/IEEE 12207 STANDARD กระบวนการส่งมอบและเปลี่ยนผ่าน
+กระบวนการส่งมอบและเปลี่ยนผ่าน
+
+Ownership Transfer
+Governance & Branch Integrity
+โอนย้ายสิทธิ์ความเป็นเจ้าของ (Transfer Ownership) ให้แก่อาจารย์ (Sponsor)
+ตั้งค่าอาจารย์เป็น Owner / Admin ของ GitHub Repository
+ปรับลดบทบาทของนักศึกษาลงเป็น Contributor หรือ Maintainer
+ยืนยันว่า Branch Protection บน main และ develop ยังล็อกแน่นหนา
+ตรวจสอบ Release Tag v2.0.0-evolution สถิตอยู่บนรีโมตถาวร
+ลบกิ่งฟีเจอร์ชั่วคราวที่ผสานเสร็จแล้ว คงไว้เฉพาะสายหลัก
+REPOSITORY OWNERSHIP TRANSFER การส่งมอบกรรมสิทธิ์และคลังโค้ด
+การส่งมอบกรรมสิทธิ์และคลังโค้ด
+
+ข้อห้ามเด็ดขาด (Security Violations)
+ห้ามส่งมอบรหัสผ่าน API Keys หรือกุญแจความลับผ่านช่องทางแชตสาธารณะ (LINE / Discord) และห้าม Commit ขึ้น Git
+การละเมิดจะถือว่าไม่ผ่านเกณฑ์ความปลอดภัยตามมาตรฐาน SEI CERT
+กระบวนการส่งมอบที่ปลอดภัย
+จัดทำแม่แบบไฟล์กำหนดค่าสภาพแวดล้อม .env.example
+บันทึก Secrets และ Tokens ลงใน GitHub Secrets ของ Repository
+จัดทำเอกสาร Environment Inventory ระบุชื่อตัวแปรที่ระบบต้องการ
+SECURITY TRANSITION PROTOCOL การส่งมอบข้อมูลความปลอดภัย
+การส่งมอบข้อมูลความปลอดภัย
+
+4 แกนสำคัญในคู่มือ
+The Standalone Test
+เกณฑ์การตรวจรับรอง: วิศวกรซอฟต์แวร์คนใหม่ต้องสามารถเปิดอ่านคู่มือนี้ แล้วเริ่มปฏิบัติการบำรุงรักษาระบบได้ทันที 100% โดยไม่ต้องขอคำแนะนำเพิ่มเติมจากทีมผู้พัฒนาเดิม
+System Architecture Map: ไดอะแกรมความสัมพันธ์ระหว่างโมดูล
+Daily Operations: ขั้นตอนการเปิดระบบ และสำรองข้อมูลประจำวัน
+Troubleshooting Matrix: ตารางวิเคราะห์ปัญหาและวิธีแก้ฉุกเฉิน
+Maintenance Escalation: ช่องทางติดต่อผู้พัฒนาเดิมกรณีพบวิกฤต
+OPERATIONAL HANDOVER GATE การส่งมอบคู่มือผู้ปฏิบัติการ
+การส่งมอบคู่มือผู้ปฏิบัติการ
+
+EMPIRICAL QUALITY DEMONSTRATION การสอบทานระบบสดต่อหน้ากรรมการ
+การสอบทานระบบสดต่อหน้ากรรมการ
+1. Clean Install: ติดตั้งระบบสดจากศูนย์บนเครื่องใหม่
+2. Live PyTest: สั่งรันชุดทดสอบสดบน Terminal โชว์ 100% Pass
+3. Live Operations: ทดสอบฟังก์ชัน Barcode และ CSV สด
+
+# 1. สร้างไดเรกทอรีทดสอบใหม่และโคลนโค้ดจากแท็กทางการ
+# 2. สร้าง Virtual Environment เปล่าสดๆ
+# หรือ live_env\Scripts\activate
+# 3. ติดตั้ง Dependencies และตรวจเช็ก
+2-Minute Standard
+กระบวนการโคลนและติดตั้งระบบสดต่อหน้าคณะกรรมการต้องดำเนินไปอย่างราบรื่น ปราศจาก Dependency Conflict และเสร็จสิ้นภายในเวลาไม่เกิน 2 นาที
+พิสูจน์ความเป็นอิสระของสภาพแวดล้อม (Portability & Installability)
+LIVE DEMONSTRATION STEP 1 ขั้นตอน 1: ติดตั้งบนเครื่องใหม่สด
+ขั้นตอน 1: ติดตั้งบนเครื่องใหม่สด
+
+# สั่งรัน Full Suite พร้อมวัด Code Coverage สด
+# ผลลัพธ์ที่ปรากฏบนหน้าจอ:
+PASSED [ 5%]
+PASSED [ 11%]
+PASSED [ 50%]
+PASSED [ 80%]
+PASSED [100%]
+======================= 18 passed in 0.48s =======================
+Zero-Flake Execution
+ชุดทดสอบ 18 เคสต้องผ่านไฟเขียวรวดเดียว 100% ปราศจาก Flaky Tests หรือข้อผิดพลาดแอบแฝง
+และตาราง Coverage รายงานตัวเลขรวม $\ge 90\%$ โดยคลาสสำคัญมี Coverage 100%
+LIVE DEMONSTRATION STEP 2 ขั้นตอน 2: รัน PYTEST สด 100%
+ขั้นตอน 2: รัน PyTest สด 100%
+
+1. Barcode & Reorder Alert (CR-01)
+2. CSV Reporting (CR-02)
+เพิ่มสินค้าใหม่พร้อมระบุรหัสบาร์โค้ด 885999001
+สาธิตการค้นหาสินค้าด้วยบาร์โค้ดได้อย่างรวดเร็ว
+สั่งตัดสต็อกจนเหลือ $\le$ Reorder Point และแสดงไฟแจ้งเตือนสีเหลือง/แดง
+สั่ง Export รายงานสินค้าสต็อกต่ำออกมาเป็นไฟล์ .csv
+เปิดไฟล์สดๆ ในโปรแกรม Microsoft Excel ให้กรรมการดู
+ตรวจสอบว่ามีคอลัมน์ Barcode และยอดสต็อกถูกต้องครบถ้วน
+LIVE DEMONSTRATION STEP 3 ขั้นตอน 3: สาธิตฟังก์ชันหลักสด
+ขั้นตอน 3: สาธิตฟังก์ชันหลักสด
+
+คณะกรรมการจะสุ่มสั่งทดสอบสถานการณ์ขอบเขต (Ad-hoc Edge Cases) สดในห้องสอบ:
+คำถามและโจทย์ท้าทาย
+เกณฑ์การให้คะแนน
+สถาปัตยกรรมใหม่ต้องสามารถดักจับข้อผิดพลาด (Validation Handling) และแสดงข้อความแจ้งเตือนที่ปลอดภัย โดยที่ระบบต้อง ไม่ Crash และไม่เกิด Unhandled Exception
+"ลองตัดสต็อกสินค้าเกินกว่าจำนวนที่มีอยู่จริงในคลังดูซิ?"
+"ลองกรอกราคาเป็นตัวอักษร 'abc' หรือค่าติดลบดู?"
+"ลอง Export CSV ซ้ำสองรอบติดกันดูว่าไฟล์จะเสียหายไหม?"
+EDGE CASE STRESS TESTING การทดสอบตามคำสั่งคณะกรรมการ
+การทดสอบตามคำสั่งคณะกรรมการ
+
+FORMAL ENGINEERING DOSSIER การส่งมอบแฟ้มประวัติ ISO 14764
+การส่งมอบแฟ้มประวัติ ISO 14764
+1. Quality Audit: ตารางสอบทาน Code Metrics เปรียบเทียบ
+2. Traceability: เมทริกซ์เชื่อมโยงข้อกำหนด สู่โค้ด สู่การทดสอบ
+3. Handover Manual: คู่มือผู้ดูแลระบบและแนวทางต่อยอด
+
+หมวด / บทที่
+หัวข้อเอกสารสำคัญ
+ผลผลิตทางวิศวกรรม
+ส่วนที่ 1: Overview
+บทนำ ภาพรวมระบบคลังสินค้า และประวัติหนี้เดิม
+System Scope Statement
+ส่วนที่ 2: Architecture
+สถาปัตยกรรม As-Is vs As-Built และ Design Patterns
+UML Diagram + Schema
+ส่วนที่ 3: Surgery Logs
+ประวัติการ Refactoring ลบ global x ใน Sprint 1
+Refactoring Audit Report
+ส่วนที่ 4: Changes (CR)
+บันทึกคำขอ CR-01 (Barcode) และ CR-02 (CSV)
+CR Forms + Impact Analysis
+ส่วนที่ 5: Defect Logs
+บันทึกการแก้บั๊ก BUG-101 และ 5 Whys RCA
+Root Cause Analysis Report
+ส่วนที่ 6: Verification
+ผลการทดสอบ PyTest, Coverage 94% และ Bandit Scan
+post_maintenance_test.log
+ส่วนที่ 7: Handover
+คู่มือติดตั้ง Emergency SOP และ Known Issues
+System Operations Manual
+FORMAL DOCUMENTATION ARCHITECTURE โครงสร้างแฟ้มประวัติฉบับสมบูรณ์
+โครงสร้างแฟ้มประวัติฉบับสมบูรณ์
+
+ตัวชี้วัดคุณภาพเชิงเทคนิค
+As-Is (v1.0.0)
+Target
+Actual (v2.0.0)
+ผลสัมฤทธิ์วิศวกรรม
+Max Complexity v(G)
+22 (Monolith)
+8
+6 (Clean)
+🟢 ลดความซับซ้อน 72.7%
+Coupling (CBO)
+N/A (Spaghetti)
+4
+3 (Loose)
+🟢 แยกส่วนอิสระสมบูรณ์
+Inheritance Depth (DIT)
+0
+2
+1 (Optimal)
+🟢 โครงสร้างอ่านง่าย
+Global State Variables
+2 (x, db)
+0
+0 (Zero)
+🟢 ปราศจาก Side Effects
+PyTest Code Coverage
+15%
+ 90%
+94%
+🏆 เกราะคุ้มกันครอบคลุม
+Security Vulnerabilities
+3 Known CVEs
+0
+0 (Zero)
+🟢 ปลอดภัยไร้ช่องโหว่
+EMPIRICAL QUALITY VERIFICATION ตารางสอบทานดัชนีคุณภาพจริง
+ตารางสอบทานดัชนีคุณภาพจริง
+
+ก่อนการปรับปรุง (As-Is v1.0.0)
+หลังการปรับปรุง (As-Built v2.0.0)
+โค้ดกระจุกตัวในฟังก์ชัน main() ยาวเหยียด
+ตัวแปรชื่อสั้นไร้ความหมาย x, a, b, c, d
+เข้าถึงไฟล์ข้อมูลตรง เสี่ยงพังทุกครั้งที่มีการแก้
+แยกเลเยอร์ชัดเจนตาม Repository Pattern และมี Domain Model
+ใช้การบันทึกไฟล์แบบ Atomic File Writing ป้องกันไฟล์พัง 100%
+มีชุดทดสอบ Automated Regression Tests เป็นเกราะคุ้มกันถาวร
+ARCHITECTURAL TRANSFORMATION หลักฐานการลดหนี้ทางเทคนิค
+หลักฐานการลดหนี้ทางเทคนิค
+
+Change Requests Traceability
+Defect Traceability
+BUG-101 (Legacy JSON Schema): 5 Whys RCA ➔ แก้ไข InventoryRepository.load_all() ➔ Commit e3d45f9 ➔ test_legacy_fallback() ➔ Verified Pass
+🏆 พิสูจน์ว่าทุกบรรทัดโค้ดมีที่มาที่ไปและผ่านการทดสอบรองรับ 100%
+CR-01 (Barcode & Alert): WBS 2.1 ➔ Product, InventoryService ➔ Commit a4f81c2 ➔ test_barcode_alert() ➔ UAT-SC01
+CR-02 (CSV Export): WBS 2.2 ➔ CsvReportExporter ➔ Commit c9b72e1 ➔ test_csv_export() ➔ UAT-SC03
+BIDIRECTIONAL TRACEABILITY เมทริกซ์การตรวจสอบย้อนกลับ
+เมทริกซ์การตรวจสอบย้อนกลับ
+
+FORMAL ACCEPTANCE GATEWAY ใบรับรองการส่งมอบงานทางเทคนิค
+ใบรับรองการส่งมอบงานทางเทคนิค
+รับรองการส่งมอบผลิตภัณฑ์ซอฟต์แวร์และคลังโค้ด
+รับรองผลการทดสอบสดและการส่งมอบแฟ้ม Dossier
+ลายเซ็น Tech Lead และคณะกรรมการตรวจรับ
+
+1. Clean Install
+โคลนโค้ดสดและติดตั้ง Dependencies บน Terminal ต่อหน้ากรรมการ (3 นาที)
+2. Live PyTest
+สั่งรันชุดทดสอบสด โชว์ไฟเขียว 100% พร้อมตาราง Coverage (3 นาที)
+3. Feature Demo
+สาธิตฟังก์ชัน Barcode, Reorder Alert, และ CSV Export (5 นาที)
+4. Inspection
+ตอบคำถามทางเทคนิคและส่งมอบเล่ม Maintenance Dossier (4 นาที)
+PRACTICAL DEFENSE PROTOCOL กิจกรรม FINAL DEFENSE วันนี้
+กิจกรรม Final Defense วันนี้
+
+ปฏิบัติการบนเวทีนำเสนอ
+Dependency Verification
+แพ็กเกจทั้งหมดจาก requirements.txt ถูกดาวน์โหลดและติดตั้งครบถ้วน ปราศจาก Warning หรือ Dependency Conflict ภายในเวลาไม่เกิน 2 นาที
+เปิดหน้าจอ Terminal ขยายตัวอักษรให้อ่านง่าย
+สั่งรันสคริปต์ setup.sh หรือพิมพ์คำสั่งโคลนจากแท็ก v2.0.0-evolution
+แสดงให้กรรมการเห็นว่า Virtual Environment ถูกสร้างขึ้นใหม่
+DEFENSE EXECUTION STEP 1 ขั้นตอน 1: รันคำสั่งติดตั้งสด
+ขั้นตอน 1: รันคำสั่งติดตั้งสด
+
+คำสั่งรันชุดทดสอบสด
+สั่งรันต่อหน้ากรรมการ ให้กรรมการดูผลการรันผ่านทีละเคสจนครบ 18 เคส
+Coverage Report Verification
+ชี้แจงตัวเลขในตาราง Coverage Report ยืนยันว่าโมดูลหลักมี Coverage 100% และภาพรวมระบบบรรลุ 94% ครอบคลุมทั้งกรณีปกติ (Happy Path) และกรณีขอบเขต (Edge Cases)
+DEFENSE EXECUTION STEP 2 ขั้นตอน 2: รัน PYTEST โชว์สด
+ขั้นตอน 2: รัน PyTest โชว์สด
+
+สาธิตระบบคลังสินค้า v2.0
+เปิดไฟล์ CSV ใน Excel สด
+สั่ง Export รายงานสต็อกต่ำออกมาเป็นไฟล์ .csv ➔ เปิดไฟล์สดๆ ในโปรแกรม Spreadsheet ให้กรรมการตรวจดูคอลัมน์ Barcode และสต็อกตรงกัน
+สั่งรัน python app.py เข้าสู่หน้าจอหลัก
+สาธิตการป้อนรหัสบาร์โค้ด และสั่งค้นหาสินค้า
+สั่งตัดสต็อกให้ระบบแสดงข้อความเตือน Reorder Point Alert
+DEFENSE EXECUTION STEP 3 ขั้นตอน 3: สาธิตสดและเปิด CSV
+ขั้นตอน 3: สาธิตสดและเปิด CSV
+
+ยื่นเล่มเอกสารต่อคณะกรรมการ
+ลงนาม Technical Handover
+คณะกรรมการตรวจสอบความสมบูรณ์และลงลายเซ็นรับรองในเอกสาร Technical Handover Certificate เพื่อยืนยันการปิดเฟสอย่างสมบูรณ์
+ส่งมอบเล่ม Final System Maintenance Dossier ทั้ง 7 หมวด
+ชี้แจงตารางเปรียบเทียบ Metrics As-Is vs As-Built
+ชี้แจงบันทึกการแก้บั๊ก Defect Log และผลกระทบ CR-01/CR-02
+DEFENSE EXECUTION STEP 4 ขั้นตอน 4: ตรวจรับรองแฟ้มระบบ
+ขั้นตอน 4: ตรวจรับรองแฟ้มระบบ
+
+ชิ้นงาน 1: แฟ้มประวัติวิศวกรรมบำรุงรักษาระบบฉบับสมบูรณ์ (Final System Maintenance Dossier) รูปเล่มสมบูรณ์
+ชิ้นงาน 2: ลิงก์ GitHub Repository ฉบับสมบูรณ์ บนสาขา main มีแท็ก v2.0.0-evolution
+ชิ้นงาน 3: ประวัติผลการรัน GitHub Actions CI/CD ไฟเขียว 100% บนสาขา main
+ชิ้นงาน 4: เอกสารใบรับมอบงานทางเทคนิค (Technical Handover Certificate) ที่มีลายเซ็นครบถ้วน
+FINAL ARCHIVE PORTFOLIO เช็คลิสต์สิ่งส่งมอบขั้นสุดท้าย
+เช็คลิสต์สิ่งส่งมอบขั้นสุดท้าย
+
+ส่งมอบใบรับรองทางเทคนิค
+ส่งมอบเอกสารรับรอง Technical Handover Certificate ให้ทีม Project Management (ENGSE202) เพื่อใช้เป็นหลักฐานยืนยันความสำเร็จ
+เวที Final Project Closure Defense
+การันตีว่าทีมมีผลิตภัณฑ์ซอฟต์แวร์ที่ทำงานได้จริง (Working Software) เป็นฐานรองรับการนำเสนอคุณค่าความคุ้มค่าทางธุรกิจ (ROI) ในวิชา SPM ช่วง 3 ชั่วโมงหลัง
+CROSS-COURSE ALIGNMENT สะพานส่งต่องานสู่วิชา ENGSE202
+สะพานส่งต่องานสู่วิชา ENGSE202
+
+Code is Living
+ซอฟต์แวร์เป็นสิ่งมีชีวิตที่ต้องปรับตัวตามกฎของ Lehman เสมอ มิฉะนั้นจะเสื่อมถอย
+Refactoring without Fear
+การผ่าตัดโค้ดเก่าทำได้อย่างมั่นใจเมื่อมีชุดทดสอบอัตโนมัติ (PyTest) คุ้มกัน
+Engineering Rigor
+มาตรฐาน ISO/IEC 14764 และ 12207 คือเส้นแบ่งระหว่างมือสมัครเล่นกับวิศวกรมืออาชีพ
+15-WEEK CAPSTONE SYNTHESIS สรุปบทเรียน 15 สัปดาห์
+สรุปบทเรียน 15 สัปดาห์
+
+ISO/IEC/IEEE. (2017). Systems and software engineering — Software life cycle processes (ISO/IEC/IEEE Standard No. 12207:2017).
+ISO/IEC. (2006). Software Engineering — Software Life Cycle Processes — Maintenance (ISO/IEC Standard No. 14764:2006).
+ISO/IEC. (2011). Systems and software engineering — Systems and software Quality Requirements and Evaluation (SQuaRE) — System and software quality models (ISO/IEC Standard No. 25010:2011).
+Chidamber, S. R., & Kemerer, C. F. (1994). A metrics suite for object oriented design. IEEE Transactions on Software Engineering, 20(6), 476-493.
+McCabe, T. J. (1976). A complexity measure. IEEE Transactions on Software Engineering, (4), 308-320.
+Fowler, M. (2018). Refactoring: Improving the Design of Existing Code (2nd ed.). Addison-Wesley.
+SOFTWARE ENGINEERING BIBLIOGRAPHY เอกสารอ้างอิงทางวิชาการ
+เอกสารอ้างอิงทางวิชาการ
+
+https://www.slideteam.net/media/catalog/product/cache/1280x720/s/t/steps_to_prepare_an_effective_thesis_defense_presentation_slide01.jpg
+Source: www.slideteam.net
+https://quollnet.com/chk/file/Pile_Dossier_Ha_checklist_afa44c41-e4c3-44c5-a5bb-24e382d25685/Pile-Dossier-Handover-Checklist-main.webp
+Source: quollnet.com
+https://images.template.net/456276/Equipment-Handover-Letter-Template-edit-online.png
+Source: www.template.net
+Image Sources
