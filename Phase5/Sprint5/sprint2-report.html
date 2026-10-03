@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>รายงาน Sprint 5 · v3.0 | SQLite + Member System</title>
+  <link rel="stylesheet" href="../../theme.css">
+</head>
+
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="../../index.html">
+        <span class="brand-icon">SPM</span>
+        <span>CLI Inventory Management</span>
+      </a>
+      <nav class="nav-links">
+        <a class="nav-item" href="../../index.html">หน้าแรก</a>
+        <a class="nav-item" href="../../Phase4/Sprint4/sprint-report.html">รายงาน Sprint 1</a>
+        <a class="nav-item active" href="sprint2-report.html">รายงาน Sprint 2</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="main-wrapper">
+    <div class="portal-container">
+      <div class="page-header-block">
+        <div class="notice-pill">ข้อมูลสมมติเพื่อการเรียน · Fictional Coursework</div>
+        <h1 class="page-title">รายงาน Sprint 5 · v3.0 — SQLite + Member System</h1>
+        <p class="page-desc">Jira Sprint 2 (ID 48) · SPM-23…SPM-27 Done 5 ใบ รวม 17 SP ·
+          ฉบับเต็ม: <a href="sprint2.md">sprint2.md</a></p>
+      </div>
+
+      <section style="margin-bottom: 48px;">
+        <h2>สิ่งที่ส่งมอบ</h2>
+        <div class="card-grid">
+          <article class="card">
+            <div class="card-title">SPM-23 · SQLite Layer (5 SP)</div>
+            <div class="card-body">
+              <code>SQLiteDatabaseContext</code> Singleton + <code>InventoryRepository</code>
+              ใช้ parameterized query 100% กัน SQL injection (<code>bandit</code> 0 issues)
+            </div>
+            <div class="card-meta"><span class="badge badge-blue">Done</span><span>SPM-23-sqlite-layer.md</span></div>
+          </article>
+          <article class="card">
+            <div class="card-title">SPM-24 · Migration (3 SP)</div>
+            <div class="card-body">
+              <code>migrate_json_to_sqlite</code> รองรับคีย์เก่า <code>n/q/p/c</code>
+              ตรวจจำนวน + มูลค่าตรง 100% (<code>match: True</code>) CLI auto-migrate
+            </div>
+            <div class="card-meta"><span class="badge badge-blue">Done</span><span>SPM-24-migration.md</span></div>
+          </article>
+          <article class="card">
+            <div class="card-title">SPM-25 · Member CRUD (3 SP)</div>
+            <div class="card-body">
+              Strategy <code>MemberTier</code> 4 ระดับ Regular 0% / Silver 5% /
+              Gold 10% / Platinum 15% tier ผิด fallback Regular ไม่ error
+            </div>
+            <div class="card-meta"><span class="badge badge-blue">Done</span><span>SPM-25-member-crud.md</span></div>
+          </article>
+          <article class="card">
+            <div class="card-title">SPM-26 · Checkout (3 SP)</div>
+            <div class="card-body">
+              <code>CheckoutService</code> ใบเสร็จแยก subtotal/discount/grand total
+              Gold 1,000 → 900 guest ราคาเต็ม ตัดสต็อก atomic alert reorder ยังทำงาน
+            </div>
+            <div class="card-meta"><span class="badge badge-blue">Done</span><span>SPM-26-checkout.md</span></div>
+          </article>
+          <article class="card">
+            <div class="card-title">SPM-27 · Tests (3 SP)</div>
+            <div class="card-body">
+              9 เคสใหม่ (singleton, injection, migration, tiers, fallback,
+              checkout ×3, legacy) รวม <code>test_app.py</code> 14 passed
+              regression week-12 25 passed
+            </div>
+            <div class="card-meta"><span class="badge badge-blue">Done</span><span>SPM-27-tests.md</span></div>
+          </article>
+          <article class="card">
+            <div class="card-title">คุณภาพโค้ด</div>
+            <div class="card-body">
+              <code>flake8 app.py</code> clean (ไร้ E501) <code>bandit</code> 0 issues
+              backward compat JSON/CSV v2.0 ครบ CLI ขยายเป็น 8 เมนู
+            </div>
+            <div class="card-meta"><span class="badge badge-blue">Done</span><span>app.py v3.0</span></div>
+          </article>
+        </div>
+      </section>
+
+      <section style="margin-bottom: 48px;">
+        <h2>หลักฐานราย issue</h2>
+        <ul>
+          <li><a href="SPM-23-sqlite-layer.md">SPM-23-sqlite-layer.md</a></li>
+          <li><a href="SPM-24-migration.md">SPM-24-migration.md</a></li>
+          <li><a href="SPM-25-member-crud.md">SPM-25-member-crud.md</a></li>
+          <li><a href="SPM-26-checkout.md">SPM-26-checkout.md</a></li>
+          <li><a href="SPM-27-tests.md">SPM-27-tests.md</a></li>
+          <li><a href="sprint2.md">sprint2.md (รายงานฉบับเต็ม)</a></li>
+          <li><a href="sprint2.pdf">sprint2.pdf (รายงานฉบับ PDF)</a></li>
+          <li><a href="app.py">app.py (snapshot โค้ด v3.0)</a></li>
+          <li><a href="test_app.py">test_app.py (snapshot ชุดทดสอบ 14 เคส)</a></li>
+        </ul>
+      </section>
+    </div>
+  </main>
+  <script src="../../site-nav.js"></script>
+</body>
+
+</html>

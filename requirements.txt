@@ -1,2 +1,5 @@
 pytest==8.0.2
 coverage==7.4.3
+fastapi
+uvicorn
+httpx

@@ -1,4 +1,5 @@
 data.json
+inventory.db
 /.agents
 .env
 test.json

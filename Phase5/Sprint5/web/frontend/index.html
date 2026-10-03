@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Inventory Web v4.0</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+  <header class="topbar">
+    <a class="brand" href="#/dashboard"><span class="brand-icon">INV</span><span>Inventory Web</span></a>
+    <button class="nav-toggle" id="navToggle" aria-label="เมนู">☰</button>
+    <nav class="nav" id="mainNav">
+      <a href="#/dashboard" data-route="dashboard">แดชบอร์ด</a>
+      <a href="#/products" data-route="products">สินค้า</a>
+      <a href="#/members" data-route="members">สมาชิก</a>
+      <a href="#/checkout" data-route="checkout">ขาย (Checkout)</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <div class="status" id="apiStatus">กำลังเชื่อมต่อ API…</div>
+
+    <section class="page" id="page-dashboard">
+      <h1>แดชบอร์ด</h1>
+      <div class="cards" id="summaryCards"></div>
+      <h2>แจ้งเตือนสินค้าใกล้หมด</h2>
+      <div class="table-wrap"><table id="lowTable">
+        <thead><tr><th>ID</th><th>ชื่อ</th><th>คงเหลือ</th><th>ROP</th></tr></thead>
+        <tbody></tbody>
+      </table></div>
+    </section>
+
+    <section class="page" id="page-products" hidden>
+      <h1>สินค้า</h1>
+      <div class="toolbar">
+        <input id="productSearch" type="search" placeholder="ค้นหาชื่อ/ID…">
+        <button id="exportCsv">โหลด CSV</button>
+      </div>
+      <form id="productForm" class="form-grid">
+        <input name="product_id" placeholder="ID *" required>
+        <input name="name" placeholder="ชื่อ *" required>
+        <input name="quantity" type="number" min="0" step="1" placeholder="จำนวน *" required>
+        <input name="price" type="number" min="0" step="0.01" placeholder="ราคา *" required>
+        <input name="category" placeholder="หมวด (General)">
+        <input name="barcode" placeholder="Barcode">
+        <input name="reorder_point" type="number" min="0" step="1" placeholder="ROP (5)">
+        <button type="submit">บันทึกสินค้า</button>
+      </form>
+      <div class="table-wrap"><table id="productTable">
+        <thead><tr><th>ID</th><th>ชื่อ</th><th>คงเหลือ</th><th>ราคา</th><th>สถานะ</th><th>จัดการ</th></tr></thead>
+        <tbody></tbody>
+      </table></div>
+    </section>
+
+    <section class="page" id="page-members" hidden>
+      <h1>สมาชิก</h1>
+      <form id="memberForm" class="form-grid">
+        <input name="member_id" placeholder="รหัสสมาชิก *" required>
+        <input name="name" placeholder="ชื่อ *" required>
+        <select name="tier">
+          <option>Regular</option><option>Silver</option>
+          <option>Gold</option><option>Platinum</option>
+        </select>
+        <button type="submit">บันทึกสมาชิก</button>
+      </form>
+      <div class="table-wrap"><table id="memberTable">
+        <thead><tr><th>ID</th><th>ชื่อ</th><th>Tier</th><th>ส่วนลด</th><th>จัดการ</th></tr></thead>
+        <tbody></tbody>
+      </table></div>
+    </section>
+
+    <section class="page" id="page-checkout" hidden>
+      <h1>ขาย (Checkout)</h1>
+      <form id="checkoutForm" class="form-grid">
+        <input name="product_id" placeholder="รหัสสินค้า *" required>
+        <input name="qty" type="number" min="1" step="1" value="1" required>
+        <input name="member_id" placeholder="รหัสสมาชิก (ว่าง = guest)">
+        <button type="submit">คิดเงิน</button>
+      </form>
+      <div id="receipt" class="receipt" hidden></div>
+      <div id="checkoutError" class="error" hidden></div>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+
+</html>
