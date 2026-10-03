@@ -37,56 +37,397 @@ blockquote { margin: 1em 0; padding: 8px 14px; border-left: 4px solid #1a56db;
 </head>
 <body>
 <nav class="nav"><a href="../../index.html">หน้าแรก</a><a href="../../Phase1/README.html">Phase1</a><a href="../../Phase2/README.html">Phase2</a><a href="../../Phase3/README.html">Phase3 (หน้านี้)</a><a href="../../Phase4/README.html">Phase4</a><a href="../../Phase5/README.html">Phase5</a></nav>
-<h1>รายงานปิด Sprint 3 — Phase 3 Execution (W8–W11)</h1>
-<p>Sprint 3 (Jira ID 85) งานลงมือและคุมการเปลี่ยนแปลง รวม 16 story points
-สถานะ Done ทั้ง 5 ใบ ข้อมูลสมมติเพื่อการเรียน</p>
-<h2>งาน (SPM-15…SPM-19)</h2>
+<h1>รายงานปิด Sprint 3 — Phase 3: ลงมือและคุมการเปลี่ยนแปลง (W8–W11)</h1>
+<p>เอกสารนี้สรุปหลักฐานสปรินต์ที่สาม ซึ่งเป็นช่วงลงมือทำงานจริงภายใต้การควบคุม
+— รับคำขอเปลี่ยนแปลงผ่าน Impact Analysis และ CCB, ติดตามความคืบหน้าด้วย
+Burndown/EVM, แก้บั๊กจากข้อมูลเก่า และปิดท้ายด้วยการ harden โค้ดกับ scope freeze
+ข้อมูลโครงการทั้งหมดเป็นข้อมูลสมมติเพื่อการเรียน ไม่ใช่ข้อมูลลูกค้าจริง</p>
+<h2>1. ข้อมูลสปรินต์</h2>
 <table>
 <thead>
 <tr>
-<th>Issue</th>
-<th>งาน</th>
-<th style="text-align: right;">SP</th>
+<th>รายการ</th>
+<th>ค่า</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>SPM-15</td>
-<td>CR-01: Barcode + Reorder Point (8h)</td>
-<td style="text-align: right;">5</td>
+<td>Sprint</td>
+<td>Sprint 3 - Phase 3 (W8-11)</td>
 </tr>
 <tr>
-<td>SPM-16</td>
-<td>EVM Analysis + Retrospective</td>
-<td style="text-align: right;">2</td>
+<td>Jira Sprint ID</td>
+<td>85 (state: closed)</td>
 </tr>
 <tr>
-<td>SPM-17</td>
-<td>BUG-101 KeyError barcode (tolerant get)</td>
-<td style="text-align: right;">3</td>
+<td>Story Points</td>
+<td>16 SP (SPM-15…SPM-19) ปิดครบทุกใบ</td>
 </tr>
 <tr>
-<td>SPM-18</td>
-<td>CR-02: CSV Export ผ่าน CCB (4.5h)</td>
-<td style="text-align: right;">3</td>
+<td>Issues</td>
+<td>SPM-15, SPM-16, SPM-17, SPM-18, SPM-19</td>
 </tr>
 <tr>
-<td>SPM-19</td>
-<td>Hardening + Scope Freeze</td>
-<td style="text-align: right;">3</td>
+<td>หลักฐานประจำสัปดาห์</td>
+<td><code>week-8/</code> <code>week-9/</code> <code>week-10/</code> <code>week-11/</code></td>
 </tr>
 </tbody>
 </table>
-<h2>สิ่งส่งมอบ</h2>
+<h2>2. ทีมและบทบาท</h2>
+<table>
+<thead>
+<tr>
+<th>บุคคล</th>
+<th>บทบาท</th>
+<th>ความรับผิดชอบในสปรินต์นี้</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ภานุวัฒน์ ต๋าคำ</td>
+<td>PM / Developer</td>
+<td>Impact analysis, CCB, Log Work, ติดตาม EVM</td>
+</tr>
+<tr>
+<td>เอกพันธ์ ทศทิศรังสรรค์</td>
+<td>QA / Tester</td>
+<td>Defect-driven test, integration test, coverage</td>
+</tr>
+<tr>
+<td>ณฐภาพ สายหล้า</td>
+<td>Tech Lead / Architect</td>
+<td>การแก้บั๊กที่รากเหง้า, code review, hardening</td>
+</tr>
+</tbody>
+</table>
+<h2>3. งานรายสัปดาห์ (W8–W11)</h2>
+<table>
+<thead>
+<tr>
+<th>สัปดาห์</th>
+<th>งานที่ทำ</th>
+<th>ไฟล์หลักฐาน</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>W8</td>
+<td>รับ CR-01 ด้วย Impact Analysis, ตั้ง Active Board/Burndown, Blocker Flag, Stakeholder Matrix, Procurement Log</td>
+<td><code>week-8/CR-01_Impact_Analysis.md</code>, <code>Sprint1_Tracking.md</code>, <code>Stakeholder_Matrix.md</code>, <code>Procurement_Log.md</code></td>
+</tr>
+<tr>
+<td>W9</td>
+<td>สรุป EVM, Retrospective (Mad/Sad/Glad), เตรียมปิดสปรินต์และส่งต่องาน</td>
+<td><code>week-9/EVM_Sprint1.md</code>, <code>Retrospective_Sprint1.md</code>, <code>Sprint_Transition.md</code></td>
+</tr>
+<tr>
+<td>W10</td>
+<td>CR-02 ผ่าน CCB (4.5 man-hours), แก้ BUG-101 ด้วย 5 Whys + Defect-driven test, เบิกเงินสำรอง</td>
+<td><code>week-10/CCB_Meeting_Minutes.md</code>, <code>CR-02_Impact_Decision_Form.md</code>, <code>Defect_Log_BUG-101.md</code>, <code>Contingency_Reserve_Log.md</code></td>
+</tr>
+<tr>
+<td>W11</td>
+<td>Hardening sprint, วิเคราะห์ flow/WIP, Burnup และ Scope Freeze</td>
+<td><code>week-11/Hardening_Report.md</code>, <code>Flow_Metrics.md</code>, <code>Scope_Freeze_Agreement.md</code></td>
+</tr>
+</tbody>
+</table>
+<h2>4. สิ่งที่ส่งมอบ</h2>
+<table>
+<thead>
+<tr>
+<th>สถานะ</th>
+<th>รายการ</th>
+<th>หลักฐาน/ข้อกำหนด</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Delivered</td>
+<td>CR-01: Barcode + Reorder Point</td>
+<td><code>Product.barcode</code> (ค่าเริ่มต้น <code>""</code>), <code>reorder_point</code> (ค่าเริ่มต้น 5), แจ้งเตือนเมื่อ <code>quantity &lt;= reorder_point</code>; ผลกระทบประเมิน +8 man-hours; branch <code>feature/cr01-barcode-reorder-point</code>; เทสต์แบบ RED→GREEN→REFACTOR</td>
+</tr>
+<tr>
+<td>Delivered</td>
+<td>CR-02: ส่งออก CSV</td>
+<td>อนุมัติผ่าน CCB 4.5 man-hours × 300 THB = <strong>1,350 THB</strong> จากเงินสำรอง; <code>CsvReportExporter</code> แยกคลาสตาม SRP ไม่ฝัง <code>import csv</code> ใน UI</td>
+</tr>
+<tr>
+<td>Delivered</td>
+<td>BUG-101 แก้ที่รากเหง้า</td>
+<td><code>KeyError: barcode</code> เมื่ออ่านไฟล์ JSON รุ่นเก่า → ใช้ <code>dict.get</code> + ค่า default; มี Defect Log และ 5 Whys</td>
+</tr>
+<tr>
+<td>Delivered</td>
+<td>กระบวนการ Change Control</td>
+<td>4 ขั้น: Submit CR → Impact Analysis → CCB Review → Update Baseline; CCB มี 4 ฝ่าย (Sponsor, User Rep, PM, Tech Lead)</td>
+</tr>
+<tr>
+<td>Delivered</td>
+<td>รายงาน EVM + Retrospective</td>
+<td>ตัวเลขและบทเรียนพร้อม action item</td>
+</tr>
+<tr>
+<td>Delivered</td>
+<td>Hardening + Scope Freeze</td>
+<td>กำจัด code smell, บังคับ atomic write, Bandit สะอาด, แช่แข็งขอบเขต 29 points</td>
+</tr>
+</tbody>
+</table>
+<h2>5. Change Control และผลกระทบ</h2>
+<table>
+<thead>
+<tr>
+<th>รายการ</th>
+<th>CR-01</th>
+<th>CR-02</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ประเภท</td>
+<td>Perfective (Normal Change)</td>
+<td>Perfective (Emergency/Fast-Track)</td>
+</tr>
+<tr>
+<td>ผลกระทบต่นทุน</td>
+<td>+8 man-hours</td>
+<td>4.5 man-hours (1,350 THB)</td>
+</tr>
+<tr>
+<td>กลุ่มแตะ</td>
+<td>Product + Repository + ConsoleUI</td>
+<td>Service (exporter) เพิ่มใหม่</td>
+</tr>
+<tr>
+<td>การอนุมัติ</td>
+<td>ผ่าน Impact Analysis, เลื่อนไปสปรินต์ถัดไป</td>
+<td>ผ่าน CCB (Approve) พร้อมดึงเงินสำรอง</td>
+</tr>
+<tr>
+<td>ทดสอบ</td>
+<td>เพิ่มเคส barcode/ROP</td>
+<td>เพิ่มเคส CSV header/เนื้อหา</td>
+</tr>
+</tbody>
+</table>
+<h2>6. Defect: BUG-101</h2>
+<table>
+<thead>
+<tr>
+<th>หัวข้อ</th>
+<th>รายละเอียด</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>อาการ</td>
+<td>โปรแกรม crash ด้วย <code>KeyError: 'barcode'</code> เมื่อโหลด <code>data.json</code> ที่เขียนก่อนมีฟิลด์นี้</td>
+</tr>
+<tr>
+<td>ระดับ</td>
+<td>Critical/Major</td>
+</tr>
+<tr>
+<td>รากเหง้า (5 Whys)</td>
+<td>ขาด Data Validation และ default fallback ในชั้น Repository ทำให้ schema ใหม่กระทบข้อมูลเก่า</td>
+</tr>
+<tr>
+<td>วิธีแก้</td>
+<td><code>from_dict</code> ใช้ <code>dict.get('barcode', '')</code> และ <code>dict.get('reorder_point', 5)</code></td>
+</tr>
+<tr>
+<td>มาตรการป้องกัน</td>
+<td>Defect-driven test เป็นเคสถาวร + backward compatibility test</td>
+</tr>
+<tr>
+<td>สถานะ</td>
+<td>แก้แล้วและมีเทสต์รองรับ</td>
+</tr>
+</tbody>
+</table>
+<h2>7. ผลติดตามความคืบหน้า</h2>
+<table>
+<thead>
+<tr>
+<th>ตัวชี้วัด</th>
+<th>ค่า</th>
+<th>ความหมาย</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Burnup (scope vs done)</td>
+<td>27 / 29 points (93%)</td>
+<td>เหลือ 2 points นอกขอบเขตที่แช่แข็ง</td>
+</tr>
+<tr>
+<td>WIP limit ช่อง Review</td>
+<td>3 ใบ</td>
+<td>ใช้กฎของ Little's Law ลดงานค้างสะสม</td>
+</tr>
+<tr>
+<td>EVM Sprint 1</td>
+<td>PV 4,000 / EV 3,000 / AC 4,200</td>
+<td>SV −1,000, CV −1,200 (ตัวเลขสมมติเพื่อการเรียน)</td>
+</tr>
+<tr>
+<td>Reserve ที่เบิกจริง</td>
+<td>1,350 THB (CR-02)</td>
+<td>เหลือสำรอง 1,473 THB ก่อนเบิกปิดงาน</td>
+</tr>
+</tbody>
+</table>
+<h2>8. Retrospective (Mad / Sad / Glad)</h2>
+<table>
+<thead>
+<tr>
+<th>ด้าน</th>
+<th>สิ่งที่พบ</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Mad</td>
+<td>เสียเวลา merge conflict จากการตัดโครงสร้างใหญ่ในสัปดาห์เดียว (สะท้อน SV −1,000 / CV −1,200)</td>
+</tr>
+<tr>
+<td>Sad</td>
+<td>ประเมินงาน refactor ต่ำกว่าความจริงเพราะหนี้เทคนิคใน <code>app_v1.py</code> ซ่อนอยู่</td>
+</tr>
+<tr>
+<td>Glad</td>
+<td>PyTest จับบั๊กได้ก่อนเดโม และทีมแก้ conflict สำเร็จ</td>
+</tr>
+<tr>
+<td>Action</td>
+<td>แจ้ง blocker ทุก daily standup · PR ต้อง review ภายใน 12 ชั่วโมง · เริ่มใช้ TDR (เขียนเทสต์ก่อนโค้ด)</td>
+</tr>
+</tbody>
+</table>
+<h2>9. Scope Freeze Agreement</h2>
+<table>
+<thead>
+<tr>
+<th>ข้อ</th>
+<th>เนื้อหา</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ขอบเขตที่ล็อก</td>
+<td>29 story points (20 + 5 + 4)</td>
+</tr>
+<tr>
+<td>สิ่งที่อนุญาตหลัง freeze</td>
+<td>เฉพาะ Critical bug, Security fix, Test</td>
+</tr>
+<tr>
+<td>สิ่งที่ไม่อนุญาต</td>
+<td>ฟีเจอร์ใหม่, เปลี่ยน UI, Change Request ใหม่</td>
+</tr>
+<tr>
+<td>เงื่อนไขออกจาก freeze</td>
+<td>เมื่อ entry criteria ครบ (งาน 27/29, hardening แล้ว, lint/deck ผ่าน)</td>
+</tr>
+</tbody>
+</table>
+<h2>10. ความเสี่ยงและข้อจำกัด</h2>
+<table>
+<thead>
+<tr>
+<th>รายการ</th>
+<th>สถานะ</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Flake8 <code>E501</code></td>
+<td>ยังค้าง ณ สัปดาห์ที่ 11 (Bandit สะอาดแล้ว) — แก้ใน Sprint 5</td>
+</tr>
+<tr>
+<td>ข้อมูล legacy ใช้ <code>dict.get</code></td>
+<td>เป็น fallback ไม่ใช่ migration เต็มรูปแบบ — Sprint 5 ทำ migration + verification</td>
+</tr>
+<tr>
+<td>งานค้าง 2 points ของ burnup</td>
+<td>ต้องกลับมาทำในสปรินต์ถัดไปหรือตัด scope อย่างเป็นทางการ</td>
+</tr>
+<tr>
+<td>UAT formal sign-off</td>
+<td>ยังรอการลงนาม</td>
+</tr>
+</tbody>
+</table>
+<h2>11. Sprint Review (ตามหลักฐานที่มี)</h2>
+<table>
+<thead>
+<tr>
+<th>หัวข้อ</th>
+<th>หลักฐาน</th>
+<th>ผล/ข้อสังเกต</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>สิ่งที่สาธิต</td>
+<td>CR-01/CR-02 ทำงานจริงในโค้ด</td>
+<td>มีหลักฐานโค้ดและเทสต์</td>
+</tr>
+<tr>
+<td>ผลที่ผ่าน</td>
+<td>burnup 27/29, EVM คำนวณครบ</td>
+<td>ตัวเลขสมมติเพื่อการเรียน</td>
+</tr>
+<tr>
+<td>ข้อเสนอแนะ/ผู้เข้าร่วมเดโม</td>
+<td>ไม่มีหลักฐาน</td>
+<td>ไม่อ้างว่ามี</td>
+</tr>
+</tbody>
+</table>
+<h2>12. งานยกยอดไปสปรินต์ถัดไป</h2>
 <ul>
-<li><code>week-8/</code>: CR-01 Impact, Tracking, Burndown, Procurement</li>
-<li><code>week-9/</code>: EVM, Retrospective, Sprint Transition</li>
-<li><code>week-10/</code>: CCB, BUG-101 Defect Log, Contingency (เบิก 1,350)</li>
-<li><code>week-11/</code>: Hardening, Flow Metrics, Scope Freeze 29 pts</li>
+<li>ปิดงานค้าง 2 points ให้ครบ 29/29</li>
+<li>รัน UAT SC01–SC03 และเตรียม release checklist</li>
+<li>แก้ Flake8 <code>E501</code> และสร้าง tag รีลีส</li>
 </ul>
-<h2>หลักฐาน</h2>
-<p>หลักฐานรายสัปดาห์ใน <code>Phase3/Sprint3/week-8/</code> … <code>week-11/</code>
-รายงานภาพรวม Phase: <code>Phase3/phase3-report.md</code></p>
-<p class="note">รายงานอัตโนมัติจาก <code>/home/panuwat/work/software-project-management/Phase3/Sprint3/sprint3.md</code> — ข้อมูลสมมติเพื่อการเรียน (สร้างด้วย <code>tools/build_reports.py</code>)</p>
+<h2>13. ภาคผนวก Evidence Index</h2>
+<table>
+<thead>
+<tr>
+<th>หมวดหลักฐาน</th>
+<th>เส้นทาง</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Change request</td>
+<td><code>week-8/CR-01_Impact_Analysis.md</code>, <code>week-10/CR-02_Impact_Decision_Form.md</code>, <code>week-10/CCB_Meeting_Minutes.md</code></td>
+</tr>
+<tr>
+<td>Defect</td>
+<td><code>week-10/Defect_Log_BUG-101.md</code>, <code>week-10/mock_legacy_products.json</code></td>
+</tr>
+<tr>
+<td>การติดตามและ EVM</td>
+<td><code>week-8/Sprint1_Tracking.md</code>, <code>week-8/mock_sprint_log.json</code>, <code>week-9/EVM_Sprint1.md</code>, <code>week-9/mock_evm.json</code>, <code>week-9/Retrospective_Sprint1.md</code></td>
+</tr>
+<tr>
+<td>Hardening และ freeze</td>
+<td><code>week-11/Hardening_Report.md</code>, <code>Flow_Metrics.md</code>, <code>Scope_Freeze_Agreement.md</code>, <code>mock_burnup.json</code></td>
+</tr>
+<tr>
+<td>งบสำรอง</td>
+<td><code>week-10/Contingency_Reserve_Log.md</code></td>
+</tr>
+<tr>
+<td>Stakeholder และครึ่งภาพ</td>
+<td><code>week-8/Stakeholder_Matrix.md</code>, <code>Procurement_Log.md</code></td>
+</tr>
+</tbody>
+</table>
+<p class="note">อ่านเป็น PDF: <a href="sprint3.pdf">sprint3.pdf</a></p>
+<p class="note">รายงานอัตโนมัติจาก <code>Phase3/Sprint3/sprint3.md</code> — ข้อมูลสมมติเพื่อการเรียน (สร้างด้วย <code>tools/build_reports.py</code>)</p>
 </body>
 </html>

@@ -38,49 +38,156 @@ blockquote { margin: 1em 0; padding: 8px 14px; border-left: 4px solid #1a56db;
 <body>
 <nav class="nav"><a href="../index.html">หน้าแรก</a><a href="../Phase1/README.html">Phase1</a><a href="../Phase2/README.html">Phase2</a><a href="../Phase3/README.html">Phase3 (หน้านี้)</a><a href="../Phase4/README.html">Phase4</a><a href="../Phase5/README.html">Phase5</a></nav>
 <h1>รายงาน Phase 3 — ลงมือและคุมการเปลี่ยนแปลง (W8–W11)</h1>
-<h2>1. วัตถุประสงค์</h2>
-<p>รับ requirement ใหม่แบบคุมได้ (CR-01/CR-02) แก้บั๊กข้อมูลเก่า (BUG-101)
-ติดตามงานด้วย Burndown/EVM แล้ว hardening + แช่แข็งขอบเขตก่อนปล่อย</p>
-<h2>2. งานรายสัปดาห์</h2>
+<p>ข้อมูลทั้งหมดเป็นข้อมูลสมมติเพื่อการเรียน ไม่ใช่ข้อมูลลูกค้าจริง</p>
+<h2>1. ภาพรวบเฟส</h2>
+<table>
+<thead>
+<tr>
+<th>รายการ</th>
+<th>ค่า</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Sprint ที่ครอบคลุม</td>
+<td>Sprint 3 (Jira ID 85, closed)</td>
+</tr>
+<tr>
+<td>สัปดาห์</td>
+<td>8–11</td>
+</tr>
+<tr>
+<td>Issues</td>
+<td>SPM-15…SPM-19 (16 SP) ปิดครบ</td>
+</tr>
+<tr>
+<td>ผลลัพธ์หลัก</td>
+<td>CR-01, CR-02, BUG-101 + EVM/Retro + Hardening + Scope Freeze</td>
+</tr>
+</tbody>
+</table>
+<p>เฟสนี้เป็นช่วงที่ระบบเริ่ม "ขยับ" ตามคำขอใหม่และตามข้อผิดพลาดที่พบ
+โดยทุกการเปลี่ยนแปลงผ่านกระบวนการที่ประเมินผลกระทบและอนุมัติก่อน</p>
+<h2>2. สิ่งที่ทำตามสัปดาห์</h2>
 <table>
 <thead>
 <tr>
 <th>สัปดาห์</th>
-<th>งาน</th>
-<th>หลักฐาน</th>
+<th>เนื้อหา</th>
+<th>ไฟล์หลักฐาน</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>W8</td>
-<td>CR-01 (Barcode + Reorder Point) Impact Analysis, Sprint Tracking, Burndown</td>
-<td><code>week-8/</code></td>
+<td>CR-01 Impact Analysis (+8 man-hours) · Sprint Tracking/Burndown · Blocker Flag · Stakeholder &amp; Procurement</td>
+<td><code>Sprint3/week-8/</code></td>
 </tr>
 <tr>
 <td>W9</td>
-<td>EVM Sprint 1 (SV −1,000 / CV −1,200) และ Retrospective</td>
-<td><code>week-9/</code></td>
+<td>EVM Sprint 1 (PV 4,000 / EV 3,000 / AC 4,200) · Retrospective · Sprint Transition</td>
+<td><code>Sprint3/week-9/</code></td>
 </tr>
 <tr>
 <td>W10</td>
-<td>CR-02 CSV ผ่าน CCB, BUG-101 <code>KeyError: barcode</code> (แก้ด้วย <code>dict.get</code>), เบิกสำรอง</td>
-<td><code>week-10/</code></td>
+<td>CR-02 ผ่าน CCB (4.5h × 300 = 1,350 THB) · BUG-101 5 Whys + fix · เบิกเงินสำรอง</td>
+<td><code>Sprint3/week-10/</code></td>
 </tr>
 <tr>
 <td>W11</td>
-<td>Hardening (ลบ code smells, Atomic, Bandit สะอาด, Flake8 ค้าง E501), Scope Freeze 29 pts</td>
-<td><code>week-11/</code></td>
+<td>Hardening (code smell, atomic, Bandit) · WIP limit 3 · Burnup 27/29 (93%) · Scope Freeze</td>
+<td><code>Sprint3/week-11/</code></td>
 </tr>
 </tbody>
 </table>
-<h2>3. สิ่งส่งมอบ</h2>
+<h2>3. ผลลัพธ์หลัก</h2>
+<table>
+<thead>
+<tr>
+<th>ด้าน</th>
+<th>ผลลัพธ์</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ฟีเจอร์ใหม่</td>
+<td>Barcode + Reorder Point + แจ้งเตือน <code>quantity &lt;= reorder_point</code> (CR-01)</td>
+</tr>
+<tr>
+<td>ฟีเจอร์รายงาน</td>
+<td><code>CsvReportExporter</code> ส่งออก CSV หัวตาราง 6 คอลัมน์ (CR-02)</td>
+</tr>
+<tr>
+<td>ความทนทาน</td>
+<td>แก้ <code>KeyError: barcode</code> ด้วย <code>dict.get</code> + เพิ่ม defect-driven test (BUG-101)</td>
+</tr>
+<tr>
+<td>การเงิน</td>
+<td>เบิกเงินสำรอง 1,350 THB อย่างเป็นทางการผ่าน CCB</td>
+</tr>
+<tr>
+<td>การควบคุม</td>
+<td>Scope Freeze 29 points · burnup 27/29 · WIP limit ช่อง Review 3 ใบ</td>
+</tr>
+</tbody>
+</table>
+<h2>4. ผลติดตามและบทเรียน</h2>
+<table>
+<thead>
+<tr>
+<th>ตัวชี้วัด</th>
+<th>ค่า</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>EVM Sprint 1</td>
+<td>SV −1,000 THB · CV −1,200 THB</td>
+</tr>
+<tr>
+<td>Burnup</td>
+<td>27/29 points (93%)</td>
+</tr>
+<tr>
+<td>Reserve หลังเบิก CR-02</td>
+<td>1,473 THB</td>
+</tr>
+<tr>
+<td>บทเรียนหลัก</td>
+<td>merge conflict จากตัดโครงสร้างใหญ่รวดเดียว · ประเมินงานต่ำกว่าจริง</td>
+</tr>
+</tbody>
+</table>
+<p>Action ที่ตั้งใจทำต่อ: แจ้ง blocker ทุกวัน · PR ต้องรีวิวภายใน 12 ชั่วโมง · ใช้ TDR</p>
+<h2>5. ปัญหาที่พบและการจัดการ</h2>
+<table>
+<thead>
+<tr>
+<th>ปัญหา</th>
+<th>การจัดการ</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>KeyError: barcode</code> จากข้อมูลเก่า</td>
+<td>fallback ในชั้น Repository + เทสต์ backward compatibility</td>
+</tr>
+<tr>
+<td>Flake8 <code>E501</code> ยังค้าง</td>
+<td>บันทึกเป็นหนี้ แก้ใน Sprint 5 (โค้ดสด E501 = 0)</td>
+</tr>
+<tr>
+<td>งานค้าง 2 points ของ burnup</td>
+<td>ยกยอดไปปิดใน Sprint 4</td>
+</tr>
+</tbody>
+</table>
+<h2>6. รายงานและหลักฐานฉบับเต็ม</h2>
 <ul>
-<li>CR-01/CR-02 + BUG-101 fix รวมในโค้ด evolution</li>
-<li>EVM + Retrospective + แผนส่งต่องาน (ยกยอดไป Sprint 4/5)</li>
-<li>Scope Freeze Agreement + Hardening Report</li>
+<li>รายงานปิดสปรินต์: <a href="Sprint3/sprint3.md"><code>Sprint3/sprint3.md</code></a> · <a href="Sprint3/sprint3.html">หน้าเว็บ</a> · <a href="Sprint3/sprint3.pdf">PDF</a></li>
+<li>README ของเฟส: <a href="README.md"><code>README.md</code></a></li>
 </ul>
-<h2>4. สถานะ</h2>
-<p>เสร็จครบ (Jira: SPM-15…SPM-19 Done) พร้อมเข้า Phase 4 (UAT/Release)</p>
-<p class="note">รายงานอัตโนมัติจาก <code>/home/panuwat/work/software-project-management/Phase3/phase3-report.md</code> — ข้อมูลสมมติเพื่อการเรียน (สร้างด้วย <code>tools/build_reports.py</code>)</p>
+<p class="note">อ่านเป็น PDF: <a href="phase3-report.pdf">phase3-report.pdf</a></p>
+<p class="note">รายงานอัตโนมัติจาก <code>Phase3/phase3-report.md</code> — ข้อมูลสมมติเพื่อการเรียน (สร้างด้วย <code>tools/build_reports.py</code>)</p>
 </body>
 </html>

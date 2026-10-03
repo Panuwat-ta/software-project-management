@@ -37,11 +37,38 @@ blockquote { margin: 1em 0; padding: 8px 14px; border-left: 4px solid #1a56db;
 </head>
 <body>
 <nav class="nav"><a href="../index.html">หน้าแรก</a><a href="../Phase1/README.html">Phase1</a><a href="../Phase2/README.html">Phase2</a><a href="../Phase3/README.html">Phase3</a><a href="../Phase4/README.html">Phase4 (หน้านี้)</a><a href="../Phase5/README.html">Phase5</a></nav>
-<h1>รายงาน Phase 4 — UAT ปล่อย v2.0 และปิด Sprint 4 (W12)</h1>
-<h2>1. วัตถุประสงค์</h2>
-<p>รวมงานวิวัฒนาการ ทดสอบรับรอง UAT 3 สถานการณ์ เตรียมปล่อย
-<code>v2.0.0-evolution</code> และปิด Sprint 4 อย่างเป็นทางการ</p>
-<h2>2. งาน</h2>
+<h1>รายงาน Phase 4 — UAT ปล่อยรุ่น v2.0 (W12)</h1>
+<p>ข้อมูลทั้งหมดเป็นข้อมูลสมมติเพื่อการเรียน ไม่ใช่ข้อมูลลูกค้าจริง</p>
+<h2>1. ภาพรวบเฟส</h2>
+<table>
+<thead>
+<tr>
+<th>รายการ</th>
+<th>ค่า</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Sprint ที่ครอบคลุม</td>
+<td>Sprint 4 (Jira ID 83, closed)</td>
+</tr>
+<tr>
+<td>สัปดาห์</td>
+<td>12</td>
+</tr>
+<tr>
+<td>Issues</td>
+<td>SPM-20, SPM-21 (5 SP) ปิดครบ</td>
+</tr>
+<tr>
+<td>รุ่นที่ส่งมอบ</td>
+<td><code>v2.0.0-evolution</code></td>
+</tr>
+</tbody>
+</table>
+<p>เฟสนี้ปิดวงจรสัปดาห์ที่ 1–12 ด้วยการทดสอบการยอมรับผู้ใช้ เตรียมตัวปล่อย
+และสรุปสถานะการเงินของทั้งโครงการ</p>
+<h2>2. สิ่งที่ทำในสัปดาห์ที่ 12</h2>
 <table>
 <thead>
 <tr>
@@ -51,31 +78,88 @@ blockquote { margin: 1em 0; padding: 8px 14px; border-left: 4px solid #1a56db;
 </thead>
 <tbody>
 <tr>
-<td>โค้ด evolution (barcode/reorder/CSV/BUG-101 fix) + เทสต์ 25 passed</td>
-<td><code>week-12/app.py</code>, <code>week-12/test_app.py</code>, snapshot <code>app.py</code>/<code>test_app.py</code></td>
+<td>โค้ดวิวัฒนาการ (รวม CR-01/CR-02/BUG-101 fix)</td>
+<td><code>Sprint4/week-12/app.py</code></td>
 </tr>
 <tr>
-<td>UAT SC01–SC03 + Sign-off Sheet + Release Checklist</td>
-<td><code>week-12/</code></td>
+<td>ชุดทดสอบเติบโต 5 → 25 เคส</td>
+<td><code>Sprint4/week-12/test_app.py</code></td>
 </tr>
 <tr>
-<td>CHANGELOG + Final EVM (SPI 1.00 / CPI 0.96)</td>
-<td><code>week-12/</code></td>
+<td>UAT SC01–SC03 + sign-off sheet</td>
+<td><code>Sprint4/week-12/UAT_Sign_Off_Sheet.md</code></td>
 </tr>
 <tr>
-<td>รายงานปิด Sprint 4 ฉบับเต็ม + เอกสารสรุปภาพรวม</td>
-<td><code>Sprint4/sprint4.md</code>, <code>Sprint4/sprint-report.html</code>, <code>Sprint4/sprint1-slides.html</code></td>
+<td>Release checklist 3 ด่าน</td>
+<td><code>Sprint4/week-12/Release_Checklist.md</code></td>
+</tr>
+<tr>
+<td>CHANGELOG + Final EVM</td>
+<td><code>Sprint4/week-12/CHANGELOG.md</code>, <code>Final_EVM.md</code></td>
 </tr>
 </tbody>
 </table>
-<h2>3. สิ่งส่งมอบและงานยกยอด</h2>
+<h2>3. ผลลัพธ์หลัก</h2>
+<table>
+<thead>
+<tr>
+<th>ด้าน</th>
+<th>ผลลัพธ์</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>เทสต์</td>
+<td>25 passed (baseline 5 + CR-01 4 + CR-02 6 + BUG-101 4 + CLI 3 + integration 3)</td>
+</tr>
+<tr>
+<td>UAT</td>
+<td>SC01–SC03 ผ่านในส่วนผลทางเทคนิค และคัดแยกประเด็นชัดเจน</td>
+</tr>
+<tr>
+<td>การเงิน</td>
+<td>SPI 1.00 (ตรงเวลา) · CPI 0.96 · CV −575 THB (3.7%)</td>
+</tr>
+<tr>
+<td>เงินสำรอง</td>
+<td>2,823 − 1,350 − 575 = เหลือ 898 THB</td>
+</tr>
+<tr>
+<td>Velocity</td>
+<td>Sprint 1 = 15 · Sprint 2 = 22 · Sprint 3 = 12</td>
+</tr>
+</tbody>
+</table>
+<h2>4. สถานะที่ยังไม่ปิด</h2>
+<table>
+<thead>
+<tr>
+<th>รายการ</th>
+<th>สถานะ</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ลายเซ็น UAT ของผู้ทดสอบและ Tech Lead</td>
+<td>ยังว่าง — ต้องลงนามก่อนถือว่ารับรองเสร็จสมบูรณ์</td>
+</tr>
+<tr>
+<td>Flake8 <code>E501</code></td>
+<td>ยังค้างในรุ่นนี้ (แก้ใน Sprint 5)</td>
+</tr>
+<tr>
+<td>การรองรับข้อมูลเก่าแบบ migration เต็มรูปแบบ</td>
+<td>ยังเป็น fallback อย่างเดียว</td>
+</tr>
+</tbody>
+</table>
+<h2>5. รายงานและหลักฐานฉบับเต็ม</h2>
 <ul>
-<li>ส่งมอบ <code>v2.0.0-evolution</code> (Snapshot เก็บที่ <code>Phase4/Sprint4/app.py</code>)</li>
-<li>ยกยอดไป Phase 5: SQLite v3.0 + Member + Checkout (ตอนนั้นแค่แบบออกแบบ),
-  หนี้ Flake8 <code>E501</code>, UAT sign-off, Git tag</li>
+<li>รายงานปิดสปรินต์: <a href="Sprint4/sprint4.md"><code>Sprint4/sprint4.md</code></a> · <a href="Sprint4/sprint4.html">หน้าเว็บ</a> · <a href="Sprint4/sprint4.pdf">PDF</a></li>
+<li>สรุปรอบ W1–12: <a href="Sprint4/sprint-report.html"><code>Sprint4/sprint-report.html</code></a> · <a href="Sprint4/sprint1-slides.html">สไลด์</a> · <a href="Sprint4/summary-w1-w12.pdf">PDF</a></li>
+<li>README ของเฟส: <a href="README.md"><code>README.md</code></a></li>
 </ul>
-<h2>4. สถานะ</h2>
-<p>Sprint 4 ปิดแล้ว (Jira ID 83, SPM-20…21 Done)</p>
-<p class="note">รายงานอัตโนมัติจาก <code>/home/panuwat/work/software-project-management/Phase4/phase4-report.md</code> — ข้อมูลสมมติเพื่อการเรียน (สร้างด้วย <code>tools/build_reports.py</code>)</p>
+<p class="note">อ่านเป็น PDF: <a href="phase4-report.pdf">phase4-report.pdf</a></p>
+<p class="note">รายงานอัตโนมัติจาก <code>Phase4/phase4-report.md</code> — ข้อมูลสมมติเพื่อการเรียน (สร้างด้วย <code>tools/build_reports.py</code>)</p>
 </body>
 </html>

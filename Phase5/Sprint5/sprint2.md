@@ -62,8 +62,8 @@ parameterized query, สคริปต์ย้าย `data.json` พร้อ�
 
 - `flake8 app.py` → clean (exit 0); `bandit -r app.py` → 0 issues
 - หนี้คงเหลือ: `test_app.py` ยังมี style nits เดิม (E302/W293) ไม่กระทบ
-  การรัน; งานพิธีการ (UAT sign-off ลายเซ็น, Git tag `v2.0.0-evolution`)
-  ยังเป็นของ Sprint 1 ไม่ได้รวมใน Sprint 2 นี้
+  การรัน; งานพิธีการที่ยังค้างจาก Sprint 4 คือช่องลายเซ็น UAT
+  (tag `v2.0.0-evolution` สร้างแล้วในรอบตรวจรับ)
 
 ## 7. Jira และการติดตาม
 

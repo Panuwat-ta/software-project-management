@@ -37,57 +37,415 @@ blockquote { margin: 1em 0; padding: 8px 14px; border-left: 4px solid #1a56db;
 </head>
 <body>
 <nav class="nav"><a href="../../index.html">หน้าแรก</a><a href="../../Phase1/README.html">Phase1 (หน้านี้)</a><a href="../../Phase2/README.html">Phase2</a><a href="../../Phase3/README.html">Phase3</a><a href="../../Phase4/README.html">Phase4</a><a href="../../Phase5/README.html">Phase5</a></nav>
-<h1>รายงานปิด Sprint 1 — Phase 1 Initiation (W1–W4)</h1>
-<p>Sprint 1 (Jira ID 84) งานเริ่มโครงการและวางฐาน รวม 15 story points
-สถานะ Done ทั้ง 5 ใบ ข้อมูลสมมติเพื่อการเรียน</p>
-<h2>งาน (SPM-6…SPM-10)</h2>
+<h1>รายงานปิด Sprint 1 — Phase 1: เริ่มโครงการและวางฐาน (W1–W4)</h1>
+<p>เอกสารนี้สรุปหลักฐาน Sprint แรกของโครงการ ครอบคลุมสัปดาห์ที่ 1–4
+ตั้งแต่การวางกฎบัตรจนถึงการเขียนโค้ดใหม่และทดสอบ
+ข้อมูลโครงการทั้งหมดเป็นข้อมูลสมมติเพื่อการเรียน ไม่ใช่ข้อมูลลูกค้าจริง</p>
+<h2>1. ข้อมูลสปรินต์</h2>
 <table>
 <thead>
 <tr>
-<th>Issue</th>
-<th>งาน</th>
-<th style="text-align: right;">SP</th>
+<th>รายการ</th>
+<th>ค่า</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>SPM-6</td>
-<td>Project Charter, Scope, Stakeholder Roles</td>
-<td style="text-align: right;">3</td>
+<td>Sprint</td>
+<td>Sprint 1 - Phase 1 (W1-4)</td>
 </tr>
 <tr>
-<td>SPM-7</td>
-<td>Legacy Code Review + Static Analysis</td>
-<td style="text-align: right;">2</td>
+<td>Jira Sprint ID</td>
+<td>84 (state: closed)</td>
 </tr>
 <tr>
-<td>SPM-8</td>
-<td>Refactor OOP + Input Validation</td>
-<td style="text-align: right;">5</td>
+<td>Board</td>
+<td>SPM board (ID 71) · โปรเจกต์ SPM</td>
 </tr>
 <tr>
-<td>SPM-9</td>
-<td>Atomic Write Persistence</td>
-<td style="text-align: right;">3</td>
+<td>Story Points</td>
+<td>15 SP (SPM-6…SPM-10) ปิดครบทุกใบ</td>
 </tr>
 <tr>
-<td>SPM-10</td>
-<td>RACI + DoD Quality Gates</td>
-<td style="text-align: right;">2</td>
+<td>Issues</td>
+<td>SPM-6, SPM-7, SPM-8, SPM-9, SPM-10</td>
+</tr>
+<tr>
+<td>หลักฐานประจำสัปดาห์</td>
+<td><code>week-1/</code> <code>week-2/</code> <code>week-3/</code> <code>week-4/</code></td>
+</tr>
+<tr>
+<td>ข้อเสนอรวมเฟส</td>
+<td><code>proposal/Integrated_Planning_Proposal.md</code> (+ <code>.pdf</code>)</td>
 </tr>
 </tbody>
 </table>
-<h2>สิ่งส่งมอบ</h2>
+<p>เป้าหมายของสปรินต์: ตั้งกฎบัตรและขอบเขต ทำความเข้าใจระบบเดิม ตรวจสุขภาพโค้ด
+ออกแบบพิมพ์เขียวปรับโครงสร้าง แล้วลงมือ refactor พร้อมชุดทดสอบอัตโนมัติ</p>
+<h2>2. ทีมและบทบาท</h2>
+<table>
+<thead>
+<tr>
+<th>ชื่อ-นามสกุล</th>
+<th>รหัสนักศึกษา</th>
+<th>บทบาท</th>
+<th>ความรับผิดชอบในสปรินต์นี้</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ภานุวัฒน์ ต๋าคำ</td>
+<td>6754210044-3</td>
+<td>Project Manager / Developer</td>
+<td>Input validation, การจัดเก็บข้อมูล, บริหารงาน</td>
+</tr>
+<tr>
+<td>เอกพันธ์ ทศทิศรังสรรค์</td>
+<td>67543210050-0</td>
+<td>QA / Tester</td>
+<td>ออกแบบ test cases, รัน PyTest, รายงาน <code>test.json</code></td>
+</tr>
+<tr>
+<td>ณฐภาพ สายหล้า</td>
+<td>67543210054-2</td>
+<td>Tech Lead / Architect</td>
+<td>ออกแบบสถาปัตยกรรม, Code Review ตาม PEP 8</td>
+</tr>
+</tbody>
+</table>
+<h2>3. งานรายสัปดาห์ (W1–W4)</h2>
+<table>
+<thead>
+<tr>
+<th>สัปดาห์</th>
+<th>งานที่ทำ</th>
+<th>ไฟล์หลักฐาน</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>W1</td>
+<td>Project Charter, Scope of Work, ทบทวนระบบเดิม 5 เมนู + ระบุความเสี่ยง 3 ระดับรุนแรง</td>
+<td><code>week-1/Project-Charter.md</code>, <code>scope.md</code>, <code>doc.md</code>, <code>app_v1.py</code>, <code>trello.md</code></td>
+</tr>
+<tr>
+<td>W2</td>
+<td>DFD (L0/L1), Hotspot 3 จุด, Static Analysis, พิมพ์เขียว Blueprint, ออกแบบระบบสมาชิก/ส่วนลด</td>
+<td><code>week-2/DFD.md</code>, <code>Hotspot.md</code>, <code>Static-Analysis.md</code>, <code>blueprint.md</code>, <code>Member-Discount.md</code>, <code>trello.md</code></td>
+</tr>
+<tr>
+<td>W3</td>
+<td>เขียน <code>app_v2.py</code> ตามบลูปริ้นท์ (OOP 3 คลาส, validation, atomic write) + กำหนด DoD 5 ข้อ + RACI</td>
+<td><code>week-3/app_v2.py</code>, <code>dod.md</code>, <code>raci.md</code>, <code>test_app.py</code>, <code>test_app1.py</code>, <code>test.json</code></td>
+</tr>
+<tr>
+<td>W4</td>
+<td>ทดสอบและปรับปรุงโค้ดรอบสุดท้ายของสปรินต์ (5 tests ผ่าน)</td>
+<td><code>week-4/app.py</code>, <code>test_app.py</code>, <code>test.json</code>, <code>test_app.png</code></td>
+</tr>
+</tbody>
+</table>
+<h2>4. สิ่งที่ส่งมอบ</h2>
+<table>
+<thead>
+<tr>
+<th>สถานะ</th>
+<th>รายการ</th>
+<th>หลักฐาน/ข้อกำหนด</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Delivered</td>
+<td>โค้ด refactor 3 คลาส</td>
+<td><code>Product</code> / <code>InventoryManager</code> / <code>InventoryCLI</code> แยก Business Logic ออกจาก UI ตาม SoC</td>
+</tr>
+<tr>
+<td>Delivered</td>
+<td>Atomic Save</td>
+<td>เขียนไฟล์ชั่วคราว <code>*.tmp</code> แล้ว <code>os.replace</code> ทับ ไม่ใช้ <code>json.dump</code> เขียนทับตรง</td>
+</tr>
+<tr>
+<td>Delivered</td>
+<td>Input Validation</td>
+<td><code>_get_input()</code> + validator ต่อช่อง: ไม่รับค่าติดลบ, <code>amount &gt; 0</code>, กัน <code>ValueError</code></td>
+</tr>
+<tr>
+<td>Delivered</td>
+<td>Backward compatibility</td>
+<td><code>Product.from_dict</code> รองรับคีย์สั้น <code>n</code>/<code>q</code>/<code>p</code>/<code>c</code> และค่าเริ่มต้นเมื่อฟิลด์ขาด</td>
+</tr>
+<tr>
+<td>Delivered</td>
+<td>ชุดทดสอบอัตโนมัติ</td>
+<td>PyTest 5 เคส + รายงานผลเป็น <code>test.json</code> ผ่าน custom plugin</td>
+</tr>
+<tr>
+<td>Delivered</td>
+<td>เกณฑ์คุณภาพงาน</td>
+<td>DoD 5 ข้อ (<code>week-3/dod.md</code>) และ RACI (<code>week-3/raci.md</code>)</td>
+</tr>
+<tr>
+<td>ออกแบบเท่านั้น</td>
+<td>SQLite, Member tiers, Checkout</td>
+<td>อยู่ใน <code>week-2/blueprint.md</code>, <code>Member-Discount.md</code> ยังไม่ implement</td>
+</tr>
+</tbody>
+</table>
+<h2>5. หลักฐานทดสอบ</h2>
+<table>
+<thead>
+<tr>
+<th>ชุด</th>
+<th>ผล</th>
+<th>ครอบคลุม</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>week-3/test_app.py</code>, <code>week-4/test_app.py</code></td>
+<td>5 passed</td>
+<td>สรุปมูลค่าคลัง + low stock, ตัดสต็อกสำเร็จ/ของไม่พอ/ไม่มีสินค้า, เพิ่ม-อัปเดตสินค้า</td>
+</tr>
+<tr>
+<td><code>test.json</code></td>
+<td>5/5 PASS</td>
+<td>รายงานผลอัตโนมัติทุกครั้งที่รัน</td>
+</tr>
+</tbody>
+</table>
+<h2>6. ผลตรวจคุณภาพโค้ด</h2>
+<p><strong>ก่อนปรับปรุง (ตั้งฐาน สัปดาห์ที่ 2 จาก <code>week-2/Static-Analysis.md</code>)</strong></p>
+<table>
+<thead>
+<tr>
+<th>ตัวชี้วัด</th>
+<th>ค่า</th>
+<th>หมายเหตุ</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Lines of Code</td>
+<td>99 (LLOC 77, SLOC 78)</td>
+<td>โค้ดเดิมแบบ Monolithic</td>
+</tr>
+<tr>
+<td>Pylint</td>
+<td>7.10 / 10</td>
+<td>คะแนนรวมกลุ่ม Convention</td>
+</tr>
+<tr>
+<td>Cyclomatic Complexity (<code>main</code>)</td>
+<td>14 (เกรด C)</td>
+<td>เป้า ISO 14598 คือ ≤ 8</td>
+</tr>
+<tr>
+<td>R0912 (branches)</td>
+<td>17 (เกณฑ์ 12)</td>
+<td>เมนู if/elif ซ้อนกันลึก</td>
+</tr>
+<tr>
+<td>R0915 (statements)</td>
+<td>55 (เกณฑ์ 50)</td>
+<td>ฟังก์ชันเดียวทำทุกอย่าง</td>
+</tr>
+<tr>
+<td>อื่นๆ</td>
+<td>C0303 trailing whitespace, C0301 บรรทัดยาว, C0304 ไม่มี newline ท้ายไฟล์</td>
+<td>PEP 8</td>
+</tr>
+</tbody>
+</table>
+<p><strong>หลังปรับปรุง:</strong> <code>app.py</code> ที่ส่งมอบมีโครงสร้างเป็นคลาสแยกหน้าที่ ตรรกะธุรกิจ
+แยกจากการรับ/แสดงผล และเทสต์ผ่านครบ แต่รายงานนี้ไม่ได้วัด Pylint/CC ซ้ำ
+หลังปรับ จึงไม่อ้างตัวเลขเดิมเป็นผลหลังปรับปรุง</p>
+<h2>7. Definition of Done ที่ใช้ตรวจ (5 ข้อ)</h2>
+<ol>
+<li>ผ่านการทดสอบอัตโนมัติ 100% (PyTest passed)</li>
+<li>โค้ดเขียนตามมาตรฐานการออกแบบ (PEP 8 / แยกชั้น)</li>
+<li>ความปลอดภัยและการดักจับข้อผิดพลาด (validation, atomic write, กันค่าติดลบ)</li>
+<li>อัปเดตเอกสารคู่มือครบถ้วน (docstrings + doc/)</li>
+<li>ผ่านการรีวิวและการอนุมัติ (Code Review + Approve)</li>
+</ol>
+<h2>8. EVM และงบประมาณ (ตัวเลขสมมติเพื่อการเรียน)</h2>
+<blockquote>
+<p>บันทึกการวิเคราะห์ใน <code>week-9/EVM_Sprint1.md</code> (สัปดาห์ที่ 9) และงบฐานใน <code>week-7/</code></p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>ตัวแปร</th>
+<th style="text-align: right;">ค่า</th>
+<th>ความหมาย</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>PV (Planned Value)</td>
+<td style="text-align: right;">4,000 THB</td>
+<td>ตั้งเป้า 4 tasks งบ task ละ 1,000</td>
+</tr>
+<tr>
+<td>EV (Earned Value)</td>
+<td style="text-align: right;">3,000 THB</td>
+<td>ปิด Done ได้ 3 tasks</td>
+</tr>
+<tr>
+<td>AC (Actual Cost)</td>
+<td style="text-align: right;">4,200 THB</td>
+<td>ชั่วโมงจริงจาก Log Work</td>
+</tr>
+<tr>
+<td>SV = EV − PV</td>
+<td style="text-align: right;">−1,000 THB</td>
+<td>ล่าช้ากว่าแผน</td>
+</tr>
+<tr>
+<td>CV = EV − AC</td>
+<td style="text-align: right;">−1,200 THB</td>
+<td>เกินงบ 1,200 บาท</td>
+</tr>
+</tbody>
+</table>
 <ul>
-<li><code>week-1/</code>: Charter, scope, doc, trello + <code>app_v1.py</code> ฐานเปรียบเทียบ</li>
-<li><code>week-2/</code>: DFD, Hotspot, Static Analysis, blueprint, Member-Discount (ออกแบบ)</li>
-<li><code>week-3/</code>: <code>app_v2.py</code>, dod, raci, ชุดทดสอบ</li>
-<li><code>week-4/</code>: <code>app.py</code> + <code>test_app.py</code> (5 passed)</li>
-<li><code>proposal/</code>: ข้อเสนอ Phase 1 ภาพรวม</li>
+<li>สาเหตุ: หนี้ทางเทคนิคซ่อนใน <code>app_v1.py</code> + เสียเวลาแก้ Merge Conflict</li>
+<li>การตอบสนอง: ยกงานหลุดไปสปรินต์ถัดไป, ชดเชยส่วนเกินด้วยเงินสำรอง</li>
+<li>เงินสำรองที่ตั้งไว้ 2,823 บาท (15% ของ baseline 18,823) — เบิกจริงภายหลัง 1,350 บาท (CR-02)</li>
 </ul>
-<h2>หลักฐาน</h2>
-<p>หลักฐานรายสัปดาห์ใน <code>Phase1/Sprint1/week-1/</code> … <code>week-4/</code>
-รายงานภาพรวม Phase: <code>Phase1/phase1-report.md</code></p>
-<p class="note">รายงานอัตโนมัติจาก <code>/home/panuwat/work/software-project-management/Phase1/Sprint1/sprint1.md</code> — ข้อมูลสมมติเพื่อการเรียน (สร้างด้วย <code>tools/build_reports.py</code>)</p>
+<h2>9. ความเสี่ยง ข้อจำกัด และหนี้เทคนิค</h2>
+<table>
+<thead>
+<tr>
+<th>รายการ</th>
+<th>สถานะ</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ไฟล์ JSON เสี่ยงพังเมื่อเขียนทับ</td>
+<td>ลดด้วย atomic write แต่ยังไม่มี transaction ระดับฐานข้อมูล</td>
+</tr>
+<tr>
+<td>ข้อมูลเก่าใช้คีย์สั้น</td>
+<td>รองรับด้วย fallback ใน <code>from_dict</code> (ยังไม่ใช่ migration เต็มรูปแบบ)</td>
+</tr>
+<tr>
+<td>Flake8 <code>E501</code></td>
+<td>ค้างในไฟล์ snapshot ของสัปดาห์ที่ 1–4 (แก้ในโค้ดสดภายหลัง Sprint 5)</td>
+</tr>
+<tr>
+<td>สเกล</td>
+<td>รองรับผู้ใช้คนเดียว ไม่มีการล็อกไฟล์</td>
+</tr>
+</tbody>
+</table>
+<h2>10. งานที่ยกยอดไปสปรินต์ถัดไป</h2>
+<ul>
+<li>ออกแบบและพัฒนา SQLite + Member tiers + Checkout (เดิมเป็นแบบออกแบบเท่านั้น)</li>
+<li>รับ CR-01 (Barcode + Reorder Point) และ CR-02 (CSV Export) ผ่านกระบวนการ Change Control</li>
+<li>แก้ BUG-101 (<code>KeyError: barcode</code> เมื่อเจอข้อมูลเก่า)</li>
+<li>ปิดช่องลายเซ็น UAT และสร้าง tag รีลีส</li>
+</ul>
+<h2>11. Sprint Review (ตามหลักฐานที่มี)</h2>
+<table>
+<thead>
+<tr>
+<th>หัวข้อ</th>
+<th>สิ่งที่ยืนยันได้จากหลักฐาน</th>
+<th>ผล/ข้อสังเกต</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>สิ่งที่สาธิต</td>
+<td>โครงสร้าง 3 คลาส + PyTest 5 เคส</td>
+<td>เดโมสดของสปรินต์นี้ไม่มีหลักฐานการบันทึก</td>
+</tr>
+<tr>
+<td>ผลที่ผ่าน</td>
+<td>ชุดทดสอบ 5 passed พร้อม <code>test.json</code></td>
+<td>ยืนยันได้จากไฟล์ใน <code>week-3/</code>, <code>week-4/</code></td>
+</tr>
+<tr>
+<td>การรับรองจาก Sponsor</td>
+<td>ไม่มีหลักฐานลายเซ็น</td>
+<td>ไม่อ้างว่าได้รับการรับรอง</td>
+</tr>
+</tbody>
+</table>
+<h2>12. ตารางงานค้างและงานยกยอด</h2>
+<table>
+<thead>
+<tr>
+<th>งาน</th>
+<th>สถานะปิดสปรินต์</th>
+<th>ย้ายไป</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SQLite + Member + Checkout</td>
+<td>ออกแบบแล้ว ยังไม่พัฒนา</td>
+<td>Sprint 5 (Phase 5)</td>
+</tr>
+<tr>
+<td>CR-01 / CR-02 / BUG-101</td>
+<td>ยังไม่รับ</td>
+<td>Sprint 3 (Phase 3)</td>
+</tr>
+<tr>
+<td>UAT sign-off, Git tag</td>
+<td>ยังไม่ทำ</td>
+<td>Sprint 4 (Phase 4) — tag ปิดแล้วในรอบตรวจรับ</td>
+</tr>
+<tr>
+<td>Flake8 <code>E501</code></td>
+<td>ค้างใน snapshot</td>
+<td>แก้ใน Sprint 5 (โค้ดสด E501 = 0)</td>
+</tr>
+</tbody>
+</table>
+<h2>13. ภาคผนวก Evidence Index</h2>
+<table>
+<thead>
+<tr>
+<th>หมวดหลักฐาน</th>
+<th>เส้นทาง</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>กฎบัตร/ขอบเขต/ระบบเดิม</td>
+<td><code>week-1/Project-Charter.md</code>, <code>scope.md</code>, <code>doc.md</code>, <code>app_v1.py</code>, <code>trello.md</code></td>
+</tr>
+<tr>
+<td>วิเคราะห์และแบบออกแบบ</td>
+<td><code>week-2/DFD.md</code>, <code>Hotspot.md</code>, <code>Static-Analysis.md</code>, <code>blueprint.md</code>, <code>Member-Discount.md</code>, <code>trello.md</code></td>
+</tr>
+<tr>
+<td>โค้ดและเกณฑ์งาน</td>
+<td><code>week-3/app_v2.py</code>, <code>dod.md</code>, <code>raci.md</code>, <code>week-4/app.py</code>, <code>test_app.py</code>, <code>test.json</code></td>
+</tr>
+<tr>
+<td>ข้อเสนอภาพรวมเฟส</td>
+<td><code>proposal/Integrated_Planning_Proposal.md</code>, <code>proposal/slides.html</code></td>
+</tr>
+<tr>
+<td>EVM และการส่งต่องาน</td>
+<td><code>Phase3/Sprint3/week-9/EVM_Sprint1.md</code>, <code>Sprint_Transition.md</code></td>
+</tr>
+<tr>
+<td>งบฐาน</td>
+<td><code>Phase2/Sprint2/week-7/Cost_Baseline_and_Sprint_Plan.md</code></td>
+</tr>
+<tr>
+<td>เวอร์ชันที่ส่งมอบจริง</td>
+<td>tag <code>v2.0.0-evolution</code> (โค้ดสดที่รากรีโปคือ v3.0 จาก Sprint 5)</td>
+</tr>
+</tbody>
+</table>
+<p class="note">อ่านเป็น PDF: <a href="sprint1.pdf">sprint1.pdf</a></p>
+<p class="note">รายงานอัตโนมัติจาก <code>Phase1/Sprint1/sprint1.md</code> — ข้อมูลสมมติเพื่อการเรียน (สร้างด้วย <code>tools/build_reports.py</code>)</p>
 </body>
 </html>

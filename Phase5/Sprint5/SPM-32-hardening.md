@@ -15,7 +15,7 @@
    `node --check` ผ่าน
 4. Docs → `web/README.md` (วิธีรัน + API ย่อ + เดโม 2 นาที),
    `web-plan.md`; E2E ผ่านทั้ง CLI (14) + API (6) + regression (25)
-5. Tag `v4.0.0-web` รอ commit ก่อนสร้าง (ยังไม่สร้าง tag ลอย)
+5. Tag `v4.0.0-web` และ `v4.0.1` สร้างและ push แล้ว (ปิดรอบตรวจรับ)
 
 ## หมายเหตุ
 

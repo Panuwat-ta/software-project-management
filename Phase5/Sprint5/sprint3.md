@@ -36,7 +36,7 @@
 | Delivered | Reuse ไม่พังของเดิม | CLI + `test_app.py` 14 เคสยังเขียว; regression week-12 25 passed |
 | Delivered | คุณภาพ | `flake8` clean, `bandit` 0 issues, `node --check` ผ่าน |
 | Delivered | เอกสาร | `web-plan.md`, `web/README.md` (วิธีรัน + เดโม 2 นาที), รายงานฉบับนี้ + `sprint-report.html` |
-| คงค้าง | Tag `v4.0.0-web` | รอ commit ก่อนสร้าง tag |
+| ส่งมอบแล้ว | tag `v4.0.0-web` + `v4.0.1` | สร้าง annotated tag และ push ขึ้น remote แล้ว |
 
 รันเว็บ (จากรากรีโป): `PYTHONPATH=Phase5/Sprint5 uvicorn web.backend.main:app`
 แล้วเปิด http://127.0.0.1:8000/ (API docs ที่ `/docs`)
