@@ -1,5 +1,8 @@
 pytest==8.0.2
 coverage==7.4.3
-fastapi
-uvicorn
-httpx
+fastapi==0.142.2
+uvicorn==0.54.0
+httpx==0.28.1
+markdown==3.11
+flake8==7.4.1
+bandit==1.9.4

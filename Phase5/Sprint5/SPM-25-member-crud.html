@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,
+      initial-scale=1.0">
+<title>SPM 25 member crud | SPM</title>
+<link rel="stylesheet" href="../../theme.css">
+<style>@page { size: A4; margin: 18mm 16mm; }
+body { font-family: "Noto Sans Thai", "Liberation Sans", sans-serif;
+  font-size: 11pt; line-height: 1.7; color: #1a1a1a; max-width: 900px;
+  margin: 0 auto; padding: 24px 20px 60px; }
+h1 { font-size: 22pt; border-bottom: 3px solid #1a56db; padding-bottom: 8px; }
+h2 { font-size: 14pt; color: #1a56db; margin-top: 1.6em;
+  border-bottom: 1px solid #e5e7eb; padding-bottom: 4px; }
+h3 { font-size: 12pt; margin-top: 1.2em; }
+table { border-collapse: collapse; width: 100%; margin: 0.9em 0;
+  font-size: 9.5pt; }
+th, td { border: 1px solid #cbd5e1; padding: 6px 9px; text-align: left;
+  vertical-align: top; }
+th { background: #eef2ff; }
+tr:nth-child(even) td { background: #fafbff; }
+code { font-family: "Noto Sans Mono", monospace; font-size: 9pt;
+  background: #f3f4f6; padding: 1px 5px; border-radius: 3px; }
+pre { background: #f3f4f6; padding: 12px; border-radius: 6px;
+  overflow-x: auto; font-size: 8.5pt; line-height: 1.5; }
+pre code { background: none; padding: 0; }
+blockquote { margin: 1em 0; padding: 8px 14px; border-left: 4px solid #1a56db;
+  background: #f5f8ff; }
+.nav { background: #1a1a2e; color: #fff; padding: 10px 16px;
+  border-radius: 8px; margin-bottom: 20px; font-size: 13px; }
+.nav a { color: #c7d6ff; text-decoration: none; margin-right: 14px; }
+.nav a:hover { color: #fff; text-decoration: underline; }
+.note { color: #5b6472; font-size: 10pt; margin-top: 40px;
+  border-top: 1px solid #e5e7eb; padding-top: 10px; }
+@media print { .nav { display: none; } }</style>
+</head>
+<body>
+<nav class="nav"><a href="../../index.html">หน้าแรก</a><a href="../../Phase1/README.html">Phase1</a><a href="../../Phase2/README.html">Phase2</a><a href="../../Phase3/README.html">Phase3</a><a href="../../Phase4/README.html">Phase4</a><a href="../../Phase5/README.html">Phase5 (หน้านี้)</a></nav>
+<h1>SPM-25 — Member CRUD Module with 4 Tiers</h1>
+<ul>
+<li>Jira: <code>SPM-25</code> (3 SP) → Done, comment ผูกโค้ดแล้ว</li>
+<li>เรื่องเล่า: ในฐานะพนักงานร้าน ฉันต้องการจัดการข้อมูลสมาชิก
+  (เพิ่ม/ค้นหา/แก้ไข) พร้อมระดับ Regular 0%, Silver 5%,
+  Gold 10%, Platinum 15%</li>
+</ul>
+<h2>เกณฑ์ยอมรับ → หลักฐาน</h2>
+<ol>
+<li>มีรหัสสมาชิก ค้นหาแล้วต้องเจอพร้อม tier ถูกต้อง →
+   <code>MemberManager.save_member</code>/<code>find_by_id</code>/<code>find_all</code>/
+   <code>delete_member</code> (parameterized); เทสต์
+   <code>test_member_crud_four_tiers</code> สร้างครบ 4 tiers ตรวจอัตรา
+   0.0/0.05/0.10/0.15, แก้ไข tier, ลบแล้วหาย ผ่าน</li>
+<li>tier ผิด/ว่างบันทึกแล้วต้อง fallback Regular (0%) โดยไม่
+   error → <code>normalize_tier</code>/<code>discount_rate_for</code> คืน Regular/0.0
+   เสมอเมื่อ input ผิด; เทสต์ <code>test_member_invalid_tier_fallback_regular</code>
+   (รวม <code>"Diamond"</code>, <code>""</code>, <code>None</code>) ผ่าน</li>
+</ol>
+<h2>โค้ด</h2>
+<ul>
+<li><code>app.py</code>: Strategy <code>MemberTier</code> + 4 คลาสย่อย
+  (<code>RegularMember</code>/<code>SilverMember</code>/<code>GoldMember</code>/<code>PlatinumMember</code>,
+  เพิ่ม tier ใหม่ไม่ต้องแตะ <code>if-else</code> ตาม OCP),
+  <code>Member</code> (<code>discount_rate</code> property), <code>MemberManager</code>
+  (ตาราง <code>members</code>, เก็บ <code>discount_rate</code> จาก tier ที่ normalize แล้ว)</li>
+<li>CLI เมนู 6: ดูรายชื่อ / เพิ่ม-อัปเดต / ค้นหา (พิมพ์เตือนและ
+  fallback เมื่อ tier ไม่รู้จัก)</li>
+</ul>
+<p class="note">รายงานอัตโนมัติจาก <code>/home/panuwat/work/software-project-management/Phase5/Sprint5/SPM-25-member-crud.md</code> — ข้อมูลสมมติเพื่อการเรียน (สร้างด้วย <code>tools/build_reports.py</code>)</p>
+</body>
+</html>

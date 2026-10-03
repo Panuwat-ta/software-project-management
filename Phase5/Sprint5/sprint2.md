@@ -6,8 +6,8 @@
 ## 1. วัตถุประสงค์และขอบเขต Sprint 2
 
 เป้าหมายจาก epic SPM-22 คือลงมือทำ scope ที่ยกยอดจาก Sprint 1 ซึ่งตอนนั้น
-เป็นเพียงแบบออกแบบ (`week-2/blueprint.md`, `week-2/Member-Discount.md`,
-`week-6/To_Be_Architecture.md`): ชั้นฐานข้อมูล SQLite แบบ Singleton ที่ใช้
+เป็นเพียงแบบออกแบบ (`Phase1/Sprint1/week-2/blueprint.md`, `Phase1/Sprint1/week-2/Member-Discount.md`,
+`Phase2/Sprint2/week-6/To_Be_Architecture.md`): ชั้นฐานข้อมูล SQLite แบบ Singleton ที่ใช้
 parameterized query, สคริปต์ย้าย `data.json` พร้อมยืนยัน, ระบบสมาชิก CRUD
 4 tiers ด้วย Strategy pattern, ผูกส่วนลดเข้า Checkout Flow พร้อมใบเสร็จ
 และชุดทดสอบอัตโนมัติครอบชั้น DB + เครื่องคำนวณส่วนลด + กัน SQL injection

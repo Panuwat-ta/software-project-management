@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,
+      initial-scale=1.0">
+<title>web plan | SPM</title>
+<link rel="stylesheet" href="../../theme.css">
+<style>@page { size: A4; margin: 18mm 16mm; }
+body { font-family: "Noto Sans Thai", "Liberation Sans", sans-serif;
+  font-size: 11pt; line-height: 1.7; color: #1a1a1a; max-width: 900px;
+  margin: 0 auto; padding: 24px 20px 60px; }
+h1 { font-size: 22pt; border-bottom: 3px solid #1a56db; padding-bottom: 8px; }
+h2 { font-size: 14pt; color: #1a56db; margin-top: 1.6em;
+  border-bottom: 1px solid #e5e7eb; padding-bottom: 4px; }
+h3 { font-size: 12pt; margin-top: 1.2em; }
+table { border-collapse: collapse; width: 100%; margin: 0.9em 0;
+  font-size: 9.5pt; }
+th, td { border: 1px solid #cbd5e1; padding: 6px 9px; text-align: left;
+  vertical-align: top; }
+th { background: #eef2ff; }
+tr:nth-child(even) td { background: #fafbff; }
+code { font-family: "Noto Sans Mono", monospace; font-size: 9pt;
+  background: #f3f4f6; padding: 1px 5px; border-radius: 3px; }
+pre { background: #f3f4f6; padding: 12px; border-radius: 6px;
+  overflow-x: auto; font-size: 8.5pt; line-height: 1.5; }
+pre code { background: none; padding: 0; }
+blockquote { margin: 1em 0; padding: 8px 14px; border-left: 4px solid #1a56db;
+  background: #f5f8ff; }
+.nav { background: #1a1a2e; color: #fff; padding: 10px 16px;
+  border-radius: 8px; margin-bottom: 20px; font-size: 13px; }
+.nav a { color: #c7d6ff; text-decoration: none; margin-right: 14px; }
+.nav a:hover { color: #fff; text-decoration: underline; }
+.note { color: #5b6472; font-size: 10pt; margin-top: 40px;
+  border-top: 1px solid #e5e7eb; padding-top: 10px; }
+@media print { .nav { display: none; } }</style>
+</head>
+<body>
+<nav class="nav"><a href="../../index.html">หน้าแรก</a><a href="../../Phase1/README.html">Phase1</a><a href="../../Phase2/README.html">Phase2</a><a href="../../Phase3/README.html">Phase3</a><a href="../../Phase4/README.html">Phase4</a><a href="../../Phase5/README.html">Phase5 (หน้านี้)</a></nav>
+<h1>แผนงาน: จาก CLI สู่ Web App (v4.0-web)</h1>
+<p>เป้าหมาย: เว็บหน้าตาทันสมัย ใช้งานได้ทั้งคอมพิวเตอร์และมือถือ
+Backend Python + Frontend HTML/CSS/JavaScript (ไม่ใช้ framework ฝั่ง frontend
+เพื่อไม่ต้องมี build step) โดย reuse ตรรกะเดิมจาก <code>app.py</code> v3.0 ทั้งหมด</p>
+<h2>1. ขอบเขต</h2>
+<p><strong>ทำ:</strong> เว็บ CRUD สินค้า, Dashboard สรุป + แจ้งเตือน low-stock, จัดการสมาชิก,
+Checkout คิดส่วนลดพร้อมใบเสร็จบนเว็บ, ดาวน์โหลด CSV, responsive 360px/768px/1280px
+<strong>ไม่ทำ:</strong> ระบบล็อกอิน/สิทธิ์, จ่ายเงินออนไลน์, แอปมือถือ native, หลายสาขา/หลายผู้ใช้พร้อมกัน
+(SQLite = single-user ตามข้อจำกัดเดิม)</p>
+<h2>2. Tech Stack</h2>
+<table>
+<thead>
+<tr>
+<th>ชั้น</th>
+<th>เลือก</th>
+<th>เหตุผล</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Backend</td>
+<td>FastAPI + Uvicorn</td>
+<td>REST ตรงสเปก, Pydantic ตรวจ input แทน validator เดิม, มี <code>/docs</code> ให้เทสต์ API ฟรี</td>
+</tr>
+<tr>
+<td>Domain/DB</td>
+<td>reuse <code>app.py</code> v3.0 ทั้งก้อน</td>
+<td><code>Product</code>, <code>MemberTier</code>, <code>CheckoutService</code>, <code>InventoryRepository</code>, <code>MemberManager</code> ใช้ต่อได้เลย API เป็น wrapper บาง ๆ CLI เดิมไม่พัง</td>
+</tr>
+<tr>
+<td>Database</td>
+<td>SQLite (<code>inventory.db</code> ไฟล์เดิม)</td>
+<td>ไม่ต้องย้ายข้อมูล, migrate script เดิมใช้ต่อ</td>
+</tr>
+<tr>
+<td>Frontend</td>
+<td>HTML + CSS + JavaScript ล้วน</td>
+<td>ตรงสเปกที่ขอ, เปิดไฟล์/serve ง่าย, ไม่ต้อง build</td>
+</tr>
+<tr>
+<td>Style</td>
+<td>CSS custom (variables + grid/flex) + Noto Sans Thai</td>
+<td>คุมธีมให้เข้ากับเว็บพอร์ทัลเดิม (<code>theme.css</code>), responsive ด้วย media queries</td>
+</tr>
+<tr>
+<td>Test</td>
+<td>pytest + FastAPI TestClient</td>
+<td>ต่อจากชุดเดิม 14 เคส ไม่ต้องเปลี่ยนเครื่องมือ</td>
+</tr>
+</tbody>
+</table>
+<h2>3. สถาปัตยกรรม</h2>
+<pre><code class="language-text">Browser (SPA: dashboard/products/members/checkout)
+   │  fetch JSON
+   ▼
+FastAPI (/api/*) ──► Service layer (reuse: CheckoutService ฯลฯ)
+                          │
+                          ▼
+                   SQLite (inventory.db)
+CLI เดิมยังรันได้ (ใช้ service ชั้นเดียวกัน)
+</code></pre>
+<p>โครงโฟลเดอร์ใหม่ (ไม่แตะของเดิม):</p>
+<pre><code class="language-text">Phase5/Sprint5/web/
+├── backend/
+│   ├── main.py        # FastAPI app + รวม router
+│   ├── api_products.py
+│   ├── api_members.py
+│   ├── api_checkout.py
+│   └── deps.py        # เปิด DB context / repository ร่วมกัน
+├── frontend/
+│   ├── index.html     # SPA shell + nav (responsive + hamburger)
+│   ├── styles.css     # ธีม + responsive
+│   └── app.js         # fetch API + render แต่ละหน้า
+└── README.md          # วิธีรัน (uvicorn + เปิดเว็บ)
+</code></pre>
+<h2>4. API Design (REST)</h2>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Endpoint</th>
+<th>ใช้ทำอะไร</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GET</td>
+<td><code>/api/health</code></td>
+<td>ตรวจสถานะ</td>
+</tr>
+<tr>
+<td>GET/POST</td>
+<td><code>/api/products</code></td>
+<td>ดูทั้งหมด / เพิ่ม-อัปเดต</td>
+</tr>
+<tr>
+<td>GET/PUT/DELETE</td>
+<td><code>/api/products/{id}</code></td>
+<td>ดูรายตัว / แก้ / ลบ</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>/api/products/{id}/cut</code></td>
+<td>ตัดสต็อก <code>{qty}</code></td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>/api/summary</code></td>
+<td>ยอดรวม + low-stock list</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>/api/export.csv</code></td>
+<td>ดาวน์โหลดรายงาน CSV</td>
+</tr>
+<tr>
+<td>GET/POST</td>
+<td><code>/api/members</code></td>
+<td>ดูทั้งหมด / เพิ่ม-อัปเดต</td>
+</tr>
+<tr>
+<td>GET/DELETE</td>
+<td><code>/api/members/{id}</code></td>
+<td>ดูรายคน / ลบ</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>/api/checkout</code></td>
+<td><code>{product_id, member_id?, qty}</code> → ใบเสร็จ JSON</td>
+</tr>
+</tbody>
+</table>
+<p>กฎ: error คืน JSON <code>{detail}</code> + HTTP status ถูกต้อง (404/400/409);
+ห้ามต่อ SQL string (ใช้ repository เดิม), Pydantic กันค่าติดลบ/<code>qty&lt;=0</code></p>
+<h2>5. หน้าจอ Frontend (4 หน้าใน SPA เดียว)</h2>
+<ol>
+<li><strong>Dashboard</strong> — การ์ดสรุป (จำนวนแบบ/มูลค่ารวม/low-stock), ตาราง alert,
+   ปุ่มลัดไป checkout</li>
+<li><strong>Products</strong> — ค้นหา + ตาราง (badge <code>[LOW]</code>, barcode, ROP), ฟอร์มเพิ่ม/แก้ไข,
+   ปุ่มตัดสต็อก, ปุ่มโหลด CSV</li>
+<li><strong>Members</strong> — ตาราง tier + อัตรา, ฟอร์มสมัคร/เปลี่ยน tier, ค้นหารหัส</li>
+<li><strong>Checkout</strong> — เลือกสินค้า + จำนวน + รหัสสมาชิก (ว่าง = guest) →
+   แสดง Subtotal/Discount/Total + สต็อกคงเหลือ + คำเตือน</li>
+</ol>
+<p>Responsive: nav บน desktop / hamburger บนมือถือ, ตารางแนวนอน scroll ได้ที่ 360px,
+ฟอร์ม 1 คอลัมน์บนมือถือ 2 คอลัมน์บนจอใหญ่, ปุ่มแตะง่าย (≥44px)</p>
+<h2>6. แผนงาน 4 ช่วง (พร้อมบทบาท)</h2>
+<table>
+<thead>
+<tr>
+<th>ช่วง</th>
+<th>งาน</th>
+<th style="text-align: right;">SP</th>
+<th>ใคร</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A. Foundation</td>
+<td>โครง <code>Phase5/Sprint5/web/</code>, FastAPI + reuse domain, <code>/health</code>+<code>/docs</code>, สคริปต์รัน, API tests แรก</td>
+<td style="text-align: right;">8</td>
+<td>Tech Lead + Dev</td>
+</tr>
+<tr>
+<td>B. Products + Dashboard</td>
+<td>API สินค้า/summary/CSV + UI 2 หน้า + responsive รอบแรก</td>
+<td style="text-align: right;">8</td>
+<td>Dev + QA</td>
+</tr>
+<tr>
+<td>C. Members + Checkout</td>
+<td>API สมาชิก/checkout + UI 2 หน้า + ใบเสร็จ + edge cases</td>
+<td style="text-align: right;">8</td>
+<td>Dev + QA</td>
+</tr>
+<tr>
+<td>D. Hardening + Release</td>
+<td>เทสต์มือถือ 3 ขนาด, E2E smoke, flake8/bandit, README + คู่มือ, demo script, tag <code>v4.0.0-web</code></td>
+<td style="text-align: right;">5</td>
+<td>ทั้งทีม</td>
+</tr>
+</tbody>
+</table>
+<p>รวม 29 SP ≈ 2 sprints (อิง velocity เดิม Sprint 1 = 15, Sprint 2 = 17)</p>
+<h2>7. ความเสี่ยงและวิธีรับมือ</h2>
+<table>
+<thead>
+<tr>
+<th>ความเสี่ยง</th>
+<th>รับมือ</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Scope creep (อยากได้ auth/จ่ายเงิน)</td>
+<td>freeze ตามหัวข้อ 1, ส่วนเกิน → backlog อนาคต</td>
+</tr>
+<tr>
+<td>แก้ domain แล้ว CLI พัง</td>
+<td>API เป็น wrapper บาง ๆ ห้ามแก้ <code>app.py</code> domain; regression 14 + 25 ต้องเขียวตลอด</td>
+</tr>
+<tr>
+<td>SQLite เขียนพร้อมกัน</td>
+<td>เอกสารกำกับ single-user; เขียนผ่าน repository เดิม (commit/rollback)</td>
+</tr>
+<tr>
+<td>JS บานปลาย</td>
+<td>แยกฟังก์ชันต่อหน้า ห้าม lib ภายนอก, โค้ดรีวิวก่อน merge</td>
+</tr>
+<tr>
+<td>หน้าพังบนมือถือ</td>
+<td>ตรวจ 3 ขนาดทุกครั้งก่อนปิดงาน (checklist ใน DoD)</td>
+</tr>
+</tbody>
+</table>
+<h2>8. Definition of Done (รายช่วง)</h2>
+<ul>
+<li>pytest (เดิม + API ใหม่) เขียว 100%, <code>flake8</code>/<code>bandit</code> สะอาด</li>
+<li>เปิดบน 360/768/1280px ใช้งานได้จริงทุกปุ่ม (มีหลักฐานภาพ/เช็กลิสต์)</li>
+<li>เดโมสคริปต์ผ่าน: เพิ่มสินค้า → สมัคร Gold → checkout 1,000 เหลือ 900 →
+  โหลด CSV → ตัดเกินสต็อกต้อง error สวยไม่พัง</li>
+<li>CLI เดิมยังรันได้ + regression เขียว, README อัปเดตวิธีรันเว็บ</li>
+</ul>
+<h2>9. ขั้นต่อไป</h2>
+<p>สร้าง Epic + 4 stories (A–D) ลง Jira แล้วเริ่มช่วง A ได้ทันที</p>
+<p class="note">รายงานอัตโนมัติจาก <code>/home/panuwat/work/software-project-management/Phase5/Sprint5/web-plan.md</code> — ข้อมูลสมมติเพื่อการเรียน (สร้างด้วย <code>tools/build_reports.py</code>)</p>
+</body>
+</html>

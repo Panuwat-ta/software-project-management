@@ -60,3 +60,32 @@
    - เขียนสคริปต์ Unit Test เพื่อทดสอบตรรกะหลักของคลังสินค้า เช่น สูตรคำนวณมูลค่ารวมสินค้าคงคลัง และการจ่ายตัดสต็อก
    - เขียนสคริปต์ทดสอบการคำนวณส่วนลดสมาชิกในระดับ Tier ต่างๆ
    - เขียนสคริปต์ทดสอบระบบความปลอดภัยฐานข้อมูลจากการโจมตีประเภท SQL Injection
+
+---
+
+## คำสั่งที่ใช้บ่อย (Commands)
+
+```bash
+# ติดตั้งแพ็กเกจ
+pip install -r requirements.txt
+
+# รันชุดทดสอบทั้งหมด (CLI 14 + Web API 6 = 20 เคส)
+pytest
+
+# รันเว็บ (Backend FastAPI + Frontend แบบ responsive)
+PYTHONPATH=Phase5/Sprint5 uvicorn web.backend.main:app --reload
+# เปิด http://127.0.0.1:8000/  ·  API docs ที่ /docs
+
+# สร้างหน้า HTML จากรายงาน Markdown (Phase/Sprint ทั้งหมด)
+python3 tools/build_reports.py
+
+# ตรวจว่า HTML ที่ commit ไว้ตรงกับ Markdown (ใช้ใน CI)
+python3 tools/build_reports.py --check
+
+# ตรวจสไลด์หลักฐานทุกสัปดาห์
+python3 Phase1/Sprint1/templates/verify_evidence_decks.py
+
+# ตรวจคุณภาพโค้ด
+flake8 app.py Phase5/Sprint5/web/backend/ tools/
+bandit -q -r app.py Phase5/Sprint5/web/backend/
+```
