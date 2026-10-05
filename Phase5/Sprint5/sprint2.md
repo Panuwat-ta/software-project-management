@@ -3,7 +3,7 @@
 เอกสารนี้สรุปหลักฐานในโฟลเดอร์ `Phase5/` สำหรับงานรายวิชา
 ข้อมูลโครงการทั้งหมดเป็นข้อมูลสมมติเพื่อการเรียน ไม่ใช่ข้อมูลลูกค้าจริง
 
-## 1. วัตถุประสงค์และขอบเขต Sprint 2
+## 1. วัตถุประสงค์และขอบเขตส่วน v3.0 ของ Sprint 5
 
 เป้าหมายจาก epic SPM-22 คือลงมือทำ scope ที่ยกยอดจาก Sprint 1 ซึ่งตอนนั้น
 เป็นเพียงแบบออกแบบ (`Phase1/Sprint1/week-2/blueprint.md`, `Phase1/Sprint1/week-2/Member-Discount.md`,
@@ -79,4 +79,4 @@ parameterized query, สคริปต์ย้าย `data.json` พร้อ�
 | หลักฐานราย issue | `Phase5/Sprint5/SPM-23-sqlite-layer.md` … `SPM-27-tests.md` |
 | รายงานฉบับเว็บ | `Phase5/Sprint5/sprint2-report.html` |
 | งานยกยอดต้นทาง | `Phase1/Sprint1/week-2/blueprint.md`, `Phase1/Sprint1/week-2/Member-Discount.md`, `Phase2/Sprint2/week-6/To_Be_Architecture.md` |
-| รายงาน Sprint 1 | `Phase4/Sprint4/sprint1.md` |
+| รายงาน Sprint 4 / v2.0 | `Phase4/Sprint4/sprint4.md` |

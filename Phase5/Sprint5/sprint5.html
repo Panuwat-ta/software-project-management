@@ -37,11 +37,11 @@ blockquote { margin: 1em 0; padding: 8px 14px; border-left: 4px solid #1a56db;
 </head>
 <body>
 <nav class="nav"><a href="../../index.html">หน้าแรก</a><a href="../../Phase1/README.html">Phase1</a><a href="../../Phase2/README.html">Phase2</a><a href="../../Phase3/README.html">Phase3</a><a href="../../Phase4/README.html">Phase4</a><a href="../../Phase5/README.html">Phase5 (หน้านี้)</a></nav>
-<h1>รายงานปิด Sprint 5 — Phase 5: วิวัฒนาการ v3.0 และเว็บแอป v4.0</h1>
-<p>เอกสารนี้สรุปหลักฐานสปรินต์ที่ห้า ซึ่งเป็นการนำแบบออกแบบที่ค้างไว้ตั้งแต่ Sprint 1
-มาพัฒนาเป็นโค้ดจริงสองส่วน: ฐานข้อมูล SQLite กับระบบสมาชิก/ส่วนลด (v3.0)
-และเว็บแอป responsive ที่ reuse ตรรกะเดิมทั้งหมด (v4.0-web)
-ข้อมูลโครงการทั้งหมดเป็นข้อมูลสมมติเพื่อการเรียน ไม่ใช่ข้อมูลลูกค้าจริง</p>
+<h1>รายงานปิด Sprint 5 — Phase 5: v3.0 + Desktop Program</h1>
+<p>เอกสารนี้สรุป Sprint 5 ซึ่งมีสองส่วน:
+1) SQLite + Member + Checkout (v3.0)
+2) โปรแกรม Desktop UI ที่รันด้วย Python และ reuse domain เดิม</p>
+<p>ข้อมูลทั้งหมดเป็นข้อมูลสมมติเพื่อการเรียน</p>
 <h2>1. ข้อมูลสปรินต์</h2>
 <table>
 <thead>
@@ -53,60 +53,64 @@ blockquote { margin: 1em 0; padding: 8px 14px; border-left: 4px solid #1a56db;
 <tbody>
 <tr>
 <td>Sprint</td>
-<td>Sprint 5 - Phase 5 (v3+Web)</td>
+<td>Sprint 5 - Phase 5</td>
 </tr>
 <tr>
 <td>Jira Sprint ID</td>
-<td>86 (state: closed)</td>
+<td>86 (closed)</td>
 </tr>
 <tr>
 <td>Story Points</td>
-<td>46 SP (SPM-23…SPM-27 + SPM-29…SPM-32) ปิดครบทุกใบ</td>
+<td>46 SP</td>
+</tr>
+<tr>
+<td>Issues</td>
+<td>SPM-23…SPM-27 + SPM-29…SPM-32</td>
 </tr>
 <tr>
 <td>Epics</td>
-<td>SPM-22 (SQLite + Member), SPM-28 (WEB)</td>
+<td>SPM-22 + SPM-28</td>
 </tr>
 <tr>
-<td>หลักฐานราย issue</td>
-<td><code>SPM-23-sqlite-layer.md</code> … <code>SPM-32-hardening.md</code></td>
+<td>ตัวส่งมอบหลัก</td>
+<td><code>app.py</code>, <code>program.py</code>, <code>test_app.py</code>, <code>test_program.py</code></td>
 </tr>
 <tr>
-<td>รุ่นที่ส่งมอบ</td>
-<td>tag <code>v3.0.0</code>, <code>v4.0.0-web</code>, <code>v4.0.1</code></td>
+<td>Desktop release tag</td>
+<td>ยังไม่สร้างในรอบนี้ เพราะ working tree ยังไม่ได้ commit</td>
 </tr>
 </tbody>
 </table>
-<p>เป้าหมาย: ยกระดับจาก CLI เป็นเว็บที่ใช้งานได้ทั้งคอมพิวเตอร์และมือถือ
-โดยไม่ทิ้งฟีเจอร์เดิมและไม่ให้ regression</p>
+<p>เป้าหมายคือให้ระบบจากเดิมที่ใช้ CLI สามารถเปิดเป็นโปรแกรมหน้าต่าง UI ได้
+โดยไม่คัดลอก business logic และไม่ทำ regression กับรุ่นเดิม</p>
 <h2>2. ทีมและบทบาท</h2>
 <table>
 <thead>
 <tr>
 <th>บุคคล</th>
 <th>บทบาท</th>
-<th>ความรับผิดชอบในสปรินต์นี้</th>
+<th>ความรับผิดชอบ</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>ภานุวัฒน์ ต๋าคำ</td>
 <td>PM / Developer</td>
-<td>API, หน้าเว็บ, migration, checkout flow</td>
+<td>SQLite migration, Desktop UI, Checkout integration</td>
 </tr>
 <tr>
 <td>เอกพันธ์ ทศทิศรังสรรค์</td>
 <td>QA / Tester</td>
-<td>เทสต์ชั้น DB/ส่วนลด, เทสต์ injection, QA ขนาดจอ</td>
+<td>integration test, regression, edge cases</td>
 </tr>
 <tr>
 <td>ณฐภาพ สายหล้า</td>
 <td>Tech Lead / Architect</td>
-<td>ตัดสินใจ reuse domain, ตรวจสถาปัตยกรรมและ lint</td>
+<td>domain reuse, architecture, lint/security review</td>
 </tr>
 </tbody>
 </table>
-<h2>3. งานตามแผนและหลักฐาน</h2>
+<h2>3. งานตามแผน</h2>
 <h3>ส่วน A — v3.0: SQLite + Member + Checkout (17 SP)</h3>
 <table>
 <thead>
@@ -114,437 +118,308 @@ blockquote { margin: 1em 0; padding: 8px 14px; border-left: 4px solid #1a56db;
 <th>Issue</th>
 <th>งาน</th>
 <th style="text-align: right;">SP</th>
-<th>หลักฐาน</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>SPM-23</td>
-<td>SQLite Database Layer (Singleton + Parameterized)</td>
+<td>SQLite Database Layer</td>
 <td style="text-align: right;">5</td>
-<td><code>SPM-23-sqlite-layer.md</code></td>
 </tr>
 <tr>
 <td>SPM-24</td>
-<td>Migrate JSON Data to SQLite with Verification</td>
+<td>JSON → SQLite Migration</td>
 <td style="text-align: right;">3</td>
-<td><code>SPM-24-migration.md</code></td>
 </tr>
 <tr>
 <td>SPM-25</td>
-<td>Member CRUD Module with 4 Tiers</td>
+<td>Member CRUD 4 Tiers</td>
 <td style="text-align: right;">3</td>
-<td><code>SPM-25-member-crud.md</code></td>
 </tr>
 <tr>
 <td>SPM-26</td>
-<td>Integrate Member Discount into Checkout Flow</td>
+<td>Member Discount + Checkout</td>
 <td style="text-align: right;">3</td>
-<td><code>SPM-26-checkout.md</code></td>
 </tr>
 <tr>
 <td>SPM-27</td>
-<td>Automated Tests for DB Layer and Discount Engine</td>
+<td>DB/Discount/Injection Tests</td>
 <td style="text-align: right;">3</td>
-<td><code>SPM-27-tests.md</code></td>
 </tr>
 </tbody>
 </table>
-<h3>ส่วน B — v4.0-web: เว็บแอป (29 SP)</h3>
+<h3>ส่วน B — Desktop Program UI (29 SP)</h3>
 <table>
 <thead>
 <tr>
 <th>Issue</th>
 <th>งาน</th>
 <th style="text-align: right;">SP</th>
-<th>หลักฐาน</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>SPM-29</td>
-<td>Foundation: scaffold + FastAPI reuse domain</td>
+<td>GTK4 Foundation + reuse domain</td>
 <td style="text-align: right;">8</td>
-<td><code>SPM-29-foundation.md</code></td>
 </tr>
 <tr>
 <td>SPM-30</td>
-<td>Products + Dashboard API + UI</td>
+<td>Dashboard + Products UI</td>
 <td style="text-align: right;">8</td>
-<td><code>SPM-30-products.md</code></td>
 </tr>
 <tr>
 <td>SPM-31</td>
-<td>Members + Checkout API + UI</td>
+<td>Members + Checkout UI</td>
 <td style="text-align: right;">8</td>
-<td><code>SPM-31-checkout.md</code></td>
 </tr>
 <tr>
 <td>SPM-32</td>
-<td>Hardening + Release</td>
+<td>Hardening + Desktop Release Candidate</td>
 <td style="text-align: right;">5</td>
-<td><code>SPM-32-hardening.md</code></td>
 </tr>
 </tbody>
 </table>
-<p>แผนงานละเอียดของส่วน B: <code>web-plan.md</code></p>
-<h2>4. ส่วน A: สถาปัตยกรรม v3.0</h2>
-<table>
-<thead>
-<tr>
-<th>แนวทาง</th>
-<th>การถือปฏิบัติ</th>
-<th>รายละเอียด</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Singleton</td>
-<td><code>SQLiteDatabaseContext</code></td>
-<td>จุดเชื่อมต่อฐานข้อมูลจุดเดียว ป้องกัน Database Locked มี <code>commit</code>/<code>rollback</code>/<code>reset</code></td>
-</tr>
-<tr>
-<td>Repository</td>
-<td><code>InventoryRepository</code></td>
-<td>ซ่อน SQL ไว้ชั้นเดียว: save/find_by_id/find_all/update_stock/delete + summary</td>
-</tr>
-<tr>
-<td>Strategy</td>
-<td><code>MemberTier</code> + 4 คลาส</td>
-<td>Regular 0% · Silver 5% · Gold 10% · Platinum 15% เพิ่มระดับใหม่ไม่ต้องแก้ if-else</td>
-</tr>
-<tr>
-<td>Transaction</td>
-<td>commit/rollback ทุก write</td>
-<td>ข้อมูลไม่ค้างกลางคันเมื่อเกิดข้อผิดพลาด</td>
-</tr>
-</tbody>
-</table>
-<p>ตารางฐานข้อมูล:
-- <code>products</code> — product_id (PK), name, quantity, price, category, barcode, reorder_point พร้อม <code>CHECK (&gt;= 0)</code>
-- <code>members</code> — member_id (PK), name, tier, discount_rate</p>
-<h2>5. ส่วน A: การย้ายข้อมูลและผลตรวจสอบ</h2>
-<table>
-<thead>
-<tr>
-<th>รายการ</th>
-<th>ผล</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>ฟังก์ชัน</td>
-<td><code>migrate_json_to_sqlite()</code> อ่านผ่าน <code>Product.from_dict</code> จึงรองรับคีย์เก่า <code>n</code>/<code>q</code>/<code>p</code>/<code>c</code></td>
-</tr>
-<tr>
-<td>ค่า default ของฟิลด์ใหม่</td>
-<td><code>barcode=""</code>, <code>reorder_point=5</code> (ต่อเนื่องจาก BUG-101)</td>
-</tr>
-<tr>
-<td>การตรวจสอบ</td>
-<td>เทียบจำนวนระเบียนและมูลค่ารวมก่อน/หลังย้าย ต้องตรงกัน 100% (<code>match: True</code>)</td>
-</tr>
-<tr>
-<td>ตัวอย่างผลตรวจ</td>
-<td>JSON 2 ระเบียน (ผสมคีย์เก่า/ใหม่) มูลค่า 600.0 → SQLite 600.0</td>
-</tr>
-<tr>
-<td>การใช้งานจริง</td>
-<td>เปิดโปรแกรมครั้งแรกจะย้าย <code>data.json</code> อัตโนมัติเมื่อฐานข้อมูลยังว่าง</td>
-</tr>
-</tbody>
-</table>
-<h2>6. ส่วน A: ระบบสมาชิกและส่วนลด</h2>
+<h2>4. สถาปัตยกรรม</h2>
+<pre><code class="language-text">Desktop UI: program.py (GTK4)
+        │
+        ├─ Dashboard
+        ├─ Products
+        ├─ Members
+        └─ Checkout
+              │
+              ▼
+Domain: app.py
+        ├─ InventoryRepository
+        ├─ MemberManager
+        ├─ CheckoutService
+        ├─ CsvReportExporter
+        └─ SQLiteDatabaseContext
+              │
+              ▼
+         inventory.db
+</code></pre>
+<p>UI ไม่เขียน SQL และไม่คำนวณส่วนลดซ้ำเอง</p>
+<h2>5. SQLite / Migration</h2>
+<ul>
+<li>ใช้ Singleton connection</li>
+<li>Repository ซ่อน SQL</li>
+<li>ทุก query ที่มี input ใช้ parameterized placeholder</li>
+<li>schema มี CHECK ป้องกันค่าติดลบ</li>
+<li>migration อ่าน legacy JSON ผ่าน <code>Product.from_dict</code></li>
+<li>ตรวจ record count และ total inventory value หลังย้าย</li>
+</ul>
+<h2>6. Member / Discount / Checkout</h2>
 <table>
 <thead>
 <tr>
 <th>Tier</th>
-<th style="text-align: right;">อัตราส่วนลด</th>
-<th style="text-align: right;">ตัวอย่างซื้อ 1,000 บาท</th>
+<th style="text-align: right;">ส่วนลด</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>Regular</td>
 <td style="text-align: right;">0%</td>
-<td style="text-align: right;">1,000.00</td>
 </tr>
 <tr>
 <td>Silver</td>
 <td style="text-align: right;">5%</td>
-<td style="text-align: right;">950.00</td>
 </tr>
 <tr>
 <td>Gold</td>
 <td style="text-align: right;">10%</td>
-<td style="text-align: right;">900.00</td>
 </tr>
 <tr>
 <td>Platinum</td>
 <td style="text-align: right;">15%</td>
-<td style="text-align: right;">850.00</td>
 </tr>
 </tbody>
 </table>
-<ul>
-<li>ชื่อ tier ผิด/ว่าง/ไม่ใช่ string → <code>normalize_tier</code> คืน <code>Regular</code> โดยไม่ error</li>
-<li>ไม่กรอกรหัสสมาชิก หรือรหัสไม่มีในระบบ → คิดราคาเต็ม (Graceful Guest-Only)</li>
-<li>ใบเสร็จแยกบรรทัด: subtotal, tier + อัตรา, discount_value, grand_total, สต็อกคงเหลือ, ธง low stock</li>
-</ul>
-<h2>7. ส่วน B: เว็บแอป</h2>
-<table>
-<thead>
-<tr>
-<th>หัวข้อ</th>
-<th>รายละเอียด</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Backend</td>
-<td>FastAPI + Uvicorn, รวม router 3 ตัว, เสิร์ฟ frontend แบบ static</td>
-</tr>
-<tr>
-<td>Frontend</td>
-<td>SPA 4 หน้า (แดชบอร์ด/สินค้า/สมาชิก/ขาย) + HTML/CSS/JS ล้วน ไม่มี build step</td>
-</tr>
-<tr>
-<td>Responsive</td>
-<td>ทดสอบ 360 / 768 / 1280 px: มือถือใช้ hamburger, การ์ดคอลัมน์เดียว, ตารางเลื่อนแนวนอน</td>
-</tr>
-<tr>
-<td>API</td>
-<td><code>/api/products</code> CRUD + cut · <code>/api/summary</code> · <code>/api/export.csv</code> · <code>/api/members</code> CRUD + tiers · <code>/api/checkout</code></td>
-</tr>
-<tr>
-<td>การจัดการ error</td>
-<td>404 ไม่พบข้อมูล · 409 สต็อกไม่พอ · 422 ข้อมูลผิดประเภทจาก Pydantic</td>
-</tr>
-<tr>
-<td>เอกสาร API</td>
-<td>เปิด <code>/docs</code> ได้อัตโนมัติจาก FastAPI</td>
-</tr>
-</tbody>
-</table>
-<p>วิธีรัน (จากรากรีโป):</p>
-<pre><code class="language-bash">PYTHONPATH=Phase5/Sprint5 uvicorn web.backend.main:app --reload
+<p>Checkout ใช้ <code>CheckoutService</code> เดิม
+Guest ได้ราคาเต็ม และใบเสร็จแสดง subtotal / discount / total / remaining stock</p>
+<h2>7. Desktop Program UI</h2>
+<p>หน้าโปรแกรมมี 4 ส่วนหลัก:</p>
+<ol>
+<li><strong>ภาพรวม</strong> — จำนวนประเภทสินค้า มูลค่ารวม และ low-stock</li>
+<li><strong>สินค้า</strong> — เพิ่ม/แก้ไข/ค้นหา/ตัดสต็อก/ลบ/Export CSV</li>
+<li><strong>สมาชิก</strong> — CRUD + เลือก Tier</li>
+<li><strong>Checkout</strong> — ระบุสินค้า จำนวน สมาชิก และแสดงใบเสร็จ</li>
+</ol>
+<p>Responsive/Adaptive UI:
+- Sidebar เมนูหลักกว้างประมาณ 1/3 ของหน้าต่างจริง และไม่ขยายเกินสัดส่วน
+- Desktop ≥980 px: Dashboard 3 cards/แถว, Checkout 2 คอลัมน์
+- Compact 760–979 px: form 2 คอลัมน์, Checkout แนวตั้ง
+- Narrow &lt;760 px: form/card 1 คอลัมน์, toolbar แนวตั้ง และตารางเลื่อนแนวนอนได้</p>
+<p>ไฟล์รัน:</p>
+<pre><code class="language-bash">python3 program.py
 </code></pre>
-<h2>8. ส่วน A: การรักษาความเข้ากันได้</h2>
+<p>บน Fedora:</p>
+<pre><code class="language-bash">sudo dnf install python3-gobject gtk4
+</code></pre>
+<p>โปรแกรมผ่านการเปิดจริงบน GNOME/Wayland และ process ทำงานต่อโดยไม่มี runtime error</p>
+<h2>8. Compatibility</h2>
 <table>
 <thead>
 <tr>
-<th>หลักการ</th>
-<th>ผลลัพธ์</th>
+<th>รายการ</th>
+<th>ผล</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>ไม่แก้โครงสร้างโดเมนเดิม</td>
-<td>ชั้น API เป็น wrapper บาง ๆ ทับของเดิม</td>
+<td>CLI เดิม</td>
+<td>ยังอยู่ใน <code>app.py</code></td>
 </tr>
 <tr>
-<td>CLI ยังทำงาน</td>
-<td><code>app.py</code> ยังรันเมนูเดิมครบ (เพิ่มเมนูสมาชิก/ขาย)</td>
+<td>barcode / reorder point</td>
+<td>ยังทำงาน</td>
 </tr>
 <tr>
-<td>ฟีเจอร์เดิมไม่หาย</td>
-<td>barcode, reorder point, <code>is_low_stock</code>, CSV, atomic save</td>
+<td>CSV</td>
+<td>reuse <code>CsvReportExporter</code></td>
 </tr>
 <tr>
-<td>regression รุ่นเก่า</td>
-<td><code>Phase4/Sprint4/week-12/test_app.py</code> ผ่าน 25 เคสไม่แตก</td>
+<td>JSON compatibility</td>
+<td>legacy key ยังรองรับ</td>
+</tr>
+<tr>
+<td>v2.0 regression</td>
+<td>25 passed</td>
 </tr>
 </tbody>
 </table>
-<h2>9. หลักฐานทดสอบรวม</h2>
+<h2>9. หลักฐานทดสอบ</h2>
 <table>
 <thead>
 <tr>
 <th>ชุด</th>
 <th>ผล</th>
-<th>ครอบคลุม</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><code>test_app.py</code> (CLI)</td>
+<td><code>test_app.py</code></td>
 <td>14 passed</td>
-<td>5 เดิม + 9 ใหม่ (singleton, injection, migration, CRUD 4 tiers, fallback, checkout ×3, legacy)</td>
 </tr>
 <tr>
-<td><code>web/backend/test_web_api.py</code></td>
-<td>6 passed</td>
-<td>health, seed, CRUD+validation, summary+CSV, member/checkout, injection</td>
+<td><code>test_program.py</code></td>
+<td>7 passed</td>
 </tr>
 <tr>
-<td><strong>รวมชุดหลัก</strong></td>
-<td><strong>20 passed</strong></td>
-<td>—</td>
+<td><strong>รวม</strong></td>
+<td><strong>21 passed</strong></td>
 </tr>
 <tr>
-<td>regression รุ่น v2.0</td>
+<td>regression v2.0</td>
 <td>25 passed</td>
-<td>ยืนยันว่าไม่มีการถดถอย</td>
+</tr>
+<tr>
+<td>flake8</td>
+<td>0</td>
+</tr>
+<tr>
+<td>bandit</td>
+<td>0</td>
 </tr>
 </tbody>
 </table>
-<h2>10. คุณภาพโค้ดและความปลอดภัย</h2>
+<p>ตัวอย่าง integration test Desktop:
+- responsive breakpoints: Desktop / Compact / Narrow
+- seed database
+- dashboard metrics
+- LOW/OK status
+- Gold checkout 1,000 → 900
+- receipt formatting
+- CSV export</p>
+<h2>10. คุณภาพ</h2>
+<p>คำสั่งตรวจ:</p>
+<pre><code class="language-bash">python -m pytest test_app.py test_program.py -q
+flake8 app.py program.py test_program.py tools/build_reports.py
+bandit -q -r app.py program.py
+</code></pre>
+<p>ผลล่าสุด: ผ่านทั้งหมด</p>
+<h2>11. Jira</h2>
+<p>Epic SPM-28 และ Stories SPM-29…SPM-32 ยังคง Sprint, Story Point,
+parent และสถานะ Done เดิม แต่เปลี่ยน scope/summary จาก Web เป็น Desktop Program UI</p>
+<h2>12. ข้อจำกัด</h2>
+<ul>
+<li>ไม่มี Login / RBAC</li>
+<li>ไม่มี Online Payment</li>
+<li>SQLite เป็น local single-user</li>
+<li>Desktop UI ปัจจุบัน target Linux/Fedora GTK4</li>
+<li>UAT formal sign-off จาก Sprint 4 ยังรอลงนาม</li>
+</ul>
+<h2>13. Sprint Review</h2>
 <table>
 <thead>
 <tr>
-<th>รายการ</th>
+<th>หัวข้อ</th>
 <th>ผล</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>flake8 (โค้ดสด + backend เว็บ + tools)</td>
-<td>0 ปัญหา</td>
+<td>โปรแกรมรันได้</td>
+<td><code>python3 program.py</code> เปิด GTK4 window</td>
 </tr>
 <tr>
-<td>E501 (บรรทัดยาวเกิน 79) ในโค้ดสด</td>
-<td>0</td>
+<td>Domain reuse</td>
+<td>ใช้ Repository/Member/Checkout เดิม</td>
 </tr>
 <tr>
-<td>E501 ในไฟล์ snapshot ประวัติการทำงาน</td>
-<td>112 จุด (Phase1/Sprint1 86, Phase4/Sprint4 26) เก็บเป็นหลักฐาน ไม่ได้แก้</td>
+<td>Test</td>
+<td>21 + 25 passed</td>
 </tr>
 <tr>
-<td>bandit</td>
-<td>0 ปัญหา</td>
+<td>Code quality</td>
+<td>flake8 0 / bandit 0</td>
 </tr>
 <tr>
-<td>SQL injection</td>
-<td>input <code>' OR '1'='1</code> และ <code>"; DROP TABLE --</code> ถูกปฏิบัติเป็น string ธรรมดา ตารางไม่เสียหาย</td>
-</tr>
-<tr>
-<td>การจับ exception</td>
-<td>เจาะจงชนิด ไม่กลืน error</td>
+<td>Jira</td>
+<td>อัปเดต scope เป็น Desktop Program</td>
 </tr>
 </tbody>
 </table>
-<h2>11. บั๊กที่พบระหว่าง QA และการแก้ไข</h2>
-<table>
-<thead>
-<tr>
-<th>อาการ</th>
-<th>รากเหง้า</th>
-<th>การแก้</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>sqlite3.ProgrammingError</code> เมื่อรันบน uvicorn</td>
-<td>FastAPI ทำงานหลาย thread แต่ connection เดียวถูกสร้างใน thread หนึ่ง</td>
-<td>เปิด <code>check_same_thread=False</code> ใน <code>SQLiteDatabaseContext</code> แล้วรันสอบครบทั้งชุด</td>
-</tr>
-<tr>
-<td>404 noise จาก favicon</td>
-<td>หน้าเว็บไม่มีไฟล์ favicon</td>
-<td>ใส่ favicon แบบ inline ใน HTML</td>
-</tr>
-</tbody>
-</table>
-<h2>12. ความเสี่ยงและข้อจำกัดที่เหลือ</h2>
-<table>
-<thead>
-<tr>
-<th>รายการ</th>
-<th>สถานะ</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>ระบบล็อกอิน/สิทธิ์ผู้ใช้</td>
-<td>ไม่ทำ (อยู่นอกขอบเขตที่ตกลงไว้)</td>
-</tr>
-<tr>
-<td>ระบบชำระเงินออนไลน์</td>
-<td>ไม่ทำ</td>
-</tr>
-<tr>
-<td>SQLite แบบ single-user</td>
-<td>รองรับผู้ใช้คนเดียว หลายคนพร้อมกันต้องย้าย PostgreSQL ผ่าน Repository</td>
-</tr>
-<tr>
-<td>ช่องลายเซ็น UAT</td>
-<td>ยังรอผู้รับรองลงนาม (จาก Sprint 4)</td>
-</tr>
-<tr>
-<td>ข้อมูลผู้ใช้ตัวอย่าง</td>
-<td>เป็นข้อมูลสมมติเพื่อการเรียน</td>
-</tr>
-</tbody>
-</table>
-<h2>13. Sprint Review (ตามหลักฐานที่มี)</h2>
-<table>
-<thead>
-<tr>
-<th>หัวข้อ</th>
-<th>หลักฐาน</th>
-<th>ผล/ข้อสังเกต</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>สิ่งที่สาธิต</td>
-<td>โค้ด v3.0 + เว็บที่รันได้จริง</td>
-<td>สคริปต์เดโม 6 ขั้นตอนใน <code>web/README.md</code></td>
-</tr>
-<tr>
-<td>ผลที่ผ่าน</td>
-<td>20 + 25 tests, lint สะอาด, QA 3 ขนาดจอ</td>
-<td>ยืนยันได้จากคำสั่งที่รันซ้ำได้</td>
-</tr>
-<tr>
-<td>ผู้เข้าร่วมเดโม/ผู้รับรอง</td>
-<td>ไม่มีหลักฐานลงชื่อ</td>
-<td>ไม่อ้างว่าได้รับการรับรอง</td>
-</tr>
-</tbody>
-</table>
-<h2>14. งานที่ยกยอดไป</h2>
+<h2>14. งานต่อไป</h2>
 <ul>
-<li>เพิ่มระดับสมาชิกใหม่ (เช่น Diamond) โดยเพิ่มคลาสในกลุ่ม Strategy</li>
-<li>ย้ายไป REST/Web API ของฝ่ายขายเกินหนึ่งร้าน (ยังใช้ Repository เดิม)</li>
-<li>ปิดช่องลายเซ็น UAT และจัดทำคู่มือผู้ใช้ฉบับเต็ม</li>
+<li>ทำ packaging เป็น executable/installer ถ้าต้องส่งให้ผู้ใช้ทั่วไป</li>
+<li>รองรับ PostgreSQL หากเปลี่ยนเป็น multi-user</li>
+<li>เพิ่ม role/login หากขยาย scope</li>
+<li>ปิด formal UAT sign-off</li>
 </ul>
-<h2>15. ภาคผนวก Evidence Index</h2>
+<h2>15. Evidence Index</h2>
 <table>
 <thead>
 <tr>
-<th>หมวดหลักฐาน</th>
-<th>เส้นทาง</th>
+<th>หมวด</th>
+<th>หลักฐาน</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>หลักฐานราย issue</td>
-<td><code>SPM-23-sqlite-layer.md</code>, <code>SPM-24-migration.md</code>, <code>SPM-25-member-crud.md</code>, <code>SPM-26-checkout.md</code>, <code>SPM-27-tests.md</code></td>
+<td>v3.0</td>
+<td><code>sprint2.md</code></td>
 </tr>
 <tr>
-<td>หลักฐานราย story เว็บ</td>
-<td><code>SPM-29-foundation.md</code>, <code>SPM-30-products.md</code>, <code>SPM-31-checkout.md</code>, <code>SPM-32-hardening.md</code></td>
-</tr>
-<tr>
-<td>รายละเอียดส่วน v3.0</td>
-<td><code>sprint2.md</code> (+ <code>sprint2.pdf</code>, <code>sprint2-report.html</code>)</td>
-</tr>
-<tr>
-<td>รายละเอียดส่วนเว็บ</td>
-<td><code>sprint3.md</code>, <code>sprint3-report.html</code>, <code>web-plan.md</code></td>
+<td>Desktop UI</td>
+<td><code>sprint3.md</code>, <code>program-plan.md</code></td>
 </tr>
 <tr>
 <td>โค้ด</td>
-<td><code>app.py</code>, <code>test_app.py</code>, <code>web/backend/</code>, <code>web/frontend/</code></td>
+<td><code>app.py</code>, <code>program.py</code></td>
 </tr>
 <tr>
-<td>ชุดทดสอบ</td>
-<td><code>test_app.py</code>, <code>web/backend/test_web_api.py</code></td>
+<td>Tests</td>
+<td><code>test_app.py</code>, <code>test_program.py</code></td>
 </tr>
 <tr>
-<td>รุ่นที่ส่งมอบ</td>
-<td>tag <code>v3.0.0</code>, <code>v4.0.0-web</code>, <code>v4.0.1</code></td>
+<td>Jira stories</td>
+<td><code>SPM-29-foundation.md</code> … <code>SPM-32-hardening.md</code></td>
+</tr>
+<tr>
+<td>Historical Web</td>
+<td><code>web/</code>, <code>web-plan.md</code> — superseded</td>
 </tr>
 </tbody>
 </table>

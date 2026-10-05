@@ -1,17 +1,19 @@
-# SPM-30 — B. Products + Dashboard API + UI
+# SPM-30 — B. Dashboard + Products Desktop UI
 
 - Jira: `SPM-30` (8 SP) → Done
-- งาน: API สินค้า/summary/CSV + UI หน้า dashboard/products
+- งาน: หน้า Dashboard และ Products ในโปรแกรม Desktop
 
 ## เกณฑ์ยอมรับ → หลักฐาน
 
-1. API ครบ → CRUD + `PUT` แก้ไข + `POST /cut` (404/409 ถูกต้อง) +
-   `GET /summary` + `GET /export.csv` (หัวตรง CLI); curl ตรวจแล้ว
-2. UI ใช้ได้ → dashboard (การ์ดยอด + ตาราง low-stock), หน้า products
-   (ค้นหา, badge LOW/OK, เพิ่ม-แก้ไขผ่านฟอร์ม, ตัดสต็อก, ลบ, โหลด CSV)
-3. JS ตรวจ syntax ผ่าน (`node --check`)
+1. Dashboard แสดงจำนวนประเภทสินค้า มูลค่าคงคลัง และจำนวนสินค้าใกล้หมด
+2. แสดงรายการสินค้าที่ quantity <= reorder point
+3. หน้า Products ค้นหารหัส/ชื่อ/หมวดหมู่ได้
+4. เพิ่ม/แก้ไขสินค้าได้จากฟอร์ม
+5. ตัดสต็อก ลบสินค้า และ Export CSV ได้
+6. สถานะแสดง LOW / OK จาก `Product.is_low_stock`
 
 ## โค้ด
 
-- `web/frontend/`: `index.html` (SPA shell), `styles.css` (responsive),
-  `app.js` (hash router + fetch render, ไม่มี dependency)
+- `program.py` — `_build_dashboard`, `_build_products`,
+  `refresh_dashboard`, `refresh_products`
+- `app.py` — `InventoryRepository`, `CsvReportExporter`

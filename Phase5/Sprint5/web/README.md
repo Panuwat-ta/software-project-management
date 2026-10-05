@@ -1,4 +1,6 @@
-# Inventory Web (v4.0-web)
+# [Historical / Superseded] Inventory Web (v4.0-web)
+
+> implementation นี้ถูกแทนที่ด้วย Desktop Program (`program.py`) และเก็บไว้เพื่อ traceability เท่านั้น
 
 เว็บ responsive สำหรับระบบคลังสินค้า: Backend FastAPI reuse ตรรกะ
 `app.py` v3.0 ทั้งก้อน (CLI เดิมยังใช้ได้) Frontend HTML/CSS/JS ล้วน

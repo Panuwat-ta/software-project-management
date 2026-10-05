@@ -1,4 +1,6 @@
-# แผนงาน: จาก CLI สู่ Web App (v4.0-web)
+# [Historical / Superseded] แผนงาน: จาก CLI สู่ Web App (v4.0-web)
+
+> แผนนี้ถูกแทนที่ด้วย `program-plan.md` หลังเปลี่ยน scope เป็น Desktop Program UI
 
 เป้าหมาย: เว็บหน้าตาทันสมัย ใช้งานได้ทั้งคอมพิวเตอร์และมือถือ
 Backend Python + Frontend HTML/CSS/JavaScript (ไม่ใช้ framework ฝั่ง frontend

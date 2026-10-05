@@ -37,23 +37,25 @@ blockquote { margin: 1em 0; padding: 8px 14px; border-left: 4px solid #1a56db;
 </head>
 <body>
 <nav class="nav"><a href="../../index.html">หน้าแรก</a><a href="../../Phase1/README.html">Phase1</a><a href="../../Phase2/README.html">Phase2</a><a href="../../Phase3/README.html">Phase3</a><a href="../../Phase4/README.html">Phase4</a><a href="../../Phase5/README.html">Phase5 (หน้านี้)</a></nav>
-<h1>SPM-31 — C. Members + Checkout API + UI</h1>
+<h1>SPM-31 — C. Members + Checkout Desktop UI</h1>
 <ul>
 <li>Jira: <code>SPM-31</code> (8 SP) → Done</li>
-<li>งาน: API สมาชิก/checkout + UI หน้า members/checkout + ใบเสร็จ</li>
+<li>งาน: หน้า Members และ Checkout พร้อมใบเสร็จในโปรแกรม Desktop</li>
 </ul>
 <h2>เกณฑ์ยอมรับ → หลักฐาน</h2>
 <ol>
-<li>สมาชิกครบ → CRUD + <code>GET /tiers</code> (4 tiers + อัตรา), tier ผิด fallback
-   Regular; curl ตรวจแล้ว</li>
-<li>Checkout บนเว็บ → สมัคร Gold + ซื้อ 2×500 = 1,000 → ใบเสร็จสุทธิ 900;
-   guest ราคาเต็ม; ของไม่พอ 409; UI มีปุ่มแก้ไขสมาชิก + แสดงใบเสร็จ/
-   error สวยงาม</li>
+<li>เพิ่ม/แก้ไข/ลบสมาชิกได้</li>
+<li>รองรับ Regular 0% / Silver 5% / Gold 10% / Platinum 15%</li>
+<li>Checkout ใช้ <code>CheckoutService</code> เดิม ไม่คำนวณส่วนลดซ้ำใน UI</li>
+<li>Guest ได้ราคาเต็ม</li>
+<li>Gold ซื้อ 2 × 500 = 1,000 → สุทธิ 900</li>
+<li>ใบเสร็จแสดง subtotal, tier, discount, grand total และ stock คงเหลือ</li>
 </ol>
 <h2>โค้ด</h2>
 <ul>
-<li><code>web/backend/api_members.py</code>, <code>api_checkout.py</code> (404/409/400 ถูกต้อง),
-  หน้า members/checkout ใน <code>app.js</code> (receipt render + error box)</li>
+<li><code>program.py</code> — Members / Checkout UI และ <code>format_receipt</code></li>
+<li><code>app.py</code> — <code>MemberManager</code>, <code>MemberTier</code>, <code>CheckoutService</code></li>
+<li><code>test_program.py</code> — integration checkout ผ่าน domain จริง</li>
 </ul>
 <p class="note">รายงานอัตโนมัติจาก <code>Phase5/Sprint5/SPM-31-checkout.md</code> — ข้อมูลสมมติเพื่อการเรียน (สร้างด้วย <code>tools/build_reports.py</code>)</p>
 </body>

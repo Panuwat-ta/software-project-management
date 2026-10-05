@@ -37,16 +37,23 @@ blockquote { margin: 1em 0; padding: 8px 14px; border-left: 4px solid #1a56db;
 </head>
 <body>
 <nav class="nav"><a href="../index.html">หน้าแรก</a><a href="../Phase1/README.html">Phase1</a><a href="../Phase2/README.html">Phase2</a><a href="../Phase3/README.html">Phase3</a><a href="../Phase4/README.html">Phase4</a><a href="../Phase5/README.html">Phase5 (หน้านี้)</a></nav>
-<h1>Phase 5 — วิวัฒนาการ v3.0 + Web (Sprint 5)</h1>
+<h1>Phase 5 — วิวัฒนาการ v3.0 + Desktop Program (Sprint 5)</h1>
 <p>ข้อมูลทั้งหมดเป็นข้อมูลสมมติเพื่อการเรียน ไม่ใช่ข้อมูลลูกค้าจริง</p>
 <ul>
-<li>ขอบเขต: SQLite/Member/Checkout 17 SP + Web App 29 SP (รวม 46 SP)</li>
-<li>โครง: <code>sprint2.md</code>/<code>sprint2-report.html</code>, <code>sprint3.md</code>/<code>sprint3-report.html</code>,
-  <code>SPM-23…SPM-32-*.md</code> (หลักฐานราย issue), <code>app.py</code> + <code>test_app.py</code>
-  (snapshot v3.0), <code>web/</code> + <code>web-plan.md</code></li>
-<li>รายงาน: <code>phase5-report.md</code> (และ <code>sprint2.md</code>, <code>sprint3.md</code> ฉบับเต็ม)</li>
-<li>รันเว็บ (จากรากรีโป): <code>PYTHONPATH=Phase5/Sprint5 uvicorn web.backend.main:app</code></li>
+<li>ขอบเขต: SQLite/Member/Checkout 17 SP + Desktop Program UI 29 SP (รวม 46 SP)</li>
+<li>Sprint หลัก: Sprint 5 (Jira ID 86)</li>
+<li>ส่วน A: <code>sprint2.md</code> — v3.0 SQLite + Member + Checkout</li>
+<li>ส่วน B: <code>sprint3.md</code> — Desktop Program UI (GTK4) ที่รันด้วย <code>python3 program.py</code></li>
+<li>โค้ดหลัก: <code>app.py</code>, <code>program.py</code>, <code>test_app.py</code>, <code>test_program.py</code></li>
+<li>แผน Desktop UI: <code>program-plan.md</code></li>
+<li>โฟลเดอร์ <code>web/</code> และ <code>web-plan.md</code> เก็บไว้เป็นหลักฐาน implementation เดิมที่ถูกแทนที่ ไม่ใช่ตัวส่งมอบหลักปัจจุบัน</li>
 </ul>
+<p>รันโปรแกรมจากรากรีโป:</p>
+<pre><code class="language-bash">python3 program.py
+</code></pre>
+<p>บน Fedora ต้องมี GTK4/PyGObject:</p>
+<pre><code class="language-bash">sudo dnf install python3-gobject gtk4
+</code></pre>
 <p class="note">รายงานอัตโนมัติจาก <code>Phase5/README.md</code> — ข้อมูลสมมติเพื่อการเรียน (สร้างด้วย <code>tools/build_reports.py</code>)</p>
 </body>
 </html>

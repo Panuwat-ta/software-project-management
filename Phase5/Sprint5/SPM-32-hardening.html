@@ -37,29 +37,45 @@ blockquote { margin: 1em 0; padding: 8px 14px; border-left: 4px solid #1a56db;
 </head>
 <body>
 <nav class="nav"><a href="../../index.html">หน้าแรก</a><a href="../../Phase1/README.html">Phase1</a><a href="../../Phase2/README.html">Phase2</a><a href="../../Phase3/README.html">Phase3</a><a href="../../Phase4/README.html">Phase4</a><a href="../../Phase5/README.html">Phase5 (หน้านี้)</a></nav>
-<h1>SPM-32 — D. Hardening + Release</h1>
+<h1>SPM-32 — D. Desktop Hardening + Release Candidate</h1>
 <ul>
 <li>Jira: <code>SPM-32</code> (5 SP) → Done</li>
-<li>งาน: QA 3 ขนาดจอ, E2E smoke, lint, docs, เตรียม tag <code>v4.0.0-web</code></li>
+<li>งาน: hardening, tests, lint, security และคู่มือรัน Desktop Program</li>
 </ul>
 <h2>เกณฑ์ยอมรับ → หลักฐาน</h2>
 <ol>
-<li>3 ขนาดจอ (360/768/1280) ใช้งานได้ทุกปุ่ม → screenshot จริงตรวจแล้ว:
-   มือถือใช้ hamburger + การ์ดคอลัมน์เดียว + ตาราง scroll;
-   จอใหญ่ nav เต็ม + การ์ด 3 คอลัมน์</li>
-<li>เจอบั๊กจริงตอน QA: SQLite thread error ใต้ uvicorn →
-   แก้ <code>check_same_thread=False</code> ใน <code>SQLiteDatabaseContext</code>
-   (เทสต์ 20 ยังเขียว, sync snapshot Phase2 แล้ว)</li>
-<li>คุณภาพ → <code>flake8</code> clean, <code>bandit</code> 0 issues (ไม่นับ assert ในไฟล์เทสต์),
-   <code>node --check</code> ผ่าน</li>
-<li>Docs → <code>web/README.md</code> (วิธีรัน + API ย่อ + เดโม 2 นาที),
-   <code>web-plan.md</code>; E2E ผ่านทั้ง CLI (14) + API (6) + regression (25)</li>
-<li>Tag <code>v4.0.0-web</code> และ <code>v4.0.1</code> สร้างและ push แล้ว (ปิดรอบตรวจรับ)</li>
+<li><code>python3 program.py</code> เปิดหน้าต่าง GTK4 จริงบน GNOME/Wayland</li>
+<li><code>test_app.py</code> 14 + <code>test_program.py</code> 7 = 21 passed</li>
+<li>regression v2.0 = 25 passed</li>
+<li><code>flake8 app.py program.py test_program.py tools/build_reports.py</code> = 0</li>
+<li><code>bandit -q -r app.py program.py</code> = 0</li>
+<li>UI ใช้ SQLite / Repository / Strategy / CheckoutService ชุดเดิม</li>
+<li>มี <code>program-plan.md</code> และคำสั่งรันใน README</li>
 </ol>
+<h2>UX/UI hardening รอบล่าสุด</h2>
+<ul>
+<li>ปรับ navigation sidebar และ active state ให้เห็นหน้าปัจจุบันชัดเจน</li>
+<li>เพิ่ม inline status banner สำหรับ feedback สำเร็จ/ผิดพลาด</li>
+<li>เพิ่ม empty state และจำนวนรายการใน Products/Members</li>
+<li>เพิ่ม LOW/OK badge และจัด visual hierarchy ของตารางใหม่</li>
+<li>เพิ่ม confirmation ก่อนลบข้อมูล</li>
+<li>ปรับ form state สำหรับ add/edit และ helper text</li>
+<li>ปรับ Checkout เป็นสองส่วน: ข้อมูลการขาย + ใบเสร็จ และเน้น grand total</li>
+<li>โปรแกรมเปิดจริงบน GNOME/Wayland หลังแก้ UX/UI โดยไม่มี runtime error</li>
+<li>เพิ่ม Responsive breakpoints: Desktop ≥980 px, Compact 760–979 px, Narrow &lt;760 px</li>
+<li>Sidebar เมนูหลักถูกจำกัดให้กว้างประมาณ 1/3 ของหน้าต่างจริง โดยตั้ง <code>hexpand=False</code>; Compact/Narrow จะปรับจำนวนคอลัมน์ของ form/cards และเรียง Checkout แนวตั้ง</li>
+<li>Products/Members table เลื่อนได้ในแนวนอนเมื่อหน้าต่างแคบ</li>
+</ul>
+<h2>ข้อกำหนด runtime</h2>
+<p>Fedora:</p>
+<pre><code class="language-bash">sudo dnf install python3-gobject gtk4
+python3 program.py
+</code></pre>
 <h2>หมายเหตุ</h2>
 <ul>
-<li>favicon ใส่แบบ inline กัน 404 noise</li>
-<li><code>.gitignore</code> เพิ่ม <code>inventory.db</code> (ไฟล์รันไทม์)</li>
+<li>สถานะ Jira เดิมคงเป็น Done</li>
+<li>ไม่สร้าง/แก้ Git tag ในรอบนี้ เพราะ working tree ยังมีการเปลี่ยนแปลงที่ยังไม่ได้ commit</li>
+<li>Web implementation เดิมถูกเก็บเป็น historical evidence เท่านั้น</li>
 </ul>
 <p class="note">รายงานอัตโนมัติจาก <code>Phase5/Sprint5/SPM-32-hardening.md</code> — ข้อมูลสมมติเพื่อการเรียน (สร้างด้วย <code>tools/build_reports.py</code>)</p>
 </body>

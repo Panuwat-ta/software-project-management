@@ -25,6 +25,7 @@ REPORT_GLOBS = (
     "Phase*/Sprint*/sprint*.md",
     "Phase*/Sprint*/SPM-*.md",
     "Phase*/Sprint*/web-plan.md",
+    "Phase*/Sprint*/program-plan.md",
     "Phase*/README.md",
     "Phase*/Sprint*/web/README.md",
 )

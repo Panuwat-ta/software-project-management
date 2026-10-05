@@ -1,75 +1,92 @@
-# รายงาน Phase 5 — วิวัฒนาการ v3.0 และเว็บแอป v4.0
+# รายงาน Phase 5 — วิวัฒนาการ v3.0 และ Desktop Program
 
 ข้อมูลทั้งหมดเป็นข้อมูลสมมติเพื่อการเรียน ไม่ใช่ข้อมูลลูกค้าจริง
 
-## 1. ภาพรวบเฟส
+## 1. ภาพรวมเฟส
 
 | รายการ | ค่า |
 |---|---|
 | Sprint ที่ครอบคลุม | Sprint 5 (Jira ID 86, closed) |
-| Issues | SPM-23…SPM-27 (17 SP) + SPM-29…SPM-32 (29 SP) = **46 SP** ปิดครบ |
-| Epics | SPM-22 (SQLite + Member), SPM-28 (WEB) |
-| รุ่นที่ส่งมอบ | `v3.0.0` (CLI+SQLite) และ `v4.0.0-web` (เว็บแอป) |
+| Issues | SPM-23…SPM-27 (17 SP) + SPM-29…SPM-32 (29 SP) = **46 SP** |
+| Epics | SPM-22 (SQLite + Member), SPM-28 (Desktop Program UI) |
+| ตัวส่งมอบหลัก | `app.py` v3.0 + `program.py` Desktop UI |
+| สถานะ | งานหลัก Done; release tag ของ Desktop build ยังไม่สร้างในรอบนี้ |
 
-เฟสนี้เป็นการ "นำแบบออกแบบที่ค้างมาตั้งแต่ Sprint 1 มาทำจริง" และขยายไปถึงเว็บแอป
-โดยกำหนดขอบเขตชัดเจน: ไม่ทำระบบล็อกอินและระบบชำระเงินออนไลน์
+Phase 5 ปิดงานออกแบบที่ค้างจาก Sprint 1 แล้วเพิ่มหน้าตาโปรแกรม Desktop
+โดย reuse business logic เดิมและไม่บังคับให้ผู้ใช้เปิด browser หรือรัน server
 
-## 2. สองส่วนของงาน
-
-### ส่วน A — v3.0: SQLite + Member + Checkout
-
-| หัวข้อ | ผลลัพธ์ |
-|---|---|
-| ฐานข้อมูล | ย้ายจาก JSON เป็น SQLite แบบ Singleton + Repository + parameterized query 100% |
-| Transaction | commit/rollback ทุก write พร้อม schema `CHECK` กันค่าติดลบ |
-| Migration | สคริปต์ย้าย `data.json` พร้อมตรวจจำนวนและมูลค่าตรง 100% |
-| สมาชิก | CRUD + 4 tiers (0/5/10/15%) ด้วย Strategy pattern, tier ผิด fallback Regular |
-| Checkout | คิดส่วนลดอัตโนมัติ + ใบเสร็จแยกบรรทัด + ตัดสต็อก atomic |
-
-### ส่วน B — v4.0-web: เว็บแอป responsive
+## 2. ส่วน A — v3.0: SQLite + Member + Checkout
 
 | หัวข้อ | ผลลัพธ์ |
 |---|---|
-| Backend | FastAPI + Uvicorn reuse domain เดิมทั้งหมด (ไม่แตกโครงสร้างชั้น domain) |
-| Frontend | SPA 4 หน้า: แดชบอร์ด · สินค้า · สมาชิก · ขาย |
-| Responsive | ใช้งานได้ที่ 360 / 768 / 1280 px (ทดสอบด้วย screenshot จริง) |
-| API | products CRUD + cut · summary · export.csv · members CRUD + tiers · checkout |
-| UI เด่น | ใบเสร็จบนหน้าจอ, ป้าย LOW, ค้นหาสินค้า, แก้ไขแบบเติมฟอร์มเดิม |
+| ฐานข้อมูล | SQLite แบบ Singleton + Repository + parameterized query |
+| Transaction | commit/rollback และ schema CHECK กันค่าติดลบ |
+| Migration | JSON → SQLite พร้อมตรวจจำนวนและมูลค่า 100% |
+| สมาชิก | CRUD + Regular/Silver/Gold/Platinum ด้วย Strategy |
+| Checkout | ส่วนลดอัตโนมัติ + ใบเสร็จ + ตัดสต็อก |
 
-## 3. หลักฐานทดสอบ
+## 3. ส่วน B — Desktop Program UI
+
+| หัวข้อ | ผลลัพธ์ |
+|---|---|
+| Toolkit | GTK4 / PyGObject |
+| จุดเริ่ม | `python3 program.py` |
+| Dashboard | ประเภทสินค้า มูลค่ารวม และ low-stock |
+| Products | เพิ่ม/แก้ไข/ค้นหา/ตัด/ลบ/Export CSV |
+| Members | CRUD สมาชิกและ tier |
+| Checkout | ส่วนลดสมาชิก + ใบเสร็จบนหน้าจอ |
+| Domain reuse | Repository / MemberManager / CheckoutService / CSV จาก `app.py` |
+
+สถาปัตยกรรม:
+
+```text
+program.py (GTK4)
+      │
+      └─ app.py domain
+           ├─ InventoryRepository
+           ├─ MemberManager
+           ├─ CheckoutService
+           └─ SQLiteDatabaseContext
+                  └─ inventory.db
+```
+
+## 4. หลักฐานทดสอบ
 
 | ชุด | ผล |
 |---|---|
-| `test_app.py` (CLI) | 14 passed (5 เดิม + 9 ใหม่) |
-| `web/backend/test_web_api.py` | 6 passed |
-| **รวม** | **20 passed** |
-| regression `Sprint4/week-12/test_app.py` | 25 passed (ไม่แตก) |
+| `test_app.py` | 14 passed |
+| `test_program.py` | 7 passed |
+| **รวมชุดหลัก** | **21 passed** |
+| regression v2.0 | 25 passed |
+| flake8 | 0 |
+| bandit | 0 |
 
-## 4. คุณภาพและความปลอดภัย
+## 5. วิธีรัน
 
-| รายการ | ผล |
-|---|---|
-| flake8 | 0 ปัญหา (โค้ดสด + backend เว็บ + tools) |
-| bandit | 0 ปัญหา |
-| SQL injection | ทดสอบด้วย `' OR '1'='1` และ `DROP TABLE` แล้วถูกดักเป็น string ธรรมดา |
-| บั๊กที่พบใน QA | SQLite cross-thread → แก้ด้วย `check_same_thread=False` |
+Fedora:
 
-## 5. ขอบเขตที่ตกลงไม่ทำ
+```bash
+sudo dnf install python3-gobject gtk4
+python3 program.py
+```
+
+โปรแกรมเปิดเป็นหน้าต่าง Desktop UI บน GNOME/Wayland
+
+## 6. ขอบเขตที่ไม่ทำ
 
 - ระบบล็อกอิน/สิทธิ์ผู้ใช้
-- ระบบชำระเงินออนไลน์
-- รองรับหลายผู้ใช้พร้อมกัน (SQLite เป็น single-user; ย้าย PostgreSQL ได้ผ่าน Repository)
+- Online Payment
+- multi-user concurrent server
+- cloud sync
 
-## 6. งานที่ค้างจากเฟสก่อน
+SQLite ปัจจุบันเหมาะกับ desktop single-user; ถ้าต้องการหลายผู้ใช้
+สามารถเปลี่ยน persistence ผ่าน Repository ภายหลัง
 
-- ช่องลายเซ็น UAT (Sprint 4) ยังรอผู้รับรองลงนาม
-- Flake8 `E501` ในไฟล์ snapshot ประวัติการทำงาน 112 จุด (เก็บเป็นหลักฐาน ไม่แก้)
-- ตัวเลขรายงานที่อ้างถึงรุ่น v2.0 ยังใช้ตัวเลขเดิมของ Phase 1–4 (ไม่ได้วัดใหม่สำหรับ v3.0)
+## 7. Traceability
 
-## 7. รายงานและหลักฐานฉบับเต็ม
-
-- รายงานปิดสปรินต์: [`Sprint5/sprint5.md`](Sprint5/sprint5.md) · [หน้าเว็บ](Sprint5/sprint5.html) · [PDF](Sprint5/sprint5.pdf)
-- รายละเอียดส่วน v3.0: [`Sprint5/sprint2.md`](Sprint5/sprint2.md) · [PDF](Sprint5/sprint2.pdf)
-- รายละเอียดส่วนเว็บ: [`Sprint5/sprint3.md`](Sprint5/sprint3.md) · [แผนงาน](Sprint5/web-plan.md)
-- วิธีรันเว็บ: [`Sprint5/web/README.md`](Sprint5/web/README.md)
-- README ของเฟส: [`README.md`](README.md)
+- `Sprint5/sprint2.md` — v3.0 SQLite + Member + Checkout
+- `Sprint5/sprint3.md` — Desktop Program UI
+- `Sprint5/program-plan.md` — แผน Desktop
+- `Sprint5/SPM-29-foundation.md` … `SPM-32-hardening.md`
+- `Sprint5/program.py`, `Sprint5/test_program.py` — snapshot
+- `web/`, `web-plan.md` — historical implementation เดิมที่ถูกแทนที่

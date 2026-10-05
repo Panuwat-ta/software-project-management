@@ -30,19 +30,16 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
 
-    - name: Run PyTest (CLI + Web API)
+    - name: Run PyTest (CLI + Desktop Program)
       run: |
-        pytest test_app.py Phase5/Sprint5/web/backend/test_web_api.py \
+        python -m pytest test_app.py test_program.py \
           --maxfail=1 --disable-warnings -q
 
     - name: Lint (flake8 + bandit)
       run: |
-        flake8 app.py Phase5/Sprint5/web/backend/ --count --statistics
-        bandit -q -r app.py Phase5/Sprint5/web/backend/main.py \
-          Phase5/Sprint5/web/backend/deps.py \
-          Phase5/Sprint5/web/backend/api_products.py \
-          Phase5/Sprint5/web/backend/api_members.py \
-          Phase5/Sprint5/web/backend/api_checkout.py
+        flake8 app.py program.py test_program.py tools/build_reports.py \
+          --count --statistics
+        bandit -q -r app.py program.py
 
     - name: Verify generated reports are up to date
       run: python3 tools/build_reports.py --check

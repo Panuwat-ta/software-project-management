@@ -1,22 +1,20 @@
-# SPM-29 — A. Foundation: web scaffold + FastAPI reuse domain
+# SPM-29 — A. Foundation: GTK4 Desktop scaffold + reuse domain
 
 - Jira: `SPM-29` (8 SP) → Done
-- งาน: โครง `web/backend` + `web/frontend`, FastAPI reuse `app.py` v3.0,
-  `/health` + `/docs`, สคริปต์รัน, API tests แรก
+- งาน: สร้าง `program.py` เป็น GTK4 Desktop UI และ reuse domain จาก `app.py`
 
 ## เกณฑ์ยอมรับ → หลักฐาน
 
-1. โครง web รันได้ reuse domain ไม่แตะ CLI → `deps.py` ต่อ
-   `Product`/`MemberTier`/`CheckoutService`/`Repository` เดิม;
-   `test_app.py` 14 เคสยังเขียว (CLI ไม่พัง)
-2. API tests แรกเขียว → `test_web_api.py` 6 เคส
-   (health, seed, CRUD+validation, summary+CSV, member+checkout Gold,
-   injection) ผ่าน
-3. คุณภาพ → `flake8` clean, `bandit` 0 issues
+1. รัน `python3 program.py` แล้วเปิดหน้าต่างโปรแกรมได้จริงบน GNOME/Wayland
+2. UI ต่อกับ `InventoryRepository`, `MemberManager`, `CheckoutService` เดิม
+3. ไม่มี SQL หรือ business rule ซ้ำใน UI
+4. `test_app.py` เดิมยังผ่าน และเพิ่ม `test_program.py`
+5. `flake8` และ `bandit` ผ่าน 0 ปัญหา
 
 ## โค้ด
 
-- `web/backend/main.py` (app + `/api/health|summary|export.csv` +
-  serve frontend), `deps.py` (lazy DB + migrate/seed แบบ CLI),
-  `api_products.py`, `api_members.py`, `api_checkout.py`
-- smoke: `uvicorn` จริง health/summary/frontend/checkout 200 ทั้งหมด
+- `program.py` — GTK4 application shell, navigation และ domain bridge
+- `test_program.py` — integration tests ของ Desktop Program
+- `app.py` — business logic / SQLite / Strategy / Repository
+
+> Web implementation เดิมใน `web/` ถูกแทนที่เป็นตัวส่งมอบหลัก แต่เก็บไว้เป็นหลักฐานย้อนหลัง

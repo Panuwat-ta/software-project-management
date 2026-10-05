@@ -37,23 +37,25 @@ blockquote { margin: 1em 0; padding: 8px 14px; border-left: 4px solid #1a56db;
 </head>
 <body>
 <nav class="nav"><a href="../../index.html">หน้าแรก</a><a href="../../Phase1/README.html">Phase1</a><a href="../../Phase2/README.html">Phase2</a><a href="../../Phase3/README.html">Phase3</a><a href="../../Phase4/README.html">Phase4</a><a href="../../Phase5/README.html">Phase5 (หน้านี้)</a></nav>
-<h1>SPM-30 — B. Products + Dashboard API + UI</h1>
+<h1>SPM-30 — B. Dashboard + Products Desktop UI</h1>
 <ul>
 <li>Jira: <code>SPM-30</code> (8 SP) → Done</li>
-<li>งาน: API สินค้า/summary/CSV + UI หน้า dashboard/products</li>
+<li>งาน: หน้า Dashboard และ Products ในโปรแกรม Desktop</li>
 </ul>
 <h2>เกณฑ์ยอมรับ → หลักฐาน</h2>
 <ol>
-<li>API ครบ → CRUD + <code>PUT</code> แก้ไข + <code>POST /cut</code> (404/409 ถูกต้อง) +
-   <code>GET /summary</code> + <code>GET /export.csv</code> (หัวตรง CLI); curl ตรวจแล้ว</li>
-<li>UI ใช้ได้ → dashboard (การ์ดยอด + ตาราง low-stock), หน้า products
-   (ค้นหา, badge LOW/OK, เพิ่ม-แก้ไขผ่านฟอร์ม, ตัดสต็อก, ลบ, โหลด CSV)</li>
-<li>JS ตรวจ syntax ผ่าน (<code>node --check</code>)</li>
+<li>Dashboard แสดงจำนวนประเภทสินค้า มูลค่าคงคลัง และจำนวนสินค้าใกล้หมด</li>
+<li>แสดงรายการสินค้าที่ quantity &lt;= reorder point</li>
+<li>หน้า Products ค้นหารหัส/ชื่อ/หมวดหมู่ได้</li>
+<li>เพิ่ม/แก้ไขสินค้าได้จากฟอร์ม</li>
+<li>ตัดสต็อก ลบสินค้า และ Export CSV ได้</li>
+<li>สถานะแสดง LOW / OK จาก <code>Product.is_low_stock</code></li>
 </ol>
 <h2>โค้ด</h2>
 <ul>
-<li><code>web/frontend/</code>: <code>index.html</code> (SPA shell), <code>styles.css</code> (responsive),
-  <code>app.js</code> (hash router + fetch render, ไม่มี dependency)</li>
+<li><code>program.py</code> — <code>_build_dashboard</code>, <code>_build_products</code>,
+  <code>refresh_dashboard</code>, <code>refresh_products</code></li>
+<li><code>app.py</code> — <code>InventoryRepository</code>, <code>CsvReportExporter</code></li>
 </ul>
 <p class="note">รายงานอัตโนมัติจาก <code>Phase5/Sprint5/SPM-30-products.md</code> — ข้อมูลสมมติเพื่อการเรียน (สร้างด้วย <code>tools/build_reports.py</code>)</p>
 </body>

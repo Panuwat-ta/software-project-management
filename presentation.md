@@ -1,9 +1,10 @@
-# เอกสารนำเสนอโครงงาน: ระบบจัดการสินค้าคงคลังแบบ CLI (v3.0)
+# เอกสารนำเสนอโครงงาน: ระบบจัดการสินค้าคงคลัง CLI → โปรแกรม Desktop
 
 ## 1. ภาพรวมโครงการ
 
-ระบบจัดการสินค้าคงคลังแบบ CLI สำหรับร้านค้าขนาดเล็ก ครอบคลุมงานรับสินค้าเข้า
-ตัดสต็อก แจ้งเตือนสินค้าใกล้หมด ระบบสมาชิกพร้อมส่วนลดอัตโนมัติ และรายงาน CSV
+ระบบจัดการสินค้าคงคลังสำหรับร้านค้าขนาดเล็ก เริ่มจาก CLI และพัฒนาต่อเป็นโปรแกรม Desktop UI
+ครอบคลุมงานรับสินค้าเข้า ตัดสต็อก แจ้งเตือนสินค้าใกล้หมด ระบบสมาชิกพร้อมส่วนลด
+อัตโนมัติ Checkout และรายงาน CSV
 พัฒนาต่อเนื่องจากโค้ดเดิมที่เป็นแบบ Monolithic ใช้ตัวแปรโกลบอล `x` เก็บข้อมูล
 ในไฟล์ JSON ไม่มีการตรวจสอบข้อมูลนำเข้า โปรแกรมล่มเมื่อกรอกผิดประเภทและยอมรับ
 ค่าติดลบได้
@@ -34,15 +35,17 @@
 | v1.0 | JSON (เขียนทับตรง) | Monolithic + global `x` | CLI 5 เมนู |
 | v2.0 | JSON (Atomic Save) | OOP 3 คลาส แยก Logic/CLI | Validation, กันติดลบ, Barcode, Reorder Point, CSV |
 | v3.0 | SQLite (ACID) | Singleton + Repository + Strategy | Member 4 tiers, Checkout + ส่วนลด, Migration |
+| v4.0 Desktop | SQLite ผ่าน domain เดิม | GTK4 / PyGObject | Dashboard, Products, Members, Checkout, CSV, Desktop UI |
 
 ## 5. สถาปัตยกรรม v3.0
 
 ```text
-CLI (8 เมนู) ──► CheckoutService ──► InventoryRepository ──► SQLite (inventory.db)
-     │                  │                      │
-     │                  └── MemberTier ◄── MemberManager
-     │                      (Strategy)         (CRUD สมาชิก)
-     └── CsvReportExporter (รายงาน CSV)
+CLI (app.py) ───────────┐
+                       ├──► CheckoutService ──► InventoryRepository ──► SQLite
+Desktop UI (program.py) ┘          │                      │
+                                  └── MemberTier ◄── MemberManager
+                                      (Strategy)         (CRUD สมาชิก)
+program.py / app.py ───────────────► CsvReportExporter (รายงาน CSV)
 ```
 
 - **Singleton** (`SQLiteDatabaseContext`) — จุดเชื่อมต่อฐานข้อมูลจุดเดียว
@@ -57,8 +60,11 @@ CLI (8 เมนู) ──► CheckoutService ──► InventoryRepository ─
 
 ## 6. ฟีเจอร์และการใช้งาน
 
-เมนูหลัก 8 ข้อ: ดูสินค้า, เพิ่ม/แก้ไข (รวม barcode + reorder point),
-ตัดสต็อก, สรุปคลัง, ส่งออก CSV, จัดการสมาชิก, Checkout พร้อมส่วนลด, ออก
+CLI เดิมมี 8 เมนู: ดูสินค้า, เพิ่ม/แก้ไข, ตัดสต็อก, สรุปคลัง, ส่งออก CSV,
+จัดการสมาชิก, Checkout พร้อมส่วนลด และออก
+
+Desktop Program เปิดด้วย `python3 program.py` และมี 4 หน้าหลัก:
+Dashboard, Products, Members และ Checkout โดยใช้ domain เดียวกับ CLI
 
 ตัวอย่างใบเสร็จ (สมาชิก Gold ซื้อสินค้า 500 บาท × 2):
 
@@ -90,7 +96,7 @@ Remaining stock: 8
 
 | ชุดทดสอบ | ผล | ครอบคลุม |
 |---|---|---|
-| `test_app.py` (ราก, v3.0) + `web/backend/test_web_api.py` | 20 passed | สรุปคลัง, ตัดสต็อก (สำเร็จ/ของไม่พอ/ไม่มีสินค้า), เพิ่ม-อัปเดต, Singleton, กัน injection, migration, Member CRUD 4 tiers, fallback, checkout (Gold/guest/alert), legacy JSON |
+| `test_app.py` + `test_program.py` | 21 passed | domain/CLI 14 เคส + Desktop integration 7 เคส: responsive breakpoints, seed, dashboard metrics, LOW/OK, member checkout, receipt, CSV |
 | `Phase4/Sprint4/week-12/test_app.py` (regression v2.0) | 25 passed | baseline + CR-01/CR-02 + BUG-101 + CLI + integration |
 
 - input อันตราย (`' OR '1'='1`, `DROP TABLE`) ถูกปฏิบัติเป็น string ธรรมดา
@@ -113,7 +119,7 @@ Remaining stock: 8
 | 2 (ID 82) | Design W5–7 | SPM-11…14 | 13 |
 | 3 (ID 85) | Execution W8–11 | SPM-15…19 | 16 |
 | 4 (ID 83) | Release W12 v2.0 | SPM-20, 21 | 5 |
-| 5 (ID 86) | Evolution v3.0 + Web | SPM-23…27, SPM-29…32 | 46 |
+| 5 (ID 86) | Evolution v3.0 + Desktop Program | SPM-23…27, SPM-29…32 | 46 |
 
 ทุก sprint ปิดแล้ว ทุก issue Done (sprint เก่า ID 45/48/81 เก็บเป็น ARCHIVED)
 
@@ -124,14 +130,14 @@ Remaining stock: 8
 
 - ข้อมูล JSON เดิมแก้ด้วย fallback ไม่ใช่ migration เต็มรูปแบบ (ฝั่ง v3.0
   ใช้สคริปต์ย้ายพร้อมตรวจแทน)
-- UAT รอบ formal sign-off และ Git tag รีลีสยังรอขั้นตอนพิธีการ
+- UAT รอบ formal sign-off ยังรอลายเซ็นผู้รับรอง; Desktop build รอบนี้ยังไม่สร้าง Git tag เพราะ working tree ยังไม่ได้ commit
 - แนวทางต่อ: สมาชิก tier ใหม่ (เช่น Diamond) เติมได้ทันทีด้วย Strategy,
-  ต่อยอด Web UI สำเร็จแล้ว (FastAPI + SPA) โดยไม่แตะชั้น Repository
+  โปรแกรม Desktop UI reuse Repository/Strategy เดิม และสามารถทำ installer เพิ่มภายหลัง
 
 ## 12. สรุป
 
 ระบบขยับจากสคริปต์ Monolithic ที่ล่มง่าย สู่สถาปัตยกรรมแบบชั้น
-(SQLite + Member + Checkout) ที่ทดสอบอัตโนมัติครอบคลุม 20 + 25 เคส ปลอดภัยจาก
+(SQLite + Member + Checkout) ที่ทดสอบอัตโนมัติครอบคลุม 21 + 25 เคส ปลอดภัยจาก
 SQL injection ทนข้อมูลเก่า และพร้อมสาธิตการทำงานจริงทุกเมนู
 
 ## เอกสารอ้างอิง

@@ -1,70 +1,98 @@
-# รายงาน Sprint 5 · ส่วน Web — จาก CLI สู่ Web App (v4.0-web)
+# รายงาน Sprint 5 · ส่วน Desktop Program — จาก CLI สู่โปรแกรม UI
 
-เอกสารนี้สรุปหลักฐานส่วน Web ในโฟลเดอร์ `Phase5/Sprint5/` สำหรับงานรายวิชา
-ข้อมูลโครงการทั้งหมดเป็นข้อมูลสมมติเพื่อการเรียน ไม่ใช่ข้อมูลลูกค้าจริง
+เอกสารนี้สรุปงานส่วน UI ของ Sprint 5 หลังเปลี่ยน scope จาก Web App
+มาเป็นโปรแกรม Desktop ที่รันด้วย Python โดยตรง
+ข้อมูลทั้งหมดเป็นข้อมูลสมมติเพื่อการเรียน
 
-## 1. วัตถุประสงค์และขอบเขต (ส่วน Web ของ Sprint 5)
+## 1. วัตถุประสงค์และขอบเขต
 
-เปลี่ยนระบบคลังสินค้า CLI เป็นเว็บสวยงามทันสมัย ใช้ได้ทั้งคอมพิวเตอร์
-และมือถือ โดย Backend Python (FastAPI) reuse ตรรกะ `app.py` v3.0 ทั้งก้อน
-และ Frontend HTML/CSS/JavaScript ล้วน ไม่ทำระบบล็อกอิน/จ่ายเงิน
-(Epic WEB: SPM-28, 29 SP)
+เปลี่ยนระบบคลังสินค้า CLI ให้มีหน้าตาโปรแกรม Desktop โดยใช้ GTK4/PyGObject
+และ reuse `app.py` v3.0 ทั้งก้อน ไม่คัดลอก business logic หรือ SQL ซ้ำใน UI
 
-## 2. ทีมและบทบาท
+Epic: SPM-28 · Stories: SPM-29…SPM-32 · รวม 29 SP · Sprint 5 (ID 86)
 
-| บุคคล | บทบาท | ความรับผิดชอบหลัก |
-|---|---|---|
-| Panuwat | PM / Developer | บริหารงานและพัฒนา |
-| Ekkapan | QA / Tester | ออกแบบและทดสอบอัตโนมัติ |
-| Nattapap | Tech Lead / Architect | ออกแบบสถาปัตยกรรมและทบทวนโค้ด |
-
-## 3. งานตามแผน SPM-29…SPM-32
+## 2. งานตามแผน
 
 | Issue | งาน | SP | หลักฐาน |
 |---|---|---:|---|
-| SPM-29 | A. Foundation: scaffold + FastAPI reuse domain + tests | 8 | `SPM-29-foundation.md`, `web/backend/`, 6 API tests |
-| SPM-30 | B. Products + Dashboard API + UI | 8 | `SPM-30-products.md`, หน้า dashboard/products |
-| SPM-31 | C. Members + Checkout API + UI | 8 | `SPM-31-checkout.md`, หน้า members/checkout + ใบเสร็จ |
-| SPM-32 | D. Hardening + Release | 5 | `SPM-32-hardening.md`, QA 3 ขนาด + lint + docs |
+| SPM-29 | GTK4 Foundation + reuse domain | 8 | `SPM-29-foundation.md`, `program.py` |
+| SPM-30 | Dashboard + Products Desktop UI | 8 | `SPM-30-products.md` |
+| SPM-31 | Members + Checkout Desktop UI | 8 | `SPM-31-checkout.md` |
+| SPM-32 | Hardening + Desktop Release Candidate | 5 | `SPM-32-hardening.md` |
 
-## 4. สิ่งที่ส่งมอบ
+## 3. สิ่งที่ส่งมอบ
 
-| สถานะ | รายการ | หลักฐาน/ข้อกำหนด |
-|---|---|---|
-| Delivered | REST API 9 กลุ่ม | products CRUD/cut, summary, export.csv, members CRUD/tiers, checkout (404/409/400 ถูกต้อง) |
-| Delivered | SPA 4 หน้า responsive | dashboard, products (ค้นหา/แก้ไข/ตัด/ลบ/CSV), members, checkout + ใบเสร็จ; 360/768/1280 ตรวจด้วย screenshot จริง |
-| Delivered | Reuse ไม่พังของเดิม | CLI + `test_app.py` 14 เคสยังเขียว; regression week-12 25 passed |
-| Delivered | คุณภาพ | `flake8` clean, `bandit` 0 issues, `node --check` ผ่าน |
-| Delivered | เอกสาร | `web-plan.md`, `web/README.md` (วิธีรัน + เดโม 2 นาที), รายงานฉบับนี้ + `sprint-report.html` |
-| ส่งมอบแล้ว | tag `v4.0.0-web` + `v4.0.1` | สร้าง annotated tag และ push ขึ้น remote แล้ว |
-
-รันเว็บ (จากรากรีโป): `PYTHONPATH=Phase5/Sprint5 uvicorn web.backend.main:app`
-แล้วเปิด http://127.0.0.1:8000/ (API docs ที่ `/docs`)
-
-## 5. หลักฐานทดสอบ
-
-| ชุดทดสอบ | ผล | ขอบเขต |
-|---|---|---|
-| `test_app.py` + `web/backend/test_web_api.py` | 20 passed | 14 CLI + 6 API (health/seed/CRUD/validation/summary/CSV/member/checkout/injection) |
-| `Phase4/Sprint4/week-12/test_app.py` | 25 passed | regression v2.0 ไม่แตก |
-
-- E2E บน server จริง: เพิ่มสินค้า → สมัคร Gold → checkout 1,000 → 900 →
-  โหลด CSV; ตัดเกินสต็อก/ราคาติดลบได้ error สวย
-- QA เจอบั๊กจริง: SQLite thread error ใต้ uvicorn → แก้ด้วย
-  `check_same_thread=False` (เทสต์ยังเขียวทั้งหมด)
-
-## 6. Jira และการติดตาม
-
-- Epic SPM-28 + stories SPM-29…SPM-32 (29 SP) Done ทั้งหมด
-  อยู่ใน Sprint 5 (ID 86) ซึ่งปิดแล้ว
-
-## 7. ภาคผนวก Evidence Index
-
-| หมวดหลักฐาน | เส้นทาง |
+| รายการ | ผล |
 |---|---|
-| แผนงาน | `Phase5/Sprint5/web-plan.md` |
-| โค้ดเว็บ | `Phase5/Sprint5/web/backend/`, `Phase5/Sprint5/web/frontend/` |
-| ชุดทดสอบ API | `Phase5/Sprint5/web/backend/test_web_api.py` |
-| หลักฐานราย story | `Phase5/Sprint5/SPM-29-foundation.md` … `SPM-32-hardening.md` |
-| รายงานฉบับเว็บ | `Phase5/Sprint5/sprint3-report.html` |
-| Domain ที่ reuse | `app.py`, `test_app.py` (รากรีโป) |
+| โปรแกรม Desktop | `program.py` รันแล้วเปิด GTK4 window |
+| Dashboard | จำนวนประเภทสินค้า มูลค่ารวม และ low-stock |
+| Products | เพิ่ม/แก้ไข/ค้นหา/ตัด/ลบ/Export CSV |
+| Members | CRUD + 4 tiers |
+| Checkout | ส่วนลดอัตโนมัติ + ใบเสร็จ |
+| Persistence | SQLite ผ่าน Repository เดิม |
+| Migration | ใช้ `migrate_json_to_sqlite` เดิม |
+| Compatibility | CLI เดิมใน `app.py` ยังใช้งานได้ |
+
+## 4. UX/UI ที่ปรับปรุง
+
+- Sidebar ระบุหน้าปัจจุบันด้วย active state
+- Header แสดงสถานะ SQLite และมีคำสั่งรีเฟรช
+- Form สินค้าและสมาชิกแสดงโหมดเพิ่ม/แก้ไขชัดเจน
+- Products/Members มี item count และ empty state
+- สถานะ stock ใช้ badge LOW/OK ที่สแกนด้วยสายตาได้เร็ว
+- การลบต้องยืนยันก่อนเพื่อป้องกันการกดพลาด
+- Success/error ใช้ status banner ไม่ขัดจังหวะ workflow ด้วย dialog ทุกครั้ง
+- Checkout แบ่งข้อมูลการขายกับใบเสร็จ พร้อมแสดงยอดสุทธิเด่น
+- Responsive 3 ระดับ: Desktop ≥980 px, Compact 760–979 px และ Narrow <760 px
+- Sidebar เมนูหลักกว้างประมาณ 1/3 ของหน้าต่างจริงและไม่ขยายกินพื้นที่เกินสัดส่วน; เมื่อหน้าต่างแคบ form/card จะลดจำนวนคอลัมน์ และ Checkout เปลี่ยนเป็นแนวตั้ง
+- ตารางสินค้า/สมาชิกใช้ horizontal scroll เพื่อรักษาความอ่านง่าย
+
+## 5. วิธีรัน
+
+Fedora:
+
+```bash
+sudo dnf install python3-gobject gtk4
+python3 program.py
+```
+
+โปรแกรมเปิดเป็นหน้าต่าง GUI ไม่ต้องเปิด browser และไม่ต้องรัน server
+
+## 6. หลักฐานทดสอบ
+
+| ชุด | ผล |
+|---|---|
+| `test_app.py` | 14 passed |
+| `test_program.py` | 7 passed |
+| **รวมชุดหลัก** | **21 passed** |
+| regression `Phase4/Sprint4/week-12/test_app.py` | 25 passed |
+| flake8 | 0 |
+| bandit | 0 |
+
+## 7. สถาปัตยกรรม
+
+```text
+GTK4 program.py
+   ├─ Dashboard / Products / Members / Checkout
+   └─ reuse app.py
+        ├─ InventoryRepository
+        ├─ MemberManager
+        ├─ CheckoutService
+        ├─ CsvReportExporter
+        └─ SQLiteDatabaseContext
+             └─ inventory.db
+```
+
+## 8. Jira และ traceability
+
+Epic SPM-28 และ stories SPM-29…SPM-32 คงสถานะ Done
+แต่แก้ Summary/Description จาก Web เป็น Desktop Program UI
+โดยไม่เปลี่ยน Story Point หรือ parent
+
+## 9. หลักฐาน
+
+- แผน: `program-plan.md`
+- โค้ด: `program.py`, `app.py`
+- ทดสอบ: `test_program.py`, `test_app.py`
+- ราย story: `SPM-29-foundation.md` … `SPM-32-hardening.md`
+- `web/` และ `web-plan.md`: historical implementation ที่ถูกแทนที่

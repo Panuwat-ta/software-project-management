@@ -24,11 +24,13 @@
 ├── Phase1/        # เริ่มโครงการ+วางฐาน (W1-4): week-1…4, proposal/, templates/
 ├── Phase2/        # ออกแบบ+ต้นทุนฐาน (W5-7): week-5…7
 ├── Phase3/        # ลงมือ+คุมเปลี่ยนแปลง (W8-11): week-8…11
-├── Phase4/        # UAT+ปล่อย v2.0 (W12): week-12, sprint1.*, app.py/test_app.py (v2.0)
-├── Phase5/        # วิวัฒนาการ (Sprint 2+3): sprint2.* / sprint3.*, SPM-23…32,
-│   #                app.py/test_app.py (v3.0), web/ + web-plan.md
+├── Phase4/        # UAT+ปล่อย v2.0 (W12 / Sprint 4): week-12, sprint4.*, app.py/test_app.py
+├── Phase5/        # Sprint 5: v3.0 + Desktop Program UI, SPM-23…32
+│   #                sprint2.* = v3.0, sprint3.* = Desktop Program
 ├── app.py         # โค้ดหลัก v3.0 (SQLite + Member + Checkout)
-├── test_app.py    # ชุดทดสอบ 14 เคส
+├── program.py     # โปรแกรม Desktop GTK4 (รันด้วย python3 program.py)
+├── test_app.py    # ชุดทดสอบ domain/CLI 14 เคส
+├── test_program.py# ชุดทดสอบ Desktop integration 7 เคส
 ├── doc/           # เอกสารเพิ่มเติม (app.md, test.md)
 ├── work/          # transcript บรรยายรายสัปดาห์
 ├── index.html     # พอร์ทัลเว็บหลัก (Phase 1-5)
@@ -69,12 +71,12 @@
 # ติดตั้งแพ็กเกจ
 pip install -r requirements.txt
 
-# รันชุดทดสอบทั้งหมด (CLI 14 + Web API 6 = 20 เคส)
+# รันชุดทดสอบทั้งหมด (CLI/domain 14 + Desktop integration 7 = 21 เคส)
 pytest
 
-# รันเว็บ (Backend FastAPI + Frontend แบบ responsive)
-PYTHONPATH=Phase5/Sprint5 uvicorn web.backend.main:app --reload
-# เปิด http://127.0.0.1:8000/  ·  API docs ที่ /docs
+# รันโปรแกรม Desktop UI
+# Fedora ต้องมี: sudo dnf install python3-gobject gtk4
+python3 program.py
 
 # สร้างหน้า HTML จากรายงาน Markdown (Phase/Sprint ทั้งหมด)
 python3 tools/build_reports.py
@@ -86,6 +88,6 @@ python3 tools/build_reports.py --check
 python3 Phase1/Sprint1/templates/verify_evidence_decks.py
 
 # ตรวจคุณภาพโค้ด
-flake8 app.py Phase5/Sprint5/web/backend/ tools/
-bandit -q -r app.py Phase5/Sprint5/web/backend/
+flake8 app.py program.py test_program.py tools/build_reports.py
+bandit -q -r app.py program.py
 ```
