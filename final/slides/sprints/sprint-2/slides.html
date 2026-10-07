@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="สไลด์สรุป Sprint 2 Phase 2 To-Be Architecture ISO quality และ Cost Baseline">
+<title>สไลด์ Sprint 2: ออกแบบและตั้งต้นทุนฐาน | SPM</title>
+<style>
+:root{--font:"Noto Sans Thai","Leelawadee UI",system-ui,sans-serif;--bg:#e7eeee;--paper:#fff;--ink:#122a38;--muted:#49616b;--accent:#0867a1;--line:#bfd0d4;--soft:#e8f3f8}
+*{box-sizing:border-box}
+body{margin:0;font-family:var(--font);color:var(--ink);background:var(--bg);min-height:100vh;display:grid;grid-template-rows:auto 1fr auto}
+a:focus-visible,button:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+.deck-header,.deck-controls{width:min(1440px,calc(100% - 48px));margin:auto;display:flex;align-items:center;justify-content:space-between;gap:18px;color:var(--muted);font-size:14px}
+.deck-header{padding:18px 0}.deck-controls{padding:18px 0}
+.back-link{color:var(--accent);font-weight:700;text-decoration:none}
+.deck-controls button{min-height:44px;padding:10px 16px;border:1px solid var(--line);background:var(--paper);color:var(--ink);font:700 15px var(--font);cursor:pointer}
+.deck-controls button:disabled{opacity:.35;cursor:default}.deck-controls button:hover:not(:disabled){background:var(--accent);border-color:var(--accent);color:#fff}
+.deck-frame{width:min(1440px,calc(100vw - 48px),calc((100vh - 132px) * 16 / 9));aspect-ratio:16/9;margin:auto;overflow:hidden;background:var(--paper);box-shadow:0 18px 46px rgb(18 42 56 / 18%)}
+.slide{display:none;height:100%;padding:3.5% 4.5%;align-content:center}
+.slide.active{display:grid}
+.slide h1{margin:0;letter-spacing:-.04em;line-height:1.08;font-size:clamp(36px,5vw,76px)}
+.slide h2{margin:0;letter-spacing:-.04em;line-height:1.08;font-size:clamp(24px,2.4vw,34px)}
+.slide-label{margin:0 0 20px;color:var(--accent);font-weight:800}
+.slide-lead{max-width:50ch;margin:10px 0 0;color:var(--muted);font-size:clamp(17px,1.8vw,26px);line-height:1.45}
+.cover-meta{margin:0;padding:14px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);color:var(--muted);line-height:1.7}
+.cover-layout,.content-layout{display:grid;grid-template-columns:1.12fr .88fr;gap:7%;align-items:center}
+.rule-list{margin:0;padding:0;list-style:none;border-top:1px solid var(--line)}
+.rule-list li{display:grid;grid-template-columns:32% 1fr;gap:18px;padding:10px 0;border-bottom:1px solid var(--line)}
+.rule-list strong{color:var(--accent)}
+table{width:100%;margin-top:16px;border-collapse:collapse;font-size:clamp(14px,1.45vw,21px)}
+th{padding:8px 14px;font-size:20px;background:var(--ink);color:#fff;text-align:left}
+td{padding:8px 14px;font-size:20px;border-bottom:1px solid var(--line)}
+tbody tr:nth-child(even){background:#f3f7f7}
+.metrics{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.metrics div{padding:14px 18px;border-right:1px solid var(--line)}
+.metrics div:last-child{border:0}
+.metrics b{display:block;font-size:clamp(26px,3.2vw,44px);letter-spacing:-.05em}
+.metrics span{display:block;margin-top:9px;color:var(--muted)}
+.next-steps{margin:0;padding-left:1.2em}
+.next-steps li{padding:8px 0;color:var(--muted);font-size:clamp(16px,1.6vw,24px)}
+@media (max-width:720px){.deck-header,.deck-controls{width:calc(100% - 32px);flex-wrap:wrap}.deck-frame{width:100%;aspect-ratio:auto;overflow:visible;box-shadow:none}.slide{height:auto;min-height:70vh}.cover-layout,.content-layout{grid-template-columns:1fr;gap:20px}.rule-list li{grid-template-columns:1fr;gap:4px}.metrics{grid-template-columns:1fr}th,td{padding:8px 10px}}
+@media print{@page{size:13.333in 7.5in;margin:0}.deck-header,.deck-controls{display:none}.deck-frame{width:13.333in;height:auto;aspect-ratio:auto;overflow:visible;box-shadow:none}.slide{display:grid;break-after:page;width:13.333in;height:7.5in;padding:.42in .60in}}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto !important}}
+</style>
+</head>
+<body>
+<header class="deck-header"><a class="back-link" href="../../../../Phase2/Sprint2/sprint2.html">← รายงาน Sprint 2</a><span id="slide-counter" aria-live="polite">1 / 8</span></header>
+<main class="deck-frame" aria-label="สไลด์สรุป Sprint 2">
+<section class="slide active" id="slide-1">
+<div class="cover-layout"><div><p class="slide-label">Sprint 2 · Phase 2 · W5–W7</p><h1>ออกแบบระบบ<br>และตั้งต้นทุนฐาน</h1><p class="slide-lead">รอบนี้ยังไม่เร่งเขียนฟีเจอร์ แต่ล็อก To-Be Architecture, Quality Gate และ Cost Baseline ก่อนลงมือจริง</p></div><p class="cover-meta">13 SP · SPM-11…SPM-14<br>Jira Sprint ID 82 · state: closed<br>ข้อมูลสมมติเพื่อการเรียน</p></div>
+</section>
+<section class="slide" id="slide-2">
+<h2>W5–W7 เปลี่ยนจากแนวคิดเป็นแผนที่ควบคุมได้</h2><p class="slide-lead">ที่มา: sprint2.md ส่วนงานรายสัปดาห์</p><table><thead><tr><th>สัปดาห์</th><th>งานหลัก</th><th>ผลลัพธ์</th></tr></thead><tbody><tr><td>W5</td><td>As-Is vs To-Be · ISO 25010 · Budget worksheet</td><td>เห็น gap ด้านคุณภาพและต้นทุน</td></tr><tr><td>W6</td><td>Communication · DoR/DoD · Architecture · Variance</td><td>ได้กติกาและแบบสถาปัตยกรรม</td></tr><tr><td>W7</td><td>Cost Baseline · Capacity · ISO 14598</td><td>ได้ฐานงบและ quality gate</td></tr></tbody></table>
+</section>
+<section class="slide" id="slide-3">
+<div class="content-layout"><div><h2>To-Be แยก 4 ชั้นเพื่อให้เปลี่ยน persistence ได้</h2><p class="slide-lead">แบบนี้ถูกนำไป implement จริงใน Sprint 5</p></div><ul class="rule-list"><li><strong>Presentation</strong><span>CLI / Web รับและแสดงผล ไม่ถือ SQL</span></li><li><strong>Service</strong><span>Checkout / Validation / Export เป็นงานเชิงธุรกิจ</span></li><li><strong>Repository</strong><span>ซ่อน CRUD / Summary และ parameterized SQL</span></li><li><strong>Database</strong><span>SQLite เก็บ products / members พร้อม transaction</span></li></ul></div>
+</section>
+<section class="slide" id="slide-4">
+<h2>ISO/IEC 25010 ชี้ 3 มิติที่ต้องแก้เชิงโครงสร้าง</h2><p class="slide-lead">ประเมิน As-Is ก่อนพัฒนา เพื่อให้การปรับมีเป้าหมายวัดได้</p><table><thead><tr><th>มิติ</th><th>สถานะ</th><th>แนวทาง</th></tr></thead><tbody><tr><td>Usability</td><td>ต้องปรับ</td><td>validator + เมนูชัดขึ้น</td></tr><tr><td>Reliability</td><td>ตก</td><td>atomic write → SQLite</td></tr><tr><td>Security</td><td>ตก</td><td>parameterized query 100%</td></tr><tr><td>Maintainability</td><td>ตก</td><td>แยกชั้น + OOP</td></tr></tbody></table>
+</section>
+<section class="slide" id="slide-5">
+<h2>Cost Baseline ที่อนุมัติคือ 18,823 บาท</h2><p class="slide-lead">ใช้ตัวเลข W7 เป็นฐานควบคุมงบ ไม่ปนกับ worksheet ชุด W5</p><div class="metrics"><div><b>15,000</b><span>ค่าแรง</span></div><div><b>1,000</b><span>Infrastructure</span></div><div><b>2,823</b><span>Reserve</span></div></div>
+</section>
+<section class="slide" id="slide-6">
+<div class="content-layout"><div><h2>Baseline มี threshold และ capacity ไม่ใช่แค่ยอดเงิน</h2><p class="slide-lead">ทีมต้องรู้ว่าเมื่อไรควรเตือนและเมื่อไรควรตัด scope</p></div><ul class="rule-list"><li><strong>Budget Threshold</strong><span>≤5% ปกติ · 5–10% เตือน · >10% วิกฤต</span></li><li><strong>Capacity</strong><span>3 คน × 6 ชม. × 2 สัปดาห์ = 36 man-hours</span></li><li><strong>Quality</strong><span>v(G) ≤ 8 · CBO ≤ 4 · DIT ≤ 2 · Coverage ≥ 85%</span></li><li><strong>DoR/DoD</strong><span>งานเข้า Sprint ต้องพร้อม และงานออกต้องผ่าน review/test/docs</span></li></ul></div>
+</section>
+<section class="slide" id="slide-7">
+<h2>ตัวอย่าง Cost Variance เตือนว่าการ migration มีต้นทุนแฝง</h2><p class="slide-lead">กรณี JSON → SQLite ในการวิเคราะห์ W6</p><table><thead><tr><th>ตัวแปร</th><th>ค่า</th><th>ผล</th></tr></thead><tbody><tr><td>PV</td><td>2,400 THB</td><td>งบตามแผน</td></tr><tr><td>EV</td><td>2,400 THB</td><td>งานเสร็จตาม DoD</td></tr><tr><td>AC</td><td>4,000 THB</td><td>ใช้จริงสูงกว่าแผน</td></tr><tr><td>CV</td><td>−1,600 THB</td><td>ต้องพิจารณา reserve / replan</td></tr></tbody></table>
+</section>
+<section class="slide" id="slide-8">
+<div class="cover-layout"><div><h2>Sprint 2 ทำให้การพัฒนารอบต่อไปมีกรอบตัดสินใจ</h2><p class="slide-lead">Architecture, quality และ cost ถูกเชื่อมเข้าด้วยกันก่อนรับงานเปลี่ยนแปลงจริง</p></div><ol class="next-steps"><li>รับ CR-01 ด้วย Impact Analysis</li><li>ติดตาม Burndown / EVM ด้วย Log Work จริง</li><li>วัด quality gate ในช่วง Hardening</li><li>รักษาฐานงบ 18,823 THB ให้เป็นแหล่งอ้างอิงเดียว</li></ol></div>
+</section>
+</main>
+<footer class="deck-controls"><button id="previous" type="button" aria-label="สไลด์ก่อนหน้า">← ก่อนหน้า</button><button id="next" type="button" aria-label="สไลด์ถัดไป">ถัดไป →</button></footer>
+<script>
+(function(){
+var slides=Array.prototype.slice.call(document.querySelectorAll(".slide"));
+var count=document.getElementById("slide-counter");
+var storageKey='spm-sprint-2-summary-slides';
+function slideFromHash(){var m=/#slide-(\d+)/.exec(window.location.hash||"");if(!m)return null;var i=parseInt(m[1],10)-1;return(i>=0&&i<slides.length)?i:null;}
+function storedSlide(){try{var v=window.localStorage.getItem(storageKey);if(v===null)return null;var i=parseInt(v,10);return(i>=0&&i<slides.length)?i:null;}catch(err){return null;}}
+function rememberSlide(i){try{window.localStorage.setItem(storageKey,String(i));}catch(err){}}
+var current=slideFromHash();if(current===null)current=storedSlide();if(current===null)current=0;
+function show(i){current=Math.min(Math.max(i,0),slides.length-1);slides.forEach(function(s,n){s.classList.toggle("active",n===current);});if(count)count.textContent=(current+1)+" / "+slides.length;previousBtn.disabled=current===0;nextBtn.disabled=current===slides.length-1;rememberSlide(current);try{window.history.replaceState(null,"","#slide-"+(current+1));}catch(err){}}
+function showFromHash(){var i=slideFromHash();if(i!==null)show(i);}
+var previousBtn=document.getElementById("previous");var nextBtn=document.getElementById("next");
+previousBtn.addEventListener("click",function(){show(current-1);});nextBtn.addEventListener("click",function(){show(current+1);});
+document.addEventListener("keydown",function(e){if(e.key==="ArrowRight"||e.key==="PageDown"||e.key===" "){e.preventDefault();show(current+1);}else if(e.key==="ArrowLeft"||e.key==="PageUp"){e.preventDefault();show(current-1);}else if(e.key==="Home"){e.preventDefault();show(0);}else if(e.key==="End"){e.preventDefault();show(slides.length-1);}});
+window.addEventListener("hashchange",showFromHash);show(current);
+})();
+</script>
+</body>
+</html>

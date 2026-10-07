@@ -1,0 +1,302 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>สไลด์สัปดาห์ที่ 12 | CLI Inventory Management</title>
+  <style>
+    :root {
+      --font: "Noto Sans Thai", "Leelawadee UI", system-ui, sans-serif;
+      --serif: "TH Sarabun New", "Angsana New", Georgia, serif;
+      --bg: #e7eeee;
+      --paper: #fff;
+      --ink: #122a38;
+      --muted: #49616b;
+      --accent: #0867a1;
+      --line: #bfd0d4;
+      --soft: #e8f3f8;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: var(--font);
+      color: var(--ink);
+      background: var(--bg);
+    }
+    a:focus-visible, button:focus-visible {
+      outline: 3px solid var(--accent);
+      outline-offset: 3px;
+    }
+    .back-link { color: var(--accent); font-weight: 700; text-decoration: none; }
+    .template-deck {
+      min-height: 100vh;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      background: var(--bg);
+    }
+    .deck-header, .deck-controls {
+      width: min(1440px, calc(100% - 48px));
+      margin: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+    .deck-header { padding: 18px 0; }
+    .deck-controls { padding: 18px 0; }
+    .deck-controls button {
+      min-height: 44px;
+      padding: 10px 16px;
+      border: 1px solid var(--line);
+      background: var(--paper);
+      color: var(--ink);
+      font: 700 15px var(--font);
+      cursor: pointer;
+    }
+    .deck-controls button:disabled { opacity: .35; cursor: default; }
+.deck-controls button:hover:not(:disabled) {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+    }
+    .deck-frame {
+      width: min(1440px, calc(100vw - 48px), calc((100vh - 132px) * 16 / 9));
+      aspect-ratio: 16/9;
+      margin: auto;
+      overflow: hidden;
+      background: var(--paper);
+      box-shadow: 0 18px 46px rgb(18 42 56 / 18%);
+    }
+    .slide {
+      display: none;
+      height: 100%;
+      padding: 3.5% 4.5%;
+      align-content: center;
+    }
+    .slide.active { display: grid; }
+    .slide h1, .slide h2 {
+      margin: 0;
+      letter-spacing: -.04em;
+      line-height: 1.08;
+    }
+    .slide h1 { font-size: clamp(36px, 5vw, 76px); }
+    .slide h2 { font-size: clamp(24px, 2.4vw, 34px); }
+    .slide-label {
+      margin: 0 0 20px;
+      color: var(--accent);
+      font-weight: 800;
+    }
+    .slide-lead {
+      max-width: 50ch;
+      margin: 10px 0 0;
+      color: var(--muted);
+      font-size: clamp(17px, 1.8vw, 26px);
+      line-height: 1.45;
+    }
+    .cover-layout, .content-layout {
+      display: grid;
+      grid-template-columns: 1.12fr .88fr;
+      gap: 7%;
+      align-items: center;
+    }
+    .cover-meta {
+      margin: 0;
+      padding: 14px 0;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      color: var(--muted);
+      line-height: 1.7;
+    }
+    .rule-list {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      border-top: 1px solid var(--line);
+    }
+    .rule-list li {
+      display: grid;
+      grid-template-columns: 32% 1fr;
+      gap: 18px;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--line);
+    }
+    .rule-list strong { color: var(--accent); }
+    table {
+      width: 100%;
+      margin-top: 16px;
+      border-collapse: collapse;
+      font-size: clamp(14px, 1.45vw, 21px);
+    }
+    th {
+      padding: 8px 14px;
+      background: var(--ink);
+      color: #fff;
+      text-align: left;
+    }
+    td {
+      padding: 8px 14px;
+      border-bottom: 1px solid var(--line);
+    }
+    tbody tr:nth-child(even) { background: #f3f7f7; }
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+    .metrics div { padding: 14px 18px; border-right: 1px solid var(--line); }
+    .metrics div:last-child { border: 0; }
+    .metrics b { display: block; font-size: clamp(26px, 3.2vw, 44px); letter-spacing: -.05em; }
+    .metrics span { display: block; margin-top: 9px; color: var(--muted); }
+    .next-steps { margin: 0; padding-left: 1.2em; }
+    .next-steps li {
+      padding: 8px 0;
+      color: var(--muted);
+      font-size: clamp(16px, 1.6vw, 24px);
+    }
+    .slide-label, .slide-lead, .cover-meta, .rule-list li, .next-steps li, .metrics span, table { font-size: clamp(24px, 1.6vw, 26px); }
+    @media (max-width: 720px) {
+      .deck-header, .deck-controls { width: calc(100% - 32px); flex-wrap: wrap; }
+      .deck-frame { width: 100%; aspect-ratio: auto; overflow: visible; box-shadow: none; }
+      .slide { height: auto; min-height: 70vh; }
+      .slide { padding: 6%; }
+      .cover-layout, .content-layout { grid-template-columns: 1fr; gap: 20px; }
+      .cover-meta { padding: 14px 0; }
+      .rule-list li { grid-template-columns: 1fr; gap: 4px; padding: 10px 0; }
+      .metrics { grid-template-columns: 1fr; }
+      .metrics div { padding: 12px 9px; border-right: 0; border-bottom: 1px solid var(--line); }
+      .metrics div:last-child { border-bottom: 0; }
+      th, td { padding: 8px 10px; }
+      .deck-controls button { padding: 8px 12px; }
+    }
+    @media print {
+      .template-deck { display: block; background: #fff; }
+      .deck-header, .deck-controls { display: none; }
+      .deck-frame { width: 100%; aspect-ratio: auto; overflow: visible; box-shadow: none; }
+      .slide { display: grid; break-after: page; height: auto; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      * { scroll-behavior: auto !important; }
+    }
+  </style>
+</head>
+<body class="template-deck">
+  <header class="deck-header">
+    <a class="back-link" href="index.html">← กลับเอกสารสัปดาห์ที่ 12</a>
+    <span id="slide-counter" aria-live="polite">1 / 9</span>
+  </header>
+  <main class="deck-frame" aria-label="สไลด์สัปดาห์ที่ 12">
+    <section class="slide active" id="slide-1">
+      <div class="cover-layout">
+        <div><p class="slide-label">สัปดาห์ที่ 12 · CLI Inventory Management</p><h1>ปิด UAT<br>สรุป EVM ปล่อยรีลีส</h1><p class="slide-lead">ชุดนี้ตอบว่าระบบพร้อมใช้งานจริงหรือไม่ เหลืออะไรค้าง</p></div>
+        <p class="cover-meta">Final EVM · Release Checklist<br>UAT Sign-off · CHANGELOG<br>ข้อมูลสมมติเพื่อการเรียน</p>
+      </div>
+    </section>
+    <section class="slide" id="slide-2">
+      <div class="content-layout"><div><h2>ปิดรีลีสตรงเวลาต้องแยกบั๊กออกจากงานงอก</h2><p class="slide-lead">รีลีส v2.0.0-evolution ต้องตรงเวลาในงบ แยกบั๊กกับงานงอก</p></div><ul class="rule-list"><li><strong>ปัญหา</strong><span>ปิดงานให้ตรงเวลา แยกบั๊กกับงานงอกก่อนปล่อย</span></li><li><strong>เป้าหมาย</strong><span>UAT ครบ เทสต์เขียว ผ่านเช็กลิสต์ 3 ด่าน</span></li><li><strong>ขอบเขต</strong><span>ในงาน SC01 SC02 SC03 EVM รีลีส งานใหม่ไปรอบหน้า</span></li></ul></div>
+    </section>
+    <section class="slide" id="slide-3">
+      <h2>SC01 กับ SC02 ครอบคลุมวงจรจริงตั้งแต่รับถึงขาย</h2>
+      <p class="slide-lead">ที่มา: UAT_Sign_Off_Sheet.md จำลองวงจรจริง End-to-End</p>
+      <table><thead><tr><th>ID</th><th>ขั้นตอน</th><th>เกณฑ์ผ่าน</th></tr></thead><tbody><tr><td>SC01 ผู้จัดการคลัง</td><td>รับ Milk (885) 10 ชิ้น ROP 5</td><td>บันทึกสำเร็จ ไร้ Crash</td></tr><tr><td>SC02 แคชเชียร์</td><td>ตัด 6 เหลือ 4 ต่ำกว่า ROP</td><td>ขึ้นเตือนสต็อกต่ำทันที</td></tr></tbody></table>
+    </section>
+    <section class="slide" id="slide-4">
+      <div class="content-layout"><div><h2>SC03 ยืนยัน CSV ได้ครบตามเกณฑ์ Excel</h2><p class="slide-lead">ที่มา: UAT_Sign_Off_Sheet.md</p></div><ul class="rule-list"><li><strong>SC03 จัดซื้อ</strong><span>ส่งออก CSV เปิดใน Excel คอลัมน์ Barcode ครบข้อมูลต่ำถูก</span></li><li><strong>แยกบั๊กกับงานใหม่</strong><span>ไม่เตือนทั้งที่ต่ำกว่า ROP คือบั๊กแก้ก่อน merge ขอฟีเจอร์เพิ่มไป v3.0</span></li><li><strong>ผลทางเทคนิค</strong><span>SC01–SC03 ผ่านตามเกณฑ์ บันทึกใน UAT_Sign_Off_Sheet.md</span></li></ul></div>
+    </section>
+    <section class="slide" id="slide-5">
+      <h2>ผ่าน 3 ด่านครบจึง merge ติดแท็กรีลีสได้</h2>
+      <p class="slide-lead">ที่มา: Release_Checklist.md ครบก่อน merge เข้า main</p>
+      <table><thead><tr><th>ด่าน</th><th>เงื่อนไข</th><th>หลักฐาน</th></tr></thead><tbody><tr><td>ด่าน 1 UAT ครบ</td><td>SC01-03 ครบ แยก defect กับ scope แล้ว</td><td>ผลใน UAT_Sign_Off_Sheet</td></tr><tr><td>ด่าน 2 เทสต์เขียวอนุมัติ</td><td>pytest 25 ผ่าน 100% PR develop ไป main</td><td>CI เขียว Tech Lead กด merge</td></tr><tr><td>ด่าน 3 merge tag log</td><td>tag v2.0.0-evolution CHANGELOG ครบ</td><td>main คือ Gold Master</td></tr></tbody></table>
+    </section>
+    <section class="slide" id="slide-6">
+      <h2>CHANGELOG บันทึกครบ 3 มิติซ่อมบำรุงแล้ว</h2>
+      <p class="slide-lead">ที่มา: CHANGELOG.md รุ่น 2.0.0-evolution วันที่ 2026-08-31</p>
+      <table><thead><tr><th>หมวด</th><th>เนื้อหา</th></tr></thead><tbody><tr><td>Added</td><td>Barcode Reorder Alert CSV Export เมนู 5</td></tr><tr><td>Changed</td><td>Repository Pattern สคีมา barcode reorder_point เมนูออก 5 ไป 6</td></tr><tr><td>Removed Fixed</td><td>ลบ global x แก้ BUG-101 รับคีย์สั้น n q p c ค่าเริ่มว่างกับ 5</td></tr><tr><td>corrective perfective preventive</td><td>แก้ BUG-101 เพิ่ม CR-01 CR-02 กันพังด้วยสถาปัตยกรรมใหม่</td></tr></tbody></table>
+    </section>
+    <section class="slide" id="slide-7">
+      <h2>EVM ปิดตรงเวลา SPI 1.00 สำรองเหลือ 898</h2>
+      <p class="slide-lead">ที่มา: Final_EVM.md [ข้อมูลจำลองเพื่อการศึกษา]</p>
+      <table><thead><tr><th>ตัวแปร</th><th>ค่า</th><th>ความหมาย</th></tr></thead><tbody><tr><td>PV กับ EV</td><td>15,525 กับ 15,525</td><td>SPI 1.00 ตรงเวลา 100%</td></tr><tr><td>AC</td><td>16,100</td><td>CPI 0.96 เกินงบ 3.7%</td></tr><tr><td>CV กับ SV</td><td>-575 กับ 0</td><td>ชดเชยด้วยสำรอง</td></tr><tr><td>สำรองคงเหลือ</td><td>2,823-1,350-575 = 898</td><td>ไม่ติดลบ ไม่ขอเพิ่ม</td></tr></tbody></table>
+    </section>
+    <section class="slide" id="slide-8">
+      <h2>เทสต์ 25 เคสผ่านครบ 100% ทั้ง 6 กลุ่ม</h2>
+      <p class="slide-lead">ที่มา: test_app.py 25 tests ผ่าน 100%</p>
+      <table><thead><tr><th>กลุ่ม</th><th>จำนวน</th><th>ขอบเขต</th></tr></thead><tbody><tr><td>baseline</td><td>5</td><td>คำนวณ ตัดสต็อก เพิ่มสินค้า</td></tr><tr><td>CR-01</td><td>4</td><td>barcode เริ่มว่าง round-trip CSV มี barcode</td></tr><tr><td>CR-02</td><td>6</td><td>reorder_point boundary alert header CSV ว่าง</td></tr><tr><td>BUG-101</td><td>4</td><td>คีย์สั้น ค่าเริ่ม โหลดไฟล์เก่า ชื่อว่าง</td></tr><tr><td>CLI</td><td>3</td><td>แสดงรายการ เมนูผิด ส่งออกไฟล์</td></tr><tr><td>integration</td><td>3</td><td>เซฟโหลดคงฟิลด์ ตัดแล้วเตือน atomic ไม่เหลือ tmp</td></tr></tbody></table>
+    </section>
+    <section class="slide" id="slide-9">
+      <div class="cover-layout"><div><h2>งานเทคนิคครบแล้วเหลือแท็กรีลีส</h2><p class="slide-lead">งานเทคนิคครบ แท็กรอปิดตามขั้น</p></div><ol class="next-steps"><li>ปิดผล UAT SC01 SC02 SC03 ลงเอกสาร</li><li>ผ่าน 3 ด่านแล้วค่อย merge ติดแท็กรีลีส</li><li>หนี้ค้าง E501 กับงานออกแบบยกไปรอบถัดไป</li></ol></div>
+    </section>
+  </main>
+  <footer class="deck-controls"><button id="previous" type="button" aria-label="สไลด์ก่อนหน้า">← ก่อนหน้า</button><button id="next" type="button" aria-label="สไลด์ถัดไป">ถัดไป →</button></footer>
+  <script>
+const slides = [...document.querySelectorAll(".slide")];
+const count = document.querySelector("#slide-counter");
+const storageKey = "spm-week-12-evidence";
+function slideFromHash() {
+  const match = /#slide-(\d+)/.exec(window.location.hash || "");
+  if (!match) return null;
+  const index = Number.parseInt(match[1], 10) - 1;
+  return Number.isInteger(index) && index >= 0 && index < slides.length ? index : null;
+}
+function storedSlide() {
+  try {
+    const value = window.localStorage.getItem(storageKey);
+    if (value === null) return null;
+    const index = Number.parseInt(value, 10);
+    return Number.isInteger(index) && index >= 0 && index < slides.length ? index : null;
+  } catch (error) {
+    return null;
+  }
+}
+function rememberSlide(index) {
+  try {
+    window.localStorage.setItem(storageKey, String(index));
+  } catch (error) {
+  }
+}
+let current = slideFromHash() ?? storedSlide() ?? 0;
+function show(index) {
+  current = Math.min(Math.max(index, 0), slides.length - 1);
+  slides.forEach((slide, position) => slide.classList.toggle("active", position === current));
+  count.textContent = `${current + 1} / ${slides.length}`;
+  previousBtn.disabled = current === 0;
+  nextBtn.disabled = current === slides.length - 1;
+  rememberSlide(current);
+  try {
+    window.history.replaceState(null, "", `#slide-${current + 1}`);
+  } catch (error) {
+  }
+}
+function showFromHash() {
+  const index = slideFromHash();
+  if (index !== null) show(index);
+}
+var previousBtn = document.querySelector("#previous");
+var nextBtn = document.querySelector("#next");
+previousBtn.addEventListener("click", () => show(current - 1));
+nextBtn.addEventListener("click", () => show(current + 1));
+document.addEventListener("keydown", (event) => {
+  if (event.key === "ArrowRight" || event.key === "PageDown" || event.key === " ") {
+    event.preventDefault();
+    show(current + 1);
+  }
+  if (event.key === "ArrowLeft" || event.key === "PageUp") {
+    event.preventDefault();
+    show(current - 1);
+  }
+  if (event.key === "Home") {
+    event.preventDefault();
+    show(0);
+  }
+  if (event.key === "End") {
+    event.preventDefault();
+    show(slides.length - 1);
+  }
+});
+window.addEventListener("hashchange", showFromHash);
+show(current);
+  </script>
+</body>
+</html>

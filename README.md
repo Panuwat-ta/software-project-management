@@ -21,47 +21,23 @@
 
 ```text
 .
-├── Phase1/                       # เอกสารนำเสนอและวางแผนโครงการระยะที่ 1 (Phase 1)
-│   ├── Integrated_Planning_Proposal.md # ข้อเสนอและแผนงานแบบบูรณาการ
-│   ├── Integrated_Planning_Proposal.pdf # ไฟล์ PDF ของข้อเสนอ
-│   └── presentation.html         # สไลด์นำเสนอโครงการ (HTML)
-├── doc/                          # เอกสารเพิ่มเติม
-│   ├── app.md                    # เอกสารอธิบายโครงสร้างและการทำงานของระบบคลังสินค้าใหม่ (v2.0)
-│   └── test.md                   # เอกสารอธิบายการทำงานของสคริปต์ Automated Test (PyTest)
-├── week-1/                       # สัปดาห์ที่ 1: ขั้นวางแผนและทบทวนโค้ดดั้งเดิม (Planning & Legacy Code Review)
-│   ├── Project-Charter.md        # กฎบัตรโครงการ ขอบเขตของงาน และการแบ่งบทบาทหน้าที่
-│   ├── app_v1.py                 # ซอร์สโค้ดเดิมที่เป็นแบบ Monolithic JSON-based
-│   ├── data.json                 # ไฟล์ตัวอย่างข้อมูลสินค้าในคลังสินค้าดั้งเดิม
-│   ├── doc.md                    # เอกสารสรุปการทำความเข้าใจโปรแกรมเดิม
-│   ├── scope.md                  # เอกสารสรุปขอบเขตโครงการและตารางประเมินความเสี่ยงเริ่มต้น
-│   └── trello.md                 # รายการงานและตารางคุมงานช่วงสัปดาห์ที่ 1
-├── week-2/                       # สัปดาห์ที่ 2: ขั้นออกแบบโครงสร้างและวางระบบใหม่ (Evolution & Refactoring Design)
-│   ├── DFD.md                    # Data Flow Diagram เปรียบเทียบระบบเดิมและระบบใหม่
-│   ├── Hotspot.md                # เอกสารระบุจุดเปราะบาง (Hotspots) ในโค้ดดั้งเดิม
-│   ├── Member-Discount.md        # เอกสารออกแบบระบบสมาชิกและส่วนลด (เพิ่มใหม่)
-│   ├── Static-Analysis.md        # รายงานการวิเคราะห์โค้ดเชิงสถิต (Static Code Analysis)
-│   ├── app_v1.py                 # ซอร์สโค้ดในส่วนของการทดสอบสัปดาห์ที่ 2
-│   ├── blueprint.md              # บลูปริ้นท์แสดงการออกแบบตาราง SQLite ระบบสมาชิก และแผน Refactor
-│   └── trello.md                 # รายละเอียดเงื่อนไขความสำเร็จงาน (DoD) และแผนการสร้างบอร์ด Trello
-├── week-3/                       # สัปดาห์ที่ 3: ลงมือพัฒนาโค้ดใหม่ (Implementation & Testing)
-│   ├── app_v2.py                 # ซอร์สโค้ดฉบับปรับปรุงตาม Blueprint (OOP, Input Validation, Atomic Save)
-│   ├── data.json                 # ฐานข้อมูล JSON ชั่วคราวของแอปพลิเคชัน
-│   ├── dod.md                    # Definition of Done (DoD) เกณฑ์พิจารณาความสำเร็จของงาน
-│   ├── raci.md                   # ตาราง RACI Matrix มอบหมายบทบาทหน้าที่ในการทำงาน
-│   ├── test.json                 # รายงานผลลัพธ์การทดสอบระบบอัตโนมัติ
-│   ├── test_app.py               # สคริปต์ Automated Test (Unittest)
-│   └── test_app1.py              # สคริปต์ Automated Test (PyTest) พร้อมระบบออกรีพอร์ต JSON
-├── week-4/                       # สัปดาห์ที่ 4: การทดสอบและการแก้ไขปรับปรุงโค้ด (Testing & Code Refinement)
-│   ├── app.py                    # ซอร์สโค้ดระบบที่มีการพัฒนาปรับปรุงล่าสุด
-│   ├── data.json                 # ฐานข้อมูล JSON ของแอปพลิเคชัน
-│   ├── test.json                 # รายงานผลลัพธ์การทดสอบระบบ
-│   ├── test_app.png              # รูปภาพหน้าจอหรือผลการทดสอบ
-│   └── test_app.py               # สคริปต์ Automated Test
-├── .gitignore                    # ไฟล์กำหนดรายการที่ไม่ต้องนำเข้า Git
-├── index.html                    # หน้าแรกของการนำเสนอโครงการ (เว็บ)
-├── work.md                       # บันทึกลิงก์สไลด์การบรรยายประจำสัปดาห์
-└── README.md                     # แนะนำโครงการและรายชื่อสมาชิกในทีม (ไฟล์ปัจจุบัน)
+├── Phase1/        # เริ่มโครงการ+วางฐาน (W1-4): week-1…4, proposal/, templates/
+├── Phase2/        # ออกแบบ+ต้นทุนฐาน (W5-7): week-5…7
+├── Phase3/        # ลงมือ+คุมเปลี่ยนแปลง (W8-11): week-8…11
+├── Phase4/        # UAT+ปล่อย v2.0 (W12 / Sprint 4): week-12, sprint4.*, app.py/test_app.py
+├── Phase5/        # Sprint 5: v3.0 + Desktop Program UI, SPM-23…32
+│   #                sprint2.* = v3.0, sprint3.* = Desktop Program
+├── app.py         # โค้ดหลัก v3.0 (SQLite + Member + Checkout)
+├── program.py     # โปรแกรม Desktop GTK4 (รันด้วย python3 program.py)
+├── test_app.py    # ชุดทดสอบ domain/CLI 14 เคส
+├── test_program.py# ชุดทดสอบ Desktop integration 7 เคส
+├── doc/           # เอกสารเพิ่มเติม (app.md, test.md)
+├── work/          # transcript บรรยายรายสัปดาห์
+├── index.html     # พอร์ทัลเว็บหลัก (Phase 1-5)
+└── README.md      # ไฟล์ปัจจุบัน
 ```
+
+แต่ละ Phase มี `README.md` + `phaseN-report.md` ของตัวเอง
 
 ---
 
@@ -86,3 +62,32 @@
    - เขียนสคริปต์ Unit Test เพื่อทดสอบตรรกะหลักของคลังสินค้า เช่น สูตรคำนวณมูลค่ารวมสินค้าคงคลัง และการจ่ายตัดสต็อก
    - เขียนสคริปต์ทดสอบการคำนวณส่วนลดสมาชิกในระดับ Tier ต่างๆ
    - เขียนสคริปต์ทดสอบระบบความปลอดภัยฐานข้อมูลจากการโจมตีประเภท SQL Injection
+
+---
+
+## คำสั่งที่ใช้บ่อย (Commands)
+
+```bash
+# ติดตั้งแพ็กเกจ
+pip install -r requirements.txt
+
+# รันชุดทดสอบทั้งหมด (CLI/domain 14 + Desktop integration 7 = 21 เคส)
+pytest
+
+# รันโปรแกรม Desktop UI
+# Fedora ต้องมี: sudo dnf install python3-gobject gtk4
+python3 program.py
+
+# สร้างหน้า HTML จากรายงาน Markdown (Phase/Sprint ทั้งหมด)
+python3 tools/build_reports.py
+
+# ตรวจว่า HTML ที่ commit ไว้ตรงกับ Markdown (ใช้ใน CI)
+python3 tools/build_reports.py --check
+
+# ตรวจสไลด์หลักฐานทุกสัปดาห์
+python3 Phase1/Sprint1/templates/verify_evidence_decks.py
+
+# ตรวจคุณภาพโค้ด
+flake8 app.py program.py test_program.py tools/build_reports.py
+bandit -q -r app.py program.py
+```

@@ -1,0 +1,340 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>สไลด์สัปดาห์ที่ 4 | CLI Inventory Management</title>
+  <style>
+    :root {
+      --font: "Noto Sans Thai", "Leelawadee UI", system-ui, sans-serif;
+      --serif: "TH Sarabun New", "Angsana New", Georgia, serif;
+      --bg: #e7eeee;
+      --paper: #fff;
+      --ink: #122a38;
+      --muted: #49616b;
+      --accent: #0867a1;
+      --line: #bfd0d4;
+      --soft: #e8f3f8;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: var(--font);
+      color: var(--ink);
+      background: var(--bg);
+      font-size: 24px;
+      line-height: 1.5;
+    }
+    a:focus-visible, button:focus-visible {
+      outline: 3px solid var(--accent);
+      outline-offset: 3px;
+    }
+    .back-link { color: var(--accent); font-weight: 700; text-decoration: none; }
+    .template-deck {
+      min-height: 100vh;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      background: var(--bg);
+    }
+    .deck-header, .deck-controls {
+      width: min(1440px, calc(100% - 48px));
+      margin: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      color: var(--muted);
+      font-size: 18px;
+    }
+    .deck-header { padding: 18px 0; }
+    .deck-controls { padding: 18px 0; }
+    .deck-controls button {
+      min-height: 44px;
+      padding: 10px 16px;
+      border: 1px solid var(--line);
+      background: var(--paper);
+      color: var(--ink);
+      font: 700 18px var(--font);
+      cursor: pointer;
+    }
+    .deck-controls button:disabled { opacity: .35; cursor: default; }
+.deck-controls button:hover:not(:disabled) {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+    }
+    .deck-frame {
+      width: min(1440px, calc(100vw - 48px), calc((100vh - 132px) * 16 / 9));
+      aspect-ratio: 16/9;
+      margin: auto;
+      overflow: hidden;
+      background: var(--paper);
+      box-shadow: 0 18px 46px rgb(18 42 56 / 18%);
+    }
+    .slide {
+      display: none;
+      height: 100%;
+      padding: 3.5% 4.5%;
+      align-content: center;
+      font-size: clamp(24px, 1.8vw, 28px);
+    }
+    .slide.active { display: grid; }
+    .slide h1, .slide h2 {
+      margin: 0;
+      letter-spacing: -.04em;
+      line-height: 1.08;
+    }
+    .slide h1 { font-size: clamp(36px, 5vw, 76px); }
+    .slide h2 { font-size: clamp(24px, 2.4vw, 34px); }
+    .slide-label {
+      margin: 0 0 20px;
+      color: var(--accent);
+      font-weight: 800;
+    }
+    .slide-lead {
+      max-width: 50ch;
+      margin: 10px 0 0;
+      color: var(--muted);
+      font-size: clamp(24px, 1.8vw, 26px);
+      line-height: 1.45;
+    }
+    .cover-layout, .content-layout {
+      display: grid;
+      grid-template-columns: 1.12fr .88fr;
+      gap: 7%;
+      align-items: center;
+    }
+    .cover-meta {
+      margin: 0;
+      padding: 14px 0;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      color: var(--muted);
+      line-height: 1.7;
+    }
+    .rule-list {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      border-top: 1px solid var(--line);
+    }
+    .rule-list li {
+      display: grid;
+      grid-template-columns: 32% 1fr;
+      gap: 18px;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--line);
+    }
+    .rule-list strong { color: var(--accent); }
+    table {
+      width: 100%;
+      margin-top: 16px;
+      border-collapse: collapse;
+      font-size: clamp(20px, 1.5vw, 24px);
+    }
+    th {
+      padding: 8px 14px;
+      background: var(--ink);
+      color: #fff;
+      text-align: left;
+    }
+    td {
+      padding: 8px 14px;
+      border-bottom: 1px solid var(--line);
+    }
+    tbody tr:nth-child(even) { background: #f3f7f7; }
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+    .metrics div { padding: 14px 18px; border-right: 1px solid var(--line); }
+    .metrics div:last-child { border: 0; }
+    .metrics b { display: block; font-size: clamp(26px, 3.2vw, 44px); letter-spacing: -.05em; }
+    .metrics span { display: block; margin-top: 9px; color: var(--muted); }
+    .next-steps { margin: 0; padding-left: 1.2em; }
+    .next-steps li {
+      padding: 8px 0;
+      color: var(--muted);
+      font-size: 24px;
+    }
+    @media (max-width: 720px) {
+      .deck-header, .deck-controls { width: calc(100% - 32px); flex-wrap: wrap; }
+      .deck-frame { width: 100%; aspect-ratio: auto; overflow: visible; box-shadow: none; }
+      .slide { height: auto; min-height: 70vh; padding: 6%; }
+      .cover-layout, .content-layout { grid-template-columns: 1fr; gap: 20px; }
+      .cover-meta { padding: 14px 0; }
+      .rule-list li { grid-template-columns: 1fr; gap: 4px; padding: 10px 0; }
+      .metrics { grid-template-columns: 1fr; }
+      .metrics div { padding: 12px 9px; border-right: 0; border-bottom: 1px solid var(--line); }
+      .metrics div:last-child { border-bottom: 0; }
+      th, td { padding: 8px 10px; }
+      .deck-controls button { padding: 8px 12px; }
+    }
+    @media print {
+      .template-deck { display: block; background: #fff; }
+      .deck-header, .deck-controls { display: none; }
+      .deck-frame { width: 100%; aspect-ratio: auto; overflow: visible; box-shadow: none; }
+      .slide { display: grid; break-after: page; height: auto; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      * { scroll-behavior: auto !important; }
+    }
+  </style>
+</head>
+<body class="template-deck" data-template="evidence">
+  <header class="deck-header">
+    <a class="back-link" href="index.html">← กลับเอกสารสัปดาห์ที่ 4</a>
+    <span id="slide-counter" aria-live="polite">1 / 5</span>
+  </header>
+  <main class="deck-frame" aria-label="สไลด์สัปดาห์ที่ 4">
+    <section class="slide active" id="slide-1">
+      <div class="cover-layout">
+        <div>
+          <p class="slide-label">สัปดาห์ที่ 4 · ทดสอบและปรับปรุงโค้ด</p>
+          <h1>ระบบคลัง v2.0 ผ่านทดสอบครบ 5 ข้อ</h1>
+          <p class="slide-lead">โค้ดรีแฟกเตอร์ยืนยันความถูกต้องด้วยชุดทดสอบอัตโนมัติ [ข้อมูลจำลองเพื่อการศึกษา]</p>
+        </div>
+        <p class="cover-meta">ผู้ทดสอบ: เอกพันธ์ (คิวเอ)<br>เอกสาร: app.py, test_app.py, test.json, pytest.yml, test_app.png</p>
+      </div>
+    </section>
+    <section class="slide" id="slide-2">
+      <div class="content-layout">
+        <div>
+          <h2>โค้ดใต้ทดสอบคือ app.py v2.0 รีแฟกเตอร์ครบ 3 คลาส</h2>
+          <p class="slide-lead">ที่มา: app.py แบนเนอร์ INVENTORY SYSTEM v2.0 และ doc/app.md หมวด 1 โครงสร้าง OOP</p>
+        </div>
+        <ul class="rule-list">
+          <li><strong>3 คลาส</strong><span>Product, InventoryManager, InventoryCLI จากสัปดาห์ที่ 3</span></li>
+          <li><strong>อ่านเขียน UTF-8</strong><span>รองรับสคีมาเก่า n q p c อัตโนมัติ</span></li>
+          <li><strong>validation</strong><span>กันค่าติดลบและตัดยอดเกินของที่มี</span></li>
+          <li><strong>บันทึก atomic</strong><span>เขียนไฟล์ .tmp แล้ว os.replace ทับตัวจริง</span></li>
+        </ul>
+      </div>
+    </section>
+    <section class="slide" id="slide-3">
+      <h2>5 เคสทดสอบคุมทางปกติและขอบเขตครบ</h2>
+      <p class="slide-lead">ที่มา: test_app.py — pytest กับ fixture ฐานข้อมูลชั่วคราว และ doc/test.md บทที่ 5 แนวทดสอบ [ข้อมูลจำลองเพื่อการศึกษา]</p>
+      <table>
+        <thead><tr><th>ประเด็น</th><th>หลักฐาน</th><th>สถานะ</th></tr></thead>
+        <tbody>
+          <tr><td>เพิ่มและอัปเดตสินค้า</td><td>test_add_or_update_product</td><td>ผ่าน</td></tr>
+          <tr><td>ตัดสต็อกปกติ</td><td>test_cut_stock_success</td><td>ผ่าน</td></tr>
+          <tr><td>ตัดสต็อกเกินคงเหลือ</td><td>test_cut_stock_not_enough</td><td>ผ่าน</td></tr>
+          <tr><td>สินค้าไม่มีในระบบ</td><td>test_cut_stock_not_found</td><td>ผ่าน</td></tr>
+          <tr><td>สรุปยอดและมูลค่า</td><td>test_calculate_inventory_summary</td><td>ผ่าน</td></tr>
+        </tbody>
+      </table>
+    </section>
+    <section class="slide" id="slide-4">
+      <div class="content-layout">
+        <div>
+          <h2>test.json ยืนยัน 5 passed ศูนย์ล้มเหลว</h2>
+          <p class="slide-lead">ที่มา: test.json — ผลรัน pytest ได้ 5 passed จากปลั๊กอิน JSONReportPlugin [ข้อมูลจำลองเพื่อการศึกษา]</p>
+        </div>
+        <div class="metrics">
+          <div><b>5</b><span>เคสทดสอบทั้งหมด</span></div>
+          <div><b>5</b><span>ผ่านทั้งหมด (5 passed)</span></div>
+          <div><b>0</b><span>ล้มเหลวและ error</span></div>
+        </div>
+      </div>
+    </section>
+    <section class="slide" id="slide-5">
+      <div class="content-layout">
+        <div>
+          <h2>สาย CI รัน pytest อัตโนมัติพร้อมภาพหลักฐาน</h2>
+          <p class="slide-lead">ที่มา: .github/workflows/pytest.yml และ test_app.png</p>
+        </div>
+        <ul class="rule-list">
+          <li><strong>CI</strong><span>เวิร์กโฟลว์ pytest.yml รันบน ubuntu Python 3.11</span></li>
+          <li><strong>ขั้นตอน</strong><span>checkout ติดตั้ง dependencies แล้วสั่ง pytest</span></li>
+          <li><strong>ภาพหลักฐาน</strong><span>test_app.png จับผลรันสีเขียวเก็บไว้ตรวจย้อน</span></li>
+        </ul>
+      </div>
+    </section>
+    <section class="slide" id="slide-6">
+      <div class="cover-layout">
+        <div>
+          <h2>โค้ด v2.0 เสถียรพร้อมรับงานเปลี่ยนแปลง</h2>
+          <p class="slide-lead">โค้ด v2.0 เสถียรพร้อมรับงานเปลี่ยนแปลง [ข้อมูลจำลองเพื่อการศึกษา]</p>
+        </div>
+        <ol class="next-steps">
+          <li>ยืนยันโค้ดรีแฟกเตอร์เสถียรพร้อมรับงานถัดไป</li>
+          <li>ใช้ test.json เป็นหลักฐานเกณฑ์งานเสร็จและต่อสาย CI</li>
+          <li>เฝ้าระวังโครงสร้างข้อมูลเก่าก่อนย้ายฐานข้อมูล</li>
+        </ol>
+      </div>
+    </section>
+  </main>
+  <footer class="deck-controls"><button id="previous" type="button" aria-label="สไลด์ก่อนหน้า">← ก่อนหน้า</button><button id="next" type="button" aria-label="สไลด์ถัดไป">ถัดไป →</button></footer>
+  <script>
+const slides = [...document.querySelectorAll(".slide")];
+const count = document.querySelector("#slide-counter");
+const storageKey = "spm-week-4-evidence";
+function slideFromHash() {
+  const match = /#slide-(\d+)/.exec(window.location.hash || "");
+  if (!match) return null;
+  const index = Number.parseInt(match[1], 10) - 1;
+  return Number.isInteger(index) && index >= 0 && index < slides.length ? index : null;
+}
+function storedSlide() {
+  try {
+    const value = window.localStorage.getItem(storageKey);
+    if (value === null) return null;
+    const index = Number.parseInt(value, 10);
+    return Number.isInteger(index) && index >= 0 && index < slides.length ? index : null;
+  } catch (error) {
+    return null;
+  }
+}
+function rememberSlide(index) {
+  try {
+    window.localStorage.setItem(storageKey, String(index));
+  } catch (error) {
+  }
+}
+let current = slideFromHash() ?? storedSlide() ?? 0;
+function show(index) {
+  current = Math.min(Math.max(index, 0), slides.length - 1);
+  slides.forEach((slide, position) => slide.classList.toggle("active", position === current));
+  count.textContent = `${current + 1} / ${slides.length}`;
+  previousBtn.disabled = current === 0;
+  nextBtn.disabled = current === slides.length - 1;
+  rememberSlide(current);
+  try {
+    window.history.replaceState(null, "", `#slide-${current + 1}`);
+  } catch (error) {
+  }
+}
+function showFromHash() {
+  const index = slideFromHash();
+  if (index !== null) show(index);
+}
+var previousBtn = document.querySelector("#previous");
+var nextBtn = document.querySelector("#next");
+previousBtn.addEventListener("click", () => show(current - 1));
+nextBtn.addEventListener("click", () => show(current + 1));
+document.addEventListener("keydown", (event) => {
+  if (event.key === "ArrowRight" || event.key === "PageDown" || event.key === " ") {
+    event.preventDefault();
+    show(current + 1);
+  }
+  if (event.key === "ArrowLeft" || event.key === "PageUp") {
+    event.preventDefault();
+    show(current - 1);
+  }
+  if (event.key === "Home") {
+    event.preventDefault();
+    show(0);
+  }
+  if (event.key === "End") {
+    event.preventDefault();
+    show(slides.length - 1);
+  }
+});
+window.addEventListener("hashchange", showFromHash);
+show(current);
+  </script>
+</body>
+</html>

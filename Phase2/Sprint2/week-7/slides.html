@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>สไลด์สัปดาห์ที่ 7 | CLI Inventory Management</title>
+  <style>
+    :root {
+      --font: "Noto Sans Thai", "Leelawadee UI", system-ui, sans-serif;
+      --serif: "TH Sarabun New", "Angsana New", Georgia, serif;
+      --bg: #e7eeee;
+      --paper: #fff;
+      --ink: #122a38;
+      --muted: #49616b;
+      --accent: #0867a1;
+      --line: #bfd0d4;
+      --soft: #e8f3f8;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: var(--font);
+      color: var(--ink);
+      background: var(--bg);
+      font-size: 24px;
+      line-height: 1.5;
+    }
+    a:focus-visible, button:focus-visible {
+      outline: 3px solid var(--accent);
+      outline-offset: 3px;
+    }
+    .back-link { color: var(--accent); font-weight: 700; text-decoration: none; }
+    .template-deck {
+      min-height: 100vh;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      background: var(--bg);
+    }
+    .deck-header, .deck-controls {
+      width: min(1440px, calc(100% - 48px));
+      margin: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      color: var(--muted);
+      font-size: 18px;
+    }
+    .deck-header { padding: 18px 0; }
+    .deck-controls { padding: 18px 0; }
+    .deck-controls button {
+      min-height: 44px;
+      padding: 10px 16px;
+      border: 1px solid var(--line);
+      background: var(--paper);
+      color: var(--ink);
+      font: 700 18px var(--font);
+      cursor: pointer;
+    }
+    .deck-controls button:disabled { opacity: .35; cursor: default; }
+.deck-controls button:hover:not(:disabled) {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+    }
+    .deck-frame {
+      width: min(1440px, calc(100vw - 48px), calc((100vh - 132px) * 16 / 9));
+      aspect-ratio: 16/9;
+      margin: auto;
+      overflow: hidden;
+      background: var(--paper);
+      box-shadow: 0 18px 46px rgb(18 42 56 / 18%);
+    }
+    .slide {
+      display: none;
+      height: 100%;
+      padding: 3.5% 4.5%;
+      align-content: center;
+      font-size: clamp(24px, 1.8vw, 28px);
+    }
+    .slide.active { display: grid; }
+    .slide h1, .slide h2 {
+      margin: 0;
+      letter-spacing: -.04em;
+      line-height: 1.08;
+    }
+    .slide h1 { font-size: clamp(36px, 5vw, 76px); }
+    .slide h2 { font-size: clamp(24px, 2.4vw, 34px); }
+    .slide-label {
+      margin: 0 0 20px;
+      color: var(--accent);
+      font-weight: 800;
+    }
+    .slide-lead {
+      max-width: 50ch;
+      margin: 10px 0 0;
+      color: var(--muted);
+      font-size: clamp(24px, 1.8vw, 26px);
+      line-height: 1.45;
+    }
+    .cover-layout, .content-layout {
+      display: grid;
+      grid-template-columns: 1.12fr .88fr;
+      gap: 7%;
+      align-items: center;
+    }
+    .cover-meta {
+      margin: 0;
+      padding: 14px 0;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      color: var(--muted);
+      line-height: 1.7;
+    }
+    .rule-list {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      border-top: 1px solid var(--line);
+    }
+    .rule-list li {
+      display: grid;
+      grid-template-columns: 32% 1fr;
+      gap: 18px;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--line);
+    }
+    .rule-list strong { color: var(--accent); }
+    table {
+      width: 100%;
+      margin-top: 16px;
+      border-collapse: collapse;
+      font-size: clamp(20px, 1.5vw, 24px);
+    }
+    th {
+      padding: 8px 14px;
+      background: var(--ink);
+      color: #fff;
+      text-align: left;
+    }
+    td {
+      padding: 8px 14px;
+      border-bottom: 1px solid var(--line);
+    }
+    tbody tr:nth-child(even) { background: #f3f7f7; }
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+    .metrics div { padding: 14px 18px; border-right: 1px solid var(--line); }
+    .metrics div:last-child { border: 0; }
+    .metrics b { display: block; font-size: clamp(26px, 3.2vw, 44px); letter-spacing: -.05em; }
+    .metrics span { display: block; margin-top: 9px; color: var(--muted); }
+    .next-steps { margin: 0; padding-left: 1.2em; }
+    .next-steps li {
+      padding: 8px 0;
+      color: var(--muted);
+      font-size: 24px;
+    }
+    @media (max-width: 720px) {
+      .deck-header, .deck-controls { width: calc(100% - 32px); flex-wrap: wrap; }
+      .deck-frame { width: 100%; aspect-ratio: auto; overflow: visible; box-shadow: none; }
+      .slide { height: auto; min-height: 70vh; padding: 6%; }
+      .cover-layout, .content-layout { grid-template-columns: 1fr; gap: 20px; }
+      .cover-meta { padding: 14px 0; }
+      .rule-list li { grid-template-columns: 1fr; gap: 4px; padding: 10px 0; }
+      .metrics { grid-template-columns: 1fr; }
+      .metrics div { padding: 12px 9px; border-right: 0; border-bottom: 1px solid var(--line); }
+      .metrics div:last-child { border-bottom: 0; }
+      th, td { padding: 8px 10px; }
+      .deck-controls button { padding: 8px 12px; }
+    }
+    @media print {
+      .template-deck { display: block; background: #fff; }
+      .deck-header, .deck-controls { display: none; }
+      .deck-frame { width: 100%; aspect-ratio: auto; overflow: visible; box-shadow: none; }
+      .slide { display: grid; break-after: page; height: auto; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      * { scroll-behavior: auto !important; }
+    }
+  </style></head>
+<body class="template-deck" data-template="evidence">
+  <header class="deck-header">
+    <a class="back-link" href="index.html">← กลับเอกสารสัปดาห์ที่ 7</a>
+    <span id="slide-counter" aria-live="polite">1 / 7</span>
+  </header>
+  <main class="deck-frame" aria-label="สไลด์สัปดาห์ที่ 7">
+<section class="slide active" id="slide-1">
+<div class="cover-layout"><div><p class="slide-label">สัปดาห์ที่ 7 · งบฐานและคุณภาพ</p><h1>งบฐานชัด คุณภาพวัดได้</h1><p class="slide-lead">งบฐาน 18,823 บาท สำรอง 2,823 บาท เกณฑ์เฝ้าระวัง 3 ระดับ ความจุ 36 ชั่วโมง [ข้อมูลจำลองเพื่อการศึกษา]</p></div><p class="cover-meta">เอกสาร: Cost_Baseline_and_Sprint_Plan.md<br>ISO_14598_Quality_Report.md<br>งบฐานอนุมัติ: 18,823 บาท</p></div>
+</section>
+<section class="slide" id="slide-2">
+<h2>งบฐาน 18,823 บาทรวมแรงงาน สำรอง และโครงสร้างพื้นฐานครบ</h2>
+<p class="slide-lead">ที่มา: Cost_Baseline_and_Sprint_Plan.md [ข้อมูลจำลองเพื่อการศึกษา]</p>
+<table><thead><tr><th>หมวดต้นทุน</th><th>สัดส่วน</th><th>ยอด บาท</th></tr></thead><tbody><tr><td>แรงงานทางตรง refactor ทดสอบ</td><td>80%</td><td>15,000</td></tr><tr><td>โครงสร้างพื้นฐาน cloud services</td><td>5%</td><td>1,000</td></tr><tr><td>รวมต้นทุนทางตรง</td><td>85%</td><td>16,000</td></tr><tr><td>สำรองฉุกเฉินกันโค้ดพัง 15%</td><td>15%</td><td>2,823</td></tr><tr><td>รวมงบฐานอนุมัติ 100%</td><td>100%</td><td>18,823</td></tr></tbody></table>
+</section>
+<section class="slide" id="slide-3">
+<h2>เกินงบ 5% เตือน เกิน 10% ต้องตัด scope ทันที</h2>
+<p class="slide-lead">ที่มา: Cost_Baseline_and_Sprint_Plan.md เฝ้าด้วย EVM กันงบบานจากแก้บั๊ก [ข้อมูลจำลองเพื่อการศึกษา]</p>
+<table><thead><tr><th>ระดับ</th><th>ผลต่างงบ</th><th>สิ่งที่ทำ</th></tr></thead><tbody><tr><td>ปกติ</td><td>0 ถึง 5%</td><td>ทำตามแผนต่อ</td></tr><tr><td>แจ้งเตือน</td><td>เกิน 5 ถึง 10%</td><td>PM ประชุมทีมลดเวลาแก้บั๊ก</td></tr><tr><td>วิกฤต</td><td>เกิน 10%</td><td>ตัด scope พัก Platinum หรือดึงสำรอง</td></tr></tbody></table>
+</section>
+<section class="slide" id="slide-4">
+<div class="content-layout"><div><h2>ทีม 3 คนทำได้ 36 man-hours จึงห้ามดึงงานเกินนี้</h2><p class="slide-lead">ที่มา: Cost_Baseline_and_Sprint_Plan.md — 3 คน คูณ 6 ชม. คูณ 2 สัปดาห์</p></div><div class="metrics"><div><b>3</b><span>คน PM QA Tech Lead</span></div><div><b>6</b><span>ชม. ต่อคน ต่อสัปดาห์</span></div><div><b>36</b><span>man-hours รวม Sprint 1</span></div></div></div>
+</section>
+<section class="slide" id="slide-5">
+<h2>ISO 14598 ชี้ว่าโค้ดเดิมต้องรื้อให้ผ่าน 5 เป้า</h2>
+<p class="slide-lead">ที่มา: ISO_14598_Quality_Report.md เทียบ app_v1 กับ app ใหม่ [ข้อมูลจำลองเพื่อการศึกษา]</p>
+<table><thead><tr><th>ตัวชี้วัด</th><th>ของเดิม app_v1</th><th>เป้าหมาย</th></tr></thead><tbody><tr><td>ความซับซ้อน v(G)</td><td>if ซ้อนเกิน 20 จุดใน main</td><td>แยกฟังก์ชัน ไม่เกิน 8</td></tr><tr><td>ดักข้อมูลผิด</td><td>กรอกตัวอักษรแล้วล่ม</td><td>ดัก try-except ทุกจุดรับค่า</td></tr><tr><td>global state</td><td>ใช้ global x ทุกฟังก์ชัน</td><td>เลิก 100% ใช้ class แทน</td></tr><tr><td>coverage QA</td><td>0% ไม่มีเทสต์</td><td>test_app ไม่ต่ำกว่า 85%</td></tr><tr><td>กัน injection</td><td>ยังใช้ JSON</td><td>query แบบ parameter 100%</td></tr></tbody></table>
+</section>
+<section class="slide" id="slide-6">
+<div class="content-layout"><div><h2>CI 3 ด่านสกัดโค้ดพังก่อนขอรีวิวได้</h2><p class="slide-lead">ที่มา: ISO_14598_Quality_Report.md — ทุก PR ต้องผ่านด่านอัตโนมัติ</p></div><ul class="rule-list"><li><strong>ล็อกเครื่องมือ</strong><span>โหลด requirements ที่ล็อกเวอร์ชัน pytest 8.0.2</span></li><li><strong>รันเทสต์ QA</strong><span>รัน test_app อัตโนมัติทุก Pull Request</span></li><li><strong>ล็อก Merge</strong><span>เทสต์ไม่ผ่านรวมโค้ดไม่ได้ Tech Lead ไม่ต้องรีวิวของพัง</span></li></ul></div>
+</section>
+<section class="slide" id="slide-7">
+<div class="cover-layout"><div><h2>คุมงบด้วย EVM และคุณภาพด้วย CI แล้วเริ่ม Sprint 1 ได้</h2><p class="slide-lead">ใช้งบฐานคุม EVM ตรวจคุณภาพผ่าน CI [ข้อมูลจำลองเพื่อการศึกษา]</p></div><ol class="next-steps"><li>ผลต่างเกิน 5% เตือน เกิน 10% ตัด scope หรือดึงสำรอง 2,823</li><li>ดึงงานเข้า Sprint 1 รวมห้ามเกิน 36 man-hours</li><li>ทุก PR ผ่าน CI ก่อนขอ Tech Lead รีวิว</li></ol></div>
+</section>
+</main>
+  <footer class="deck-controls"><button id="previous" type="button" aria-label="สไลด์ก่อนหน้า">← ก่อนหน้า</button><button id="next" type="button" aria-label="สไลด์ถัดไป">ถัดไป →</button></footer>
+  <script>
+
+const slides = [...document.querySelectorAll(".slide")];
+const count = document.querySelector("#slide-counter");
+const storageKey = "spm-week-7-evidence";
+function slideFromHash() {
+  const match = /#slide-(\d+)/.exec(window.location.hash || "");
+  if (!match) return null;
+  const index = Number.parseInt(match[1], 10) - 1;
+  return Number.isInteger(index) && index >= 0 && index < slides.length ? index : null;
+}
+function storedSlide() {
+  try {
+    const value = window.localStorage.getItem(storageKey);
+    if (value === null) return null;
+    const index = Number.parseInt(value, 10);
+    return Number.isInteger(index) && index >= 0 && index < slides.length ? index : null;
+  } catch (error) {
+    return null;
+  }
+}
+function rememberSlide(index) {
+  try {
+    window.localStorage.setItem(storageKey, String(index));
+  } catch (error) {
+  }
+}
+let current = slideFromHash() ?? storedSlide() ?? 0;
+function show(index) {
+  current = Math.min(Math.max(index, 0), slides.length - 1);
+  slides.forEach((slide, position) => slide.classList.toggle("active", position === current));
+  count.textContent = `${current + 1} / ${slides.length}`;
+  previousBtn.disabled = current === 0;
+  nextBtn.disabled = current === slides.length - 1;
+  rememberSlide(current);
+  try {
+    window.history.replaceState(null, "", `#slide-${current + 1}`);
+  } catch (error) {
+  }
+}
+function showFromHash() {
+  const index = slideFromHash();
+  if (index !== null) show(index);
+}
+var previousBtn = document.querySelector("#previous");
+var nextBtn = document.querySelector("#next");
+previousBtn.addEventListener("click", () => show(current - 1));
+nextBtn.addEventListener("click", () => show(current + 1));
+document.addEventListener("keydown", (event) => {
+  if (event.key === "ArrowRight" || event.key === "PageDown" || event.key === " ") {
+    event.preventDefault();
+    show(current + 1);
+  }
+  if (event.key === "ArrowLeft" || event.key === "PageUp") {
+    event.preventDefault();
+    show(current - 1);
+  }
+  if (event.key === "Home") {
+    event.preventDefault();
+    show(0);
+  }
+  if (event.key === "End") {
+    event.preventDefault();
+    show(slides.length - 1);
+  }
+});
+window.addEventListener("hashchange", showFromHash);
+show(current);
+  
+  </script>
+</body>
+</html>

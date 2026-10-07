@@ -1,0 +1,269 @@
+WEEK 15: FINAL DEFENSE & FORMAL CLOSURE
+ENGSE202: Final Defense & Closure
+“การสังเคราะห์ผลสัมฤทธิ์โครงการตลอด 15 สัปดาห์ การประเมินผลต่างทางการเงิน EVM การถอดบทเรียนองค์กร และการปิดโครงการตามกรอบ PMBOK Guide”
+Academic Framework: PMBOK Guide 7th Edition - Project Close-out & Governance
+ENGSE202: SOFTWARE PROJECT MANAGEMENT WEEK 15 GRAND FINALE
+
+1. Final Defense
+นำเสนอสรุปผลการดำเนินโครงการต่อหน้าคณะกรรมการอย่างมืออาชีพภายในเวลา 20 นาที
+2. KPIs Scorecard
+สังเคราะห์และแสดงผลสัมฤทธิ์ของตัวชี้วัดโครงการครบทั้ง 4 มิติ (Schedule, Cost, Quality, Stakeholder)
+3. Strategic Lessons
+นำเสนอการถอดบทเรียนโครงการเชิงกลยุทธ์ (Lessons Learned Defense) เพื่อถ่ายทอดองค์ความรู้แก่องค์กร
+4. Official Adjournment
+ดำเนินพิธีปิดโครงการอย่างเป็นทางการ ปรับบอร์ด Jira เป็น ARCHIVED และสลายทีมตาม RACI
+WEEKLY COURSE OBJECTIVES ENGSE202
+เป้าหมายการเรียนรู้สัปดาห์ 15
+
+Phase 1 & Phase 2 (W1-W7)
+Phase 3 & Phase 4 (W8-W15)
+W1-W4: ก่อตั้งทีม, สร้าง Project Charter, แตก WBS, และวิเคราะห์ความเสี่ยงบน Risk Matrix
+W5-W7: คำนวณงบประมาณ Cost Baseline, วางกติกา RACI/DoD, ผูกท่อ Jira Automation และผ่านด่าน Phase 2 Gate
+W8-W12: ขับเคลื่อน 3 Sprints, คุม Burndown, บริหาร CCB สกัดกั้น Scope Creep และผ่านด่าน UAT
+W13-W15: สรุป KPI Scorecard, วิเคราะห์ ROI +63.9%, ตรวจรับรองความพร้อม และปิดโครงการอย่างสมบูรณ์
+THE PROJECT MANAGER JOURNEY เส้นทางผู้บริหารโครงการ 15 สัปดาห์
+เส้นทางผู้บริหารโครงการ 15 สัปดาห์
+
+PROJECT GOVERNANCE GATEWAY กระบวนการปิดโครงการตาม PMBOK
+กระบวนการปิดโครงการตาม PMBOK
+1. Administrative Closure: รวบรวมเอกสาร รายงานผลงาน และจัดเก็บเข้าสู่คลัง Archives
+2. Financial Closure: เคลียร์บัญชีต้นทุนจริง กระทบยอดจัดซื้อ และส่งคืนเงินสำรอง
+3. Team Release: ประเมิน Peer Review และปลดประจำการทีมตามตาราง RACI
+
+Charter Verification
+OPAs Archiving Protocol
+รวบรวมเอกสารทุกชิ้น (Charter, WBS, SCM Plan, UAT Sign-off Sheet) บรรจุลงในโฟลเดอร์ project_archives/ เพื่อใช้เป็นหลักฐานการประเมินผลการเรียนรู้ของรายวิชา
+ตรวจสอบว่าข้อกำหนดและเป้าหมายทั้งหมดใน Project Charter ได้รับการส่งมอบครบถ้วน 100%
+ยืนยันความสมบูรณ์ของชิ้นงาน WBS และคู่มือผู้ปฏิบัติการ
+จัดทำรายงาน Final Project Closure Report ฉบับสมบูรณ์
+CLOSE-OUT DIMENSION 1 มิติที่ 1: การปิดโครงการเชิงบริหาร
+มิติที่ 1: การปิดโครงการเชิงบริหาร
+
+Settlement Summary
+Reserve Return Settlement
+จากงบสำรองตั้งต้น 2,025 บาท เบิกจ่ายจริง 1,925 บาท (CR-02 + ค่าแรงส่วนเกิน)
+ส่งคืนเงินสำรองคงเหลือสุทธิ 100 บาท ให้แก่ Sponsor 🟢
+ตรวจสอบตัวเลขต้นทุนจริงรวมสุทธิ (AC = 16,100 บาท)
+กระทบยอดจัดซื้อจัดจ้างเครื่องมือจริง 780 บาท (ประหยัดงบได้ 20 บาท)
+ไม่มีภาระผูกพันหนี้สินคงค้างกับผู้ให้บริการภายนอก (Zero Debt)
+CLOSE-OUT DIMENSION 2 มิติที่ 2: การปิดโครงการเชิงการเงิน
+มิติที่ 2: การปิดโครงการเชิงการเงิน
+
+RACI Matrix Dissolution
+360-Degree Peer Evaluation
+สมาชิกทุกคนทำแบบประเมิน Peer Review ให้คะแนนการทำงานร่วมกัน ความตรงต่อเวลา และการมีส่วนร่วม พร้อมร่วมเฉลิมฉลองความสำเร็จของทีม (Celebrating Team Success)
+สลายโครงสร้างความรับผิดชอบตามตาราง RACI Matrix อย่างเป็นทางการ
+ปลดปล่อยสมาชิกในทีมสู่การปฏิบัติงานโครงการถัดไป (Team Reallocation)
+จัดทำประวัติผลงานรายบุคคลเพื่อเป็นบันทึกทางวิชาการ
+CLOSE-OUT DIMENSION 3 มิติที่ 3: การปลดประจำการทีมตาม RACI
+มิติที่ 3: การปลดประจำการทีมตาม RACI
+
+1. Schedule
+SPI = 1.00 ส่งมอบงานตรงตามกำหนดเวลา 100% ครบทั้ง 3 Sprints
+2. Cost
+CPI = 0.96 ควบคุมงบประมาณในกรอบเงินสำรอง พร้อมส่งคืนเงิน 100 บาท
+3. Quality
+Coverage 94%, Complexity ลดเหลือ 6, และ Zero Production Defects
+4. Stakeholder
+ผ่าน UAT Sign-off 100% และสร้างผลตอบแทนความคุ้มค่า ROI +63.9% ต่อปี
+MASTER EVALUATION SCORECARD 4 มิติแห่งความสำเร็จของโครงการ
+4 มิติแห่งความสำเร็จของโครงการ
+
+Schedule Variances
+Sprint Delivery Adherence
+การส่งมอบงานทุกรอบการพัฒนา (Sprint 1: Refactoring, Sprint 2: Evolution, Sprint 3: Release) ปิดรอบได้ตรงตามกำหนดการโดยไม่มีชิ้นงานตกหล่น (100% Sprint On-Time Completion Rate)
+KPI DIMENSION 1 มิติที่ 1: ผลสัมฤทธิ์ด้านเวลา (SPI = 1.00)
+มิติที่ 1: ผลสัมฤทธิ์ด้านเวลา (SPI = 1.00)
+
+Cost Performance Index
+Budget Baseline Defense
+ยอดเงินเกินงบประมาณ 575 บาท ได้รับการชดเชยจาก Contingency Reserve (2,025 บาท) ทำให้โครงการยังคงมีเงินสำรองเหลือส่งคืน 100 บาท ควบคุมต้นทุนรวมอยู่ในกรอบที่ได้รับอนุมัติ 100%
+KPI DIMENSION 2 มิติที่ 2: ผลสัมฤทธิ์ด้านต้นทุน (CPI = 0.96)
+มิติที่ 2: ผลสัมฤทธิ์ด้านต้นทุน (CPI = 0.96)
+
+Technical Debt Elimination
+Testing & Security
+Cyclomatic Complexity: ลดจาก 22 เหลือ 6 (เป้าหมาย 8) ➔ ผ่าน 100% 🟢
+Coupling (CBO): แยกส่วนอิสระ ลดเหลือ 3 (เป้าหมาย 4) ➔ ผ่าน 100% 🟢
+Global State: ขจัด global x ได้เด็ดขาดเป็น 0 ➔ ผ่าน 100% 🟢
+Automated Test Coverage: บรรลุ 94% (เป้าหมาย 90%) ➔ สูงกว่าเป้า 🏆
+Zero Vulnerabilities: สแกน Bandit และ pip-audit ได้ 0 CVEs 🟢
+Clean Deployment: ติดตั้งและรันสดใน 2 นาที ➔ ผ่าน 100% 🟢
+KPI DIMENSION 3 มิติที่ 3: คุณภาพเทคนิคระดับสากล
+มิติที่ 3: คุณภาพเทคนิคระดับสากล
+
+User & Scope Acceptance
+Business Return (ROI)
+คาดการณ์ผลตอบแทนจากการลงทุนปรับปรุงระบบ (Maintenance ROI) สูงถึง +63.9% ต่อปี
+🏆 คืนทุน (Payback Period) ภายในเวลาไม่ถึง 8 เดือน
+UAT First-Time Pass Rate: 100% ผ่านทุก Scenarios ในรอบสัปดาห์ที่ 12
+Scope Delivery Rate: ส่งมอบฟังก์ชันครบ 100% (Barcode, Alert, CSV)
+Stakeholder Sign-off: ได้รับการลงนามรับรองจาก Sponsor ในทุก Gate Review
+KPI DIMENSION 4 มิติที่ 4: ความพึงพอใจและคุณค่าธุรกิจ
+มิติที่ 4: ความพึงพอใจและคุณค่าธุรกิจ
+
+หมวดหมู่ตัวชี้วัด
+ตัวชี้วัดเฉพาะเจาะจง
+แผนตั้งต้น (Target)
+ผลงานจริง (Actuals)
+สถานะความสำเร็จ
+Schedule
+Schedule Performance Index (SPI)
+1.00
+1.00
+🟢 Met (ตรงตามแผน 100%)
+Cost
+Cost Performance Index (CPI)
+ 0.95
+0.96
+🟢 Met (คุมงบในกรอบสำรอง)
+Quality
+PyTest Code Coverage
+90%
+94%
+🏆 Exceeded (สูงกว่าเป้า)
+Quality
+Max Cyclomatic Complexity v(G)
+8
+6
+🟢 Met (โค้ดอ่านง่าย ไร้หนี้)
+Technical
+Third-Party Vulnerabilities
+0 CVEs
+0 CVEs
+🟢 Met (ปลอดภัย 100%)
+Business
+User Acceptance Rate (UAT)
+100%
+100%
+🟢 Met (ลูกค้าพึงพอใจ)
+OFFICIAL SCORECARD SUMMARY ตาราง MASTER PROJECT KPI SCORECARD
+ตาราง Master Project KPI Scorecard
+
+ORGANIZATIONAL KNOWLEDGE ASSET การถ่ายทอดองค์ความรู้และบทเรียน
+การถ่ายทอดองค์ความรู้และบทเรียน
+Strategic Insights: บทเรียนระดับการตัดสินใจเชิงบริหารและขอบเขต
+Operational Insights: บทเรียนระดับกระบวนการ Agile และเครื่องมือ Jira
+Technical Insights: บทเรียนระดับการผ่าตัดโค้ดและการทดสอบอัตโนมัติ
+
+1. บทบาท CCB ต้าน Scope Creep
+เมื่อลูกค้าขอเพิ่มฟังก์ชัน CSV Export กะทันหันในสัปดาห์ที่ 10 หากไม่มี CCB โครงการจะล่มสลาย
+การนำเข้า CCB ช่วยให้เจรจาขยายงบและเวลาได้อย่างเป็นธรรม
+2. วินัยของ Contingency Reserve
+การตั้งงบสำรองความเสี่ยง 15% ตั้งแต่สัปดาห์ที่ 5 ช่วยพิทักษ์สถานะทางการเงินของโครงการ
+ชดเชยค่าแรงส่วนเกินและรองรับ CR-02 ได้โดยไม่ต้องขอเงินเพิ่ม
+STRATEGIC LEVEL REFLECTION บทเรียนเชิงกลยุทธ์ (STRATEGIC LESSONS)
+บทเรียนเชิงกลยุทธ์ (Strategic Lessons)
+
+3. กฎ Single Accountable ใน RACI
+ในสัปดาห์ที่ 8 มีงานชะงักเพราะต่างคนต่างคิดว่าอีกคนจะทำ
+เมื่อบังคับให้ 1 Task มี Accountable (A) เพียงคนเดียว ปัญหาการเกี่ยงงานหมดไปทันที
+4. การจำกัด WIP Limits ทลายคอขวด
+การวิเคราะห์ CFD ชี้ว่างานไปกองสะสมที่ Code Review
+การตั้ง WIP Limit 3 ใบ บังคับให้ทีมหยุดเขียนโค้ดใหม่แล้วมาช่วยตรวจ PR ให้เสร็จก่อน
+OPERATIONAL LEVEL REFLECTION บทเรียนเชิงกระบวนการและการทำงาน
+บทเรียนเชิงกระบวนการและการทำงาน
+
+1. Mandate Automated Testing from Day One: อย่ารอให้เขียนโค้ดเสร็จแล้วค่อยเขียน Test ให้เขียน PyTest ควบคู่ไปกับโค้ดตั้งแต่วันแรกของโครงการ
+2. Enforce Strict Scope Freeze: ต้องกำหนดวัน Scope Freeze อย่างน้อย 2 สัปดาห์ก่อนวันส่งมอบ เพื่อเปิดพื้นที่ให้ทำ System Hardening และ UAT
+3. Maintain Continuous Integration Pipeline: อย่าปิดท่อ CI/CD และห้ามอนุญาตให้ใคร Bypass Branch Protection Rules โดยเด็ดขาด
+FUTURE POLICY GUIDELINES ข้อเสนอแนะเชิงนโยบายสู่อนาคต
+ข้อเสนอแนะเชิงนโยบายสู่อนาคต
+
+Part 1: Overview
+แนะนำปัญหาเดิม, Charter, และขอบเขต WBS (3 นาที - PM)
+Part 2: Demo
+สถาปัตยกรรมใหม่, PyTest สด, และสาธิตฟังก์ชัน (8 นาที - Tech Lead)
+Part 3: Governance
+EVM ($SPI, CPI$), Burndown 3 Sprints, และ KPIs (5 นาที - PM)
+Part 4: Lessons
+สรุปบทเรียนและผลลัพธ์ ROI +63.9% (4 นาที - PM/QA)
+DEFENSE PRESENTATION ARCHITECTURE โครงสร้างการนำเสนอ FINAL DEFENSE
+โครงสร้างการนำเสนอ Final Defense
+
+Legacy Problem Statement
+ชี้แจงปัญหาตั้งต้นของโค้ดสปาเก็ตตี app_v1.py ที่มีหนี้ทางเทคนิคสูง ปราศจากชุดทดสอบ และเสี่ยงพังทุกครั้งที่มีการแก้ไข
+วัตถุประสงค์ตาม Charter: ปรับปรุงโครงสร้างล้างหนี้เดิม และต่อเติมระบบบาร์โค้ด
+WBS Scope Execution
+แสดงแผนผัง Work Breakdown Structure (WBS) ครบทั้ง 4 หมวดงานหลักที่ถูกส่งมอบครบถ้วน 100% ไร้ปัญหา Scope Creep
+DEFENSE PART 1: EXECUTIVE OVERVIEW ตอนที่ 1: ความเป็นมาและขอบเขตงาน
+ตอนที่ 1: ความเป็นมาและขอบเขตงาน
+
+As-Built Architecture
+Live Verification
+สถาปัตยกรรมแบ่งชั้นตาม Repository Pattern
+แก้ปัญหา Schema เก่า (BUG-101) ด้วย Fallback
+ระบบบันทึกไฟล์แบบ Atomic File Writing ป้องกันไฟล์พัง
+สาธิตสด: สแกน Barcode, แจ้งเตือน Reorder Alert, และออก CSV
+ผลการรัน PyTest Full Suite 18 เคสผ่านไฟเขียว 100%
+Code Coverage ยืนยันตัวเลข 94% ครอบคลุมทั้งระบบ
+DEFENSE PART 2: TECHNICAL SOLUTION ตอนที่ 2: สถาปัตยกรรมและ LIVE DEMO
+ตอนที่ 2: สถาปัตยกรรมและ Live Demo
+
+EVM & Flow Control
+Master Scorecard
+แสดงตาราง Master Project KPI Scorecard ยืนยันความสำเร็จครบทั้ง 4 มิติ (Schedule, Cost, Quality, Stakeholder) ตามเกณฑ์ที่ได้รับอนุมัติ
+สรุปตัวเลขการเงิน: PV=15,525, EV=15,525, AC=16,100
+ดัชนีประสิทธิภาพ: SPI = 1.00 (ตรงเวลา), $CPI = 0.96 (คุมงบได้)
+แสดงวิเคราะห์ Burndown 3 Sprints และ CFD ไร้คอขวด
+DEFENSE PART 3: PROJECT GOVERNANCE ตอนที่ 3: ธรรมาภิบาลและดัชนี KPIS
+ตอนที่ 3: ธรรมาภิบาลและดัชนี KPIs
+
+Maintenance ROI +63.9%
+การลงทุนปรับปรุงระบบสร้างผลตอบแทนความคุ้มค่า +63.9% ต่อปี คืนทุนภายใน 8 เดือน
+ประหยัดค่าแรงแก้บั๊ก 14,400 บาท + ยอดขายไม่ตกหล่น 12,000 บาท
+Lessons Learned Compendium
+สรุปบทเรียนและข้อเสนอแนะเชิงนโยบาย 3 ระดับ (Strategic, Operational, Tactical) พร้อมส่งมอบคลังสินทรัพย์ OPAs เข้าสู่ระบบกลาง
+DEFENSE PART 4: BUSINESS VALUE ตอนที่ 4: ความคุ้มค่าทางธุรกิจ
+ตอนที่ 4: ความคุ้มค่าทางธุรกิจ
+
+คำถามท้าทายจากคณะกรรมการ
+แนวทางการตอบอย่างมืออาชีพ
+"ทำไม CPI ถึงอยู่ที่ 0.96 (เกินงบ) มีสาเหตุมาจากอะไร?"
+"ถ้าลูกค้าจะเปลี่ยนไปใช้ PostgreSQL ต้องรื้อโค้ดเยอะไหม?"
+"มั่นใจได้อย่างไรว่าไม่มีบั๊กตกค้างในระบบ?"
+อ้างอิงการดึงงบสำรอง Contingency Reserve ที่ตั้งไว้ล่วงหน้า
+ชี้แจงความยืดหยุ่นของ Repository Pattern ที่สลับ DB ได้ทันที
+อ้างอิงหลักฐาน PyTest Coverage 94% และใบตรวจรับ UAT 100%
+AD-HOC INQUIRY PREPARATION การเตรียมรับมือคำถามคณะกรรมการ
+การเตรียมรับมือคำถามคณะกรรมการ
+
+OFFICIAL CLOSURE CEREMONY พิธีการปิดโครงการอย่างเป็นทางการ
+พิธีการปิดโครงการอย่างเป็นทางการ
+อาจารย์ (Sponsor) ลงนามใน Final Project Acceptance Certificate
+PM กดเปลี่ยนสถานะโครงการบน Jira เป็น ARCHIVED
+สลายบทบาทความรับผิดชอบตามตาราง RACI Matrix
+
+ชิ้นงาน 1: เล่มรายงานปิดโครงการฉบับสมบูรณ์ (Final Project Closure Report)
+ชิ้นงาน 2: ตารางสรุปดัชนีชี้วัดความสำเร็จฉบับทางการ (Master Project KPI Scorecard)
+ชิ้นงาน 3: เอกสารปิดสัญญาจัดซื้อจัดจ้างและงบประมาณจริง (Procurement & Reserve Close-out Sheet)
+ชิ้นงาน 4: สมุดทะเบียนรวบรวมบทเรียนโครงการฉบับสังเคราะห์ (Comprehensive Lessons Learned Register)
+ชิ้นงาน 5: สไลด์ประกอบการนำเสนอฉบับสมบูรณ์ (Final Defense Presentation Slide Deck)
+FINAL ARCHIVE PORTFOLIO เช็คลิสต์สิ่งส่งมอบสมบูรณ์ขั้นสุดท้าย
+เช็คลิสต์สิ่งส่งมอบสมบูรณ์ขั้นสุดท้าย
+
+Engineering Foundation
+โค้ดที่สะอาดและสถาปัตยกรรมที่ยอดเยี่ยม (ENGSE225) จะเกิดขึ้นไม่ได้หากปราศจากการวางแผนงบประมาณและกรอบการทำงานที่โปร่งใส
+Management Value
+และการบริหารโครงการที่ยอดเยี่ยม (ENGSE202) จะไร้ความหมายทันที หากทีมวิศวกรไม่สามารถส่งมอบซอฟต์แวร์ที่ทำงานได้จริง (Working Software)
+Professional Mastery
+ขอแสดงความยินดีกับนักศึกษาทุกคนที่ก้าวข้ามสู่การเป็นวิศวกรซอฟต์แวร์และผู้บริหารโครงการมืออาชีพอย่างเต็มภาคภูมิ 🏆
+INTERDISCIPLINARY SYNERGY บูรณาการวิศวกรรมและการบริหาร
+บูรณาการวิศวกรรมและการบริหาร
+
+Project Management Institute. (2021). A Guide to the Project Management Body of Knowledge (PMBOK Guide) (7th ed.). Project Management Institute.
+Project Management Institute. (2017). A Guide to the Project Management Body of Knowledge (PMBOK Guide) (6th ed.). Project Management Institute.
+Flemming, Q. W., & Koppelman, J. M. (2010). Earned Value Project Management (4th ed.). Project Management Institute.
+Kerzner, H. (2017). Project Management: A Systems Approach to Planning, Scheduling, and Controlling (12th ed.). Wiley.
+Schwaber, K., & Sutherland, J. (2020). The Scrum Guide: The Definitive Guide to Scrum: The Rules of the Game.
+Erdogmus, H., Favaro, J., & Strigel, W. (2004). Return on investment. IEEE Software, 21(3), 18-22.
+PROJECT MANAGEMENT BIBLIOGRAPHY เอกสารอ้างอิงทางวิชาการ
+เอกสารอ้างอิงทางวิชาการ
+
+https://powerslides.com/wp-content/uploads/2022/04/Executive-Project-Status-Report-Template-1.png
+Source: powerslides.com
+https://slidemodel.com/wp-content/uploads/7379-01-project-management-mobile-dashboard-16x9-2.jpg
+Source: slidemodel.com
+https://templates.business-in-a-box.com/imgs/1000px/board-resolution-approving-the-award-of-a-contract-D51.png
+Source: www.business-in-a-box.com
+Image Sources

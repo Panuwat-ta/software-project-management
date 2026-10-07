@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,
+      initial-scale=1.0">
+<title>phase5 report | SPM</title>
+<link rel="stylesheet" href="../theme.css">
+<style>@page { size: A4; margin: 18mm 16mm; }
+body { font-family: "Noto Sans Thai", "Liberation Sans", sans-serif;
+  font-size: 11pt; line-height: 1.7; color: #1a1a1a; max-width: 900px;
+  margin: 0 auto; padding: 24px 20px 60px; }
+h1 { font-size: 22pt; border-bottom: 3px solid #1a56db; padding-bottom: 8px; }
+h2 { font-size: 14pt; color: #1a56db; margin-top: 1.6em;
+  border-bottom: 1px solid #e5e7eb; padding-bottom: 4px; }
+h3 { font-size: 12pt; margin-top: 1.2em; }
+table { border-collapse: collapse; width: 100%; margin: 0.9em 0;
+  font-size: 9.5pt; }
+th, td { border: 1px solid #cbd5e1; padding: 6px 9px; text-align: left;
+  vertical-align: top; }
+th { background: #eef2ff; }
+tr:nth-child(even) td { background: #fafbff; }
+code { font-family: "Noto Sans Mono", monospace; font-size: 9pt;
+  background: #f3f4f6; padding: 1px 5px; border-radius: 3px; }
+pre { background: #f3f4f6; padding: 12px; border-radius: 6px;
+  overflow-x: auto; font-size: 8.5pt; line-height: 1.5; }
+pre code { background: none; padding: 0; }
+blockquote { margin: 1em 0; padding: 8px 14px; border-left: 4px solid #1a56db;
+  background: #f5f8ff; }
+.nav { background: #1a1a2e; color: #fff; padding: 10px 16px;
+  border-radius: 8px; margin-bottom: 20px; font-size: 13px; }
+.nav a { color: #c7d6ff; text-decoration: none; margin-right: 14px; }
+.nav a:hover { color: #fff; text-decoration: underline; }
+.note { color: #5b6472; font-size: 10pt; margin-top: 40px;
+  border-top: 1px solid #e5e7eb; padding-top: 10px; }
+@media print { .nav { display: none; } }</style>
+</head>
+<body>
+<nav class="nav"><a href="../index.html">หน้าแรก</a><a href="../Phase1/README.html">Phase1</a><a href="../Phase2/README.html">Phase2</a><a href="../Phase3/README.html">Phase3</a><a href="../Phase4/README.html">Phase4</a><a href="../Phase5/README.html">Phase5 (หน้านี้)</a></nav>
+<h1>รายงาน Phase 5 — วิวัฒนาการ v3.0 และ Desktop Program</h1>
+<p>ข้อมูลทั้งหมดเป็นข้อมูลสมมติเพื่อการเรียน ไม่ใช่ข้อมูลลูกค้าจริง</p>
+<h2>1. ภาพรวมเฟส</h2>
+<table>
+<thead>
+<tr>
+<th>รายการ</th>
+<th>ค่า</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Sprint ที่ครอบคลุม</td>
+<td>Sprint 5 (Jira ID 86, closed)</td>
+</tr>
+<tr>
+<td>Issues</td>
+<td>SPM-23…SPM-27 (17 SP) + SPM-29…SPM-32 (29 SP) = <strong>46 SP</strong></td>
+</tr>
+<tr>
+<td>Epics</td>
+<td>SPM-22 (SQLite + Member), SPM-28 (Desktop Program UI)</td>
+</tr>
+<tr>
+<td>ตัวส่งมอบหลัก</td>
+<td><code>app.py</code> v3.0 + <code>program.py</code> Desktop UI</td>
+</tr>
+<tr>
+<td>สถานะ</td>
+<td>งานหลัก Done; release tag ของ Desktop build ยังไม่สร้างในรอบนี้</td>
+</tr>
+</tbody>
+</table>
+<p>Phase 5 ปิดงานออกแบบที่ค้างจาก Sprint 1 แล้วเพิ่มหน้าตาโปรแกรม Desktop
+โดย reuse business logic เดิมและไม่บังคับให้ผู้ใช้เปิด browser หรือรัน server</p>
+<h2>2. ส่วน A — v3.0: SQLite + Member + Checkout</h2>
+<table>
+<thead>
+<tr>
+<th>หัวข้อ</th>
+<th>ผลลัพธ์</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ฐานข้อมูล</td>
+<td>SQLite แบบ Singleton + Repository + parameterized query</td>
+</tr>
+<tr>
+<td>Transaction</td>
+<td>commit/rollback และ schema CHECK กันค่าติดลบ</td>
+</tr>
+<tr>
+<td>Migration</td>
+<td>JSON → SQLite พร้อมตรวจจำนวนและมูลค่า 100%</td>
+</tr>
+<tr>
+<td>สมาชิก</td>
+<td>CRUD + Regular/Silver/Gold/Platinum ด้วย Strategy</td>
+</tr>
+<tr>
+<td>Checkout</td>
+<td>ส่วนลดอัตโนมัติ + ใบเสร็จ + ตัดสต็อก</td>
+</tr>
+</tbody>
+</table>
+<h2>3. ส่วน B — Desktop Program UI</h2>
+<table>
+<thead>
+<tr>
+<th>หัวข้อ</th>
+<th>ผลลัพธ์</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Toolkit</td>
+<td>GTK4 / PyGObject</td>
+</tr>
+<tr>
+<td>จุดเริ่ม</td>
+<td><code>python3 program.py</code></td>
+</tr>
+<tr>
+<td>Dashboard</td>
+<td>ประเภทสินค้า มูลค่ารวม และ low-stock</td>
+</tr>
+<tr>
+<td>Products</td>
+<td>เพิ่ม/แก้ไข/ค้นหา/ตัด/ลบ/Export CSV</td>
+</tr>
+<tr>
+<td>Members</td>
+<td>CRUD สมาชิกและ tier</td>
+</tr>
+<tr>
+<td>Checkout</td>
+<td>ส่วนลดสมาชิก + ใบเสร็จบนหน้าจอ</td>
+</tr>
+<tr>
+<td>Domain reuse</td>
+<td>Repository / MemberManager / CheckoutService / CSV จาก <code>app.py</code></td>
+</tr>
+</tbody>
+</table>
+<p>สถาปัตยกรรม:</p>
+<pre><code class="language-text">program.py (GTK4)
+      │
+      └─ app.py domain
+           ├─ InventoryRepository
+           ├─ MemberManager
+           ├─ CheckoutService
+           └─ SQLiteDatabaseContext
+                  └─ inventory.db
+</code></pre>
+<h2>4. หลักฐานทดสอบ</h2>
+<table>
+<thead>
+<tr>
+<th>ชุด</th>
+<th>ผล</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>test_app.py</code></td>
+<td>14 passed</td>
+</tr>
+<tr>
+<td><code>test_program.py</code></td>
+<td>7 passed</td>
+</tr>
+<tr>
+<td><strong>รวมชุดหลัก</strong></td>
+<td><strong>21 passed</strong></td>
+</tr>
+<tr>
+<td>regression v2.0</td>
+<td>25 passed</td>
+</tr>
+<tr>
+<td>flake8</td>
+<td>0</td>
+</tr>
+<tr>
+<td>bandit</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+<h2>5. วิธีรัน</h2>
+<p>Fedora:</p>
+<pre><code class="language-bash">sudo dnf install python3-gobject gtk4
+python3 program.py
+</code></pre>
+<p>โปรแกรมเปิดเป็นหน้าต่าง Desktop UI บน GNOME/Wayland</p>
+<h2>6. ขอบเขตที่ไม่ทำ</h2>
+<ul>
+<li>ระบบล็อกอิน/สิทธิ์ผู้ใช้</li>
+<li>Online Payment</li>
+<li>multi-user concurrent server</li>
+<li>cloud sync</li>
+</ul>
+<p>SQLite ปัจจุบันเหมาะกับ desktop single-user; ถ้าต้องการหลายผู้ใช้
+สามารถเปลี่ยน persistence ผ่าน Repository ภายหลัง</p>
+<h2>7. Traceability</h2>
+<ul>
+<li><code>Sprint5/sprint2.md</code> — v3.0 SQLite + Member + Checkout</li>
+<li><code>Sprint5/sprint3.md</code> — Desktop Program UI</li>
+<li><code>Sprint5/program-plan.md</code> — แผน Desktop</li>
+<li><code>Sprint5/SPM-29-foundation.md</code> … <code>SPM-32-hardening.md</code></li>
+<li><code>Sprint5/program.py</code>, <code>Sprint5/test_program.py</code> — snapshot</li>
+<li><code>web/</code>, <code>web-plan.md</code> — historical implementation เดิมที่ถูกแทนที่</li>
+</ul>
+<p class="note">อ่านเป็น PDF: <a href="phase5-report.pdf">phase5-report.pdf</a></p>
+<p class="note">รายงานอัตโนมัติจาก <code>Phase5/phase5-report.md</code> — ข้อมูลสมมติเพื่อการเรียน (สร้างด้วย <code>tools/build_reports.py</code>)</p>
+</body>
+</html>

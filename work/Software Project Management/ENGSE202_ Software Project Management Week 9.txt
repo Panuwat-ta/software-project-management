@@ -1,0 +1,274 @@
+WEEK 9: SPRINT TRANSITION & EVM CONTROL
+ENGSE202: Sprint Transition & EVM
+“สาธิตผลงาน สรุปบทเรียน Retrospective ประเมินผลต่าง EVM และปิดค้ำการใช้จ่ายเครื่องมือพัฒนาอย่างเป็นระบบ”
+Academic Framework: PMBOK Guide 7th Edition - Project Performance Measurement & Control
+ENGSE202: SOFTWARE PROJECT MANAGEMENT WEEK 9 MASTERCLASS
+
+1. Sprint Review & Retro
+สาธิต Working Software และถกบทเรียน Retrospective ด้วยเทคนิค Mad/Sad/Glad หรือ Start/Stop/Continue
+2. EVM Cost Control
+คำนวณและวิเคราะห์ผลต่างทางการเงินและกำหนดการ (SV, CV) จากข้อมูลการ Log Time จริงใน Sprint 1
+3. Procurement & SLA
+ติดตามโควต้าการใช้งานเครื่องมือ SaaS และจัดทำตาราง Vendor / Tool Evaluation Log
+4. Sprint 2 Activation
+บันทึกค่า Team Velocity กด Complete Sprint 1 และดึงงาน CR-01 เข้าสู่ Sprint 2 บนระบบ Jira
+WEEKLY COURSE OBJECTIVES ENGSE202
+เป้าหมายการเรียนรู้ประจำสัปดาห์
+
+ฝั่งเทคนิค ENGSE225 (3 ชม. แรก)
+ทีมผสานสายงาน Refactoring ของ Sprint 1 เข้าสู่ develop และเริ่มต้นเขียน PyTest แบบ TDR สำหรับฟีเจอร์ CR-01
+ฝั่งบริหาร ENGSE202 (3 ชม. หลัง)
+Demo & Review: สาธิต Working Software โครงสร้างใหม่ต่อหน้า Sponsor
+EVM Control: คำนวณค่า SV และ CV จากชั่วโมง Log Time จริง
+Retrospective: สรุปบทเรียนปรับปรุงกระบวนการทำงานใน Sprint 2
+Jira Transition: ปิด Sprint 1 บันทึก Velocity และเปิด Sprint 2
+CROSS-COURSE ALIGNMENT สะพานเชื่อมโยง ENGSE225 สู่ ENGSE202
+สะพานเชื่อมโยง ENGSE225 สู่ ENGSE202
+
+อ้างอิงตาม The Scrum Guide (Schwaber & Sutherland, 2020) สองพิธีกรรมบังคับเมื่อจบ Sprint:
+1. Sprint Review
+เน้นประเมิน "ตัวชิ้นงานซอฟต์แวร์ (Product & Increment)" สาธิตความถูกต้องต่อหน้า Stakeholders
+2. Sprint Retrospective
+เน้นทบทวน "คน กระบวนการ และเครื่องมือ (People, Process & Tools)" เพื่อการปรับปรุงอย่างต่อเนื่อง (Kaizen)
+AGILE GOVERNANCE FRAMEWORK กรอบการเปลี่ยนผ่าน SPRINT ตาม AGILE
+กรอบการเปลี่ยนผ่าน Sprint ตาม Agile
+
+หลักการสำคัญของการสาธิตผลงาน (Software Demo):
+Working Software Only: สาธิตด้วยซอฟต์แวร์ที่รันได้จริงเท่านั้น ห้ามใช้ภาพสไลด์นิ่ง
+"Working software is the primary measure of progress." — Agile Manifesto
+Sprint 1 Demo Goal: โชว์โครงสร้างใหม่ ปรัน PyTest ไฟเขียว 100% ไร้ global x
+AGILE CEREMONY 1 AGILE CEREMONY 1: SPRINT REVIEW
+Agile Ceremony 1: Sprint Review
+
+3 ขั้นตอนการสาธิตระบบคลังสินค้า Refactored:
+1. Show Architecture: เปิดโครงสร้างไฟล์แสดงคลาส Product, InventoryRepository, InventoryService
+2. Run PyTest Suite: สั่งรัน pytest -v ใน Terminal โชว์ไฟเขียว 100% ต่อหน้า Sponsor
+3. Demonstrate Execution: สั่งรันโปรแกรมระบบคลังสินค้า ทดลองเพิ่ม/ลดสต็อกและคำนวณราคารวม
+DEMO GUIDELINES แนวทางการทำ WORKING SOFTWARE DEMO
+แนวทางการทำ Working Software Demo
+
+AGILE CEREMONY 2 AGILE CEREMONY 2: RETROSPECTIVE
+Agile Ceremony 2: Retrospective
+Psychological Safety: สร้างพื้นที่ปลอดภัยในการพูดความจริงโดยปราศจากการกล่าวโทษตัวบุคคล
+Continuous Improvement: หัวใจหลักของการพัฒนาประสิทธิภาพทีมแบบยั่งยืน
+
+😡 Mad (หงุดหงิด)
+อุปสรรค กระบวนการ หรือเครื่องมือที่ทำให้งานสะดุด (เช่น Merge Conflict รุนแรง, CI/CD รันช้า)
+😔 Sad (เสียดาย)
+สิ่งที่ไม่เป็นไปตามคาด หรือเรื่องที่คิดว่าน่าจะทำได้ดีกว่านี้ (เช่น ประมาณการเวลา Refactor ต่ำไป)
+😀 Glad (ประทับใจ)
+ความสำเร็จ เรื่องที่ดี หรือคำชื่นชมเพื่อนร่วมทีม (เช่น PyTest ช่วยดักบั๊กได้จริง, เพื่อนช่วยแก้ Conflict)
+RETRO TECHNIQUE 1 เทคนิค RETRO 1: MAD / SAD / GLAD
+เทคนิค Retro 1: Mad / Sad / Glad
+
+🚀 Start (เริ่มทำ)
+พฤติกรรมหรือแนวปฏิบัติใหม่ที่ทีมควรเริ่มทำใน Sprint 2 (เช่น เขียน PyTest ก่อนเขียนฟังก์ชันจริงตาม TDR)
+🛑 Stop (หยุดทำ)
+พฤติกรรมที่สร้างปัญหาและต้องเลิกทำเด็ดขาด (เช่น หยุดดอง PR ไว้นานเกิน 24 ชม., หยุด Commit ข้าม PR)
+🔄 Continue (ทำต่อ)
+แนวปฏิบัติที่ดีอยู่แล้วและควรทำต่อเนื่อง (เช่น การสื่อสาร Blocker ใน Daily Standup ทุกเช้า)
+RETRO TECHNIQUE 2 เทคนิค RETRO 2: START / STOP / CONTINUE
+เทคนิค Retro 2: Start / Stop / Continue
+
+Retro ที่ไร้ประโยชน์
+การบ่นระบายอารมณ์แล้วแยกย้าย โดยไม่มีการสรุปข้อตกลงแก้ไขที่เป็นรูปธรรม
+SMART Action Item บน Jira
+คัดเลือกประเด็นสำคัญ 1-2 เรื่อง แล้วแปลงเป็น Action Item ที่เจาะจง นำไปสร้างเป็นการ์ดงานบน Jira Backlog ใน Sprint 2
+ตัวอย่าง: "บังคับ Reviewer ต้องเข้าตรวจ PR ภายใน 12 ชม. หลังได้รับแจ้งเตือนบน Discord"
+ACTIONABLE RETROSPECTIVE OUTPUT แปลงข้อคิดเห็นสู่ ACTION ITEMS
+แปลงข้อคิดเห็นสู่ Action Items
+
+EVM PERFORMANCE CONTROL การประเมินผลต่างประสิทธิภาพ (EVM)
+การประเมินผลต่างประสิทธิภาพ (EVM)
+Planned Value (PV): งบประมาณตามแผน ณ ปัจจุบัน
+Earned Value (EV): มูลค่าเนื้องานที่ทำเสร็จจริง
+Actual Cost (AC): ชั่วโมงค่าแรงที่จ่ายไปจริง
+
+Schedule Variance (SV)
+Cost Variance CV)
+SV > 0: เร็วกว่าแผน 🟢
+SV = 0: ตามแผน 🟡
+SV < 0: ล่าช้ากว่าแผน 🔴
+CV > 0: ประหยัดงบ 🟢
+CV = 0: ตรงตามงบ 🟡
+CV < 0: เกินงบประมาณ 🔴
+EVM MATHEMATICAL FORMULAS สูตรคำนวณผลต่าง SV และ CV
+สูตรคำนวณผลต่าง SV และ CV
+
+ตัวแปร EVM
+รายละเอียดเนื้องานและการคำนวณ
+มูลค่าทางการเงิน
+Planned Value (PV)
+ตั้งเป้าทำ 4 Tasks งบประมาณ Task ละ 1,000 บาท
+4,000 THB
+Earned Value (EV)
+ทำเสร็จสมบูรณ์ผ่าน PyTest จำนวน 3 Tasks
+3,000 THB
+Actual Cost (AC)
+จ่ายชั่วโมงค่าแรงจริงจากการกด Log Work บน Jira
+4,200 THB
+Schedule Variance (SV)
+SV = EV - PV = 3,000 - 4,000
+-1,000 THB (Behind 🔴)
+Cost Variance (CV)
+CV = EV - AC = 3,000 - 4,200
+-1,200 THB (Over 🔴)
+SPRINT 1 FINANCIAL ANALYSIS กรณีศึกษา: คำนวณ EVM หลัง SPRINT 1
+กรณีศึกษา: คำนวณ EVM หลัง Sprint 1
+
+วิเคราะห์สาเหตุ (Root Cause)
+พบหนี้ทางเทคนิคซ่อนเร้นใน app_v1.py และเสียเวลาแก้ Merge Conflict ที่ไม่จำเป็น ทำให้ SV และ CV ติดลบ
+แผนแก้ไขใน Sprint 2
+แผนเวลา (SV): ยกงานที่หลุดไปใส่ใน Sprint 2 และปรับเพิ่ม Buffer Time
+แผนงบ (CV): อนุมัติดึงเงิน -1,200 บาท ออกจาก Contingency Reserve ที่ตั้งไว้ในสัปดาห์ที่ 5
+MANAGERIAL CORRECTIVE ACTION การวิเคราะห์สาเหตุและแผนแก้ EVM
+การวิเคราะห์สาเหตุและแผนแก้ EVM
+
+Team Velocity คืออะไร?
+ปริมาณเนื้องานที่ทีมสามารถส่งมอบเสร็จสมบูรณ์จริง (ตามเกณฑ์ DoD) ใน 1 Sprint
+ตัวอย่าง: ตั้งเป้าไว้ 20 Points ทำเสร็จจริง 15 Points ➔ Velocity = 15 Points
+ประโยชน์ในการวางแผน
+ใช้เป็นเกณฑ์อ้างอิงในการดึงงานเข้า Sprint 2 ห้ามดึงงานเกิน 15 Points เด็ดขาด เพื่อป้องกันปัญหาความล้าของทีม
+SPRINT CAPACITY BENCHMARK การวัดความเร็วของทีม (VELOCITY)
+การวัดความเร็วของทีม (Velocity)
+
+อ้างอิงตาม PMBOK Guide (Project Procurement Management Performance Domain):
+Procurement ในงานซอฟต์แวร์
+การติดตาม ควบคุม และบริหารจัดการสัญญาการใช้งานเครื่องมือพัฒนา SaaS และบริการคลาวด์ภายนอก
+เป้าหมายการควบคุม SLA
+คุมไม่ให้ค่าบริการเครื่องมือบานปลาย และติดตามว่าผู้ให้บริการภายนอกปฏิบัติตาม Service Level Agreement (SLA)
+SOFTWARE PROCUREMENT DOMAIN การบริหารจัดซื้อจัดจ้างซอฟต์แวร์
+การบริหารจัดซื้อจัดจ้างซอฟต์แวร์
+
+1. GitHub Actions Minutes
+ตรวจสอบโควต้านาที CI/CD PyTest (เช่น โควต้าฟรี 2,000 นาที/เดือน ใช้ไปแล้วเท่าใด)
+2. Jira Licensing & Cloud
+ตรวจจำนวนผู้ใช้งานไม่ให้เกิน Free Tier (10 Users) และตรวจ % Uptime คลาวด์เซิร์ฟเวอร์
+RESOURCE USAGE GOVERNANCE การติดตามข้อตกลง SLA และเครื่องมือ
+การติดตามข้อตกลง SLA และเครื่องมือ
+
+Tool / Service
+SLA Target
+Actual Performance
+Cost Status
+Action Taken
+GitHub Actions
+99.9% Pass Rate
+100% Pass Rate
+0 THB (Free Quota)
+แคช pip ลดเวลา
+Jira Software
+Real-time Sync
+ขยับช้า 1 นาทีบางครั้ง
+0 THB (Free Tier)
+ใช้งานต่อ
+AWS Database
+99.9% Uptime
+100% Uptime
+450 / 500 THB 🟢
+คุมงบดีเยี่ยม
+TOOL EXPENSE GOVERNANCE ตาราง VENDOR / TOOL EVALUATION LOG
+ตาราง Vendor / Tool Evaluation Log
+
+1. Demo & Retro
+สาธิต Working Software โครงสร้างใหม่ และทำ Retrospective บน Miro/EasyRetro
+2. EVM Analysis
+ปิด Sprint 1 บน Jira บันทึก Velocity คำนวณค่า SV, CV และวิเคราะห์สาเหตุ
+3. Start Sprint 2
+ดึงงาน CR-01 เข้าสู่ Sprint 2 กด Start Sprint 2 และอัปเดต Procurement Log
+PRACTICAL LAB ACTIVITY แนะนำกิจกรรม WORKSHOP ประจำวันนี้
+แนะนำกิจกรรม Workshop ประจำวันนี้
+
+Working Software Demo
+สาธิตโครงสร้างโค้ดใหม่และรัน pytest -v โชว์ไฟเขียวต่อหน้าอาจารย์
+Sprint Retrospective
+เขียนโน้ตลงบอร์ด Mad, Sad, Glad เลือก 1 Action Item แปลงเป็นการ์ดบน Jira
+WORKSHOP EXECUTION STEP 1 ขั้นตอน 1: DEMO & RETROSPECTIVE
+ขั้นตอน 1: Demo & Retrospective
+
+ขั้นตอนปิดรอบ Sprint บน Jira:
+เข้าหน้า Active Sprints กดปุ่ม "Complete Sprint"
+ตรวจสอบรายการ Completed Tasks และย้ายงานไม่เสร็จกลับ Backlog
+สังเกตระบบ Jira บันทึกค่า Team Velocity ของ Sprint 1 อัตโนมัติ
+WORKSHOP EXECUTION STEP 2 ขั้นตอน 2: ปิด SPRINT 1 บน JIRA
+ขั้นตอน 2: ปิด Sprint 1 บน Jira
+
+ตัวแปร EVM
+วิธีการรวบรวมข้อมูล
+ผลลัพธ์คำนวณ
+Planned Value (PV)
+รวมงบประมาณของการ์ดที่ตั้งเป้าไว้ใน Sprint 1
+4,000 THB
+Earned Value (EV)
+รวมงบประมาณของการ์ดที่ปิด Done สำเร็จจริง
+3,000 THB
+Actual Cost (AC)
+รวมชั่วโมงค่าแรงจริงที่สมาชิกกด Log Work บน Jira
+4,200 THB
+Variances ($SV, CV$)
+SV = EV - PV และ CV = EV - AC
+SV = -1,000 | CV = -1,200 🔴
+WORKSHOP EXECUTION STEP 3 ขั้นตอน 3: คำนวณ EVM หลัง SPRINT 1
+ขั้นตอน 3: คำนวณ EVM หลัง Sprint 1
+
+ดึงงาน CR-01 เข้า Sprint 2
+ดึงการ์ดงานบาร์โค้ดและ Reorder Point เข้ากล่อง Sprint 2 โดยคุมไม่ให้เกิน Velocity (15 Points)
+กด Start Sprint 2
+กดปุ่ม "Start Sprint 2" บน Jira เริ่มต้นรอบการพัฒนาฟีเจอร์อย่างเป็นทางการ
+WORKSHOP EXECUTION STEP 4 ขั้นตอน 4: วางแผนและเปิด SPRINT 2
+ขั้นตอน 4: วางแผนและเปิด Sprint 2
+
+Tool / Service
+Quota Usage Status
+Cost Status
+GitHub Actions
+120 / 2,000 Compute Minutes Spent
+Free Quota (0 THB)
+Jira Software
+5 / 10 Active Seats Used
+Free Tier (0 THB)
+Cloud Database
+450 / 500 THB Budget Spent
+Under Budget (+50 THB 🟢)
+WORKSHOP EXECUTION STEP 5 ขั้นตอน 5: บันทึก PROCUREMENT LOG
+ขั้นตอน 5: บันทึก Procurement Log
+
+ชิ้นงาน 1 (ENGSE225): ภาพประวัติ Commit & Network Graph บน GitHub แสดงการ Merge งาน Sprint 1 เข้าสู่ develop
+ชิ้นงาน 2 (ENGSE225): ซอร์สโค้ดและชุดทดสอบ PyTest ครอบคลุมฟังก์ชัน CR-01 บน Feature Branch
+ชิ้นงาน 3 (ENGSE202): รายงานสรุปผล Sprint 1 Retrospective Report (บอร์ด Mad/Sad/Glad)
+ชิ้นงาน 4 (ENGSE202): ตารางคำนวณ EVM Analysis ($SV, CV$) และภาพสกรีนช็อต Active Sprint 2 บน Jira
+COMBINED PROGRESS DELIVERABLES เช็คลิสต์สิ่งส่งมอบสัปดาห์ที่ 9
+เช็คลิสต์สิ่งส่งมอบสัปดาห์ที่ 9
+
+Agile Transition
+เปลี่ยนผ่าน Sprint ด้วย Demo ผลงานจริง และถก Retrospective ปรับปรุงทีม
+EVM Control
+ใช้วิชาคูณหาร EVM (SV, CV) ติดตามต้นทุนจริงและแก้ไขก่อนสายเกินแก้
+Procurement SLA
+ควบคุมโควต้าเครื่องมือ SaaS และประเมิน Vendor ใน Procurement Log
+SESSION RECAP สรุปบทเรียนประจำสัปดาห์ที่ 9
+สรุปบทเรียนประจำสัปดาห์ที่ 9
+
+ช่วงถาม-ตอบ (Q&A Session)
+“ทีมซอฟต์แวร์ระดับโลก ไม่ใช่ทีมที่ไม่เคยทำผิดพลาด แต่คือทีมที่กล้าเรียนรู้จากข้อผิดพลาดใน Retrospective แล้วใช้ตัวเลข EVM นำทางไปสู่การปรับปรุงแก้ไข”
+เตรียมความพร้อมสำหรับการพัฒนาฟังก์ชัน CR-01 และการรับมือข้อผิดพลาดในสัปดาห์ที่ 10
+ENGSE202: SOFTWARE PROJECT MANAGEMENT Q&A & DISCUSSION
+
+Project Management Institute. (2021). A Guide to the Project Management Body of Knowledge (PMBOK Guide) (7th ed.). Project Management Institute.
+Schwaber, K., & Sutherland, J. (2020). The Scrum Guide: The Definitive Guide to Scrum: The Rules of the Game.
+Flemming, Q. W., & Koppelman, J. M. (2010). Earned Value Project Management (4th ed.). Project Management Institute.
+Derby, E., & Larsen, D. (2006). Agile Retrospectives: Making Good Teams Great. Pragmatic Bookshelf.
+Cohn, M. (2005). Agile Estimating and Planning. Prentice Hall.
+Institute of Electrical and Electronics Engineers. (1998). IEEE Standard for Software Project Management Plans (IEEE Std 1058-1998).
+SOFTWARE MANAGEMENT BIBLIOGRAPHY เอกสารอ้างอิงทางวิชาการ
+เอกสารอ้างอิงทางวิชาการ
+
+https://assets.qlik.com/image/upload/f_auto/q_auto/v1702367209/qlik/glossary/dashboard-examples/seo-hero-dashboard-examples_uyouwd.jpg
+Source: www.qlik.com
+https://ideaflip.com/media/content/mad_sad_glad.png
+Source: ideaflip.com
+https://slidemodel.com/wp-content/uploads/21240-01-earned-value-management-chart-template-for-powerpoint-2.jpg
+Source: slidemodel.com
+https://community.atlassian.com/forums/image/serverpage/image-id/398784i3F99A6E77FF94E49/image-size/large?v=v2&px=999
+Source: community.atlassian.com
+Image Sources

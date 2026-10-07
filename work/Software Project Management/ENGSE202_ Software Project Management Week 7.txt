@@ -1,0 +1,224 @@
+WEEK 7: COST BASELINE & GATE REVIEW
+Cost Baselining, Phase 2 Gate Review & Transition to Execution
+“สรุปงบประมาณ ยืนยันความพร้อมของระบบ และก้าวข้ามประตูสู่อุปสรรคการพัฒนาจริงอย่างมั่นใจ”
+Academic Framework: PMBOK Guide 7th Edition - Cost Baselining & Gate Governance
+ENGSE202: SOFTWARE PROJECT MANAGEMENT WEEK 7 MASTERCLASS
+
+1. Cost Baseline
+สรุปงบประมาณและต้นทุนคงที่ (Cost & Resource Baseline) พร้อมตั้งจุดเตือนภัยงบประมาณ
+2. Phase 2 Gate Review
+ดำเนินกระบวนการ Gate Review นำเสนอความพร้อมทางการบริหารและทางเทคนิคเพื่อขอ Sign-off
+3. Capacity & Sprint 1
+คำนวณ Team Capacity และวางแผนจัดเรียง Sprint 1 Backlog บน Jira เพื่อเตรียมเริ่มพัฒนาจริง
+WEEKLY COURSE OBJECTIVES ENGSE202
+เป้าหมายการเรียนรู้ประจำสัปดาห์
+
+สัปดาห์ที่ 5 - 6 (สิ่งที่ทำสำเร็จมาแล้ว)
+สัปดาห์ที่ 7 (สัปดาห์นี้ - ปลายทางเฟส 2)
+สรุปงบประมาณรวมขั้นสุดท้าย รวบรวมเอกสาร Phase 2 Integrated Report และสอบรับรองด่าน Gate Review
+⚠️ หากไม่ผ่านการ Sign-off ในวันนี้ ทีมจะไม่สามารถกด Start Sprint 1 ในสัปดาห์หน้าได้!
+ENGSE225: ประเมิน ISO 25010/14598, ออกแบบ To-Be Class Diagram, ล็อก Branch Protection และทำ CI/CD Dry-run ผ่านไฟเขียว
+ENGSE202: จัดทำ Communication Matrix, คำนวณงบประมาณเบื้องต้น และเชื่อม Jira Automation เข้ากับ GitHub
+COURSE PROGRESSION CONTEXT PHASE 2 CLOSURE CHECKPOINT
+บริบทสรุปปลายทางเฟสที่ 2
+
+Total Estimated Project Cost
+ตัวเลขงบประมาณสุทธิของโครงการที่รวบรวมชิ้นงาน Refactoring และการพัฒนาต่อยอดทั้งหมด
+นำมาจากประมาณการ Man-Hours ของแต่ละบทบาท (ตาม RACI) คูณด้วย Labor Rate Matrix และผสานกับค่าเครื่องมือ
+สมการรวมงบประมาณโครงการ
+PROJECT FINANCIAL GOVERNANCE การสรุปงบประมาณรวมโครงการ
+การสรุปงบประมาณรวมโครงการ
+
+หมวดหมู่ต้นทุนทางการบริหาร (Cost Breakdown Category)
+สัดส่วนงบประมาณ
+จำนวนเงินสุทธิ (บาท)
+1. Direct Labor Cost (Refactoring + Maintenance Tasks)
+77.3%
+12,000
+2. Infrastructure & Tooling (Jira Cloud + GitHub Compute)
+9.7%
+1,500
+Subtotal (Direct Cost)
+87.0%
+13,500
+3. Contingency Reserve (15% ของ Direct Cost เพื่อรับมือความเสี่ยง)
+13.0%
+2,025
+ยอดรวม Cost Baseline สุจริต (Approved Budget Baseline)
+100.0%
+15,525 บาท
+MASTER FINANCIAL STATEMENT ตารางสรุปงบประมาณสุทธิ
+ตารางสรุปงบประมาณสุทธิ
+
+Cost Variance Thresholds
+เกณฑ์การแจ้งเตือนเมื่อการใช้เงินจริง (Actual Cost) หรือ Man-Hours เริ่มเบี่ยงเบนออกจาก Cost Baseline
+3 ระดับการเฝ้าระวัง
+Normal (5%): อยู่ในเกณฑ์ปกติ ไม่ต้องดำเนินการใดๆ
+Warning (> 5% - 10%): PM ทำรายงานชี้แจง และปรับ Man-Hours
+Critical (> 10%): ดึงเงินจาก Contingency Reserve หรือตัด Scope
+COST VARIANCE CONTROL การตั้งจุดเตือนภัยงบประมาณ
+การตั้งจุดเตือนภัยงบประมาณ
+
+GOVERNANCE CONTROL CHECKPOINT ความสำคัญของ PHASE 2 GATE REVIEW
+ความสำคัญของ Phase 2 Review
+พิสูจน์ความเสถียรของสถาปัตยกรรมใหม่ To-Be Class Diagram
+ยืนยันว่างบประมาณ เวลา และเกราะ SCM พร้อมใช้งาน 100%
+
+ในการ Pitching นำเสนอ 7-10 นาที แต่ละกลุ่มต้องเคลียร์ความพร้อมใน 4 เสาหลัก:
+1. Architecture Blueprint
+To-Be Class Diagram และผลประเมิน ISO 25010/14598
+2. Financial Baseline
+ยอดรวมงบประมาณ Cost Baseline และตารางกำกับค่าแรง
+3. SCM & Automation
+หลักฐาน PR Dry-run และ Jira-GitHub Rules
+4. Execution Readiness
+การจัดเรียง Jira Backlog ใน Sprint 1 พร้อมประเมินเวลา
+REVIEW FRAMEWORK 4 เสาหลักใน PHASE 2 GATE REVIEW
+4 เสาหลักใน Phase 2 Gate Review
+
+บทบาททางการบริหาร
+หน้าที่สำคัญประจำด่าน (Gate Governance Role)
+ความรับผิดชอบเชิงรับรอง
+Project Manager (ตัวแทนนศ.)
+ผู้นำเสนอหลัก ชี้แจงงบประมาณ กำหนดการ และเกณฑ์คุมคุณภาพ
+ผู้ชี้แจงแผนบูรณาการ
+Tech Lead (ตัวแทนนศ.)
+ผู้นำเสนอร่วม ชี้แจงความเสถียรของ To-Be Architecture และท่อ SCM CI/CD
+ผู้รับประกันเกณฑ์เทคนิค
+Sponsor / Client (อาจารย์)
+คณะกรรมการซักถาม ซักซ้อมสถานการณ์ความเสี่ยง และออกเสียงอนุมัติ Sign-off
+ผู้อนุมัติสิทธิ์ Sign-off
+GOVERNANCE STAKEHOLDERS บทบาทหน้าที่ใน PHASE 2 REVIEW
+บทบาทหน้าที่ใน Phase 2 Review
+
+ในครึ่งเทอมหลัง (สัปดาห์ที่ 8 - 12) โครงสร้างงานแบ่งเป็น 3 Sprints:
+Sprint 1 (Week 8-9): Refactoring Core Structure (ปรับโครงสร้างคลาสหลักตาม Repository Pattern)
+Sprint 2 (Week 10-11): Feature Evolution (เพิ่มฟีเจอร์ใหม่ตามสเปก)
+Sprint 3 (Week 12): System Integration & Project Closure
+AGILE EXECUTION FRAMEWORK การเตรียมความพร้อมสู่ EXECUTION
+การเตรียมความพร้อมสู่ Execution
+
+Capacity Planning คืออะไร?
+การคำนวณจำนวนชั่วโมงทำงานจริงที่ทีมมีอยู่จริงใน Sprint 1 เพื่อไม่ให้ดึงงานเข้า Sprint ล้นมือเกินความจริง
+สูตรคำนวณ Team Capacity
+ตัวอย่าง: ทีม 5 คน  times 6 ชม./สัปดาห์ ➔ Capacity = 30 Man-Hours
+WORKLOAD BALANCING การทำ CAPACITY PLANNING
+การทำ Capacity Planning
+
+ขั้นตอนการย้ายงานเข้า Sprint 1 บน Jira Backlog:
+ดึงงานระดับวิกฤต (Critical Refactoring Tasks) ขึ้นอันดับบน
+ตรวจสอบการ์ดงานผ่านเกณฑ์ Definition of Ready (DoR)
+ตรวจสอบจำนวนชั่วโมงรวมของการ์ดงานไม่เกิน Team Capacity
+AGILE TOOL ORCHESTRATION SPRINT PLANNING บน JIRA
+Sprint Planning บน Jira
+
+คุณลักษณะการ์ดงานที่สมบูรณ์
+การผูก Quality Gates
+แทรกคอลัมน์ Code Review / QA และผูก Jira Automation Rules เข้ากับ GitHub Events
+Assignee Mapping: ทุกการ์ดระบุผู้รับผิดชอบตาม RACI
+Original Estimate: ทุกการ์ดใส่ตัวเลขชั่วโมงประเมิน
+DoR Certified: ข้อมูลสเปกและไฟล์อ้างอิงพร้อมใช้งาน
+BACKLOG QUALITY AUDIT องค์ประกอบ JIRA BACKLOG
+องค์ประกอบ Jira Backlog
+
+โครงสร้างสไลด์ที่แต่ละกลุ่มต้องขึ้นนำเสนอต่อหน้าคณะกรรมการ (7-10 นาที):
+Slide 1: Arch
+To-Be Class Diagram & ISO 25010/14598
+Slide 2: Cost
+Total Cost Baseline & Labor Cost Worksheet
+Slide 3: SCM
+SCM Pipeline Dry-run Evidence & Branch Rules
+Slide 4: Gate
+Jira Automation Rules & Quality Gate Integration
+Slide 5: Sprint
+Capacity Planning & Sprint 1 Backlog Readiness
+PITCHING PRESENTATION STRUCTURE โครงสร้างการพิทชิ่งนำเสนอ
+โครงสร้างการพิทชิ่งนำเสนอ
+
+ตัวอย่างคำถามจำลองสถานการณ์
+"ถ้าใน Sprint 1 งาน Refactoring สต็อกใช้เวลาเกินงบไป 5 ชั่วโมง PM จะบริหารจัดการอย่างไรไม่ให้กระทบงบรวม?"
+แนวทางการตอบเชิงบริหาร
+อ้างอิงตาราง Thresholds, Contingency Reserve (15%) และการดึงแผนบริหารความเสี่ยงมาตอบอย่างมีหลักการ
+CLIENT SIMULATION DEFENSE การตอบคำถามท้าทายจากลูกค้า
+การตอบคำถามท้าทายจากลูกค้า
+
+ความหมายของการ Sign-off
+ปิดเฟสที่ 2 (Analysis & Configuration Setup) อย่างเป็นทางการ และอนุมัติงบประมาณ Cost Baseline เป็นตัวเลขคงที่
+สิทธิ์ในการกด Start Sprint
+ให้สิทธิ์ PM ในการกดปุ่ม "Start Sprint 1" บนระบบ Jira เพื่อเริ่มเขียนโค้ดในสัปดาห์ถัดไป
+PHASE CLOSURE APPROVAL กระบวนการลงนาม PHASE 2 SIGN-OFF
+กระบวนการลงนาม Phase 2 Sign-off
+
+ขั้นตอนปฏิบัติทันทีหลังได้รับ Sign-off:
+เปิดระบบ Jira หน้า Backlog
+กดปุ่ม "Start Sprint 1"
+กำหนดวันเริ่มต้นและวันสิ้นสุดของ Sprint 1 (สัปดาห์ที่ 8 - 9)
+AGILE EXECUTION ACTIVATION การเริ่มต้นระบบ START SPRINT 1
+การเริ่มต้นระบบ Start Sprint 1
+
+Phase 2 Gate Review Pitching
+นำเสนอสรุป Phase 2 Pitching ตามโครงสร้าง 5 สไลด์ เพื่อขอการตรวจรับรอง Sign-off จากอาจารย์
+Sprint 1 Backlog Refinement
+จัดทำ Capacity Planning และลงมือนำ Task งานลง Sprint 1 บน Jira เตรียมพร้อมก่อนเริ่มเขียนโค้ด
+PRACTICAL LAB ACTIVITY กิจกรรมปฏิบัติการประจำวัน
+กิจกรรมปฏิบัติการประจำวัน
+
+การนำเสนอของตัวแทนกลุ่ม (7-10 นาที):
+พิทชิ่งสไลด์ภาพรวม Phase 2 ทั้ง 5 แผ่น
+แสดงหลักฐาน Dry-run บน GitHub และ Jira Automation Rules
+ตอบคำถามซักถามเชิงบริหารและความเสี่ยง
+WORKSHOP EXECUTION STEP 1 ขั้นตอน 1: PHASE 2 PITCHING
+ขั้นตอน 1: Phase 2 Pitching
+
+คำนวณ Team Capacity
+สรุปชั่วโมง Man-Hours รวมที่ทีมมีใน Sprint 1
+จัดเรียง Sprint 1 Backlog
+ดึงการ์ดงานที่มี Assignee, Original Estimate และ DoR ลงกล่อง Sprint 1 ให้พอดีกับ Capacity
+WORKSHOP EXECUTION STEP 2 ขั้นตอน 2: CAPACITY & BACKLOG
+ขั้นตอน 2: Capacity & Backlog
+
+รับลายเซ็น Sign-off
+อาจารย์ลงนามอนุมัติในใบรับรอง Phase 2 Sign-off
+กด Start Sprint 1
+PM กดปุ่ม Start Sprint 1 บนระบบ Jira ต่อหน้าอาจารย์ และบันทึกภาพ Active Sprint Board
+WORKSHOP EXECUTION STEP 3 ขั้นตอน 3: SIGN-OFF & START
+ขั้นตอน 3: Sign-off & Start
+
+ตรวจสอบความสมบูรณ์ของรายงานฉบับสมบูรณ์ Phase 2 Integrated Report:
+หมวด ENGSE225: เล่มรายงาน ISO 25010/14598 + To-Be Class Diagram + ภาพ GitHub PR Dry-run
+หมวด ENGSE202: เล่มสรุปงบประมาณ Cost Baseline Master Worksheet + ตาราง Communication Matrix
+หมวดบูรณาการ: ลิงก์บอร์ด Jira ที่ปรับแต่ง Quality Gate, Jira Automation Rules และบอร์ด Active Sprint 1
+PHASE 2 FINAL PORTFOLIO เช็คลิสต์สิ่งส่งมอบ PHASE 2
+เช็คลิสต์สิ่งส่งมอบ Phase 2
+
+ฝั่ง ENGSE225 (3 ชม. แรก)
+ลงมือเขียนโค้ด Refactoring โครงสร้างเดิม เปลี่ยนตัวแปร Global x ไปสู่ Repository Pattern ตาม Class Diagram
+ฝั่ง ENGSE202 (3 ชม. หลัง)
+เริ่มทำ Daily Standup 15 นาที, ติดตามสถานะงานผ่าน Jira Active Board และติดตามการบันทึก Log Time เพื่อวัด Cost Variance
+NEXT WEEK EXECUTION OUTLOOK การเตรียมตัวสำหรับสัปดาห์ที่ 8
+การเตรียมตัวสำหรับสัปดาห์ที่ 8
+
+เปิดช่วงถาม-ตอบ (Q&A)
+“การบริหารโครงการที่ดี ไม่ใช่การทำให้แผนงานราบรื่นไร้ปัญหา แต่คือการเตรียมระบบและกระบวนการให้พร้อมรับมือกับทุกปัญหาอย่างมีสติ”
+ขอแสดงความยินดีกับทุกกลุ่มที่ผ่านการรับรอง Phase 2 Sign-off ในวันนี้
+ENGSE202: SOFTWARE PROJECT MANAGEMENT Q&A & DISCUSSION
+
+Project Management Institute. (2021). A Guide to the Project Management Body of Knowledge (PMBOK Guide) (7th ed.). Project Management Institute.
+Institute of Electrical and Electronics Engineers. (1998). IEEE Standard for Software Project Management Plans (IEEE Std 1058-1998).
+Cooper, R. G. (1990). Stage-gate systems: A new tool for managing new products. Business Horizons, 33(3), 44-54.
+Schwaber, K., & Sutherland, J. (2020). The Scrum Guide: The Definitive Guide to Scrum: The Rules of the Game.
+Kerzner, H. (2017). Project Management: A Systems Approach to Planning, Scheduling, and Controlling (12th ed.). Wiley.
+SOFTWARE MANAGEMENT BIBLIOGRAPHY เอกสารอ้างอิงทางวิชาการ
+เอกสารอ้างอิงทางวิชาการ
+
+https://itlawco.com/wp-content/uploads/2026/02/popia-code-of-conduct-gated-access-security-gate-data-processing-south-africa-hero-image.jpg
+Source: itlawco.com
+https://www.visual-paradigm.com/servlet/editor-content/scrum/scrum-sprint-cycle-in-8-steps/sites/7/2018/12/scrum-sprint-cycle.png
+Source: www.visual-paradigm.com
+https://confluence.atlassian.com/jirasoftwareserver/files/938845361/966063480/2/1681396594707/scrum_backlog_full.png
+Source: confluence.atlassian.com
+https://images.surferseo.art/a8d16eaf-738e-4c21-ab31-0fa2dcc47542.png
+Source: unito.io
+https://university.taylors.edu.my/content/dam/taylorsrevamp/university/student-life/campus-facilities/bizpod/latest-at-bizpod/news/2022/how-to-pitch-and-succeed-dr-ingky/taylors-bizpod-news-how-to-pitch-and-success-dr-ingky-banner-mobile-768x650.png/jcr:content/renditions/cq5dam.web.768.650.webp
+Source: university.taylors.edu.my
+Image Sources

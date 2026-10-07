@@ -1,0 +1,282 @@
+WEEK 14: BENEFIT REALIZATION & AUDIT
+ENGSE202: Benefit Realization & Audit
+“การวิเคราะห์ผลตอบแทนความคุ้มค่า (Maintenance ROI) การตรวจทานเช็คลิสต์ปิดโครงการตามกรอบ PMBOK Guide และการจัดระเบียบคลังความรู้ขององค์กร”
+Academic Framework: PMBOK Guide 7th Edition - Business Value Delivery & Project Closure
+ENGSE202: SOFTWARE PROJECT MANAGEMENT WEEK 14 MASTERCLASS
+
+1. Maintenance ROI
+คำนวณและวิเคราะห์ผลตอบแทนความคุ้มค่าจากการบำรุงรักษาซอฟต์แวร์ (Benefit Realization)
+2. Closure Checklist
+ตรวจสอบความสมบูรณ์โครงการผ่าน 4 เสาหลัก (Scope, Financial, Procurement, Stakeholder)
+3. Archiving OPAs
+รวบรวมและจัดเก็บสินทรัพย์กระบวนการองค์กร (OPAs) เข้าสู่คลังความรู้กลางอย่างเป็นระบบ
+4. Lessons Learned
+สังเคราะห์บทเรียนองค์กรระดับกลยุทธ์ (Strategic Synthesis) เตรียมนำเสนอ Final Defense
+WEEKLY COURSE OBJECTIVES ENGSE202
+เป้าหมายการเรียนรู้ประจำสัปดาห์
+
+สัปดาห์ที่ 13 (สิ่งที่วัดได้)
+เราได้ตัวเลขดัชนีชี้วัดความสำเร็จทางเทคนิคและการบริหาร:
+สัปดาห์ที่ 14 (คุณค่าทางธุรกิจ ⭐)
+ตอบคำถามผู้บริหารระดับสูงและ Sponsor:
+“ตัวเลข KPI เหล่านี้ สร้าง 'คุณค่าทางธุรกิจ (Business Value)' และผลตอบแทนความคุ้มค่า (ROI) แก่องค์กรอย่างไรบ้าง?”
+SPI = 1.00 (ส่งมอบงานตรงเวลา 100%)
+CPI = 0.96 (คุมงบประมาณในกรอบเงินสำรอง)
+Code Coverage = 94% และ v(G)  6
+STRATEGIC VALUE TRANSITION จากตัวชี้วัดสู่คุณค่าทางธุรกิจ
+จากตัวชี้วัดสู่คุณค่าทางธุรกิจ
+
+BUSINESS VALUE DELIVERY DOMAIN การส่งมอบผลประโยชน์ของโครงการ
+การส่งมอบผลประโยชน์ของโครงการ
+Tangible Benefits: วัดเป็นตัวเงินได้ เช่น ประหยัดค่าแรงแก้บั๊ก และยอดขายไม่ตกหล่น
+Intangible Benefits: ความพึงพอใจ ความเสถียร และความง่ายในการสืบทอดระบบ
+
+สมการคำนวณ ROI
+ประเมินอัตราผลตอบแทนจากการลงทุนปรับปรุงระบบตลอดระยะเวลา 1 ปี
+2 แหล่งที่มาของผลประโยชน์
+Benefit 1 (Debugging Savings): ลดเวลาแก้บั๊กจาก 10 ชม. เหลือ 2 ชม./เดือน
+Benefit 2 (Stockout Prevention): ระบบแจ้งเตือนสต็อกต่ำลดความสูญเสียยอดขาย
+FINANCIAL RETURN MECHANICS สูตรคำนวณ MAINTENANCE ROI
+สูตรคำนวณ Maintenance ROI
+
+🏆 โครงการให้ผลตอบแทนคุ้มค่าคืนทุน (Payback Period) ภายในเวลาไม่ถึง 8 เดือน
+รายการผลประโยชน์และต้นทุน (Financial Item)
+ฐานการคำนวณประเมินผลตลอดระยะเวลา 1 ปี
+มูลค่า (THB)
+ต้นทุนโครงการรวม (AC)
+ค่าแรงจริง + ค่าเครื่องมือตลอดทั้ง 3 Sprints
+16,100 THB
+ค่าแรงบำรุงรักษาที่ประหยัดได้
+ประหยัด 8 ชม./เดือน x 12 เดือน x 150 บาท/ชม.
++14,400 THB
+ยอดขายเพิ่มจากการไม่ขาดสต็อก
+ฟังก์ชัน Reorder Point & บาร์โค้ดทำงานเร็วขึ้น
++12,000 THB
+รวมผลประโยชน์ปีแรก (Benefits)
+14,400 + 12,000 บาท
++26,400 THB
+ผลตอบแทนจากการลงทุน (ROI)
+[(26,400 - 16,100) / 16,100] x 100\%
++63.9% 🟢
+FINANCIAL BUSINESS CASE กรณีศึกษา: การวิเคราะห์ ROI จริง
+กรณีศึกษา: การวิเคราะห์ ROI จริง
+
+PROJECT GOVERNANCE GATEWAY การตรวจรับรองความพร้อมปิดโครงการ
+การตรวจรับรองความพร้อมปิดโครงการ
+1. Scope & Quality: งานเสร็จตามเกณฑ์ DoD 100%
+2. Financial: บันทึกชั่วโมงและเคลียร์งบสำรอง
+3. Contractual: ปิดสัญญาเครื่องมือและ Decommission
+4. Stakeholder: รับรอง UAT และมีลายเซ็นครบ
+
+Jira & DoD Verification
+Technical Stability Audit
+การ์ดงานทุกใบใน Sprint 1, 2, 3 มีสถานะ Done 100% ไร้งานค้าง
+เกณฑ์ Definition of Done (DoD) ผ่านการตรวจสอบครบทุกข้อ
+ฟังก์ชัน CR-01 และ CR-02 ถูกรวมเข้าสู่สาย main
+ชุดทดสอบ PyTest Full Suite ผ่านไฟเขียว 100% ไร้บั๊กวิกฤต
+ผลทดสอบ Clean Environment ในสัปดาห์ 13 ผ่านการรับรอง
+ไม่มีข้อบกพร่องระดับ Critical ตกค้างบน Production
+CLOSURE PILLAR 1 เช็คลิสต์ 1: ขอบเขตและคุณภาพ
+เช็คลิสต์ 1: ขอบเขตและคุณภาพ
+
+Time & Actual Cost (AC)
+Contingency Settlement
+สมาชิกทุกคนกด Log Work บันทึกชั่วโมงจริงบน Jira ครบ 100%
+ตัวเลข AC ได้รับการกระทบยอดตรงกับชั่วโมงทำงานจริง
+คำนวณค่า CV = -575บาท สรุปผลต่างทางการเงินสมบูรณ์
+บัญชีเงินสำรองได้รับการตัดยอดและสรุปยอดคงเหลือ 100 บาท
+ทำเรื่องส่งคืนเงินสำรองส่วนเกิน 100 บาทให้แก่ Sponsor
+ปิดสมุดบัญชีโครงการ ไร้หนี้สินคั่งค้างทางการเงิน
+CLOSURE PILLAR 2 เช็คลิสต์ 2: การเงินและงบประมาณ
+เช็คลิสต์ 2: การเงินและงบประมาณ
+
+Reconciliation Verification
+Resource Decommissioning
+ตาราง Final Procurement Reconciliation ตรวจสอบครบทุกรายการ
+ตรวจสอบโควต้า GitHub Actions Minutes ไม่เกิน Free Tier
+ไม่มีภาระผูกพันสัญญาหรือค่าบริการค้างจ่าย (Zero Debt)
+ปิด (Terminate) ฐานข้อมูลทดสอบส่วนบุคคลเรียบร้อย
+ปิดระบบ Mock Server ชั่วคราว ป้องกันค่าใช้จ่ายรั่วไหล
+คงไว้เฉพาะ Production Server และ GitHub Repository หลัก
+CLOSURE PILLAR 3 เช็คลิสต์ 3: สัญญาและเครื่องมือ
+เช็คลิสต์ 3: สัญญาและเครื่องมือ
+
+Formal Sign-offs Obtained
+Final Acceptance Preparation
+จัดเตรียมร่างเอกสาร Final Project Acceptance Certificate ครบถ้วน เพื่อเตรียมลงนามปิดโครงการอย่างเป็นทางการในสัปดาห์ที่ 15
+เอกสาร UAT Sign-off Sheet มีลายเซ็นตัวแทนผู้ใช้งานจริง
+ข้อตกลง Scope Freeze Agreement ปฏิบัติตามอย่างเคร่งครัด
+ใบรับรอง Phase 3 Completion ได้รับลายเซ็นจาก Sponsor
+CLOSURE PILLAR 4 เช็คลิสต์ 4: การรับรองจากลูกค้า
+เช็คลิสต์ 4: การรับรองจากลูกค้า
+
+ORGANIZATIONAL KNOWLEDGE ASSET การจัดเก็บสินทรัพย์องค์กร (OPAS)
+การจัดเก็บสินทรัพย์องค์กร (OPAs)
+PM Artifacts: WBS, RACI, Cost Baseline Sheet
+Technical Artifacts: CI/CD Workflows, Linter Rules
+Governance: CCB Charter, UAT Sheets, Audit Logs
+
+ยกระดับจากข้อคิดเห็นดิบ (Raw Lessons) ในสัปดาห์ 13 สู่ การสังเคราะห์เชิงกลยุทธ์ 3 ระดับ:
+1. Strategic Level (กลยุทธ์)
+การตัดสินใจขอบเขต, การบริหารงบสำรองความเสี่ยง, และการเจรจาต่อรองกับผู้มีส่วนได้ส่วนเสีย
+2. Operational Level (กระบวนการ)
+การรันรอบ Agile, การคุม Burndown, และการบังคับใช้ WIP Limits
+3. Tactical / Technical (เทคนิค)
+เทคนิค Refactoring, ท่อ CI/CD, การดักจับบั๊ก Legacy Data Schema, และการทำ Atomic File Writing
+KNOWLEDGE MANAGEMENT DOMAIN การสังเคราะห์บทเรียนขององค์กร
+การสังเคราะห์บทเรียนขององค์กร
+
+ระดับบทเรียน
+ประเด็นความท้าทาย
+แนวทางแก้ไขที่ทำสำเร็จ
+ข้อเสนอแนะเชิงนโยบาย
+Strategic
+ลูกค้าขอเพิ่ม CSV ด่วนกลางคัน
+นำเข้า CCB และดึงเงินสำรอง 1,350 บ.
+ต้องมี Scope Freeze ล็อกระบบแต่แรก
+Operational
+งานค้างช่อง Code Review สูง
+ตั้งค่า WIP Limits 3 ใบ
+จำกัด WIP เสมอเพื่อลด Lead Time
+Tactical
+ข้อมูลเก่าไม่มีฟิลด์ Barcode
+แก้ Repository ใส่ Fallback
+ต้องทำ Migration ควบคู่เปลี่ยน Schema
+STRATEGIC SYNTHESIS MATRIX ตารางบทเรียนสังเคราะห์ 3 ระดับ
+ตารางบทเรียนสังเคราะห์ 3 ระดับ
+
+Read-Only / Archived Status
+Export Master Ledger
+ตรวจสอบว่าไม่มี Issue หรือ Sub-task ค้างในสถานะเปิด
+ปรับสถานะโปรเจกต์เป็น Archived ป้องกันการแก้ไขย้อนหลัง
+ล็อกประวัติการทำงานเพื่อความโปร่งใสทางวิชาการ
+ส่งออก (Export) ข้อมูลการ์ดงานและ Work Logs เป็นไฟล์ Excel
+ส่งออกรายงาน EVM และ Velocity Chart เข้าแฟ้มประวัติ
+จัดเก็บไฟล์ทั้งหมดลงในโฟลเดอร์ project_archives/
+TOOLING ARCHIVE GOVERNANCE การอัปเดตและปิดบอร์ด JIRA
+การอัปเดตและปิดบอร์ด Jira
+
+หมวด / บทที่
+หัวข้อสารบัญหลัก
+ผลผลิตเอกสาร (Deliverables)
+บทที่ 1: Overview
+บทสรุปผู้บริหารและทบทวนวัตถุประสงค์ตาม Charter
+Executive Review
+บทที่ 2: KPIs Scorecard
+ผลสัมฤทธิ์ของตัวชี้วัดความสำเร็จ (Baseline vs. Actuals)
+KPI Scorecard Table
+บทที่ 3: Business Value
+การประเมินคุณค่าและความคุ้มค่าทางธุรกิจ (ROI +63.9%)
+Maintenance ROI Statement
+บทที่ 4: Closure Readiness
+การตรวจรับรองความพร้อมปิดโครงการ 4 เสาหลัก
+4 Pillars Checklist
+บทที่ 5: Settlements
+สรุปการเงิน การจัดซื้อจัดจ้าง และการส่งคืนเงินสำรอง
+Financial Settlement Sheet
+บทที่ 6: Lessons Learned
+คลังบทเรียนโครงการเชิงสังเคราะห์ 3 ระดับ
+Lessons Learned Compendium
+FORMAL DOCUMENTATION ARCHITECTURE โครงสร้างเล่มรายงานปิดโครงการ
+โครงสร้างเล่มรายงานปิดโครงการ
+
+EXECUTIVE PITCHING STRATEGY ยุทธศาสตร์การพิทชิ่ง FINAL DEFENSE
+ยุทธศาสตร์การพิทชิ่ง Final Defense
+Part 1: The Problem & Legacy Debt (2 นาที)
+Part 2: Architecture Solution & Live Demo (8 นาที)
+Part 3: Governance KPIs & EVM Control (5 นาที)
+Part 4: Business ROI & Lessons Learned (5 นาที)
+
+Workshop: "Closure Readiness Audit & Benefit Realization Synthesis"
+1. ROI Report
+คำนวณผลตอบแทนความคุ้มค่าโครงการและจัดทำรายงานสรุป
+2. Audit 4 Pillars
+ตรวจสอบเช็คลิสต์ปิดโครงการ 4 ด้านครบถ้วนทุกข้อ
+3. Archive OPAs
+สังเคราะห์บทเรียน 3 ระดับ และจัดเก็บคลังสินทรัพย์ OPAs
+4. Defense Draft
+ปิดบอร์ด Jira และจัดทำโครงร่างสไลด์นำเสนอ Final Defense
+PRACTICAL LAB ACTIVITY แนะนำกิจกรรม WORKSHOP วันนี้
+แนะนำกิจกรรม Workshop วันนี้
+
+รวบรวมตัวเลขทางการเงิน
+จัดทำ Benefit Statement
+กรอกตัวเลขลงในสเปรดชีตคำนวณสูตร ROI และบันทึกผลการวิเคราะห์ลงในเอกสาร Benefit Realization Report เพื่อนำไปใส่ในสไลด์พิทชิ่ง
+ดึงค่าใช้จ่ายจริงรวม (AC = 16,100 บาท) จากรายงานสัปดาห์ 12
+ดึงมูลค่าเวลาที่ประหยัดได้จากการลดบั๊กในวิชา ENGSE225
+ประเมินมูลค่ายอดขายที่ไม่ตกหล่นจากการมีระบบเตือนสต็อก
+WORKSHOP EXECUTION STEP 1 ขั้นตอน 1: คำนวณ MAINTENANCE ROI
+ขั้นตอน 1: คำนวณ Maintenance ROI
+
+Scope, Quality & Financial
+Procurement & Stakeholder
+ตรวจสอบว่าการ์ดงาน Jira เป็น Done 100% ไร้งานค้าง
+ตรวจสอบผลรัน PyTest 100% Pass และ Clean Install ผ่าน
+ตรวจสอบยอดเงินสำรองคงเหลือ 100 บาทเตรียมส่งคืน
+ตรวจสอบใบเสร็จเครื่องมือและ Decommission คลาวด์เสร็จ
+ตรวจสอบใบรับรอง UAT และข้อตกลง Scope Freeze ครบ
+ติ๊กเครื่องหมายถูกลงในตาราง Readiness Checklist
+WORKSHOP EXECUTION STEP 2 ขั้นตอน 2: ตรวจเช็คลิสต์ 4 ด้าน
+ขั้นตอน 2: ตรวจเช็คลิสต์ 4 ด้าน
+
+สังเคราะห์บทเรียน 3 ระดับ
+นำประเด็นบทเรียนจากสัปดาห์ที่ 13 มากลั่นกรองเป็นระดับ Strategic, Operational, และ Tactical พร้อมระบุข้อเสนอแนะเชิงนโยบายที่นำไปใช้ได้จริง
+จัดระเบียบโฟลเดอร์ OPAs
+รวบรวมไฟล์แม่แบบ WBS, RACI, CCB Forms, และ Workflow CI/CD ใส่ลงในโฟลเดอร์ project_archives/ บน GitHub เตรียมส่งมอบ
+WORKSHOP EXECUTION STEP 3 ขั้นตอน 3: สังเคราะห์บทเรียน OPAS
+ขั้นตอน 3: สังเคราะห์บทเรียน OPAs
+
+ปรับสถานะเป็น Archived
+เข้าสู่เมนู Project Settings ➔ ปรับสถานะโปรเจกต์เป็น Archived เพื่อล็อกข้อมูลทั้งหมดไว้เป็นประวัติศาสตร์
+Export Master Data
+สั่ง Export รายงาน All Issues และ Work Logs ออกมาเป็นไฟล์ Excel/CSV และแคปเจอร์ภาพหน้าจอความสำเร็จแนบในเล่มรายงาน
+WORKSHOP EXECUTION STEP 4 ขั้นตอน 4: ปิดและ EXPORT บน JIRA
+ขั้นตอน 4: ปิดและ Export บน Jira
+
+แบ่งบทบาทการนำเสนอ
+ซักซ้อมกรอบเวลา 20 นาที
+จัดเรียงสไลด์ 4 ส่วนตาม Storyboard (Problem ➔ Architecture Demo ➔ Governance KPIs ➔ ROI & Lessons Learned) และซ้อมพูดให้พอดีเวลา
+PM: นำเสนอภาพรวม, KPIs, EVM, และผลลัพธ์ ROI
+Tech Lead: นำเสนอสถาปัตยกรรม As-Built และ Live Demo
+QA / Dev: นำเสนอผลการทดสอบ PyTest และบทเรียน
+WORKSHOP EXECUTION STEP 5 ขั้นตอน 5: วางโครงร่างสไลด์ DEFENSE
+ขั้นตอน 5: วางโครงร่างสไลด์ Defense
+
+ชิ้นงาน 1: รายงานการส่งมอบผลประโยชน์และความคุ้มค่าโครงการ (Benefit Realization & Maintenance ROI Analysis)
+ชิ้นงาน 2: เอกสารตรวจรับความพร้อมปิดโครงการ (Project Closure Readiness Checklist) ครบทั้ง 4 ด้าน
+ชิ้นงาน 3: เล่มสรุปบทเรียนและคลังความรู้โครงการฉบับสังเคราะห์ (Archived OPAs & Lessons Learned Compendium)
+ชิ้นงาน 4: หลักฐานการปิดบอร์ด Jira (Archived Status) และไฟล์ Export ประวัติการดำเนินโครงการ
+PHASE 4.2 MANAGEMENT DELIVERABLES เช็คลิสต์สิ่งส่งมอบสัปดาห์ 14
+เช็คลิสต์สิ่งส่งมอบสัปดาห์ 14
+
+Business Value Justified
+โครงการซอฟต์แวร์ที่ยอดเยี่ยมต้องพิสูจน์ความคุ้มค่าของการลงทุน (ROI) ชัดเจน
+Rigorous Closure Audit
+การตรวจรับรองความพร้อม 4 ด้านช่วยป้องกันความเสี่ยงและข้อพิพาทหลังส่งมอบ
+Knowledge as Wealth
+การจัดเก็บ OPAs และบทเรียนสังเคราะห์เปลี่ยนประสบการณ์ให้เป็นสินทรัพย์ถาวร
+SESSION RECAP สรุปบทเรียนประจำสัปดาห์ที่ 14
+สรุปบทเรียนประจำสัปดาห์ที่ 14
+
+ช่วงถาม-ตอบ (Q&A Session)
+“การบริหารโครงการที่ยอดเยี่ยม ไม่ได้จบลงแค่วันที่ระบบทำงานได้ แต่จบลงอย่างสมบูรณ์เมื่อเราสามารถพิสูจน์คุณค่า ปิดบัญชีอย่างโปร่งใส และส่งต่อความรู้ให้แก่องค์กรได้อย่างเต็มภาคภูมิ”
+เตรียมตัวให้พร้อมสำหรับการนำเสนอใหญ่ (The Grand Finale: Final Defense) ในสัปดาห์ที่ 15
+ENGSE202: SOFTWARE PROJECT MANAGEMENT Q&A & DISCUSSION
+
+Project Management Institute. (2021). A Guide to the Project Management Body of Knowledge (PMBOK Guide) (7th ed.). Project Management Institute.
+Project Management Institute. (2019). Benefits Realization Management: A Practice Guide. Project Management Institute.
+Kerzner, H. (2017). Project Management: A Systems Approach to Planning, Scheduling, and Controlling (12th ed.). Wiley.
+Erdogmus, H., Favaro, J., & Strigel, W. (2004). Return on investment. IEEE Software, 21(3), 18-22.
+Flemming, Q. W., & Koppelman, J. M. (2010). Earned Value Project Management (4th ed.). Project Management Institute.
+PROJECT MANAGEMENT BIBLIOGRAPHY เอกสารอ้างอิงทางวิชาการ
+เอกสารอ้างอิงทางวิชาการ
+
+https://web-assets.bcg.com/dims4/default/add9172/2147483647/strip/true/crop/2480x1491+0+0/resize/768x462!/format/webp/quality/80/?url=http%3A%2F%2Fboston-consulting-group-brightspot.s3.amazonaws.com%2F7d%2Fc0%2F513573bf49d9ad6e1244062c62ce%2Fthe-art-of-capital-allocation-ex2.png
+Source: www.bcg.com
+https://www.slideteam.net/media/catalog/product/cache/1280x720/p/r/project_closure_checklist_to_track_status_establishing_plan_for_successful_project_slide01.jpg
+Source: www.slideteam.net
+https://www.liferay.com/documents/246440966/376969236/Purpose-Knowledge-Management-System+%281%29.jpg/886e9c44-4e54-a15f-e90a-7a730aa9b4ba/Purpose-Knowledge-Management-System+%281%29.jpg?version=1.0&t=1787212771183
+Source: www.liferay.com
+https://cdn.prod.website-files.com/693305272ae98c274191dfde/69ce5112c1d9b78739612afe_DSC_1222%201%20copy.jpg
+Source: www.pontsbschool.com
+Image Sources

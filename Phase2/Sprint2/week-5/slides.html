@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>สไลด์สัปดาห์ที่ 5 | CLI Inventory Management</title>
+  <style>
+    :root {
+      --font: "Noto Sans Thai", "Leelawadee UI", system-ui, sans-serif;
+      --serif: "TH Sarabun New", "Angsana New", Georgia, serif;
+      --bg: #e7eeee;
+      --paper: #fff;
+      --ink: #122a38;
+      --muted: #49616b;
+      --accent: #0867a1;
+      --line: #bfd0d4;
+      --soft: #e8f3f8;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: var(--font);
+      color: var(--ink);
+      background: var(--bg);
+      font-size: 24px;
+      line-height: 1.5;
+    }
+    a:focus-visible, button:focus-visible {
+      outline: 3px solid var(--accent);
+      outline-offset: 3px;
+    }
+    .back-link { color: var(--accent); font-weight: 700; text-decoration: none; }
+    .template-deck {
+      min-height: 100vh;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      background: var(--bg);
+    }
+    .deck-header, .deck-controls {
+      width: min(1440px, calc(100% - 48px));
+      margin: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      color: var(--muted);
+      font-size: 18px;
+    }
+    .deck-header { padding: 18px 0; }
+    .deck-controls { padding: 18px 0; }
+    .deck-controls button {
+      min-height: 44px;
+      padding: 10px 16px;
+      border: 1px solid var(--line);
+      background: var(--paper);
+      color: var(--ink);
+      font: 700 18px var(--font);
+      cursor: pointer;
+    }
+    .deck-controls button:disabled { opacity: .35; cursor: default; }
+.deck-controls button:hover:not(:disabled) {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+    }
+    .deck-frame {
+      width: min(1440px, calc(100vw - 48px), calc((100vh - 132px) * 16 / 9));
+      aspect-ratio: 16/9;
+      margin: auto;
+      overflow: hidden;
+      background: var(--paper);
+      box-shadow: 0 18px 46px rgb(18 42 56 / 18%);
+    }
+    .slide {
+      display: none;
+      height: 100%;
+      padding: 3.5% 4.5%;
+      align-content: center;
+      font-size: clamp(24px, 1.8vw, 28px);
+    }
+    .slide.active { display: grid; }
+    .slide h1, .slide h2 {
+      margin: 0;
+      letter-spacing: -.04em;
+      line-height: 1.08;
+    }
+    .slide h1 { font-size: clamp(36px, 5vw, 76px); }
+    .slide h2 { font-size: clamp(24px, 2.4vw, 34px); }
+    .slide-label {
+      margin: 0 0 20px;
+      color: var(--accent);
+      font-weight: 800;
+    }
+    .slide-lead {
+      max-width: 50ch;
+      margin: 10px 0 0;
+      color: var(--muted);
+      font-size: clamp(24px, 1.8vw, 26px);
+      line-height: 1.45;
+    }
+    .cover-layout, .content-layout {
+      display: grid;
+      grid-template-columns: 1.12fr .88fr;
+      gap: 7%;
+      align-items: center;
+    }
+    .cover-meta {
+      margin: 0;
+      padding: 14px 0;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      color: var(--muted);
+      line-height: 1.7;
+    }
+    .rule-list {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      border-top: 1px solid var(--line);
+    }
+    .rule-list li {
+      display: grid;
+      grid-template-columns: 32% 1fr;
+      gap: 18px;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--line);
+    }
+    .rule-list strong { color: var(--accent); }
+    table {
+      width: 100%;
+      margin-top: 16px;
+      border-collapse: collapse;
+      font-size: clamp(20px, 1.5vw, 24px);
+    }
+    th {
+      padding: 8px 14px;
+      background: var(--ink);
+      color: #fff;
+      text-align: left;
+    }
+    td {
+      padding: 8px 14px;
+      border-bottom: 1px solid var(--line);
+    }
+    tbody tr:nth-child(even) { background: #f3f7f7; }
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+    .metrics div { padding: 14px 18px; border-right: 1px solid var(--line); }
+    .metrics div:last-child { border: 0; }
+    .metrics b { display: block; font-size: clamp(26px, 3.2vw, 44px); letter-spacing: -.05em; }
+    .metrics span { display: block; margin-top: 9px; color: var(--muted); }
+    .next-steps { margin: 0; padding-left: 1.2em; }
+    .next-steps li {
+      padding: 8px 0;
+      color: var(--muted);
+      font-size: 24px;
+    }
+    @media (max-width: 720px) {
+      .deck-header, .deck-controls { width: calc(100% - 32px); flex-wrap: wrap; }
+      .deck-frame { width: 100%; aspect-ratio: auto; overflow: visible; box-shadow: none; }
+      .slide { height: auto; min-height: 70vh; padding: 6%; }
+      .cover-layout, .content-layout { grid-template-columns: 1fr; gap: 20px; }
+      .cover-meta { padding: 14px 0; }
+      .rule-list li { grid-template-columns: 1fr; gap: 4px; padding: 10px 0; }
+      .metrics { grid-template-columns: 1fr; }
+      .metrics div { padding: 12px 9px; border-right: 0; border-bottom: 1px solid var(--line); }
+      .metrics div:last-child { border-bottom: 0; }
+      th, td { padding: 8px 10px; }
+      .deck-controls button { padding: 8px 12px; }
+    }
+    @media print {
+      .template-deck { display: block; background: #fff; }
+      .deck-header, .deck-controls { display: none; }
+      .deck-frame { width: 100%; aspect-ratio: auto; overflow: visible; box-shadow: none; }
+      .slide { display: grid; break-after: page; height: auto; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      * { scroll-behavior: auto !important; }
+    }
+  </style>
+</head>
+<body class="template-deck" data-template="evidence">
+  <header class="deck-header">
+    <a class="back-link" href="index.html">← กลับเอกสารสัปดาห์ที่ 5</a>
+    <span id="slide-counter" aria-live="polite">1 / 7</span>
+  </header>
+  <main class="deck-frame" aria-label="สไลด์สัปดาห์ที่ 5">
+<section class="slide active" id="slide-1">
+<div class="cover-layout"><div><p class="slide-label">สัปดาห์ที่ 5 · สถาปัตยกรรมและงบประมาณ</p><h1>จากระบบเดิมถึงเป้าใหม่พร้อมงบคุมได้</h1><p class="slide-lead">สัปดาห์นี้ตอบ 3 คำถาม: ระบบเดิมไปต่อได้หรือไม่ เป้าใหม่อยู่ตรงไหน และงบเท่าไร [ข้อมูลจำลองเพื่อการศึกษา]</p></div><p class="cover-meta">เอกสาร: architecture.md<br>iso25010_evaluation.md<br>budget_worksheet.md</p></div>
+</section>
+<section class="slide" id="slide-2">
+<div class="content-layout"><div><h2>ระบบเดิม (As-Is) เป็นสคริปต์เดี่ยวที่ไฟล์พังได้</h2><p class="slide-lead">ที่มา: architecture.md ผัง flowchart — จุดเสี่ยงสีแดง 2 จุดที่โหลดและบันทึก</p></div><ul class="rule-list"><li><strong>โหลด/บันทึก</strong><span>อ่าน data.json ทั้งไฟล์ เขียนทับทั้งไฟล์เมื่อเพิ่มหรือเบิก</span></li><li><strong>เมนู 4 ทาง</strong><span>แสดง เพิ่ม เบิก จบ วนลูปกับ dictionary ในหน่วยความจำ</span></li><li><strong>ไร้เกราะ</strong><span>ไม่ดัก input ผิด ไม่มี transaction ไฟดับไฟล์พังได้</span></li></ul></div>
+</section>
+<section class="slide" id="slide-3">
+<h2>เป้าใหม่แยก 5 คลาสบน SQLite กันข้อมูลหาย</h2>
+<p class="slide-lead">ที่มา: architecture.md แผนภาพ UML — ระบบสมาชิก 4 ระดับยังเป็นแบบออกแบบ</p>
+<table><thead><tr><th>คลาส</th><th>บทบาท</th><th>หมายเหตุ</th></tr></thead><tbody><tr><td>SystemCLI</td><td>Facade รับเมนูประสานงาน</td><td>start display handle</td></tr><tr><td>DatabaseManager</td><td>Singleton เชื่อมต่อเดียว</td><td>commit rollback close</td></tr><tr><td>ProductManager</td><td>Service ดูแลสต็อก</td><td>validate ก่อนอัปเดต</td></tr><tr><td>MemberSystem</td><td>Strategy ส่วนลด 4 ระดับ</td><td>Regular Silver Gold Platinum</td></tr><tr><td>CheckoutProcess</td><td>Controller คิดเงินออกใบเสร็จ</td><td>คำนวณราคาสุทธิ</td></tr></tbody></table>
+</section>
+<section class="slide" id="slide-4">
+<h2>WBS 8 งานใช้เวลาประเมินรวม 40 ชั่วโมง</h2>
+<p class="slide-lead">ที่มา: budget_worksheet.md — เวลาประเมิน ไม่ใช่เวลาจริง</p>
+<table><thead><tr><th>รหัส</th><th>งาน</th><th>ชม.</th></tr></thead><tbody><tr><td>WBS-01</td><td>ออกแบบ To-Be และ class diagram</td><td>5</td></tr><tr><td>WBS-02</td><td>ตั้ง SQLite ย้ายข้อมูลจาก JSON</td><td>5</td></tr><tr><td>WBS-03</td><td>คลาส DatabaseManager Singleton</td><td>4</td></tr><tr><td>WBS-04</td><td>ProductManager จัดการสต็อก</td><td>4</td></tr><tr><td>WBS-05</td><td>MemberSystem สมาชิกและส่วนลด</td><td>4</td></tr><tr><td>WBS-06</td><td>SystemCLI Facade หน้าจอผู้ใช้</td><td>3</td></tr><tr><td>WBS-07</td><td>รวมระบบและทดสอบ integration</td><td>10</td></tr><tr><td>WBS-08</td><td>ตรวจคุณภาพโค้ดและเอกสารสรุป</td><td>5</td></tr></tbody></table>
+</section>
+<section class="slide" id="slide-5">
+<h2>ต้นทุนแรงงานประเมินไว้ 31,000 บาท</h2>
+<p class="slide-lead">ที่มา: budget_worksheet.md [ข้อมูลจำลองเพื่อการศึกษา]</p>
+<table><thead><tr><th>รายการ</th><th>ยอด (บาท)</th></tr></thead><tbody><tr><td>แรงงาน PM 500x20 ชม</td><td>10,000</td></tr><tr><td>แรงงาน Tech Lead 600x25 ชม</td><td>15,000</td></tr><tr><td>แรงงาน QA 400x15 ชม</td><td>6,000</td></tr><tr><td>รวมแรงงาน 60 ชม 31,000</td><td>31,000</td></tr></tbody></table>
+</section>
+<section class="slide" id="slide-6">
+<h2>งบโครงการรวม 39,100 บาทพร้อมสำรอง 15 เปอร์เซ็นต์</h2>
+<p class="slide-lead">ที่มา: budget_worksheet.md [ข้อมูลจำลองเพื่อการศึกษา] — คนละฐานคิดกับงบฐาน 18,823 ของสัปดาห์ที่ 7</p>
+<table><thead><tr><th>รายการ</th><th>ยอด (บาท)</th></tr></thead><tbody><tr><td>โครงสร้างพื้นฐาน cloud CI license</td><td>3,000</td></tr><tr><td>ฐานต้นทุนรวม</td><td>34,000</td></tr><tr><td>สำรองเสี่ยง 15 เปอร์เซ็นต์</td><td>5,100</td></tr><tr><td>งบโครงการรวม</td><td>39,100</td></tr><tr><td>งบฐานอนุมัติสัปดาห์ที่ 7</td><td>18,823</td></tr></tbody></table>
+</section>
+<section class="slide" id="slide-7">
+<h2>ISO 25010 verdict: 3 ด้านต่ำต้องรื้อ</h2>
+<p class="slide-lead">ที่มา: iso25010_evaluation.md ประเมิน app_v1.py — คำตัดสิน: Reliability Security Maintainability ต่ำ ต้องย้าย SQLite แบบ OOP</p>
+<table><thead><tr><th>ด้าน</th><th>ผลประเมิน</th></tr></thead><tbody><tr><td>Functional</td><td>พื้นฐานได้ ขาดสมาชิกและกันติดลบ</td></tr><tr><td>Performance</td><td>ไฟล์เล็กเร็ว โตแล้วโหลดทั้งไฟล์ช้า</td></tr><tr><td>Compatibility</td><td>ข้ามแพลตฟอร์ม ไม่มี API เชื่อมต่อ</td></tr><tr><td>Usability</td><td>CLI ยาก ไม่มี validation หลุดง่าย</td></tr><tr><td>Reliability</td><td>ต่ำมาก ไม่มี transaction ไฟล์พังได้</td></tr><tr><td>Security</td><td>ต่ำมาก plain-text ไร้ auth</td></tr><tr><td>Maintainability</td><td>ต่ำมาก monolith ไม่ตาม PEP 8</td></tr><tr><td>Portability</td><td>มี Python รันได้ทุก OS</td></tr></tbody></table>
+</section>
+<section class="slide" id="slide-8">
+<div class="cover-layout"><div><h2>ยึดเวิร์กชีตเป็นกรอบ เทียบเวลาจริงบน Trello</h2><p class="slide-lead">ยึดเวิร์กชีตเป็นกรอบ เทียบเวลาจริงใน Trello [ข้อมูลจำลองเพื่อการศึกษา]</p></div><ol class="next-steps"><li>ตั้ง Trello custom fields: Estimated Actual Cost ทุกการ์ด</li><li>สมาชิกบันทึก Actual Hours เมื่อเสร็จเพื่อเทียบประเมิน (ที่มา: work.md ครบทุกรายการ)</li><li>ทบทวน To-Be กับ Tech Lead ก่อนย้ายฐานข้อมูลจริง</li></ol></div>
+</section>
+</main>
+  <footer class="deck-controls"><button id="previous" type="button" aria-label="สไลด์ก่อนหน้า">← ก่อนหน้า</button><button id="next" type="button" aria-label="สไลด์ถัดไป">ถัดไป →</button></footer>
+  <script>
+const slides = [...document.querySelectorAll(".slide")];
+const count = document.querySelector("#slide-counter");
+const storageKey = "spm-week-5-evidence";
+function slideFromHash() {
+  const match = /#slide-(\d+)/.exec(window.location.hash || "");
+  if (!match) return null;
+  const index = Number.parseInt(match[1], 10) - 1;
+  return Number.isInteger(index) && index >= 0 && index < slides.length ? index : null;
+}
+function storedSlide() {
+  try {
+    const value = window.localStorage.getItem(storageKey);
+    if (value === null) return null;
+    const index = Number.parseInt(value, 10);
+    return Number.isInteger(index) && index >= 0 && index < slides.length ? index : null;
+  } catch (error) {
+    return null;
+  }
+}
+function rememberSlide(index) {
+  try {
+    window.localStorage.setItem(storageKey, String(index));
+  } catch (error) {
+  }
+}
+let current = slideFromHash() ?? storedSlide() ?? 0;
+function show(index) {
+  current = Math.min(Math.max(index, 0), slides.length - 1);
+  slides.forEach((slide, position) => slide.classList.toggle("active", position === current));
+  count.textContent = `${current + 1} / ${slides.length}`;
+  previousBtn.disabled = current === 0;
+  nextBtn.disabled = current === slides.length - 1;
+  rememberSlide(current);
+  try {
+    window.history.replaceState(null, "", `#slide-${current + 1}`);
+  } catch (error) {
+  }
+}
+function showFromHash() {
+  const index = slideFromHash();
+  if (index !== null) show(index);
+}
+var previousBtn = document.querySelector("#previous");
+var nextBtn = document.querySelector("#next");
+previousBtn.addEventListener("click", () => show(current - 1));
+nextBtn.addEventListener("click", () => show(current + 1));
+document.addEventListener("keydown", (event) => {
+  if (event.key === "ArrowRight" || event.key === "PageDown" || event.key === " ") {
+    event.preventDefault();
+    show(current + 1);
+  }
+  if (event.key === "ArrowLeft" || event.key === "PageUp") {
+    event.preventDefault();
+    show(current - 1);
+  }
+  if (event.key === "Home") {
+    event.preventDefault();
+    show(0);
+  }
+  if (event.key === "End") {
+    event.preventDefault();
+    show(slides.length - 1);
+  }
+});
+window.addEventListener("hashchange", showFromHash);
+show(current);
+  </script>
+</body>
+</html>

@@ -1,7 +1,7 @@
 data.json
+inventory.db
 /.agents
 .env
 test.json
 __pycache__
 .pytest_cache
-work

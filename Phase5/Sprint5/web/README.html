@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,
+      initial-scale=1.0">
+<title>README | SPM</title>
+<link rel="stylesheet" href="../../../theme.css">
+<style>@page { size: A4; margin: 18mm 16mm; }
+body { font-family: "Noto Sans Thai", "Liberation Sans", sans-serif;
+  font-size: 11pt; line-height: 1.7; color: #1a1a1a; max-width: 900px;
+  margin: 0 auto; padding: 24px 20px 60px; }
+h1 { font-size: 22pt; border-bottom: 3px solid #1a56db; padding-bottom: 8px; }
+h2 { font-size: 14pt; color: #1a56db; margin-top: 1.6em;
+  border-bottom: 1px solid #e5e7eb; padding-bottom: 4px; }
+h3 { font-size: 12pt; margin-top: 1.2em; }
+table { border-collapse: collapse; width: 100%; margin: 0.9em 0;
+  font-size: 9.5pt; }
+th, td { border: 1px solid #cbd5e1; padding: 6px 9px; text-align: left;
+  vertical-align: top; }
+th { background: #eef2ff; }
+tr:nth-child(even) td { background: #fafbff; }
+code { font-family: "Noto Sans Mono", monospace; font-size: 9pt;
+  background: #f3f4f6; padding: 1px 5px; border-radius: 3px; }
+pre { background: #f3f4f6; padding: 12px; border-radius: 6px;
+  overflow-x: auto; font-size: 8.5pt; line-height: 1.5; }
+pre code { background: none; padding: 0; }
+blockquote { margin: 1em 0; padding: 8px 14px; border-left: 4px solid #1a56db;
+  background: #f5f8ff; }
+.nav { background: #1a1a2e; color: #fff; padding: 10px 16px;
+  border-radius: 8px; margin-bottom: 20px; font-size: 13px; }
+.nav a { color: #c7d6ff; text-decoration: none; margin-right: 14px; }
+.nav a:hover { color: #fff; text-decoration: underline; }
+.note { color: #5b6472; font-size: 10pt; margin-top: 40px;
+  border-top: 1px solid #e5e7eb; padding-top: 10px; }
+@media print { .nav { display: none; } }</style>
+</head>
+<body>
+<nav class="nav"><a href="../../../index.html">หน้าแรก</a><a href="../../../Phase1/README.html">Phase1</a><a href="../../../Phase2/README.html">Phase2</a><a href="../../../Phase3/README.html">Phase3</a><a href="../../../Phase4/README.html">Phase4</a><a href="../../../Phase5/README.html">Phase5 (หน้านี้)</a></nav>
+<h1>[Historical / Superseded] Inventory Web (v4.0-web)</h1>
+<blockquote>
+<p>implementation นี้ถูกแทนที่ด้วย Desktop Program (<code>program.py</code>) และเก็บไว้เพื่อ traceability เท่านั้น</p>
+</blockquote>
+<p>เว็บ responsive สำหรับระบบคลังสินค้า: Backend FastAPI reuse ตรรกะ
+<code>app.py</code> v3.0 ทั้งก้อน (CLI เดิมยังใช้ได้) Frontend HTML/CSS/JS ล้วน</p>
+<h2>วิธีรัน (dev, จากรากรีโป)</h2>
+<pre><code class="language-bash">pip install -r requirements.txt
+PYTHONPATH=Phase5/Sprint5 uvicorn web.backend.main:app --reload
+</code></pre>
+<ul>
+<li>เปิดเว็บ: http://127.0.0.1:8000/</li>
+<li>API docs: http://127.0.0.1:8000/docs</li>
+<li>ฐานข้อมูล: <code>inventory.db</code> ที่รากรีโป (สร้าง + seed อัตโนมัติ);
+  เปลี่ยนได้ด้วย env <code>INVENTORY_DB=/path/to/file.db</code></li>
+</ul>
+<h2>โครง (อยู่ใน <code>Phase5/Sprint5/web/</code>)</h2>
+<ul>
+<li><code>backend/main.py</code> — app + <code>/api/health|summary|export.csv</code> + serve frontend</li>
+<li><code>backend/api_products.py</code>, <code>api_members.py</code>, <code>api_checkout.py</code></li>
+<li><code>backend/deps.py</code> — ต่อ domain เดิมแบบ lazy (import แล้วไม่มี side effect)</li>
+<li><code>backend/test_web_api.py</code> — เทสต์ API
+  (<code>pytest Phase5/Sprint5/web/backend/test_web_api.py -q</code>)</li>
+<li><code>frontend/</code> — SPA 4 หน้า (dashboard/products/members/checkout)</li>
+</ul>
+<h2>API ย่อ</h2>
+<p><code>GET/POST /api/products</code>, <code>GET/PUT/DELETE /api/products/{id}</code>,
+<code>POST /api/products/{id}/cut</code>, <code>GET /api/summary</code>, <code>GET /api/export.csv</code>,
+<code>GET/POST /api/members</code>, <code>GET/DELETE /api/members/{id}</code>,
+<code>GET /api/members/tiers</code>, <code>POST /api/checkout</code></p>
+<h2>เดโม 2 นาที (หลังรัน server)</h2>
+<ol>
+<li>เปิด <code>/</code> → แดชบอร์ดขึ้นยอด 3 ประเภท / 1,540 THB</li>
+<li>หน้า <code>สินค้า</code> → เพิ่ม <code>G9 Gold Item 10×500</code> → กด <code>-1</code> ตัดสต็อก</li>
+<li>หน้า <code>สมาชิก</code> → สมัคร <code>VIP1 / Gold</code></li>
+<li>หน้า <code>ขาย</code> → <code>G9 × 2 + VIP1</code> → ใบเสร็จ Subtotal 1,000 − Gold 100 = <strong>900</strong></li>
+<li>ปุ่ม <code>โหลด CSV</code> → เปิดใน Excel ได้เลย</li>
+<li>ลองตัดเกินสต็อก / กรอกราคาติดลบ → error สวย ไม่ล่ม</li>
+</ol>
+<p class="note">รายงานอัตโนมัติจาก <code>Phase5/Sprint5/web/README.md</code> — ข้อมูลสมมติเพื่อการเรียน (สร้างด้วย <code>tools/build_reports.py</code>)</p>
+</body>
+</html>

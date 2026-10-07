@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="th">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Final Sprint 1–5 Presentation</title>
+  <style>
+    :root {
+      font-family: "Noto Sans", "Noto Sans Thai", sans-serif;
+      color: #182b36;
+      background: #e7eef2
+    }
+
+    * {
+      box-sizing: border-box
+    }
+
+    body {
+      margin: 0
+    }
+
+    .toolbar {
+      width: min(1280px, calc(100% - 32px));
+      margin: 12px auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #667b86
+    }
+
+    .deck {
+      width: min(1280px, calc(100vw - 32px));
+      aspect-ratio: 16/9;
+      margin: auto;
+      background: #fff;
+      box-shadow: 0 20px 50px #102a3a22;
+      overflow: hidden
+    }
+
+    .slide {
+      display: none;
+      width: 100%;
+      height: 100%;
+      padding: 5% 5%;
+      position: relative;
+      background: #f3f6f8
+    }
+
+    .slide.active {
+      display: block
+    }
+
+    .kicker {
+      font-size: 14px;
+      font-weight: 800;
+      color: #0a6d9f;
+      text-transform: uppercase;
+      letter-spacing: .06em
+    }
+
+    h1 {
+      margin: 20px 0 12px;
+      font-size: clamp(32px, 4vw, 60px);
+      line-height: 1.08;
+      color: #102a3a;
+      max-width: 90%
+    }
+
+    p {
+      font-size: clamp(18px, 2vw, 28px);
+      line-height: 1.45;
+      color: #667b86;
+      max-width: 85%;
+      margin: 0 0 24px
+    }
+
+    img {
+      display: block;
+      max-width: 82%;
+      max-height: 56%;
+      object-fit: contain;
+      border: 1px solid #d9e3e8;
+      border-radius: 14px;
+      background: white
+    }
+
+    .foot {
+      position: absolute;
+      left: 5%;
+      right: 5%;
+      bottom: 3.5%;
+      border-top: 1px solid #d9e3e8;
+      padding-top: 10px;
+      display: flex;
+      justify-content: space-between;
+      color: #667b86;
+      font-size: 12px
+    }
+
+    .controls {
+      width: min(1280px, calc(100% - 32px));
+      margin: 12px auto;
+      display: flex;
+      justify-content: space-between
+    }
+
+    button {
+      font: 700 14px "Noto Sans";
+      padding: 10px 18px;
+      border-radius: 8px;
+      border: 1px solid #d9e3e8;
+      background: white;
+      color: #102a3a
+    }
+
+    button:disabled {
+      opacity: .35
+    }
+
+    @media print {
+      @page {
+        size: 13.333in 7.5in;
+        margin: 0
+      }
+
+      .toolbar,
+      .controls {
+        display: none
+      }
+
+      .deck {
+        width: 13.333in;
+        aspect-ratio: auto;
+        box-shadow: none;
+        overflow: visible
+      }
+
+      .slide {
+        display: block !important;
+        width: 13.333in;
+        height: 7.5in;
+        break-after: page
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="toolbar"><strong>Final Presentation · Sprint 1–5</strong><span id="counter"></span></div>
+  <main class="deck">
+    <section class="slide" id="slide-1">
+      <div class="kicker">Software Project Management</div>
+      <h1>วิวัฒนาการระบบจัดการสินค้าคงคลัง</h1>
+      <p>จาก CLI รุ่นแรก → SQLite → โปรแกรม Desktop UI</p>
+      <img src="img/das.png" alt="วิวัฒนาการระบบจัดการสินค้าคงคลัง">
+      <div class="foot"><span>Sprint 1–5 · Final Presentation</span><b>01</b></div>
+    </section>
+    <section class="slide" id="slide-2">
+      <div class="kicker">Project Overview</div>
+      <h1>ทีม เป้าหมาย และขอบเขต</h1>
+      <p>ภานุวัฒน์ ต๋าคำ · เอกพันธ์ ทศทิศรังสรรค์ · ณฐภาพ สายหล้า</p>
+
+      <div class="foot"><span>Sprint 1–5 · Final Presentation</span><b>02</b></div>
+    </section>
+    <section class="slide" id="slide-3">
+      <div class="kicker">Roadmap</div>
+      <h1>Sprint 1 → Sprint 5</h1>
+      <p>15 SP → 13 SP → 16 SP → 5 SP → 46 SP · รวม 95 SP</p>
+
+      <div class="foot"><span>Sprint 1–5 · Final Presentation</span><b>03</b></div>
+    </section>
+    <section class="slide" id="slide-4">
+      <div class="kicker">Sprint 1</div>
+      <h1>ระบบเดิมแบบ Monolithic</h1>
+      <p>CLI 5 เมนู · JSON เขียนทับตรง · global state · CC main = 14</p>
+      <img src="img-ระบบเดิม/CLI.png" alt="ระบบเดิมแบบ Monolithic">
+      <div class="foot"><span>Sprint 1–5 · Final Presentation</span><b>04</b></div>
+    </section>
+    <section class="slide" id="slide-5">
+      <div class="kicker">Sprint 1</div>
+      <h1>Hotspot → Refactor → Automated Test</h1>
+      <p>OOP 3 คลาส · Atomic Save · Validation · PyTest 5/5</p>
+      <img src="img-ระบบเดิม/Hotspot Flow Diagram.png" alt="Hotspot → Refactor → Automated Test">
+      <div class="foot"><span>Sprint 1–5 · Final Presentation</span><b>05</b></div>
+    </section>
+    <section class="slide" id="slide-6">
+      <div class="kicker">Sprint 2</div>
+      <h1>To-Be Architecture + Quality Gate</h1>
+      <p>Presentation → Service → Repository → SQLite · Cost Baseline 18,823 บาท</p>
+
+      <div class="foot"><span>Sprint 1–5 · Final Presentation</span><b>06</b></div>
+    </section>
+    <section class="slide" id="slide-7">
+      <div class="kicker">Sprint 3</div>
+      <h1>Change Control</h1>
+      <p>CR-01 Barcode/ROP · CR-02 CSV · BUG-101 legacy JSON</p>
+
+      <div class="foot"><span>Sprint 1–5 · Final Presentation</span><b>07</b></div>
+    </section>
+    <section class="slide" id="slide-8">
+      <div class="kicker">Sprint 4</div>
+      <h1>UAT + Release v2.0</h1>
+      <p>25/25 Regression · UAT 3/3 · SPI 1.00 · CV -575 บาท</p>
+
+      <div class="foot"><span>Sprint 1–5 · Final Presentation</span><b>08</b></div>
+    </section>
+    <section class="slide" id="slide-9">
+      <div class="kicker">Evolution</div>
+      <h1>v1.0 → v4.0 Desktop</h1>
+      <p>Monolithic JSON → OOP → SQLite/Strategy → GTK4 Desktop</p>
+
+      <div class="foot"><span>Sprint 1–5 · Final Presentation</span><b>09</b></div>
+    </section>
+    <section class="slide" id="slide-10">
+      <div class="kicker">Sprint 5</div>
+      <h1>Data/Domain Architecture</h1>
+      <p>17 SP Data/Domain + 29 SP Desktop UI = 46 SP</p>
+
+      <div class="foot"><span>Sprint 1–5 · Final Presentation</span><b>10</b></div>
+    </section>
+    <section class="slide" id="slide-11">
+      <div class="kicker">Sprint 5</div>
+      <h1>Member Strategy + Checkout</h1>
+      <p>Regular 0% · Silver 5% · Gold 10% · Platinum 15%</p>
+
+      <div class="foot"><span>Sprint 1–5 · Final Presentation</span><b>11</b></div>
+    </section>
+    <section class="slide" id="slide-12">
+      <div class="kicker">Jira</div>
+      <h1>Epic SPM-28</h1>
+      <p>SPM-29…32 เปลี่ยน scope เป็น Desktop Program UI และยัง Done</p>
+      <img src="img-jira/image.png" alt="Epic SPM-28">
+      <div class="foot"><span>Sprint 1–5 · Final Presentation</span><b>12</b></div>
+    </section>
+    <section class="slide" id="slide-13">
+      <div class="kicker">Final Desktop Program</div>
+      <h1>Dashboard</h1>
+      <p>ภาพรวมคลัง · low-stock · Responsive</p>
+      <img src="img/das.png" alt="Dashboard">
+      <div class="foot"><span>Sprint 1–5 · Final Presentation</span><b>13</b></div>
+    </section>
+    <section class="slide" id="slide-14">
+      <div class="kicker">Final Desktop Program</div>
+      <h1>Products</h1>
+      <p>เพิ่ม/แก้ไข · Search · LOW/OK · CSV</p>
+      <img src="img/product.png" alt="Products">
+      <div class="foot"><span>Sprint 1–5 · Final Presentation</span><b>14</b></div>
+    </section>
+    <section class="slide" id="slide-15">
+      <div class="kicker">Final Desktop Program</div>
+      <h1>Members</h1>
+      <p>CRUD สมาชิก · 4 Tiers · Discount badge</p>
+      <img src="img/member.png" alt="Members">
+      <div class="foot"><span>Sprint 1–5 · Final Presentation</span><b>15</b></div>
+    </section>
+    <section class="slide" id="slide-16">
+      <div class="kicker">Final Desktop Program</div>
+      <h1>Checkout</h1>
+      <p>Guest/Member · Strategy discount · Receipt</p>
+      <img src="img/checkout.png" alt="Checkout">
+      <div class="foot"><span>Sprint 1–5 · Final Presentation</span><b>16</b></div>
+    </section>
+    <section class="slide" id="slide-17">
+      <div class="kicker">Quality Gate</div>
+      <h1>สถานะสุดท้าย</h1>
+      <p>21/21 Main · 25/25 Regression · Flake8 0 · Bandit 0</p>
+
+      <div class="foot"><span>Sprint 1–5 · Final Presentation</span><b>17</b></div>
+    </section>
+    <section class="slide" id="slide-18">
+      <div class="kicker">Project Management</div>
+      <h1>มุมมองรวม 5 Sprint</h1>
+      <p>Scope · Cost · Quality · Change · Release · Evidence</p>
+
+      <div class="foot"><span>Sprint 1–5 · Final Presentation</span><b>18</b></div>
+    </section>
+    <section class="slide" id="slide-19">
+      <div class="kicker">Project Outcome</div>
+      <h1>จาก CLI ที่เปราะบางสู่ Desktop Program ที่ทดสอบได้</h1>
+      <p>Next: Installer · Formal UAT · Role/Login · PostgreSQL</p>
+
+      <div class="foot"><span>Sprint 1–5 · Final Presentation</span><b>19</b></div>
+    </section>
+  </main>
+  <div class="controls"><button id="prev">← ก่อนหน้า</button><button id="next">ถัดไป →</button></div>
+  <script>
+    const slides = [...document.querySelectorAll(".slide")]; let i = 0;
+    const prev = document.getElementById("prev"), next = document.getElementById("next"), counter = document.getElementById("counter");
+    function show(n) { i = Math.max(0, Math.min(n, slides.length - 1)); slides.forEach((s, j) => s.classList.toggle("active", i === j)); counter.textContent = (i + 1) + " / " + slides.length; prev.disabled = i === 0; next.disabled = i === slides.length - 1; }
+    prev.onclick = () => show(i - 1); next.onclick = () => show(i + 1);
+    addEventListener("keydown", e => { if (["ArrowRight", "PageDown", " "].includes(e.key)) show(i + 1); if (["ArrowLeft", "PageUp"].includes(e.key)) show(i - 1); });
+    show(0);
+  </script>
+</body>
+
+</html>

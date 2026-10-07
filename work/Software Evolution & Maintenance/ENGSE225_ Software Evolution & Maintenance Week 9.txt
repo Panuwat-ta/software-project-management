@@ -1,0 +1,222 @@
+WEEK 9: SPRINT TRANSITION & FEATURE EVOLUTION
+ENGSE225: Code & Feature Evolution
+“เชื่อมรวมรากฐานสถาปัตยกรรมใหม่สู่สาขาหลัก และเริ่มต้นต่อเติมฟังก์ชัน CR-01 ด้วยการเขียนชุดทดสอบแบบ Test-Driven Refinement”
+Academic Framework: ISO/IEC/IEEE 12207:2017 - Software Life Cycle Processes (Software Integration)
+ENGSE225: SOFTWARE EVOLUTION AND MAINTENANCE WEEK 9 MASTERCLASS
+
+1. Code Integration
+ผสานสายงาน Refactoring เข้าสู่สาย develop และจัดการข้อขัดแย้งของรหัสคำสั่ง (Merge Conflicts)
+2. Full Regression
+รัน Full Regression Test Suite การันตีสภาวะ Zero Regression Defect ก่อนเริ่มต้น Sprint 2
+3. Feature Evolution
+พัฒนาฟีเจอร์ CR-01 (Barcode & Reorder Point Alert) ขยาย Data Model และ Service Layer
+4. Test-Driven Refinement
+ประยุกต์ใช้แนวคิด TDR เขียน PyTest ล็อคตรรกะใหม่ก่อนลงมือเขียนฟังก์ชันจริง
+WEEKLY COURSE OBJECTIVES ENGSE225
+เป้าหมายการเรียนรู้ประจำสัปดาห์
+
+สัปดาห์ที่ 5 - 7 (เฟส 2)
+ISO 25010 Audit, To-Be Architecture Diagram & Phase 2 Sign-off Approval
+สัปดาห์ที่ 8 (Sprint 1)
+Refactoring Surgery: ผ่าตัดลบ global x แตก Repository Pattern & CR-01 Impact
+สัปดาห์ที่ 9 (วันนี้ ⭐)
+Merge Refactoring ➔ Full Regression Suite ➔ TDR Development for CR-01
+สัปดาห์ที่ 10 - 12 (Sprint 2-3)
+System Integration, Final Acceptance Test & Project Release Closure
+SOFTWARE EVOLUTION LIFECYCLE TRANSITION FROM SPRINT 1 TO SPRINT 2
+สรุปภาพรวม Sprint 1 สู่ Sprint 2
+
+ISO/IEC 12207 INTEGRATION STANDARD การผสานสายงานตาม ISO/IEC 12207
+การผสานสายงานตาม ISO/IEC 12207
+ย้ายโค้ด Refactoring จาก feature/refactor-core-architecture เข้าสู่ develop
+ป้องกันปัญหา Long-Lived Branches ซึ่งก่อให้เกิด Merge Conflicts รุนแรงในอนาคต
+
+ก่อนที่ Tech Lead จะกดปุ่ม "Confirm Merge" บน GitHub ต้องผ่านด่านตรวจ 4 ข้อ:
+1. Peer Code Review Approval: ได้รับคำอนุมัติจาก Reviewer อย่างน้อย 1 คนบน Pull Request
+2. Clean Code Compliance: โค้ดปฏิบัติตามมาตรฐานการตั้งชื่อ ปราศจากตัวแปร global x
+3. Automated CI Status: ท่อ GitHub Actions รัน pytest ผ่านไฟเขียว 100%
+4. No Unresolved Conversations: คำถามและข้อติติงในแถบ PR Review ถูกแก้ไขและเคลียร์ครบถ้วน
+PULL REQUEST QUALITY GATE รายการตรวจเช็กก่อนการกด MERGE
+รายการตรวจเช็กก่อนการกด Merge
+
+Merge Conflict เกิดขึ้นได้อย่างไร?
+เกิดขึ้นเมื่อบรรทัดเดียวกันในไฟล์เดียวกัน ถูกแก้ไขไม่ตรงกันโดยนักพัฒนา 2 คนที่ทำงานแยกสายงานกัน
+ในสัปดาห์ที่ 8 มีการรื้อโครงสร้างไฟล์สถาปัตยกรรมอย่างมหาศาล โอกาสเกิด Conflict บนสาย develop จึงสูงมาก
+สัญลักษณ์ Git Conflict Markers
+CONFLICT RESOLUTION MECHANICS การจัดการ MERGE CONFLICT ใน GIT
+การจัดการ Merge Conflict ใน Git
+
+5 ขั้นตอนแก้ Conflict อย่างปลอดภัยบน VS Code / Terminal:
+# ทำการแก้ Conflict ใน VS Code
+"fix: Resolve merge conflicts with develop"
+1. Pull Target: สั่ง git checkout develop และ git pull
+2. Merge Target into Feature: สั่ง git merge develop บนสาย feature
+3. Resolve Manually: เลือก Accept Current / Incoming / Both ใน IDE
+4. Verify with PyTest: สั่งรัน pytest ยืนยันตรรกะไม่พัง
+5. Commit & Push: บันทึกการแก้ Conflict แล้ว Push ขึ้น GitHub
+CONFLICT RESOLUTION WORKFLOW ยุทธวิธีแก้ MERGE CONFLICT
+ยุทธวิธีแก้ Merge Conflict
+
+MAINTENANCE QUALITY PHILOSOPHY หลักการ ZERO REGRESSION DEFECT
+หลักการ Zero Regression Defect
+สั่งรัน Full Regression Test Suite ครอบคลุมเคสทดสอบเดิมทั้งหมดหลังการ Merge เพื่อการันตีสภาวะ Zero Regression สู่สาย develop
+
+คำสั่งสั่งรันชุดทดสอบครอบคลุมทั้งโปรเจกต์:
+เมื่อผลการรันขึ้น 4 passed in 0.12s (100%) สภาพแวดล้อมสาย develop พร้อมสำหรับการต่อเติมฟังก์ชั่นใหม่ทันที
+PASSED [ 25%]
+PASSED [ 50%]
+PASSED [ 75%]
+PASSED [100%]
+4 passed in 0.12s
+AUTOMATED SUITE VERIFICATION การรัน FULL REGRESSION SUITE
+การรัน Full Regression Suite
+
+ISO/IEC 14764 CATEGORY การพัฒนาตาม PERFECTIVE MAINTENANCE
+การพัฒนาตาม Perfective Maint.
+ใน Sprint 2 เราจะนำผลวิเคราะห์ Impact Analysis ของใบ CR-01 จากสัปดาห์ที่ 8 มาพัฒนาลงสู่ระบบจริง เปลี่ยนคลังสินค้าดั้งเดิมให้กลายเป็นระบบอัจฉริยะ
+
+1. Barcode Field
+เก็บข้อมูลรหัสบาร์โค้ดประจำสินค้า (String Format) เพื่อรองรับการใช้สแกนเนอร์
+2. Reorder Point Field
+กำหนดเกณฑ์สต็อกขั้นต่ำ (Integer Format) ที่ต้องเริ่มเตือนภัยการเติมสินค้า
+3. Low Stock Alert
+เมธอดคัดกรองและแจ้งเตือนอัตโนมัติเมื่อ quantity <= reorder_point
+CHANGE REQUEST INGESTION ถอดรหัสข้อกำหนด CHANGE REQUEST CR-01
+ถอดรหัสข้อกำหนด Change Request CR-01
+
+โครงสร้างคลาส Product เดิม (Sprint 1)
+Attributes: product_id, name, quantity, price
+โครงสร้างคลาส Product ใหม่ (Sprint 2)
+Attributes: product_id, name, quantity, price, ,
+เพิ่มเมธอด is_low_stock() -> bool ประจำคลาส
+DATA ARCHITECTURE EVOLUTION การปรับปรุง DATA MODEL คลาส PRODUCT
+การปรับปรุง Data Model คลาส Product
+
+Backward Compatibility
+การใส่ Default Value (barcode="", reorder_point=5) ช่วยให้โค้ดเก่าที่สร้าง Product โดยไม่ส่งค่าบาร์โค้ด ยังคงทำงานได้โดยไม่เกิด Error พัง
+CODE REFACTORING EXECUTION ตัวอย่างโค้ด: ขยายคลาส PRODUCT
+ตัวอย่างโค้ด: ขยายคลาส Product
+
+เพิ่มเมธอดใน InventoryService
+สร้างเมธอด get_low_stock_alerts() -> list[Product] เพื่อคัดกรองสินค้าที่สต็อกวิกฤต
+ขั้นตอนการทำงาน
+โหลดข้อมูลสินค้าผ่าน InventoryRepository.load_all()
+วนลูปตรวจสอบผ่านเมธอด product.is_low_stock()
+คืนค่าเป็น List ของวัตถุ Product ให้ฝั่ง UI แสดงผล
+BUSINESS LOGIC EVOLUTION การพัฒนาระดับ SERVICE LAYER
+การพัฒนาระดับ Service Layer
+
+Clean Business Logic
+ตรรกะประมวลผลถูกกักตัวอยู่ใน Service Layer 100% ไม่หลุดไปปะปนกับคำสั่ง print() ใน ConsoleUI
+CODE IMPLEMENTATION ตัวอย่างโค้ด: INVENTORYSERVICE
+ตัวอย่างโค้ด: InventoryService
+
+TDD IN MAINTENANCE แนวคิด TEST-DRIVEN REFINEMENT
+แนวคิด Test-Driven Refinement
+การเขียน Test ก่อน ช่วยให้เราเข้าใจข้อกำหนด CR-01 อย่างกระจ่างแจ้ง และป้องกันการเขียนโค้ดส่วนเกินที่ลูกค้าไม่ได้สั่ง
+
+1. RED Phase 🔴
+เขียน PyTest สำหรับ Reorder Point แล้วรัน ➔ ต้องติด Fail เพราะยังไม่มีเมธอดจริง
+2. GREEN Phase 🟢
+เขียนโค้ดสั้นที่สุดใน Product & Service ➔ รัน PyTest ให้ผ่านไฟเขียว Pass
+3. REFACTOR Phase 🔵
+จัดระเบียบโค้ดใหม่ให้สะอาด โดยสภาวะ PyTest ยังคงผ่านไฟเขียวสม่ำเสมอ
+TDR CYCLE วงจร RED-GREEN-REFACTOR สำหรับ CR-01
+วงจร Red-Green-Refactor สำหรับ CR-01
+
+RED Phase First
+เมื่อสั่งรันสคริปต์นี้เป็นครั้งแรก จะต้องขึ้น Error ติดไฟแดงล้มเหลวทันที พิสูจน์ว่า Test Case ทำหน้าที่สแกนตรรกะจริง
+TDR IMPLEMENTATION ตัวอย่าง PYTEST สำหรับ CR-01
+ตัวอย่าง PyTest สำหรับ CR-01
+
+Test Case ID
+กรณีเงื่อนไขขอบเขต (Test Condition)
+ผลลัพธ์คาดหวัง (Expected Result)
+TC-CR01-01
+quantity (3) < reorder_point (5)
+is_low_stock() == True 🔴 (Alert)
+TC-CR01-02
+quantity (5) == reorder_point (5) (Boundary)
+is_low_stock() == True 🔴 (Alert)
+TC-CR01-03
+quantity (6) > reorder_point (5)
+is_low_stock() == False 🟢 (Normal)
+TEST CASE DESIGN การทดสอบ EDGE CASES สำหรับ CR-01
+การทดสอบ Edge Cases สำหรับ CR-01
+
+1. Merge Sprint 1
+ผสานสายงาน Refactoring เข้าสู่สาย develop บน GitHub
+2. Create CR Branch
+แตก Branch ใหม่ feature/cr01-barcode-reorder-point
+3. TDR Development
+เขียน PyTest ล็อคตรรกะ CR-01 ➔ พัฒนาโค้ดจนผ่านไฟเขียว 100%
+PRACTICAL LAB ACTIVITY แนะนำกิจกรรม WORKSHOP ประจำวันนี้
+แนะนำกิจกรรม Workshop ประจำวันนี้
+
+ตรวจสอบ Pull Request
+เปิด GitHub สั่ง Merge feature/refactor-core-architecture เข้าสู่ develop
+Update Local develop
+git checkout develop && git pull
+WORKSHOP EXECUTION STEP 1 ขั้นตอน 1: ปิดงาน SPRINT 1
+ขั้นตอน 1: ปิดงาน Sprint 1
+
+แตก Branch จาก develop
+git checkout -b feature/cr01-barcode-reorder-point
+ตรวจสอบชื่อ Branch
+ยืนยันว่าทำงานอยู่บน Branch ใหม่เรียบร้อยก่อนเริ่มแตะซอร์สโค้ด
+WORKSHOP EXECUTION STEP 2 ขั้นตอน 2: แตก BRANCH สำหรับ CR-01
+ขั้นตอน 2: แตก Branch สำหรับ CR-01
+
+Write Test First (RED)
+เพิ่มเคสทดสอบบาร์โค้ดและ Reorder Point ใน test_app.py แล้วรัน pytest ➔ RED
+Write Code (GREEN)
+เพิ่ม Attributes ใน Product และเมธอดใน InventoryService ➔ รัน pytest ➔ GREEN
+WORKSHOP EXECUTION STEP 3 ขั้นตอน 3: พัฒนาแบบ TDR
+ขั้นตอน 3: พัฒนาแบบ TDR
+
+Full Regression Check
+pytest -v
+ยืนยันว่าเคสเก่าและเคสใหม่ผ่านไฟเขียว 100%
+Commit & Push
+git push origin feature/cr01-barcode-reorder-point
+WORKSHOP EXECUTION STEP 4 ขั้นตอน 4: รัน FULL SUITE & PUSH
+ขั้นตอน 4: รัน Full Suite & Push
+
+GitHub PR ➔ Jira Issue
+ส่งมอบลิงก์ PR บน GitHub ให้ PM นำไปผูกกับ Jira Issue Key เพื่อขยับการ์ดงานอัตโนมัติ
+Man-Hours Spent ➔ Cost Variance
+ส่งมอบ Man-Hours จริงจากการพัฒนา CR-01 ให้ PM นำไปกด Log Work เพื่อคำนวณ CV บน Jira
+CROSS-COURSE ALIGNMENT การส่งต่อผลงานสู่วิชา SPM
+การส่งต่อผลงานสู่วิชา SPM
+
+Clean Integration
+ผสานโค้ดผ่าน PR และแก้ Merge Conflicts อย่างเป็นระบบ
+Feature Evolution
+ขยาย Data Model และ Service Layer รองรับฟีเจอร์ CR-01
+TDR Safety Protocol
+เขียน PyTest ล็อคตรรกะก่อนเขียนฟังก์ชันจริงเสมอ
+SESSION RECAP สรุปบทเรียนประจำสัปดาห์ที่ 9
+สรุปบทเรียนประจำสัปดาห์ที่ 9
+
+ช่วงถาม-ตอบ (Q&A Session)
+“ซอฟต์แวร์ที่มีวิวัฒนาการอย่างยั่งยืน คือซอฟต์แวร์ที่สถาปัตยกรรมภายในสะอาด และทุกฟีเจอร์ใหม่ถูกการันตีความถูกต้องด้วยชุดทดสอบอัตโนมัติ”
+เตรียมคอมพิวเตอร์และ GitHub Repository ให้พร้อมสำหรับวิชา ENGSE202 ในช่วง 3 ชั่วโมงหลัง
+ENGSE225: SOFTWARE EVOLUTION AND MAINTENANCE Q&A & DISCUSSION
+
+ISO/IEC/IEEE. (2017). Systems and software engineering — Software life cycle processes (ISO/IEC/IEEE Standard No. 12207:2017).
+ISO/IEC. (2006). Software Engineering — Software Life Cycle Processes — Maintenance (ISO/IEC Standard No. 14764:2006).
+IEEE. (2012). IEEE Standard for Configuration Management in Systems and Software Engineering (IEEE Std 828-2012).
+Beck, K. (2002). Test-Driven Development: By Example. Addison-Wesley.
+Fowler, M. (2018). Refactoring: Improving the Design of Existing Code (2nd ed.). Addison-Wesley.
+SOFTWARE ENGINEERING BIBLIOGRAPHY เอกสารอ้างอิงทางวิชาการ
+เอกสารอ้างอิงทางวิชาการ
+
+https://nvie.com/img/merge-without-ff@2x.png
+Source: nvie.com
+https://media.geeksforgeeks.org/wp-content/uploads/20240611145805/Software-Quality-Assurance-(SQA)-focuses.webp
+Source: www.geeksforgeeks.org
+https://it.cornell.edu/sites/default/files/styles/article_banner/public/itc-drupal10-images/CodeWorkshop-AS_1361742163-cornell-1920.jpg?h=4882e2c2&itok=oYP-H3Le
+Source: it.cornell.edu
+https://miro.medium.com/1*tZSwCigaTaJdovyWlp5uBQ.jpeg
+Source: medium.com
+Image Sources

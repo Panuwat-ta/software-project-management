@@ -1,0 +1,286 @@
+WEEK 13: DEPLOYMENT READINESS & VERIFICATION
+ENGSE225: Clean Deployment & Verify
+“การยืนยันความพร้อมส่งมอบบนสภาพแวดล้อมบริสุทธิ์ การรัน Regression Suite รอบสุดท้าย และการปิดแฟ้มประวัติการบำรุงรักษาตามมาตรฐาน ISO/IEC 12207 และ ISO/IEC 14764”
+Academic Framework: ISO/IEC/IEEE 12207:2017 - Clause 6.4.9: Installation Process
+ENGSE225: SOFTWARE EVOLUTION AND MAINTENANCE WEEK 13 MASTERCLASS
+
+1. Clean Installation
+ดำเนินกระบวนการ Software Installation ตาม ISO 12207 บนสภาพแวดล้อมสะอาดไร้ขยะ
+2. Automated Setup
+จัดทำสคริปต์ติดตั้งอัตโนมัติ (setup.sh) พร้อม requirements.txt และ .env.example
+3. Smoke & Regression
+รัน Smoke Test ตรวจระบบเบื้องต้น และทดสอบ Full Regression Suite บนสภาพแวดล้อมใหม่
+4. Maintenance Manual
+จัดทำคู่มือบำรุงรักษาระบบ (System Operations & Maintenance Manual) ตาม ISO 14764
+WEEKLY COURSE OBJECTIVES ENGSE225
+เป้าหมายการเรียนรู้ประจำสัปดาห์
+
+สัปดาห์ที่ 8 - 10 (Sprint 1-2)
+Refactoring ลบ global x พัฒนา CR-01 Barcode และ CR-02 CSV Export
+สัปดาห์ที่ 11 - 12 (Hardening)
+สแกน Bandit ทำ Code Freeze ตรวจรับ UAT และปักแท็ก v2.0.0-evolution
+สัปดาห์ที่ 13 (วันนี้ ⭐)
+Clean Deployment ➔ Smoke Test ➔ Full Regression ➔ Maintenance Dossier
+สัปดาห์ที่ 14 - 15 (Final)
+Disaster Recovery, Rollback Audit และพิธีปิดโครงการ Final Defense
+SOFTWARE EVOLUTION LIFECYCLE TRANSITION TO PHASE 4 CLOSURE
+บทสรุปสู่เฟสที่ 4: Quality & Closure
+
+DEPLOYMENT RISK DYNAMICS ปัญหา "IT WORKS ON MY MACHINE"
+ปัญหา "It Works on My Machine"
+Missing Dependencies: แอบใช้ Library ที่ไม่ได้ระบุใน requirements.txt
+Hardcoded Paths: ฝังพาทเฉพาะเครื่อง เช่น C:\Users\Student\Desktop
+Missing Configs: พึ่งพา Environment Variables ลอยๆ ไร้แม่แบบ
+
+Software Installation Process (Clause 6.4.9): กระบวนการนำซอฟต์แวร์ติดตั้งสู่ Target Environment:
+1. Installation Planning
+ระบุความต้องการขั้นต่ำของระบบ (Prerequisites: Python 3.11+, สิทธิ์ Write Permission) และขั้นตอนทีละสเต็ปที่ทำซ้ำได้ (Reproducible)
+2. Installation Verification
+ทดสอบยืนยันผลหลังการติดตั้งทันที ว่าคอมโพเนนต์และไฟล์คอนฟิกูเรชันทั้งหมดอยู่ในสถานะพร้อมทำงานตามข้อตกลง
+ISO/IEC/IEEE 12207 STANDARD กระบวนการติดตั้งระบบตาม ISO 12207
+การติดตั้งระบบตาม ISO 12207
+
+# .env.example: แม่แบบตัวแปรสภาพแวดล้อม (Commit ขึ้น Git)
+INVENTORY_DB_PATH
+data/inventory_db.json
+APP_ENV
+production
+LOG_LEVEL
+INFO
+REPORT_EXPORT_DIR
+exports/
+REORDER_DEFAULT_THRESHOLD
+5
+Config Externalization
+แยกการตั้งค่าที่ผันแปรตามเครื่องออกจากโค้ด โดยเก็บเป็น Environment Variables และทำไฟล์แม่แบบ .env.example
+ห้าม Commit ไฟล์ .env จริงที่มีข้อมูลส่วนบุคคลหรือกุญแจความลับขึ้น GitHub โดยเด็ดขาด
+THE TWELVE-FACTOR APP (FACTOR III) การจัดการตัวแปรสภาพแวดล้อม
+ตัวแปรสภาพแวดล้อม: .env.example
+
+#!/bin/bash
+# setup.sh: สคริปต์ติดตั้งระบบคลังสินค้าบน Clean Environment
+echo
+"--- Starting Clean Environment Setup ---"
+source
+echo
+"--- Installation Completed Successfully ---"
+One-Click Deployment
+การจัดทำสคริปต์ setup.sh หรือ Makefile ช่วยขจัดข้อผิดพลาดของมนุษย์ (Zero Human Error)
+ผู้ดูแลระบบหรือทีมบำรุงรักษาในอนาคตเพียงพิมพ์คำสั่งเดียว ระบบจะสร้าง Virtual Environment และติดตั้ง dependencies พร้อมทันที
+REPRODUCIBLE SETUP AUTOMATION สคริปต์ติดตั้งระบบอัตโนมัติ
+สคริปต์ติดตั้งระบบอัตโนมัติ
+
+VERIFICATION TEST STRATEGY SMOKE TESTING VS. SANITY TESTING
+Smoke Testing vs. Sanity Testing
+💨 Smoke Testing (Build Verification)
+การทดสอบผิวเผินแบบรวดเร็วเพื่อตอบคำถาม: "ระบบเปิดติดไหม? ฐานข้อมูลโหลดขึ้นไหม? หน้าจอหลักไม่แครชใช่ไหม?"
+🎯 Sanity Testing (Targeted Verification)
+การทดสอบเจาะจงเฉพาะโมดูลที่เพิ่งแก้ไขบำรุงรักษา เพื่อดูว่าตรรกะใหม่ทำงานสมเหตุสมผลหรือไม่ (Barcode, CSV Export)
+
+import
+@pytest.mark.smoke
+def
+test_system_boots_and_loads_database
+"""ตรวจสอบว่าระบบสามารถเริ่มต้นและอ่านไฟล์ข้อมูลได้โดยไม่เกิด Crash"""
+"smoke_db.json"
+'{"P01": {"name": "Milk", "quantity": 10, "price": 20.0}}'
+assert
+is not None
+assert
+"P01"
+in
+Selective Fast Execution
+ใช้แท็ก @pytest.mark.smoke เพื่อคัดแยกเคสทดสอบความพร้อมหลัก
+สั่งรันเสร็จสิ้นภายใน 1 วินาที ช่วยตรวจจับปัญหาการคอนฟิกูเรชันผิดพลาดก่อนรันชุดทดสอบใหญ่
+PYTEST MARKERS ARCHITECTURE การวางแผนทดสอบ SMOKE TEST
+การวางแผนทดสอบ Smoke Test
+
+ZERO REGRESSION SAFEGUARD การรัน FINAL REGRESSION TESTING
+การรัน Final Regression Testing
+ยืนยันว่าสถาปัตยกรรม Refactored ไม่เกิดผลกระทบข้างเคียง
+ยืนยันว่าฟังก์ชัน CR-01 และ CR-02 ทำงานกลมกลืน 100%
+บันทึกหลักฐานผลการทดสอบเป็น Test Execution Log
+
+คำสั่งรันพร้อมวัด Coverage และบันทึกลง Log File:
+ไฟล์ post_maintenance_test.log จะกลายเป็นหลักฐานเชิงประจักษ์ (Audit Evidence) ที่ยืนยันความสมบูรณ์เชิงวิศวกรรม
+## Test Execution Summary: post_maintenance_test.log
+PASSED
+PASSED
+PASSED
+PASSED
+======================= 18 passed in 0.45s =======================
+STATUS: SUCCESS - NO REGRESSION DETECTED
+EMPIRICAL EVIDENCE ARTIFACT คำสั่งรันและส่งออกผลการทดสอบ
+คำสั่งรันและส่งออกผลการทดสอบ
+
+System Maintenance Dossier
+แฟ้มประวัติและคู่มือวิศวกรรมรวมที่บันทึกข้อมูลทุกมิติตลอดวงจรการบำรุงรักษา เพื่อใช้ส่งต่อให้ทีมดูแลระบบในอนาคต (Operational Handover)
+4 คำถามที่เอกสารต้องตอบได้
+ระบบนี้สร้างขึ้นจากเทคโนโลยีและสภาพแวดล้อมใด?
+ติดตั้งและตั้งค่าระบบบนเครื่องใหม่ได้อย่างไร?
+มีการแก้ไข ปรับสถาปัตยกรรม และเพิ่มฟังก์ชันใดไปบ้าง?
+มีข้อจำกัดที่รับทราบแล้ว (Known Issues) อะไรบ้าง?
+ISO/IEC 14764 MAINTENANCE RECORDS การทำเอกสารบำรุงรักษา ISO 14764
+การทำเอกสารบำรุงรักษา ISO 14764
+
+DOSSIER COMPONENT 1 เอกสาร AS-BUILT ARCHITECTURE
+เอกสาร As-Built Architecture
+Complete UML Diagram: ความสัมพันธ์ Product, Repo, Service, CSV
+Design Patterns: การใช้ Repository Pattern และ Dependency Injection
+Schema: ฟิลด์ Barcode และ Reorder Point ในไฟล์ JSON
+
+Prerequisites & Setup
+Config & Backup Procedures
+ความต้องการฮาร์ดแวร์และ OS (Python 3.11+, pip)
+ขั้นตอนการสร้างและ Activate Virtual Environment
+คำสั่งติดตั้ง Dependencies จาก requirements.txt
+การคัดลอกและตั้งค่า Environment ใน .env
+ขั้นตอนการสำรองข้อมูลฐานข้อมูล inventory_db.json
+ขั้นตอนการกู้คืนระบบเมื่อเกิดความขัดข้อง (Recovery Plan)
+DOSSIER COMPONENT 2 คู่มือการติดตั้งและตั้งค่าระบบ
+คู่มือการติดตั้งและตั้งค่าระบบ
+
+Known Issues (ข้อจำกัดที่รับทราบ)
+บันทึกข้อจำกัดที่ไม่ใช่อุปสรรควิกฤต เช่น:
+- ระบบรองรับการทำงานแบบ Single-User ผ่าน Console UI ยังไม่รองรับ Multi-threading พร้อมกัน
+Future Maintenance Guidelines
+คำแนะนำสำหรับนักพัฒนาชุดต่อไป:
+- หากต้องการเปลี่ยนจาก JSON ไปเป็น SQLite/PostgreSQL ให้สร้างคลาสใหม่ที่สืบทอดจาก Repository Interface ได้ทันที
+DOSSIER COMPONENT 3 KNOWN ISSUES และแนวทางต่อยอด
+Known Issues และแนวทางต่อยอด
+
+หมวด / บทที่
+หัวข้อสารบัญหลัก
+ผลผลิตเอกสาร (Deliverables)
+บทที่ 1: System Overview
+บทนำ ภาพรวมระบบคลังสินค้า และขอบเขตการทำงาน
+System Scope Statement
+บทที่ 2: Architecture
+สถาปัตยกรรมจริง As-Built Class Diagram & Patterns
+UML Diagram + Schema
+บทที่ 3: Deployment
+คู่มือการติดตั้ง Clean Installation, setup.sh & .env
+Step-by-Step Guide
+บทที่ 4: Verification
+รายงานผลการทดสอบ Smoke Test & PyTest Logs
+post_maintenance_test.log
+บทที่ 5: Operations
+การสำรองข้อมูล (Backup) และการกู้คืนข้อมูล (Recovery)
+Disaster Recovery SOP
+บทที่ 6: History & Issues
+ประวัติการแก้ไขระบบ (CHANGELOG) และ Known Issues
+ISO 14764 Records
+MANUAL DOCUMENTATION STRUCTURE โครงสร้างเล่มคู่มือบำรุงรักษา
+โครงสร้างเล่มคู่มือบำรุงรักษา
+
+from
+import
+# คำนวณตำแหน่งไฟล์สัมพัทธ์จากตำแหน่งของตัวสคริปต์
+"data"
+"inventory_db.json"
+"exports"
+# สร้างโฟลเดอร์อัตโนมัติหากยังไม่มี
+True
+True
+Pathlib / Relative Paths
+ข้อผิดพลาดคลาสสิกคือการใส่ Absolute Path เช่น open("C:/Users/...") ซึ่งจะพังทันทีเมื่อย้ายเครื่อง
+การใช้ pathlib.Path ช่วยให้โปรแกรมรันได้บนทุกระบบปฏิบัติการ (Windows, macOS, Linux) อย่างราบรื่น
+CROSS-PLATFORM ENGINEERING การทดสอบความเป็นอิสระของพาท
+การทดสอบความเป็นอิสระของพาทไฟล์
+
+PRACTICAL LAB ACTIVITY แนะนำกิจกรรม WORKSHOP สัปดาห์นี้
+แนะนำกิจกรรม Workshop สัปดาห์นี้
+โคลนโค้ด v2.0.0 ติดตั้งบน Virtual Environment เปล่า
+รัน Smoke Test และบันทึก Log ไฟล์ PyTest
+ทดสอบฟังก์ชัน Barcode, Alert, CSV บนสภาพแวดล้อมใหม่
+จัดทำเล่มคู่มือบำรุงรักษาฉบับสมบูรณ์
+
+# 1. โคลนโค้ดจากแท็ก v2.0.0-evolution เข้าโฟลเดอร์ใหม่
+# 2. สร้าง Virtual Environment เปล่า
+# 3. เปิดใช้งาน (Activate)
+# Windows: fresh_env\Scripts\activate
+# macOS/Linux:
+Clean Environment Verification
+การสร้างโฟลเดอร์ทดสอบแยกและใช้ Virtual Environment เปล่า จะตัดการพึ่งพาไลบรารีที่เคยติดตั้งไว้ในเครื่องเดิมทั้งหมด
+พิสูจน์ว่าระบบสามารถติดตั้งบนเครื่องคอมพิวเตอร์ใหม่ได้อย่างแท้จริง
+WORKSHOP EXECUTION STEP 1 ขั้นตอน 1: จำลองสภาพแวดล้อมใหม่
+ขั้นตอน 1: จำลองสภาพแวดล้อมใหม่
+
+# ติดตั้งไลบรารีตาม requirements.txt
+# ตรวจสอบรายการแพ็กเกจที่ติดตั้งสำเร็จ
+# คัดลอกไฟล์คอนฟิกจากแม่แบบ
+Dependency Completeness Check
+สังเกตว่าคำสั่งติดตั้งรันผ่านโดยไม่มีข้อผิดพลาด (Zero Missing Packages)
+หากพบว่าโปรแกรมขาดไลบรารีใด ให้บันทึกและเพิ่มชื่อลงใน requirements.txt ทันที
+WORKSHOP EXECUTION STEP 2 ขั้นตอน 2: ติดตั้ง DEPENDENCIES
+ขั้นตอน 2: ติดตั้ง Dependencies
+
+# 1. รัน Smoke Test ทดสอบการเปิดระบบ
+# 2. รัน Full Regression Suite และบันทึกลง Log
+# 3. ดูผลลัพธ์ใน Log file
+Automated Evidence Capture
+ตรวจสอบว่าผลการรันชุดทดสอบทั้งหมดขึ้น 100% Passed ปราศจากข้อผิดพลาด
+ไฟล์ post_maintenance_test.log จะถูกนำไปแนบเป็นภาคผนวกในเล่มคู่มือส่งมอบ
+WORKSHOP EXECUTION STEP 3 ขั้นตอน 3: รัน SMOKE & PYTEST LOGS
+ขั้นตอน 3: รัน Smoke & PyTest Logs
+
+ทดสอบ Barcode & Alert
+ทดสอบ CSV Reporting
+เพิ่มสินค้าใหม่พร้อมระบุ Barcode 885123456789
+ตัดสต็อกให้ลดลงต่ำกว่าจุดสั่งซื้อขั้นต่ำ
+ตรวจสอบว่าระบบแสดงข้อความแจ้งเตือนสีเหลือง/แดง
+สั่งเมนูส่งออกรายงานสินค้าสต็อกต่ำเป็น .csv
+ตรวจสอบว่าไฟล์ถูกบันทึกลงโฟลเดอร์ exports/
+เปิดไฟล์ใน Microsoft Excel ยืนยันข้อมูลถูกต้องครบถ้วน
+WORKSHOP EXECUTION STEP 4 ขั้นตอน 4: ทดสอบการทำงานสดหน้าจอ
+ขั้นตอน 4: ทดสอบการทำงานสดหน้าจอ
+
+รวบรวมเนื้อหา 6 หมวด
+กรอกเนื้อหาลงใน System Operations & Maintenance Manual: สถาปัตยกรรม As-Built, ขั้นตอนการติดตั้ง, และนโยบายการสำรองข้อมูล
+แนบหลักฐานและบันทึกข้อจำกัด
+แนบไฟล์ post_maintenance_test.log และบันทึกข้อจำกัดระบบในหมวด Known Issues เพื่อความโปร่งใสทางวิชาการ
+WORKSHOP EXECUTION STEP 5 ขั้นตอน 5: จัดทำเล่มคู่มือระบบ
+ขั้นตอน 5: จัดทำเล่มคู่มือระบบ
+
+ชิ้นงาน 1: รายงานผลการติดตั้งและทดสอบบนสภาพแวดล้อมบริสุทธิ์ (Clean Environment Installation Report)
+ชิ้นงาน 2: ไฟล์บันทึกผลการทดสอบระบบ (post_maintenance_test.log) แสดงผล PyTest 100% ผ่านไฟเขียว
+ชิ้นงาน 3: เล่มคู่มือการติดตั้งและการบำรุงรักษาระบบ (System Operations & Maintenance Manual) ตาม ISO/IEC 14764
+ชิ้นงาน 4: สคริปต์ติดตั้งอัตโนมัติ setup.sh และไฟล์แม่แบบ .env.example บน GitHub
+PHASE 4.1 TECHNICAL DELIVERABLES เช็คลิสต์สิ่งส่งมอบเฟสที่ 4.1
+เช็คลิสต์สิ่งส่งมอบเฟสที่ 4.1
+
+ส่งมอบ Technical KPIs ให้ PM
+ส่งมอบตัวเลข Code Coverage (94%), Zero Regression Defects (100% Passed) และ Clean Deployment Success Rate ให้ PM
+บันทึก Project Scorecard
+PM จะนำตัวเลขจริงเหล่านี้ไปกรอกลงในตาราง Project KPI Scorecard และจัดทำรายงาน Phase 4 Readiness ในวิชา ENGSE202 ช่วง 3 ชั่วโมงหลัง
+CROSS-COURSE ALIGNMENT สะพานส่งต่อผลงานสู่วิชา ENGSE202
+สะพานส่งต่อผลงานสู่วิชา ENGSE202
+
+Clean Deployment
+สภาพแวดล้อมบริสุทธิ์คือเครื่องพิสูจน์ความสมบูรณ์ของการตั้งค่าและ Dependencies
+Regression Safety
+การรัน Regression Suite ซ้ำบนเครื่องใหม่ช่วยการันตีความเสถียรระดับ Production
+Maintenance Legacy
+คู่มือบำรุงรักษาตาม ISO 14764 คือมรดกทางวิศวกรรมสำหรับทีมดูแลต่อในอนาคต
+SESSION RECAP สรุปบทเรียนประจำสัปดาห์ที่ 13
+สรุปบทเรียนประจำสัปดาห์ที่ 13
+
+ISO/IEC/IEEE. (2017). Systems and software engineering — Software life cycle processes (ISO/IEC/IEEE Standard No. 12207:2017).
+ISO/IEC. (2006). Software Engineering — Software Life Cycle Processes — Maintenance (ISO/IEC Standard No. 14764:2006).
+Myers, G. J., Sandler, C., & Badgett, T. (2011). The Art of Software Testing (3rd ed.). John Wiley & Sons.
+Wiggins, A. (2017). The Twelve-Factor App (12factor.net).
+IEEE. (2012). IEEE Standard for Configuration Management in Systems and Software Engineering (IEEE Std 828-2012).
+SOFTWARE ENGINEERING BIBLIOGRAPHY เอกสารอ้างอิงทางวิชาการ
+เอกสารอ้างอิงทางวิชาการ
+
+https://i.etsystatic.com/54485226/r/il/e5491a/7288860445/il_570xN.7288860445_1nhh.jpg
+Source: www.etsy.com
+https://cms-cdn.katalon.com/Comparison_diagram_ff5989ce8b.png
+Source: katalon.com
+https://media.geeksforgeeks.org/wp-content/uploads/20260527164341560473/2056958198.webp
+Source: www.geeksforgeeks.org
+https://assets.bytebytego.com/diagrams/0399-a-cheatsheet-for-uml-class-diagrams.png
+Source: bytebytego.com
+https://newhorizoncollegeofengineering.in/wp-content/uploads/2023/12/mceclip0.jpg
+Source: newhorizoncollegeofengineering.in
+Image Sources

@@ -1,0 +1,31 @@
+{
+  "products": [
+    {
+      "product_id": "1",
+      "name": "Milk",
+      "quantity": 10,
+      "price": 25.0,
+      "category": "Food",
+      "barcode": "885000000001",
+      "reorder_point": 5
+    },
+    {
+      "product_id": "2",
+      "name": "Milk Low Stock",
+      "quantity": 4,
+      "price": 25.0,
+      "category": "Food",
+      "barcode": "885000000001",
+      "reorder_point": 5
+    },
+    {
+      "product_id": "3",
+      "name": "CSV Sample",
+      "quantity": 20,
+      "price": 100.0,
+      "category": "General",
+      "barcode": "885000000003",
+      "reorder_point": 5
+    }
+  ]
+}
