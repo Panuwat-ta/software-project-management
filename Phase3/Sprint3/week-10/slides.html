@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>สไลด์สัปดาห์ที่ 10 | CLI Inventory Management</title>
+  <style>
+    :root {
+      --font: "Noto Sans Thai", "Leelawadee UI", system-ui, sans-serif;
+      --serif: "TH Sarabun New", "Angsana New", Georgia, serif;
+      --bg: #e7eeee;
+      --paper: #fff;
+      --ink: #122a38;
+      --muted: #49616b;
+      --accent: #0867a1;
+      --line: #bfd0d4;
+      --soft: #e8f3f8;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: var(--font);
+      color: var(--ink);
+      background: var(--bg);
+    }
+    a:focus-visible, button:focus-visible {
+      outline: 3px solid var(--accent);
+      outline-offset: 3px;
+    }
+    .back-link { color: var(--accent); font-weight: 700; text-decoration: none; }
+    .template-deck {
+      min-height: 100vh;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      background: var(--bg);
+    }
+    .deck-header, .deck-controls {
+      width: min(1440px, calc(100% - 48px));
+      margin: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+    .deck-header { padding: 18px 0; }
+    .deck-controls { padding: 18px 0; }
+    .deck-controls button {
+      min-height: 44px;
+      padding: 10px 16px;
+      border: 1px solid var(--line);
+      background: var(--paper);
+      color: var(--ink);
+      font: 700 15px var(--font);
+      cursor: pointer;
+    }
+    .deck-controls button:disabled { opacity: .35; cursor: default; }
+.deck-controls button:hover:not(:disabled) {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+    }
+    .deck-frame {
+      width: min(1440px, calc(100vw - 48px), calc((100vh - 132px) * 16 / 9));
+      aspect-ratio: 16/9;
+      margin: auto;
+      overflow: hidden;
+      background: var(--paper);
+      box-shadow: 0 18px 46px rgb(18 42 56 / 18%);
+    }
+    .slide {
+      display: none;
+      height: 100%;
+      padding: 3.5% 4.5%;
+      align-content: center;
+    }
+    .slide.active { display: grid; }
+    .slide h1, .slide h2 {
+      margin: 0;
+      letter-spacing: -.04em;
+      line-height: 1.08;
+    }
+    .slide h1 { font-size: clamp(36px, 5vw, 76px); }
+    .slide h2 { font-size: clamp(24px, 2.4vw, 34px); }
+    .slide-label {
+      margin: 0 0 20px;
+      color: var(--accent);
+      font-weight: 800;
+    }
+    .slide-lead {
+      max-width: 50ch;
+      margin: 10px 0 0;
+      color: var(--muted);
+      font-size: clamp(17px, 1.8vw, 26px);
+      line-height: 1.45;
+    }
+    .cover-layout, .content-layout {
+      display: grid;
+      grid-template-columns: 1.12fr .88fr;
+      gap: 7%;
+      align-items: center;
+    }
+    .cover-meta {
+      margin: 0;
+      padding: 14px 0;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      color: var(--muted);
+      line-height: 1.7;
+    }
+    .rule-list {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      border-top: 1px solid var(--line);
+    }
+    .rule-list li {
+      display: grid;
+      grid-template-columns: 32% 1fr;
+      gap: 18px;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--line);
+    }
+    .rule-list strong { color: var(--accent); }
+    table {
+      width: 100%;
+      margin-top: 16px;
+      border-collapse: collapse;
+      font-size: clamp(14px, 1.45vw, 21px);
+    }
+    th {
+      padding: 8px 14px;
+      background: var(--ink);
+      color: #fff;
+      text-align: left;
+    }
+    td {
+      padding: 8px 14px;
+      border-bottom: 1px solid var(--line);
+    }
+    tbody tr:nth-child(even) { background: #f3f7f7; }
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+    .metrics div { padding: 14px 18px; border-right: 1px solid var(--line); }
+    .metrics div:last-child { border: 0; }
+    .metrics b { display: block; font-size: clamp(26px, 3.2vw, 44px); letter-spacing: -.05em; }
+    .metrics span { display: block; margin-top: 9px; color: var(--muted); }
+    .next-steps { margin: 0; padding-left: 1.2em; }
+    .next-steps li {
+      padding: 8px 0;
+      color: var(--muted);
+      font-size: clamp(16px, 1.6vw, 24px);
+    }
+    .slide-label, .slide-lead, .cover-meta, .rule-list li, .next-steps li, .metrics span, table { font-size: clamp(24px, 1.6vw, 26px); }
+    @media (max-width: 720px) {
+      .deck-header, .deck-controls { width: calc(100% - 32px); flex-wrap: wrap; }
+      .deck-frame { width: 100%; aspect-ratio: auto; overflow: visible; box-shadow: none; }
+      .slide { height: auto; min-height: 70vh; }
+      .slide { padding: 6%; }
+      .cover-layout, .content-layout { grid-template-columns: 1fr; gap: 20px; }
+      .cover-meta { padding: 14px 0; }
+      .rule-list li { grid-template-columns: 1fr; gap: 4px; padding: 10px 0; }
+      .metrics { grid-template-columns: 1fr; }
+      .metrics div { padding: 12px 9px; border-right: 0; border-bottom: 1px solid var(--line); }
+      .metrics div:last-child { border-bottom: 0; }
+      th, td { padding: 8px 10px; }
+      .deck-controls button { padding: 8px 12px; }
+    }
+    @media print {
+      .template-deck { display: block; background: #fff; }
+      .deck-header, .deck-controls { display: none; }
+      .deck-frame { width: 100%; aspect-ratio: auto; overflow: visible; box-shadow: none; }
+      .slide { display: grid; break-after: page; height: auto; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      * { scroll-behavior: auto !important; }
+    }
+  </style>
+</head>
+<body class="template-deck">
+  <header class="deck-header">
+    <a class="back-link" href="index.html">← กลับเอกสารสัปดาห์ที่ 10</a>
+    <span id="slide-counter" aria-live="polite">1 / 8</span>
+  </header>
+  <main class="deck-frame" aria-label="สไลด์สัปดาห์ที่ 10">
+    <section class="slide active" id="slide-1">
+      <div class="cover-layout">
+        <div><p class="slide-label">สัปดาห์ที่ 10 · CLI Inventory Management</p><h1>คุมงานด่วน<br>แก้บั๊กที่ราก</h1><p class="slide-lead">ชุดนี้ตอบว่า CR-02 กับ BUG-101 จัดการอย่างไรโดยไม่พังแผน</p></div>
+        <p class="cover-meta">Defect Log BUG-101 · CR-02 Form<br>CCB Minutes · Reserve Log<br>ข้อมูลสมมติเพื่อการเรียน</p>
+      </div>
+    </section>
+    <section class="slide" id="slide-2">
+      <h2>BUG-101 ล่มทั้งไฟล์เพราะข้อมูลเก่าไร้ฟิลด์ barcode</h2>
+      <p class="slide-lead">ที่มา: Defect_Log_BUG-101.md</p>
+      <table><thead><tr><th>ประเด็น</th><th>รายละเอียด</th><th>สถานะ</th></tr></thead><tbody><tr><td>รหัสและความรุนแรง</td><td>BUG-101 ระดับ Critical/Major</td><td>โปรแกรม Crash ทันที</td></tr><tr><td>ตำแหน่ง</td><td>app.py บรรทัด 45 ใน Product.__init__</td><td>ดึงคีย์ barcode ตรง</td></tr><tr><td>ข้อมูลต้นเหตุ</td><td>data.json เก่าสัปดาห์ที่ 1 ไร้ฟิลด์ barcode</td><td>ทำซ้ำได้ 100%</td></tr><tr><td>อาการ</td><td>KeyError: barcode หยุดโหลดทั้งไฟล์</td><td>ต้องมี fallback</td></tr></tbody></table>
+    </section>
+    <section class="slide" id="slide-3">
+      <h2>5 Whys ชี้รากที่ขาด validation กับ fallback</h2>
+      <p class="slide-lead">ที่มา: Defect_Log_BUG-101.md</p>
+      <table><thead><tr><th>คำถาม</th><th>คำตอบ</th></tr></thead><tbody><tr><td>1. ทำไมเกิด KeyError</td><td>โค้ดดึงคีย์ barcode ตรง ๆ</td></tr><tr><td>2. ทำไมหาคีย์ไม่เจอ</td><td>data.json เก่าไม่มีฟิลด์นี้</td></tr><tr><td>3. ทำไมอ่านข้อมูลเก่าไม่ได้</td><td>ขาดตรรกะย้ายสคีมา</td></tr><tr><td>4. ทำไมไม่มีทางสำรอง</td><td>คิดว่าข้อมูลใหม่เสมอ</td></tr><tr><td>5. รากที่แท้จริง</td><td>ขาด validation กับ fallback ใน InventoryRepository</td></tr></tbody></table>
+    </section>
+    <section class="slide" id="slide-4">
+      <div class="content-layout"><div><h2>แก้ที่รากด้วย .get( จึงรับข้อมูลเก่าได้</h2><p class="slide-lead">ที่มา: Defect_Log_BUG-101.md</p></div><ul class="rule-list"><li><strong>ห้ามทำเด็ดขาด</strong><span>try-except pass ปิด error ยิ่งซ่อนระเบิดเวลาไว้ลึกขึ้น</span></li><li><strong>โค้ดเดิมพังง่าย</strong><span>item['barcode'] ดึงตรง เจอไฟล์เก่าล่มทันที</span></li><li><strong>ฟิกซ์ที่ราก</strong><span>item.get('barcode', '') มี fallback รองรับสคีมาเก่า</span></li><li><strong>เกราะถาวร</strong><span>RED เขียนเทสต์จำลองบั๊กก่อน GREEN แก้แล้วผ่าน เก็บเข้า suite</span></li></ul></div>
+    </section>
+    <section class="slide" id="slide-5">
+      <h2>ส่งออก CSV คุ้มทำใน Sprint 2 ด้วยงบ 1,350 บาท</h2>
+      <p class="slide-lead">ที่มา: CR-02_Impact_Decision_Form.md [ข้อมูลจำลองเพื่อการศึกษา]</p>
+      <table><thead><tr><th>ทางเลือก</th><th>ข้อดี</th><th>ข้อแลก</th></tr></thead><tbody><tr><td>Approve ทำใน Sprint 2</td><td>ได้ CSV ทันที กันของขาดสต็อก</td><td>เบิกสำรอง 1,350 บาท เสี่ยงงาน Barcode หลุด</td></tr><tr><td>Defer ไป Sprint 3</td><td>รักษาโฟกัสงานหลัก 100%</td><td>ลูกค้ารอ 1 สัปดาห์ จดมือชั่วคราว</td></tr><tr><td>Reject ไม่ทำ</td><td>ไม่เสียเวลาและงบ</td><td>ลูกค้าขาดเครื่องมือสั่งซื้อ</td></tr><tr><td>งานรวม</td><td>4.5 ชม. Dev 2.0 UI 1.0 QA 1.5</td><td>1,350 บาท @300/ชม.</td></tr></tbody></table>
+    </section>
+    <section class="slide" id="slide-6">
+      <div class="content-layout"><div><h2>CCB อนุมัติบั๊กกับ CR-02 พร้อมกติกาคุมงานงอก</h2><p class="slide-lead">ที่มา: CCB_Meeting_Minutes.md</p></div><ul class="rule-list"><li><strong>องค์ประชุม</strong><span>Sponsor อาจารย์ User PM Tech Lead</span></li><li><strong>มติ BUG-101</strong><span>อนุมัติแก้ที่รากด้วย .get( fallback พร้อมเทสต์ถาวร</span></li><li><strong>มติ CR-02</strong><span>อนุมัติ Option A ทำใน Sprint 2 งบ 4.5 ชม. @300 บาท</span></li><li><strong>กติกาเบิก</strong><span>เบิกสำรองได้เฉพาะมติ Approve เท่านั้น Defer/Reject ไม่เบิก</span></li><li><strong>กันงานงอก</strong><span>Yes if สลับงานแทน Defer with Priority เป็น task แรก Sprint 3</span></li></ul></div>
+    </section>
+    <section class="slide" id="slide-7">
+      <h2>สำรองเหลือ 1,473 บาทหลังเบิก CR-02 โปร่งใส</h2>
+      <p class="slide-lead">ที่มา: Contingency_Reserve_Log.md 2,823-1,350=1,473 [ข้อมูลจำลองเพื่อการศึกษา]</p>
+      <table><thead><tr><th>รายการ</th><th>เบิกใช้</th><th>คงเหลือ</th></tr></thead><tbody><tr><td>ตั้งต้น Week 7 baseline</td><td>-</td><td>2,823 บาท</td></tr><tr><td>เบิก CR-02 4.5 ชม. @300</td><td>-1,350 บาท</td><td>1,473 บาท</td></tr><tr><td>กรณี Defer/Reject</td><td>0 ไม่เบิก</td><td>คงเดิม</td></tr></tbody></table>
+    </section>
+    <section class="slide" id="slide-8">
+      <div class="cover-layout"><div><h2>ปิดบั๊กที่ราก คุมงานด่วนด้วยมติแล้ว</h2><p class="slide-lead">บั๊กปิดที่ราก งานด่วนคุมด้วยมติ สำรองโปร่งใส</p></div><ol class="next-steps"><li>เก็บเทสต์กันถดถอยเป็นเกราะถาวร</li><li>เบิกสำรองพร้อม audit trail ทุกครั้ง</li><li>เข้าสัปดาห์ 11 ทำ hardening แล้วตรึงขอบเขต</li></ol></div>
+    </section>
+  </main>
+  <footer class="deck-controls"><button id="previous" type="button" aria-label="สไลด์ก่อนหน้า">← ก่อนหน้า</button><button id="next" type="button" aria-label="สไลด์ถัดไป">ถัดไป →</button></footer>
+  <script>
+const slides = [...document.querySelectorAll(".slide")];
+const count = document.querySelector("#slide-counter");
+const storageKey = "spm-week-10-evidence";
+function slideFromHash() {
+  const match = /#slide-(\d+)/.exec(window.location.hash || "");
+  if (!match) return null;
+  const index = Number.parseInt(match[1], 10) - 1;
+  return Number.isInteger(index) && index >= 0 && index < slides.length ? index : null;
+}
+function storedSlide() {
+  try {
+    const value = window.localStorage.getItem(storageKey);
+    if (value === null) return null;
+    const index = Number.parseInt(value, 10);
+    return Number.isInteger(index) && index >= 0 && index < slides.length ? index : null;
+  } catch (error) {
+    return null;
+  }
+}
+function rememberSlide(index) {
+  try {
+    window.localStorage.setItem(storageKey, String(index));
+  } catch (error) {
+  }
+}
+let current = slideFromHash() ?? storedSlide() ?? 0;
+function show(index) {
+  current = Math.min(Math.max(index, 0), slides.length - 1);
+  slides.forEach((slide, position) => slide.classList.toggle("active", position === current));
+  count.textContent = `${current + 1} / ${slides.length}`;
+  previousBtn.disabled = current === 0;
+  nextBtn.disabled = current === slides.length - 1;
+  rememberSlide(current);
+  try {
+    window.history.replaceState(null, "", `#slide-${current + 1}`);
+  } catch (error) {
+  }
+}
+function showFromHash() {
+  const index = slideFromHash();
+  if (index !== null) show(index);
+}
+var previousBtn = document.querySelector("#previous");
+var nextBtn = document.querySelector("#next");
+previousBtn.addEventListener("click", () => show(current - 1));
+nextBtn.addEventListener("click", () => show(current + 1));
+document.addEventListener("keydown", (event) => {
+  if (event.key === "ArrowRight" || event.key === "PageDown" || event.key === " ") {
+    event.preventDefault();
+    show(current + 1);
+  }
+  if (event.key === "ArrowLeft" || event.key === "PageUp") {
+    event.preventDefault();
+    show(current - 1);
+  }
+  if (event.key === "Home") {
+    event.preventDefault();
+    show(0);
+  }
+  if (event.key === "End") {
+    event.preventDefault();
+    show(slides.length - 1);
+  }
+});
+window.addEventListener("hashchange", showFromHash);
+show(current);
+  </script>
+</body>
+</html>

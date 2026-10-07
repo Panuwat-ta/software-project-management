@@ -1,0 +1,255 @@
+WEEK 5: COST & RESOURCE MANAGEMENT
+Project Costing & Resource Allocation in Software Evolution Projects
+“การเปลี่ยนความเสี่ยงและหนี้ทางเทคนิค ให้กลายเป็นตัวเลขงบประมาณและการจัดสรรกำลังคนอย่างมีมาตรฐานสากล”
+Academic Framework: PMBOK Guide 7th Edition - Cost & Resource Domain
+ENGSE202: SOFTWARE PROJECT MANAGEMENT WEEK 5 MASTERCLASS
+
+1. Cost Structure
+เข้าใจโครงสร้างและองค์ประกอบต้นทุนซอฟต์แวร์ (Software Cost Components) ในโครงการ Brownfield
+2. Cost Estimation
+ประยุกต์ใช้ Analogous และ Bottom-up Estimating ร่วมกับผลประเมิน ISO/IEC 25010 ได้อย่างแม่นยำ
+3. Cost Baseline & Jira
+จัดทำ Project Budget Baseline Worksheet และตั้งค่า Cost Control Thresholds บนระบบ Jira ได้จริง
+WEEKLY COURSE OBJECTIVES ENGSE202
+เป้าหมายการเรียนรู้ประจำสัปดาห์
+
+ฝั่งเทคนิค ENGSE225 (3 ชม. แรก)
+ผลประเมิน ISO/IEC 25010 พบว่าโค้ดเดิมมี Maintainability ต่ำ (เช่น ฟังก์ชัน main() ยาวเกินไป, ใช้ตัวแปร global x)
+ฝั่งบริหาร ENGSE202 (3 ชม. หลัง)
+แปลงงาน Refactoring เป็นชั่วโมง Man-Hours ➔ คูณอัตราค่าแรง (Labor Rate) ➔ สรุปเป็นงบประมาณโครงการ (Project Budget)
+CROSS-COURSE INTEGRATION TECHNICAL QUALITY TO COST BRIDGE
+ความเชื่อมโยงวิชาเทคนิคสู่การบริหารงบ
+
+ESTIMATION CHALLENGES BROWNFIELD COSTING ICEBERG
+ความท้าทายในโครงการ Brownfield
+Code Comprehension Overhead: มีต้นทุนแฝงจากการแกะความเข้าใจโค้ดดั้งเดิม
+Side Effects Risk: เสี่ยงต่อการเกิดผลกระทบข้างเคียงจนเสียเวลาแก้บั๊กเพิ่ม
+Testing Infrastructure: ต้องเผื่อค่าใช้จ่ายสำหรับระบบทดสอบอัตโนมัติ PyTest
+
+ต้นทุนรวมของโครงการ (Total Project Cost) ประกอบขึ้นจาก 3 ส่วนสำคัญตามมาตรฐานการคำนวณสากล:
+1. Direct Labor (65-75%)
+ค่าแรงบุคลากรตรงในทีมพัฒนา (PM, Tech Lead, Senior Dev, Dev, QA) คำนวณจาก Man-Hours $\times$ Labor Rate
+2. Infrastructure (15-20%)
+ค่าเครื่องมือและระบบ Server, Cloud Computing (AWS/GCP), CI/CD Pipe, Software Licenses (Jira, GitHub)
+3. Reserves (10-15%)
+งบประมาณสำรองความเสี่ยง Contingency Reserve สำหรับรับมือบั๊กในโค้ดเก่า และ Management Reserve
+COST BREAKDOWN STRUCTURE 3 MAIN COST COMPONENTS
+3 องค์ประกอบหลักของต้นทุนซอฟต์แวร์
+
+สูตรการคำนวณค่าแรงทางตรง
+คำนวณแยกตามบทบาทและระดับประสบการณ์ของบุคลากรรายบุคคลในทีม
+การเชื่อมโยง RACI Matrix
+ต้องอ้างอิงการมอบหมายงานตามตาราง RACI Matrix ที่ทำไว้ในสัปดาห์ที่ 3
+คนรับผิดชอบหลัก (Accountable/Responsible) ในแต่ละ Work Package จะเป็นผู้ถูกนำจำนวนชั่วโมงมาคูณกับอัตราค่าแรง
+LABOR COST CALCULATION DIRECT LABOR COST MECHANICS
+องค์ประกอบที่ 1: Direct Labor Cost
+
+ค่าใช้จ่ายด้านสิ่งอำนวยความสะดวกและซอฟต์แวร์เครื่องมือทางเทคนิคตลอดวงจรการบำรุงรักษา:
+Software Licenses
+Jira Software, GitHub Enterprise, SonarQube สำหรับ Static Analysis
+Cloud Compute
+AWS/GCP Compute Instances สำหรับ Testing/Staging Cloud Database
+CI/CD Services
+GitHub Actions Compute Minutes รัน PyTest อัตโนมัติทุกครั้งที่ Commit
+SOFTWARE ENGINEERING TOOLING INFRASTRUCTURE & TOOLING COST
+องค์ประกอบที่ 2: Infrastructure & Tooling
+
+Contingency Reserve
+เงินสำรองความเสี่ยงที่ระบุได้ (Known-Unknowns): คำนวณจากตาราง Risk Register (เช่น ความเสี่ยงจากการแก้ไขโค้ดตัดสต็อกแล้วกระทบยอดรวม)
+PM มีอำนาจอนุมัติใช้เงินส่วนนี้ได้ทันทีเมื่อเหตุการณ์ความเสี่ยงเกิดขึ้นจริง
+Management Reserve
+เงินสำรองบริหารจัดการ (Unknown-Unknowns): สำรองไว้สำหรับเหตุการณ์ที่คาดไม่ถึงนอกเหนือจาก Risk Register
+ต้องขออนุมัติอย่างเป็นทางการจาก Sponsor / ลูกค้า ก่อนเบิกใช้
+RISK BUDGET ALLOCATION RESERVES: CONTINGENCY VS MANAGEMENT
+องค์ประกอบที่ 3: Risk Reserves
+
+การประมาณการโดยเปรียบเทียบ
+นำข้อมูลประวัติศาสตร์ (Historical Data) จากโครงการซอฟต์แวร์ในอดีตที่มีลักษณะใกล้เคียงกันมาเทียบเคียงปรับประเมินงบประมาณ
+ข้อดี vs ข้อเสีย
+✅ ข้อดี: ทำได้รวดเร็ว ประหยัดเวลา เหมาะกับช่วงเริ่มต้นโครงการ
+❌ ข้อเสีย: แม่นยำต่ำ หากซอฟต์แวร์เดิมมีหนี้ทางเทคนิคซ่อนอยู่ที่ไม่เท่ากัน
+COST ESTIMATION TECHNIQUE 1 ANALOGOUS ESTIMATING
+เทคนิคที่ 1: Analogous Estimating
+
+ประเมินเวลาและค่าใช้จ่ายจาก Work Package ย่อยที่สุดใน WBS ทีละชิ้น แล้วนำมารวมกันเป็นงบโครงการ:
+High Accuracy: แม่นยำสูงมาก เหมาะกับงานบำรุงรักษาซอฟต์แวร์
+ISO 25010 Integration: นำผลวิเคราะห์โค้ดดั้งเดิมมาแตกเป็นชิ้นงานย่อยได้ละเอียดที่สุด
+Detail Driven: ต้องใช้เวลาในการวิเคราะห์รายละเอียดงานสูงกว่า
+COST ESTIMATION TECHNIQUE 2 BOTTOM-UP ESTIMATING
+เทคนิคที่ 2: Bottom-up Estimating
+
+จุดเสียที่พบ (ISO 25010)
+งานใน WBS (Work Package)
+เวลา (Hrs)
+อัตรา (บาท)
+ต้นทุน (บาท)
+Modularity ตก (main ยาว)
+WBS 2.1 Refactoring Split main() into Modules
+8
+400 (Sr. Dev)
+3,200
+Testability ตก (ไร้ Unit Test)
+WBS 2.2 Write PyTest for Inventory Calc
+6
+250 (QA)
+1,500
+Analyzability ตก (ตัวแปร x)
+WBS 2.3 Rename Cryptic Variables & Docs
+4
+300 (Dev)
+1,200
+TECHNICAL QUALITY TO COST MAPPING ISO 25010 TO BOTTOM-UP COST FLOW
+เชื่อมโยง ISO 25010 สู่ Bottom-up Cost
+
+บทบาททางการบริหาร / เทคนิค
+อัตราค่าแรง (บาท/ชม.)
+ขอบเขตภาระงานหลักประจำปฏิบัติการ
+Project Manager (PM)
+350
+ควบคุมแผนบูรณาการ งบประมาณ RACI และความเสี่ยงโครงการ
+Senior Dev / Tech Lead
+400
+วิเคราะห์สถาปัตยกรรมโค้ดเดิม แกะจุดพัง และทำ Refactoring
+Developer
+300
+พัฒนาโมดูลใหม่ เพิ่มเติมฟังก์ชันย่อยตามสเปก To-Be
+QA / Tester
+250
+ออกแบบเคสทดสอบ เขียนและรัน PyTest คุ้มกันความเสถียร
+STANDARD ROLE COSTING LABOR RATE MATRIX BENCHMARK
+อัตราค่าตอบแทนมาตรฐาน (Labor Rate)
+
+รหัสและชื่อชิ้นงาน (WBS Task)
+ผู้รับผิดชอบ (Role)
+ชั่วโมง
+อัตรา
+รวม (บาท)
+Task 1.1 Static Analysis & DFD Mapping
+Tech Lead + Dev
+10
+350 avg
+3,500
+Task 2.1 Refactoring Global x to Repository
+Senior Dev
+10
+400
+4,000
+Task 2.2 Write PyTest Suite for Stock Logic
+QA Tester
+6
+250
+1,500
+รวม Direct Labor Subtotal
+9,000 บาท
+BUDGET CALCULATION 1/2 DIRECT LABOR BUDGET WORKSHEET
+ตัวอย่าง Budget Worksheet (Direct Labor)
+
+รายการรวมหมวดงบประมาณ
+TOTAL BUDGET BASELINE
+12,075 บาท
+อนุมัติเป็นงบประมาณอ้างอิงทางการของโครงการ
+Direct Labor Cost Subtotal: 9,000 บาท
+Infrastructure & Tooling (Jira + Cloud): 1,500 บาท
+Contingency Reserve (15%): 1,575 บาท
+BUDGET CALCULATION 2/2 TOTAL PROJECT BUDGET BASELINE
+สรุปงบประมาณรวมทั้งโครงการ
+
+Cost Baseline คืออะไร?
+ตัวเลขงบประมาณรวมที่ได้รับการอนุมัติอย่างเป็นทางการ ใช้เป็นจุดอ้างอิงในการวัดผลต่างค่าใช้จ่าย (Cost Variance) ตลอดการดำเนินโครงการ
+Cost Control Threshold Zones
+Green Zone (±5%): ค่าใช้จ่ายปกติอยู่ในแผนงาน
+Yellow Zone (5-10%): เฝ้าระวัง PM ต้องทำรายงานชี้แจง
+Red Zone (>10%): วิกฤต หยุดโครงการเพื่อรีวิวแผนใหม่
+COST GOVERNANCE FRAMEWORK COST BASELINE & CONTROL THRESHOLDS
+การปักหมุด Cost Baseline & Thresholds
+
+การนำตัวเลขชั่วโมงจาก Worksheet ลงสู่บอร์ด Jira จริง:
+Original Estimate: กรอกจำนวนชั่วโมงประเมินลงในการ์ดงานแต่ละใบ
+Assignee Mapping: เชื่อมโยงการ์ดงานเข้ากับสมาชิกในทีมตามตาราง RACI Matrix
+Complexity Mapping: ใช้ Story Points เพื่อวัดระดับความยากซับซ้อน
+AGILE TOOL SETUP JIRA COST & TIME ESTIMATION SETUP
+การแปลงงบประมาณลงสู่ระบบ Jira
+
+การบันทึก Log Time
+เมื่อนักพัฒนาเริ่มลงมือทำงาน จะต้องทำการ Log Time (บันทึกเวลาทำงานจริง) ลงในการ์ด Jira
+ประโยชน์สำหรับ PM
+ช่วยให้ PM รับรู้ได้ทันทีว่างานชิ้นไหนใช้เวลา/เงินเกินกว่าที่ประเมินไว้ใน Cost Baseline เพื่อเข้าแก้ไขปัญหาได้อย่างทันท่วงที
+AGILE FINANCIAL CONTROL TIME LOG & COST VARIANCE ANALYSIS
+Jira Time Log สู่การวัด Cost Variance
+
+Workshop: "Project Budgeting & Resource Costing Workshop"
+1. Budget Worksheet
+ดึงรายการ Task จาก WBS และ ISO 25010 คำนวณ Direct Labor ใน Spreadsheet
+2. Reserve Calculation
+คำนวณ Contingency Reserve 15% และสรุปตัวเลข Total Budget Baseline
+3. Jira Integration
+กรอกค่า Original Estimate ชั่วโมงลงบนการ์ด Jira และมอบหมายงานตาม RACI
+PRACTICAL LAB ACTIVITY PROJECT BUDGETING WORKSHOP
+กิจกรรมปฏิบัติการกลุ่มประจำวันนี้
+
+ขั้นตอนการจัดทำ
+รายละเอียดการปฏิบัติงานใน Google Sheets / Excel
+1. รวบรวม Task
+ดึงรายการ Task ทั้งหมดจาก WBS และผลตรวจ ISO 25010 มารวบรวมในแถว
+2. ระบุผู้รับผิดชอบ
+ใส่ชื่อผู้รับผิดชอบและบทบาทตามตาราง RACI Matrix ที่ตกลงกันไว้
+3. กรอกชั่วโมง & ค่าแรง
+ใส่ Man-Hours และใส่อัตราค่าแรงต่อชั่วโมงตาม Labor Rate Matrix
+4. คำนวณสูตรอัตโนมัติ
+ใช้สูตร =Hours * Rate คำนวณผลคูณ Direct Labor Cost ของแต่ละ Task
+WORKSHOP EXECUTION STEP 1 CREATING PROJECT BUDGET WORKSHEET
+ขั้นตอนที่ 1: สร้าง Budget Worksheet
+
+การสรุปผลรวม Direct & Infra
+บันทึกค่า Infrastructure / Software Licenses สมมุติลงในตาราง
+รวมงบ Direct Labor Subtotal + Infrastructure Cost
+การคิด Contingency Reserve
+คำนวณ Contingency Reserve 10-15% จากผลรวม เพื่อรองรับความเสี่ยงใน Risk Register
+สรุปตัวเลข Total Budget Baseline สดใสชัดเจนของกลุ่ม
+WORKSHOP EXECUTION STEP 2 CONTINGENCY RESERVE & TOTAL BASELINE
+ขั้นตอนที่ 2: คำนวณ Total Baseline
+
+ปฏิบัติการบนระบบ Jira จริงของกลุ่ม:
+Original Estimate: นำชั่วโมงประเมินไปกรอกลงในการ์ดงานแต่ละใบ
+Assignee Check: ตรวจสอบ Assignee ให้ตรงกับคนที่คำนวณค่าแรง
+Screen Capture: แคปหน้าจอ Jira Backlog ไว้เป็นหลักฐานส่งงาน
+WORKSHOP EXECUTION STEP 3 JIRA ESTIMATION & ASSIGNEE MAPPING
+ขั้นตอนที่ 3: อัปเดตข้อมูลลงบน Jira
+
+ตรวจสอบความครบถ้วนของเล่มรายงานบูรณาการ Combined Report (Phase 2.1):
+ส่วนที่ 1 (ENGSE225): รายงานประเมินคุณภาพ ISO/IEC 25010 Checklist + แผนภาพ As-Is vs To-Be
+ส่วนที่ 2 (ENGSE202): ตารางงบประมาณโครงการ (Project Budget & Resource Baseline Worksheet)
+ส่วนที่ 3 (การบูรณาการ): ภาพแคปเจอร์หน้าจอ Jira แสดงข้อมูล Cost / Hours Estimate บนการ์ดงานทุกใบ
+COMBINED DELIVERABLES CHECKLIST PHASE 2.1 PORTFOLIO SUBMISSION
+เช็คลิสต์สิ่งส่งมอบเล่มรายงาน Phase 2.1
+
+Business Language: ช่วยให้สื่อสารกับผู้บริหาร/ลูกค้าด้วยภาษาธุรกิจ (เงินและเวลา) ได้อย่างมืออาชีพ
+Value of Clean Code: ทำให้เห็นมูลค่าที่แท้จริงของการเขียน Clean Code ในการลดค่าใช้จ่ายอนาคต
+PMI Professional Skills: สร้าสทักษะ Software Project Manager ระดับสากลตามมาตรฐาน PMI
+PROFESSIONAL VALUE WHY ENGINEERS MUST UNDERSTAND COSTING
+ประโยชน์ทางวิชาชีพของการทำ Costing
+
+เปิดช่วงถาม-ตอบ (Q&A)
+“การบริหารโครงการซอฟต์แวร์ที่ประสบความสำเร็จ ไม่ใช่แค่การเขียนโค้ดให้รันผ่าน แต่คือการส่งมอบงานคุณภาพสูงภายใต้งบประมาณและเวลาที่กำหนด”
+เตรียมคอมพิวเตอร์ประจำกลุ่มเพื่อเข้าสู่ช่วง Workshop คำนวณงบประมาณและอัปเดต Jira
+ENGSE202: SOFTWARE PROJECT MANAGEMENT Q&A & DISCUSSION
+
+Project Management Institute. (2021). A Guide to the Project Management Body of Knowledge (PMBOK Guide) (7th ed.). Project Management Institute.
+Boehm, B. W. (1981). Software Engineering Economics. Prentice-Hall.
+Institute of Electrical and Electronics Engineers. (1998). IEEE Standard for Software Project Management Plans (IEEE Std 1058-1998).
+Kerzner, H. (2017). Project Management: A Systems Approach to Planning, Scheduling, and Controlling (12th ed.). Wiley.
+International Organization for Standardization. (2011). Systems and software engineering — SQuaRE (ISO/IEC Standard No. 25010:2011).
+SOFTWARE MANAGEMENT BIBLIOGRAPHY ACADEMIC REFERENCES
+เอกสารอ้างอิงและมาตรฐานวิชาการ
+
+https://miro.medium.com/v2/resize:fit:1200/1*IPqvtj-hxd2I132QcdjcSQ.png
+Source: medium.com
+https://www.projectmanager.com/wp-content/uploads/2023/06/Cost-Breakdown-Structure-Template.png
+Source: www.projectmanager.com
+https://images.ctfassets.net/xjcz23wx147q/5wSch0dnLGnOAC12Xkb29g/01e148389107643c8c9cb0a44020444a/Scrum-default-Detachable.png
+Source: www.atlassian.com
+https://www.projectmanager.com/wp-content/uploads/2025/03/Gantt-CTA-2025.jpg
+Source: www.projectmanager.com
+https://cdn.sanity.io/images/33u1mixi/production-2026/f42fe86c196951521edab94b6e65d9ce8688ed8a-722x722.png
+Source: www.diligent.com
+Image Sources

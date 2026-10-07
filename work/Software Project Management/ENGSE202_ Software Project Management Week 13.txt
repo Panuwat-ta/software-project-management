@@ -1,0 +1,274 @@
+WEEK 13: PROJECT CLOSURE & LESSONS LEARNED
+ENGSE202: Project Closure & KPIs
+“การตั้งต้นกระบวนการปิดโครงการตามมาตรฐาน PMBOK Guide การวัดผลความสำเร็จผ่าน KPI Scorecard และการสังเคราะห์องค์ความรู้สู่ Lessons Learned Register”
+Academic Framework: PMBOK Guide 7th Edition - Project Closure & Performance Evaluation
+ENGSE202: SOFTWARE PROJECT MANAGEMENT WEEK 13 MASTERCLASS
+
+1. Project Closure
+เข้าใจกรอบกระบวนการปิดโครงการตาม PMBOK ทั้งมิติ Administrative และ Financial Closure
+2. KPI Scorecard
+ออกแบบและประเมินผลตัวชี้วัดความสำเร็จเปรียบเทียบ Baseline Target กับ Actual Results 4 มิติ
+3. Lessons Learned
+ปฏิบัติการถอดบทเรียนของโครงการ (Harvesting) จัดทำสมุดทะเบียน Lessons Learned Register
+4. Jira & OPAs Archive
+เคลียร์กระดาน Jira สู่สถานะปิดโครงการ และจัดเก็บสินทรัพย์กระบวนการขององค์กร (OPAs)
+WEEKLY COURSE OBJECTIVES ENGSE202
+เป้าหมายการเรียนรู้ประจำสัปดาห์
+
+PROJECT MANAGEMENT STANDARDS ความเข้าใจผิดเกี่ยวกับการปิดโครงการ
+ความเข้าใจผิดเรื่องการปิดโครงการ
+สรุปตัวเลขทางบัญชี: เคลียร์ค่าใช้จ่ายเครื่องมือและค่าแรงอย่างโปร่งใส
+วัดผลคุณค่าทางธุรกิจ: ตรวจสอบว่าระบบบรรลุ Business Value ตาม Charter หรือไม่
+ถอดบทเรียนองค์กร: สังเคราะห์ความรู้ป้องกันความผิดพลาดซ้ำในอนาคต
+
+1. Administrative Closure
+การรวบรวมเอกสารส่งมอบทั้งหมด (Deliverables) ตรวจสอบความถูกต้องตามระเบียบ
+2. Financial Closure
+การกระทบยอดค่าใช้จ่ายจริง ($AC$) ปิดบัญชีค่าจ้างและค่าเครื่องมือ
+จัดเก็บเอกสารและโค้ดเข้าคลังสินทรัพย์องค์กร (OPAs Archiving)
+ประเมินผลงานและปลดปล่อยสมาชิกในทีม (Team Reallocation)
+กระทบยอดใบเสร็จและเคลียร์หนี้สินคงค้างทั้งหมด
+ส่งคืนงบประมาณสำรองความเสี่ยง (Contingency Reserve) ส่วนที่เหลือ
+CLOSE PROJECT OR PHASE PROCESS 2 เสาหลักของการปิดโครงการ
+2 เสาหลักของการปิดโครงการ
+
+PROJECT PERFORMANCE DOMAIN การวัดผลดัชนีความสำเร็จ (PROJECT KPIS)
+การวัดผลดัชนีความสำเร็จ (KPIs)
+หลักการวัดผลทางวิชาการ:
+เปรียบเทียบระหว่าง แผนตั้งต้น (Baseline Target) ในสัปดาห์ที่ 5 - 7 กับ ผลงานจริงที่ทำได้ (Actual Results) ในสัปดาห์ที่ 12 - 13 ครอบคลุม 4 มิติสำคัญ
+
+Schedule Variances & Index
+Sprint & Milestone Adherence
+Sprint On-Time Completion: ปิดงาน Sprint 1, 2, 3 ได้ตามกำหนด 100%
+Milestone Delivery: ผ่าน Gate Review Phase 1-3 ตามไทม์ไลน์เป๊ะ
+Deployment Window: ติดตั้งและตรวจสอบในสัปดาห์ที่ 13 ได้ตามแผน
+KPI DIMENSION 1 มิติการประเมินด้านเวลา (SCHEDULE)
+มิติที่ 1: ด้านเวลา (Schedule)
+
+Cost Variance & Index
+Reserve Health & Variance
+Budget Baseline Deviation: ควบคุมงบไม่เกินกรอบ ± 5%
+Contingency Reserve: เบิกจ่ายถูกต้อง ไม่เกิดสภาวะงบติดลบ
+Net Balance Returned: ส่งคืนเงินสำรองส่วนเกิน 100 บาทให้ Sponsor
+KPI DIMENSION 2 มิติการประเมินด้านต้นทุน (COST)
+มิติที่ 2: ด้านต้นทุน (Cost)
+
+Code Complexity & Architecture
+Testing & Deployment Safety
+Complexity Reduction: เมธอดมีความซับซ้อนลดลง (v(G)  6 จากเดิม > 22
+Global Elimination: ขจัดตัวแปรสปาเก็ตตี global x ได้ 100%
+Repository Pattern: สถาปัตยกรรมแบ่งชั้น Clean Architecture สมบูรณ์
+PyTest Code Coverage: บรรลุ 94% (เป้าหมาย  90%) 🏆
+Zero Critical Defects: ปราศจากบั๊กระดับวิกฤตบนสาย main
+Clean Deployment: ติดตั้งและรันผ่านบน Clean Machine ได้ 100%
+KPI DIMENSION 3 มิติคุณภาพทางเทคนิค (QUALITY)
+มิติที่ 3: คุณภาพทางเทคนิค (Quality)
+
+User Acceptance & Scope
+Sponsor & Change Governance
+UAT First-Time Pass Rate: ผ่านการตรวจรับรอบแรก 100%
+Scope Acceptance Rate: ฟังก์ชัน Barcode, Alert, CSV ได้รับการยอมรับ
+End-to-End Workflows: ผู้ใช้ทดสอบการรับเข้าและตัดสต็อกได้ราบรื่น
+Sponsor Satisfaction: ได้รับการประเมินความพึงพอใจ 5/5 ดาว ⭐⭐⭐⭐⭐
+CCB Governance: บริหารจัดการคำขอฉุกเฉิน CR-02 ได้รวดเร็ว
+Scope Freeze: รักษาวินัยระบบ ไม่เกิดปัญหางานงอกในโค้งสุดท้าย
+KPI DIMENSION 4 มิติความพึงพอใจ (SATISFACTION)
+มิติที่ 4: ความพึงพอใจผู้มีส่วนได้ส่วนเสีย
+
+KPI Category
+Specific Indicator
+Baseline
+Actual
+Evaluation Status
+Schedule
+Schedule Performance Index (SPI)
+1.00
+1.00
+🟢 Met (ส่งมอบงานตรงเวลา 100%)
+Cost
+Cost Performance Index (CPI)
+ 0.95
+0.96
+🟢 Met (คุมงบได้ในกรอบเงินสำรอง)
+Quality
+PyTest Code Coverage
+ 90%
+94%
+🏆 Exceeded (คุณภาพสูงกว่าเกณฑ์)
+Technical
+Max Cyclomatic Complexity
+ 8
+6
+🟢 Met (โค้ดอ่านง่าย ลดหนี้เทคนิค)
+Stakeholder
+UAT Acceptance Rate
+100%
+100%
+🟢 Met (ผ่านการรับรองครบถ้วน)
+MASTER EVALUATION SCORECARD ตารางประเมินผล PROJECT KPI SCORECARD
+ตารางประเมินผล Project KPI Scorecard
+
+ORGANIZATIONAL LEARNING DOMAIN การถอดบทเรียนของโครงการ
+การถอดบทเรียนของโครงการ
+ป้องกันสมองไหล (Brain Drain): ไม่ให้ความรู้หายไปเมื่อปิดโครงการ
+ยกระดับวุฒิภาวะองค์กร: เพิ่ม Process Maturity ตามเกณฑ์ CMMI
+สร้างฐานข้อมูลประวัติศาสตร์: ใช้อ้างอิงการประมาณการในอนาคต
+
+5 องค์ประกอบสำคัญตาม PMI
+Impact & Actionable Advice
+1. Category: หมวดหมู่ Technical, Process, People, Scope
+2. Issue / Situation: บริบทหรือสถานการณ์ที่เกิดขึ้นจริง
+3. Root Cause: วิเคราะห์รากเหง้าว่าทำไมจึงเกิดเหตุการณ์นั้น
+4. Impact: ผลกระทบต่อขอบเขต เวลา ต้นทุน หรือคุณภาพ
+5. Recommendation: ข้อเสนอแนะเชิงปฏิบัติสำหรับโครงการถัดไป (Actionable Advice ที่นำไปใช้ได้ทันที)
+PMI KNOWLEDGE MANAGEMENT โครงสร้างของ LESSONS LEARNED REGISTER
+โครงสร้าง Lessons Learned Register
+
+หมวด Technical (Git & Refactoring)
+Issue: พบ Merge Conflict รุนแรงในสัปดาห์ที่ 8 ตอนแยกคลาส
+Lesson: การทำ Refactoring ใหญ่ ต้องแตก Branch ให้มีอายุสั้นที่สุด (Short-Lived) และตกลง Interface ระหว่างกันก่อนเริ่มเขียนโค้ด
+หมวด Process (Agile & Capacity)
+Issue: ดึงงานเข้า Sprint เกินขีดความสามารถในสัปดาห์แรกๆ
+Lesson: การวางแผนต้องอิงจาก Team Velocity จริง และใช้เกณฑ์ Definition of Ready (DoR) คัดกรองงานเสมอ
+HARVESTED INSIGHTS PART 1 ตัวอย่างบทเรียน: TECHNICAL & PROCESS
+ตัวอย่างบทเรียน: Technical & Process
+
+หมวด People & RACI
+Issue: การ์ดงานบางใบไม่มีคนรับผิดชอบชัดเจนทำให้ล่าช้า
+Lesson: กฎเหล็กของ RACI Matrix ที่กำหนดให้มี Accountable (A) เพียงคนเดียว ช่วยขจัดปัญหาการเกี่ยงงานได้อย่างเด็ดขาด
+หมวด Governance & Change
+Issue: มีคำขอฉุกเฉิน CR-02 แทรกเข้ามากลางคัน
+Lesson: คณะกรรมการ CCB และการทำ Impact Analysis ช่วยให้เราสามารถเจรจาบนพื้นฐานข้อเท็จจริง ไม่ใช่อารมณ์
+HARVESTED INSIGHTS PART 2 ตัวอย่างบทเรียน: PEOPLE & GOVERNANCE
+ตัวอย่างบทเรียน: People & Governance
+
+TOOLING LIFECYCLE CLOSURE การเคลียร์กระดานและปิดงานบน JIRA
+การปิดงานบนระบบ Jira
+ตรวจสอบว่าไม่มีการ์ดค้างใน To Do หรือ In Progress
+การ์ดงานทั้งหมดใน Sprint 1-3 ต้องเป็น Done 100%
+กดปุ่ม Release Version 2.0.0 พร้อมลงวันที่
+บันทึกภาพ Project Dashboard สรุปเข้าแฟ้มประวัติ
+
+Organizational Process Assets
+คลังทรัพย์สินทางปัญญา เครื่องมือ และเทมเพลตของโครงการที่ถูกจัดเก็บรักษาไว้เพื่อให้องค์กรนำไปใช้ซ้ำในโครงการอนาคต
+4 รายการ OPAs ที่ต้องจัดเก็บ
+Project Charter & WBS Dictionary Template
+RACI Matrix & Communication Management Plan
+Jira Automation Rules & GitHub CI/CD Workflows
+Risk Register & Lessons Learned Register Database
+ORGANIZATIONAL KNOWLEDGE ASSET การจัดเก็บสินทรัพย์กระบวนการ (OPAS)
+การจัดเก็บสินทรัพย์กระบวนการ (OPAs)
+
+หมวด / บทที่
+หัวข้อสารบัญหลัก
+ผลผลิตเอกสาร (Deliverables)
+ส่วนที่ 1: Executive Summary
+บทสรุปผู้บริหาร ภาพรวมโครงการ และการทบทวนวัตถุประสงค์
+Executive Objectives Review
+ส่วนที่ 2: Performance KPIs
+สรุปผลตัวชี้วัดความสำเร็จ 4 มิติ (Schedule, Cost, Quality, User)
+Project KPI Scorecard Table
+ส่วนที่ 3: Financials & EVM
+สรุปผลต่างทางการเงิน (CPI, SPI) และการกระทบยอดงบประมาณ
+Final EVM Analysis Statement
+ส่วนที่ 4: Procurement
+การปิดสัญญาจัดซื้อจัดจ้าง เคลียร์ใบเสร็จ และส่งคืนเงินสำรอง
+Procurement Close-out Sheet
+ส่วนที่ 5: Lessons Learned
+สมุดทะเบียนบทเรียนโครงการฉบับสมบูรณ์ (5 หมวดหมู่)
+Complete Lessons Learned Register
+FORMAL CLOSURE DOCUMENTATION โครงสร้างเล่มรายงานปิดโครงการ
+โครงสร้างเล่มรายงานปิดโครงการ
+
+Workshop: "Project KPI Scorecard & Lessons Learned Harvesting Workshop"
+1. KPI Scorecard
+ดึงตัวเลขจริงจาก Jira, GitHub และ EVM กรอกลงในตาราง KPI Scorecard
+2. Harvesting Retro
+ระดมสมองถอดบทเรียนโครงการ บันทึกลง Lessons Learned Register  5 ข้อ
+3. Jira & Release
+เคลียร์การ์ด Jira เป็น Done ทั้งหมด และกด Release Version 2.0.0 บนระบบ
+PRACTICAL LAB ACTIVITY แนะนำกิจกรรม WORKSHOP วันนี้
+แนะนำกิจกรรม Workshop วันนี้
+
+รวบรวมตัวเลขจริง (Actuals)
+ประเมินสถานะผลงาน
+กรอกข้อมูลลงในตาราง Project KPI Scorecard เปรียบเทียบกับ Baseline Target และระบุสถานะประเมินผล Met / Exceeded ครบทุกแถว
+ดึงค่า SPI = 1.00 และ CPI = 0.96 จากผลลัพธ์ EVM สัปดาห์ 12
+ดึงค่า Code Coverage (94%) และผล PyTest จากวิชา ENGSE225
+ดึงผลการตรวจรับ UAT Sign-off ผ่าน 100%
+WORKSHOP EXECUTION STEP 1 ขั้นตอน 1: กรอกตาราง KPI SCORECARD
+ขั้นตอน 1: กรอกตาราง KPI Scorecard
+
+Comprehensive Retrospective
+สมาชิกทุกคนสะท้อนความคิดเห็นตั้งแต่สัปดาห์ที่ 1 ถึง 12 ผ่าน 2 คำถามหลัก:
+1. อะไรคือสิ่งที่เราทำได้ยอดเยี่ยมและควรนำไปใช้ในโครงการหน้า?
+ 2. อะไรคือข้อผิดพลาดที่เราจะไม่ทำอีกเด็ดขาด?
+ลงบันทึกใน Register
+คัดเลือกประเด็นที่ดีที่สุดอย่างน้อย 5 ข้อ บันทึกลงใน Lessons Learned Register ให้ครบทั้ง 5 คอลัมน์ (Category, Issue, Root Cause, Impact, Advice)
+WORKSHOP EXECUTION STEP 2 ขั้นตอน 2: ถอดบทเรียนโครงการ
+ขั้นตอน 2: ถอดบทเรียนโครงการ
+
+ตรวจสอบ Zero Open Tasks
+ตรวจสอบว่าการ์ดงานทั้งหมดใน Backlog และ Sprint 1, 2, 3 ย้ายเข้าช่อง Done ครบถ้วน 100% ไร้งานค้าง
+กด Release Version 2.0.0
+ไปที่เมนู Releases ➔ กดปุ่ม Release บนเวอร์ชัน v2.0.0 ใส่วันที่ส่งมอบจริง และแคปเจอร์หน้าจอรายงานความสำเร็จ
+WORKSHOP EXECUTION STEP 3 ขั้นตอน 3: ปิดกระดานและ RELEASE บน JIRA
+ขั้นตอน 3: ปิดกระดานบน Jira
+
+ประกอบร่างเอกสาร 5 หมวด
+นำตาราง Project KPI Scorecard, รายงาน Final EVM, ตาราง Procurement Close-out, และ Lessons Learned ใส่ลงในแม่แบบรายงาน
+ตรวจทานความสมบูรณ์
+ตรวจทานความสอดคล้องของตัวเลขและการจัดหน้าเอกสารให้เรียบร้อย เพื่อเตรียมจัดทำเล่มรายงานฉบับรวมส่งมอบปิดเฟส 4.1
+WORKSHOP EXECUTION STEP 4 ขั้นตอน 4: ร่างรายงาน PROJECT CLOSURE
+ขั้นตอน 4: ร่างรายงาน Project Closure
+
+ชิ้นงาน 1: ตารางประเมินผลสัมฤทธิ์โครงการฉบับสมบูรณ์ (Project KPI Scorecard: Baseline vs. Actuals)
+ชิ้นงาน 2: สมุดทะเบียนรวบรวมบทเรียนของโครงการ (Project Lessons Learned Register) ตามมาตรฐาน PMI
+ชิ้นงาน 3: ภาพแคปเจอร์หน้าบอร์ด Jira ที่ปิดการ์ดงาน 100% และสถานะ Release Version 2.0.0 สมบูรณ์
+ชิ้นงาน 4: ร่างเอกสารรายงานปิดโครงการฉบับสมบูรณ์ (Draft Project Closure Report)
+PHASE 4.1 MANAGEMENT DELIVERABLES เช็คลิสต์สิ่งส่งมอบเฟส 4.1
+เช็คลิสต์สิ่งส่งมอบเฟส 4.1
+
+หมวด ENGSE225 (Technical Dossier)
+หมวด ENGSE202 (Management Dossier)
+รายงานการติดตั้งบน Clean Environment
+ไฟล์บันทึกผลการทดสอบ post_maintenance_test.log
+เล่มคู่มือบำรุงรักษา System Operations Manual
+ตาราง Project KPI Scorecard 4 มิติ
+สมุดทะเบียน Lessons Learned Register 5 หมวด
+หลักฐาน Jira Closure Evidence & Release v2.0.0
+INTEGRATED PHASE 4.1 BUNDLE ภาพรวมรายงานส่งมอบฉบับรวม
+ภาพรวมรายงานส่งมอบฉบับรวม
+
+Data-Driven Evaluation
+KPI Scorecard ช่วยยืนยันความสำเร็จโครงการด้วยตัวเลขประจักษ์ ไม่ใช่ความรู้สึก
+Organizational Learning
+การถอดบทเรียน Lessons Learned เปลี่ยนความผิดพลาดให้เป็นสินทรัพย์ทางปัญญา
+Closure Discipline
+การปิดโครงการอย่างเป็นระบบตาม PMBOK ช่วยเคลียร์ภาระและสร้างความน่าเชื่อถือ
+SESSION RECAP สรุปบทเรียนประจำสัปดาห์ที่ 13
+สรุปบทเรียนประจำสัปดาห์ที่ 13
+
+ช่วงถาม-ตอบ (Q&A Session)
+“โครงการที่ประสบความสำเร็จอย่างแท้จริง ไม่ใช่แค่ส่งมอบซอฟต์แวร์ได้ตามเวลา แต่คือโครงการที่สร้างองค์ความรู้ใหม่ให้แก่ทีมงาน และทิ้งมรดกกระบวนการที่มีคุณภาพไว้ให้องค์กร”
+เตรียมความพร้อมสำหรับการทำ Disaster Recovery & Pre-Closure Audit ในสัปดาห์ที่ 14
+ENGSE202: SOFTWARE PROJECT MANAGEMENT Q&A & DISCUSSION
+
+Project Management Institute. (2021). A Guide to the Project Management Body of Knowledge (PMBOK Guide) (7th ed.). Project Management Institute.
+Project Management Institute. (2017). A Guide to the Project Management Body of Knowledge (PMBOK Guide) (6th ed.). Project Management Institute.
+Flemming, Q. W., & Koppelman, J. M. (2010). Earned Value Project Management (4th ed.). Project Management Institute.
+Kerzner, H. (2017). Project Management: A Systems Approach to Planning, Scheduling, and Controlling (12th ed.). Wiley.
+Kan, S. H. (2002). Metrics and Models in Software Quality Engineering (2nd ed.). Addison-Wesley.
+IEEE. (1998). IEEE Standard for Software Project Management Plans (IEEE Std 1058-1998).
+PROJECT MANAGEMENT BIBLIOGRAPHY เอกสารอ้างอิงทางวิชาการ
+เอกสารอ้างอิงทางวิชาการ
+
+https://www.projectengineer.net/wp-content/uploads/2016/12/process-groups-2.png
+Source: www.projectengineer.net
+https://nextgentemplates.com/wp-content/uploads/2025/05/Project-Management-Growth-Metrics-KPI-Dashboard-in-Excel.jpg
+Source: nextgentemplates.com
+https://www.smartsheet.com/sites/default/files/2024-08/IC-Agile-Retrospective-Lessons-Learned-Template-Example.png
+Source: www.smartsheet.com
+https://cdn.prod.website-files.com/654df81ed01944927020e1d8/68834446c4f740aa5561ca22_Release%20progress%20report%20charts.webp
+Source: www.brokenbuild.net
+Image Sources

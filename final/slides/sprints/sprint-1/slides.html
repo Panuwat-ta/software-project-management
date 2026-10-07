@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="สไลด์สรุป Sprint 1 Phase 1 เริ่มโครงการ วิเคราะห์ระบบเดิม refactor และทดสอบ">
+<title>สไลด์ Sprint 1: เริ่มโครงการและวางฐาน | SPM</title>
+<style>
+:root{--font:"Noto Sans Thai","Leelawadee UI",system-ui,sans-serif;--bg:#e7eeee;--paper:#fff;--ink:#122a38;--muted:#49616b;--accent:#0867a1;--line:#bfd0d4;--soft:#e8f3f8}
+*{box-sizing:border-box}
+body{margin:0;font-family:var(--font);color:var(--ink);background:var(--bg);min-height:100vh;display:grid;grid-template-rows:auto 1fr auto}
+a:focus-visible,button:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+.deck-header,.deck-controls{width:min(1440px,calc(100% - 48px));margin:auto;display:flex;align-items:center;justify-content:space-between;gap:18px;color:var(--muted);font-size:14px}
+.deck-header{padding:18px 0}.deck-controls{padding:18px 0}
+.back-link{color:var(--accent);font-weight:700;text-decoration:none}
+.deck-controls button{min-height:44px;padding:10px 16px;border:1px solid var(--line);background:var(--paper);color:var(--ink);font:700 15px var(--font);cursor:pointer}
+.deck-controls button:disabled{opacity:.35;cursor:default}.deck-controls button:hover:not(:disabled){background:var(--accent);border-color:var(--accent);color:#fff}
+.deck-frame{width:min(1440px,calc(100vw - 48px),calc((100vh - 132px) * 16 / 9));aspect-ratio:16/9;margin:auto;overflow:hidden;background:var(--paper);box-shadow:0 18px 46px rgb(18 42 56 / 18%)}
+.slide{display:none;height:100%;padding:3.5% 4.5%;align-content:center}
+.slide.active{display:grid}
+.slide h1{margin:0;letter-spacing:-.04em;line-height:1.08;font-size:clamp(36px,5vw,76px)}
+.slide h2{margin:0;letter-spacing:-.04em;line-height:1.08;font-size:clamp(24px,2.4vw,34px)}
+.slide-label{margin:0 0 20px;color:var(--accent);font-weight:800}
+.slide-lead{max-width:50ch;margin:10px 0 0;color:var(--muted);font-size:clamp(17px,1.8vw,26px);line-height:1.45}
+.cover-meta{margin:0;padding:14px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);color:var(--muted);line-height:1.7}
+.cover-layout,.content-layout{display:grid;grid-template-columns:1.12fr .88fr;gap:7%;align-items:center}
+.rule-list{margin:0;padding:0;list-style:none;border-top:1px solid var(--line)}
+.rule-list li{display:grid;grid-template-columns:32% 1fr;gap:18px;padding:10px 0;border-bottom:1px solid var(--line)}
+.rule-list strong{color:var(--accent)}
+table{width:100%;margin-top:16px;border-collapse:collapse;font-size:clamp(14px,1.45vw,21px)}
+th{padding:8px 14px;font-size:20px;background:var(--ink);color:#fff;text-align:left}
+td{padding:8px 14px;font-size:20px;border-bottom:1px solid var(--line)}
+tbody tr:nth-child(even){background:#f3f7f7}
+.metrics{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.metrics div{padding:14px 18px;border-right:1px solid var(--line)}
+.metrics div:last-child{border:0}
+.metrics b{display:block;font-size:clamp(26px,3.2vw,44px);letter-spacing:-.05em}
+.metrics span{display:block;margin-top:9px;color:var(--muted)}
+.next-steps{margin:0;padding-left:1.2em}
+.next-steps li{padding:8px 0;color:var(--muted);font-size:clamp(16px,1.6vw,24px)}
+@media (max-width:720px){.deck-header,.deck-controls{width:calc(100% - 32px);flex-wrap:wrap}.deck-frame{width:100%;aspect-ratio:auto;overflow:visible;box-shadow:none}.slide{height:auto;min-height:70vh}.cover-layout,.content-layout{grid-template-columns:1fr;gap:20px}.rule-list li{grid-template-columns:1fr;gap:4px}.metrics{grid-template-columns:1fr}th,td{padding:8px 10px}}
+@media print{@page{size:13.333in 7.5in;margin:0}.deck-header,.deck-controls{display:none}.deck-frame{width:13.333in;height:auto;aspect-ratio:auto;overflow:visible;box-shadow:none}.slide{display:grid;break-after:page;width:13.333in;height:7.5in;padding:.42in .60in}}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto !important}}
+</style>
+</head>
+<body>
+<header class="deck-header"><a class="back-link" href="../../../../Phase1/Sprint1/sprint1.html">← รายงาน Sprint 1</a><span id="slide-counter" aria-live="polite">1 / 8</span></header>
+<main class="deck-frame" aria-label="สไลด์สรุป Sprint 1">
+<section class="slide active" id="slide-1">
+<div class="cover-layout"><div><p class="slide-label">Sprint 1 · Phase 1 · W1–W4</p><h1>เริ่มโครงการ<br>และวางฐาน</h1><p class="slide-lead">จาก Project Charter และการวิเคราะห์ระบบเดิม สู่ OOP, validation, atomic write และ PyTest ที่รันซ้ำได้</p></div><p class="cover-meta">15 SP · SPM-6…SPM-10<br>Jira Sprint ID 84 · state: closed<br>ข้อมูลสมมติเพื่อการเรียน</p></div>
+</section>
+<section class="slide" id="slide-2">
+<h2>4 สัปดาห์เปลี่ยนระบบเดิมให้มีฐานที่ตรวจสอบได้</h2><p class="slide-lead">ที่มา: sprint1.md ส่วนงานรายสัปดาห์</p><table><thead><tr><th>สัปดาห์</th><th>งานหลัก</th><th>ผลลัพธ์</th></tr></thead><tbody><tr><td>W1</td><td>Charter · Scope · ระบบเดิม 5 เมนู</td><td>เห็นความเสี่ยงและขอบเขต</td></tr><tr><td>W2</td><td>DFD · Hotspot · Static Analysis · Blueprint</td><td>ได้แบบ refactor</td></tr><tr><td>W3</td><td>OOP 3 คลาส · Validation · Atomic Save</td><td>ได้โค้ดรุ่นใหม่ + DoD/RACI</td></tr><tr><td>W4</td><td>PyTest และปรับรอบสุดท้าย</td><td>5/5 tests ผ่าน</td></tr></tbody></table>
+</section>
+<section class="slide" id="slide-3">
+<div class="content-layout"><div><h2>Refactor แก้ 4 จุดเสี่ยงหลักของระบบเดิม</h2><p class="slide-lead">จาก Monolithic ที่พึ่ง global state ไปสู่โครงสร้างแยกหน้าที่</p></div><ul class="rule-list"><li><strong>โครงสร้าง</strong><span>Product / InventoryManager / InventoryCLI แยก Business Logic ออกจาก UI</span></li><li><strong>การบันทึก</strong><span>เขียนไฟล์ชั่วคราวแล้ว os.replace ลดความเสี่ยงไฟล์เสีย</span></li><li><strong>Input</strong><span>validator ต่อช่อง กันค่าติดลบและ ValueError</span></li><li><strong>ข้อมูลเก่า</strong><span>Product.from_dict รองรับ n/q/p/c และค่า default</span></li></ul></div>
+</section>
+<section class="slide" id="slide-4">
+<h2>Baseline ชี้ว่าปัญหาหลักอยู่ที่ maintainability</h2><p class="slide-lead">ที่มา: week-2/Static-Analysis.md — ตัวเลขนี้เป็นค่าก่อนปรับ</p><table><thead><tr><th>ตัวชี้วัด</th><th>ค่า</th><th>ความหมาย</th></tr></thead><tbody><tr><td>Pylint</td><td>7.10 / 10</td><td>ยังมี convention issue</td></tr><tr><td>Cyclomatic Complexity main</td><td>14 (C)</td><td>สูงกว่าเป้า ≤ 8</td></tr><tr><td>Branches</td><td>17</td><td>สูงกว่าเกณฑ์ 12</td></tr><tr><td>Statements</td><td>55</td><td>ฟังก์ชันเดียวทำมากเกินไป</td></tr></tbody></table>
+</section>
+<section class="slide" id="slide-5">
+<h2>ผลเทคนิคผ่าน แต่ EVM บอกว่าต้องคุม scope ให้ดีขึ้น</h2><p class="slide-lead">Sprint 1 ปิดฟังก์ชันหลักได้ แต่ใช้เวลา/ต้นทุนมากกว่าที่วางไว้</p><div class="metrics"><div><b>5 / 5</b><span>PyTest PASS</span></div><div><b>SV −1,000</b><span>ช้ากว่าแผน</span></div><div><b>CV −1,200</b><span>เกินงบ</span></div></div>
+</section>
+<section class="slide" id="slide-6">
+<div class="content-layout"><div><h2>Definition of Done ทำให้คำว่า “เสร็จ” มีเกณฑ์เดียวกัน</h2><p class="slide-lead">DoD 5 ข้อถูกใช้เป็น quality gate ของงานส่งมอบ</p></div><ul class="rule-list"><li><strong>Test</strong><span>PyTest ผ่าน 100%</span></li><li><strong>Code</strong><span>PEP 8 และแยกชั้น</span></li><li><strong>Safety</strong><span>validation + atomic write + กันค่าติดลบ</span></li><li><strong>Docs</strong><span>docstrings และเอกสารอัปเดต</span></li><li><strong>Review</strong><span>Code Review + Approve</span></li></ul></div>
+</section>
+<section class="slide" id="slide-7">
+<div class="content-layout"><div><h2>งานที่ยังไม่จบถูกยกยอดอย่างมีหลักฐาน</h2><p class="slide-lead">ไม่ปิดเงียบ และไม่อ้างว่าพัฒนาแล้วถ้ายังเป็นแค่แบบออกแบบ</p></div><ul class="rule-list"><li><strong>SQLite / Member / Checkout</strong><span>ออกแบบแล้ว แต่ยังไม่ implement — ยกไป Sprint 5</span></li><li><strong>CR-01 / CR-02 / BUG-101</strong><span>ยกไป Sprint 3 เพื่อทำผ่าน Change Control</span></li><li><strong>UAT / Tag</strong><span>ยกไป Sprint 4</span></li><li><strong>E501</strong><span>เก็บใน snapshot และแก้โค้ดสดภายหลัง</span></li></ul></div>
+</section>
+<section class="slide" id="slide-8">
+<div class="cover-layout"><div><h2>Sprint 1 วางฐานให้ระบบพร้อมวิวัฒนาการต่อ</h2><p class="slide-lead">สิ่งสำคัญไม่ใช่แค่โค้ดทำงาน แต่ต้องมี baseline, test และเกณฑ์ส่งมอบ</p></div><ol class="next-steps"><li>ใช้ To-Be architecture ต่อใน Sprint 2</li><li>คุมการเปลี่ยนแปลงจริงใน Sprint 3</li><li>ปิด UAT/Release ใน Sprint 4</li><li>นำ SQLite + Member + Checkout มาทำจริงใน Sprint 5</li></ol></div>
+</section>
+</main>
+<footer class="deck-controls"><button id="previous" type="button" aria-label="สไลด์ก่อนหน้า">← ก่อนหน้า</button><button id="next" type="button" aria-label="สไลด์ถัดไป">ถัดไป →</button></footer>
+<script>
+(function(){
+var slides=Array.prototype.slice.call(document.querySelectorAll(".slide"));
+var count=document.getElementById("slide-counter");
+var storageKey='spm-sprint-1-summary-slides';
+function slideFromHash(){var m=/#slide-(\d+)/.exec(window.location.hash||"");if(!m)return null;var i=parseInt(m[1],10)-1;return(i>=0&&i<slides.length)?i:null;}
+function storedSlide(){try{var v=window.localStorage.getItem(storageKey);if(v===null)return null;var i=parseInt(v,10);return(i>=0&&i<slides.length)?i:null;}catch(err){return null;}}
+function rememberSlide(i){try{window.localStorage.setItem(storageKey,String(i));}catch(err){}}
+var current=slideFromHash();if(current===null)current=storedSlide();if(current===null)current=0;
+function show(i){current=Math.min(Math.max(i,0),slides.length-1);slides.forEach(function(s,n){s.classList.toggle("active",n===current);});if(count)count.textContent=(current+1)+" / "+slides.length;previousBtn.disabled=current===0;nextBtn.disabled=current===slides.length-1;rememberSlide(current);try{window.history.replaceState(null,"","#slide-"+(current+1));}catch(err){}}
+function showFromHash(){var i=slideFromHash();if(i!==null)show(i);}
+var previousBtn=document.getElementById("previous");var nextBtn=document.getElementById("next");
+previousBtn.addEventListener("click",function(){show(current-1);});nextBtn.addEventListener("click",function(){show(current+1);});
+document.addEventListener("keydown",function(e){if(e.key==="ArrowRight"||e.key==="PageDown"||e.key===" "){e.preventDefault();show(current+1);}else if(e.key==="ArrowLeft"||e.key==="PageUp"){e.preventDefault();show(current-1);}else if(e.key==="Home"){e.preventDefault();show(0);}else if(e.key==="End"){e.preventDefault();show(slides.length-1);}});
+window.addEventListener("hashchange",showFromHash);show(current);
+})();
+</script>
+</body>
+</html>

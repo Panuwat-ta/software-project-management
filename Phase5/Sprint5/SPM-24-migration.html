@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,
+      initial-scale=1.0">
+<title>SPM 24 migration | SPM</title>
+<link rel="stylesheet" href="../../theme.css">
+<style>@page { size: A4; margin: 18mm 16mm; }
+body { font-family: "Noto Sans Thai", "Liberation Sans", sans-serif;
+  font-size: 11pt; line-height: 1.7; color: #1a1a1a; max-width: 900px;
+  margin: 0 auto; padding: 24px 20px 60px; }
+h1 { font-size: 22pt; border-bottom: 3px solid #1a56db; padding-bottom: 8px; }
+h2 { font-size: 14pt; color: #1a56db; margin-top: 1.6em;
+  border-bottom: 1px solid #e5e7eb; padding-bottom: 4px; }
+h3 { font-size: 12pt; margin-top: 1.2em; }
+table { border-collapse: collapse; width: 100%; margin: 0.9em 0;
+  font-size: 9.5pt; }
+th, td { border: 1px solid #cbd5e1; padding: 6px 9px; text-align: left;
+  vertical-align: top; }
+th { background: #eef2ff; }
+tr:nth-child(even) td { background: #fafbff; }
+code { font-family: "Noto Sans Mono", monospace; font-size: 9pt;
+  background: #f3f4f6; padding: 1px 5px; border-radius: 3px; }
+pre { background: #f3f4f6; padding: 12px; border-radius: 6px;
+  overflow-x: auto; font-size: 8.5pt; line-height: 1.5; }
+pre code { background: none; padding: 0; }
+blockquote { margin: 1em 0; padding: 8px 14px; border-left: 4px solid #1a56db;
+  background: #f5f8ff; }
+.nav { background: #1a1a2e; color: #fff; padding: 10px 16px;
+  border-radius: 8px; margin-bottom: 20px; font-size: 13px; }
+.nav a { color: #c7d6ff; text-decoration: none; margin-right: 14px; }
+.nav a:hover { color: #fff; text-decoration: underline; }
+.note { color: #5b6472; font-size: 10pt; margin-top: 40px;
+  border-top: 1px solid #e5e7eb; padding-top: 10px; }
+@media print { .nav { display: none; } }</style>
+</head>
+<body>
+<nav class="nav"><a href="../../index.html">หน้าแรก</a><a href="../../Phase1/README.html">Phase1</a><a href="../../Phase2/README.html">Phase2</a><a href="../../Phase3/README.html">Phase3</a><a href="../../Phase4/README.html">Phase4</a><a href="../../Phase5/README.html">Phase5 (หน้านี้)</a></nav>
+<h1>SPM-24 — Migrate JSON Data to SQLite with Verification</h1>
+<ul>
+<li>Jira: <code>SPM-24</code> (3 SP) → Done, comment ผูกโค้ดแล้ว</li>
+<li>เรื่องเล่า: ในฐานะผู้ดูแลข้อมูล ฉันต้องการสคริปต์ย้าย
+  <code>data.json</code> (รวม legacy keys <code>n</code>/<code>q</code>/<code>p</code>/<code>c</code> และ
+  <code>barcode</code>/<code>reorder</code>) ไป SQLite พร้อมยืนยันความถูกต้อง</li>
+</ul>
+<h2>เกณฑ์ยอมรับ → หลักฐาน</h2>
+<ol>
+<li>มีไฟล์ JSON เดิม รันสคริปต์ย้ายแล้วจำนวนระเบียนและมูลค่า
+   รวมต้องตรงกัน 100% → <code>migrate_json_to_sqlite</code> คืน
+   <code>{migrated, json_count, sqlite_count, json_total,
+   sqlite_total, match}</code>; เทสต์ <code>test_migrate_json_to_sqlite_verifies</code>
+   ใช้ JSON ผสมคีย์เก่า/ใหม่ 2 ระเบียน ยอด 600.0 ตรงกัน
+   (<code>match: True</code>)</li>
+<li>ย้ายเสร็จรัน regression แล้วต้องเขียวทั้งหมด →
+   <code>test_app.py</code> 14 passed, <code>Phase4/Sprint4/week-12/test_app.py</code>
+   25 passed</li>
+</ol>
+<h2>โค้ดและพฤติกรรม</h2>
+<ul>
+<li><code>app.py</code>: <code>migrate_json_to_sqlite</code> อ่านผ่าน
+  <code>Product.from_dict</code> (fallback คีย์สั้น + ค่าเริ่มต้น
+  <code>barcode=""</code>/<code>reorder_point=5</code> ต่อเนื่องจาก BUG-101),
+  <code>seed_default_products</code> เติมสินค้าตัวอย่าง 3 รายการเมื่อ DB ว่าง</li>
+<li>CLI (<code>__main__</code>): ถ้า <code>inventory.db</code> ว่างและมี <code>data.json</code>
+  จะ auto-migrate พร้อมพิมพ์สรุป แล้วค่อย seed/รันเมนู</li>
+</ul>
+<p class="note">รายงานอัตโนมัติจาก <code>Phase5/Sprint5/SPM-24-migration.md</code> — ข้อมูลสมมติเพื่อการเรียน (สร้างด้วย <code>tools/build_reports.py</code>)</p>
+</body>
+</html>

@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,
+      initial-scale=1.0">
+<title>sprint5 | SPM</title>
+<link rel="stylesheet" href="../../theme.css">
+<style>@page { size: A4; margin: 18mm 16mm; }
+body { font-family: "Noto Sans Thai", "Liberation Sans", sans-serif;
+  font-size: 11pt; line-height: 1.7; color: #1a1a1a; max-width: 900px;
+  margin: 0 auto; padding: 24px 20px 60px; }
+h1 { font-size: 22pt; border-bottom: 3px solid #1a56db; padding-bottom: 8px; }
+h2 { font-size: 14pt; color: #1a56db; margin-top: 1.6em;
+  border-bottom: 1px solid #e5e7eb; padding-bottom: 4px; }
+h3 { font-size: 12pt; margin-top: 1.2em; }
+table { border-collapse: collapse; width: 100%; margin: 0.9em 0;
+  font-size: 9.5pt; }
+th, td { border: 1px solid #cbd5e1; padding: 6px 9px; text-align: left;
+  vertical-align: top; }
+th { background: #eef2ff; }
+tr:nth-child(even) td { background: #fafbff; }
+code { font-family: "Noto Sans Mono", monospace; font-size: 9pt;
+  background: #f3f4f6; padding: 1px 5px; border-radius: 3px; }
+pre { background: #f3f4f6; padding: 12px; border-radius: 6px;
+  overflow-x: auto; font-size: 8.5pt; line-height: 1.5; }
+pre code { background: none; padding: 0; }
+blockquote { margin: 1em 0; padding: 8px 14px; border-left: 4px solid #1a56db;
+  background: #f5f8ff; }
+.nav { background: #1a1a2e; color: #fff; padding: 10px 16px;
+  border-radius: 8px; margin-bottom: 20px; font-size: 13px; }
+.nav a { color: #c7d6ff; text-decoration: none; margin-right: 14px; }
+.nav a:hover { color: #fff; text-decoration: underline; }
+.note { color: #5b6472; font-size: 10pt; margin-top: 40px;
+  border-top: 1px solid #e5e7eb; padding-top: 10px; }
+@media print { .nav { display: none; } }</style>
+</head>
+<body>
+<nav class="nav"><a href="../../index.html">หน้าแรก</a><a href="../../Phase1/README.html">Phase1</a><a href="../../Phase2/README.html">Phase2</a><a href="../../Phase3/README.html">Phase3</a><a href="../../Phase4/README.html">Phase4</a><a href="../../Phase5/README.html">Phase5 (หน้านี้)</a></nav>
+<h1>รายงานปิด Sprint 5 — Phase 5: v3.0 + Desktop Program</h1>
+<p>เอกสารนี้สรุป Sprint 5 ซึ่งมีสองส่วน:
+1) SQLite + Member + Checkout (v3.0)
+2) โปรแกรม Desktop UI ที่รันด้วย Python และ reuse domain เดิม</p>
+<p>ข้อมูลทั้งหมดเป็นข้อมูลสมมติเพื่อการเรียน</p>
+<h2>1. ข้อมูลสปรินต์</h2>
+<table>
+<thead>
+<tr>
+<th>รายการ</th>
+<th>ค่า</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Sprint</td>
+<td>Sprint 5 - Phase 5</td>
+</tr>
+<tr>
+<td>Jira Sprint ID</td>
+<td>86 (closed)</td>
+</tr>
+<tr>
+<td>Story Points</td>
+<td>46 SP</td>
+</tr>
+<tr>
+<td>Issues</td>
+<td>SPM-23…SPM-27 + SPM-29…SPM-32</td>
+</tr>
+<tr>
+<td>Epics</td>
+<td>SPM-22 + SPM-28</td>
+</tr>
+<tr>
+<td>ตัวส่งมอบหลัก</td>
+<td><code>app.py</code>, <code>program.py</code>, <code>test_app.py</code>, <code>test_program.py</code></td>
+</tr>
+<tr>
+<td>Desktop release tag</td>
+<td>ยังไม่สร้างในรอบนี้ เพราะ working tree ยังไม่ได้ commit</td>
+</tr>
+</tbody>
+</table>
+<p>เป้าหมายคือให้ระบบจากเดิมที่ใช้ CLI สามารถเปิดเป็นโปรแกรมหน้าต่าง UI ได้
+โดยไม่คัดลอก business logic และไม่ทำ regression กับรุ่นเดิม</p>
+<h2>2. ทีมและบทบาท</h2>
+<table>
+<thead>
+<tr>
+<th>บุคคล</th>
+<th>บทบาท</th>
+<th>ความรับผิดชอบ</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ภานุวัฒน์ ต๋าคำ</td>
+<td>PM / Developer</td>
+<td>SQLite migration, Desktop UI, Checkout integration</td>
+</tr>
+<tr>
+<td>เอกพันธ์ ทศทิศรังสรรค์</td>
+<td>QA / Tester</td>
+<td>integration test, regression, edge cases</td>
+</tr>
+<tr>
+<td>ณฐภาพ สายหล้า</td>
+<td>Tech Lead / Architect</td>
+<td>domain reuse, architecture, lint/security review</td>
+</tr>
+</tbody>
+</table>
+<h2>3. งานตามแผน</h2>
+<h3>ส่วน A — v3.0: SQLite + Member + Checkout (17 SP)</h3>
+<table>
+<thead>
+<tr>
+<th>Issue</th>
+<th>งาน</th>
+<th style="text-align: right;">SP</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SPM-23</td>
+<td>SQLite Database Layer</td>
+<td style="text-align: right;">5</td>
+</tr>
+<tr>
+<td>SPM-24</td>
+<td>JSON → SQLite Migration</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr>
+<td>SPM-25</td>
+<td>Member CRUD 4 Tiers</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr>
+<td>SPM-26</td>
+<td>Member Discount + Checkout</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr>
+<td>SPM-27</td>
+<td>DB/Discount/Injection Tests</td>
+<td style="text-align: right;">3</td>
+</tr>
+</tbody>
+</table>
+<h3>ส่วน B — Desktop Program UI (29 SP)</h3>
+<table>
+<thead>
+<tr>
+<th>Issue</th>
+<th>งาน</th>
+<th style="text-align: right;">SP</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SPM-29</td>
+<td>GTK4 Foundation + reuse domain</td>
+<td style="text-align: right;">8</td>
+</tr>
+<tr>
+<td>SPM-30</td>
+<td>Dashboard + Products UI</td>
+<td style="text-align: right;">8</td>
+</tr>
+<tr>
+<td>SPM-31</td>
+<td>Members + Checkout UI</td>
+<td style="text-align: right;">8</td>
+</tr>
+<tr>
+<td>SPM-32</td>
+<td>Hardening + Desktop Release Candidate</td>
+<td style="text-align: right;">5</td>
+</tr>
+</tbody>
+</table>
+<h2>4. สถาปัตยกรรม</h2>
+<pre><code class="language-text">Desktop UI: program.py (GTK4)
+        │
+        ├─ Dashboard
+        ├─ Products
+        ├─ Members
+        └─ Checkout
+              │
+              ▼
+Domain: app.py
+        ├─ InventoryRepository
+        ├─ MemberManager
+        ├─ CheckoutService
+        ├─ CsvReportExporter
+        └─ SQLiteDatabaseContext
+              │
+              ▼
+         inventory.db
+</code></pre>
+<p>UI ไม่เขียน SQL และไม่คำนวณส่วนลดซ้ำเอง</p>
+<h2>5. SQLite / Migration</h2>
+<ul>
+<li>ใช้ Singleton connection</li>
+<li>Repository ซ่อน SQL</li>
+<li>ทุก query ที่มี input ใช้ parameterized placeholder</li>
+<li>schema มี CHECK ป้องกันค่าติดลบ</li>
+<li>migration อ่าน legacy JSON ผ่าน <code>Product.from_dict</code></li>
+<li>ตรวจ record count และ total inventory value หลังย้าย</li>
+</ul>
+<h2>6. Member / Discount / Checkout</h2>
+<table>
+<thead>
+<tr>
+<th>Tier</th>
+<th style="text-align: right;">ส่วนลด</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Regular</td>
+<td style="text-align: right;">0%</td>
+</tr>
+<tr>
+<td>Silver</td>
+<td style="text-align: right;">5%</td>
+</tr>
+<tr>
+<td>Gold</td>
+<td style="text-align: right;">10%</td>
+</tr>
+<tr>
+<td>Platinum</td>
+<td style="text-align: right;">15%</td>
+</tr>
+</tbody>
+</table>
+<p>Checkout ใช้ <code>CheckoutService</code> เดิม
+Guest ได้ราคาเต็ม และใบเสร็จแสดง subtotal / discount / total / remaining stock</p>
+<h2>7. Desktop Program UI</h2>
+<p>หน้าโปรแกรมมี 4 ส่วนหลัก:</p>
+<ol>
+<li><strong>ภาพรวม</strong> — จำนวนประเภทสินค้า มูลค่ารวม และ low-stock</li>
+<li><strong>สินค้า</strong> — เพิ่ม/แก้ไข/ค้นหา/ตัดสต็อก/ลบ/Export CSV</li>
+<li><strong>สมาชิก</strong> — CRUD + เลือก Tier</li>
+<li><strong>Checkout</strong> — ระบุสินค้า จำนวน สมาชิก และแสดงใบเสร็จ</li>
+</ol>
+<p>Responsive/Adaptive UI:
+- Sidebar เมนูหลักกว้างประมาณ 1/3 ของหน้าต่างจริง และไม่ขยายเกินสัดส่วน
+- Desktop ≥980 px: Dashboard 3 cards/แถว, Checkout 2 คอลัมน์
+- Compact 760–979 px: form 2 คอลัมน์, Checkout แนวตั้ง
+- Narrow &lt;760 px: form/card 1 คอลัมน์, toolbar แนวตั้ง และตารางเลื่อนแนวนอนได้</p>
+<p>ไฟล์รัน:</p>
+<pre><code class="language-bash">python3 program.py
+</code></pre>
+<p>บน Fedora:</p>
+<pre><code class="language-bash">sudo dnf install python3-gobject gtk4
+</code></pre>
+<p>โปรแกรมผ่านการเปิดจริงบน GNOME/Wayland และ process ทำงานต่อโดยไม่มี runtime error</p>
+<h2>8. Compatibility</h2>
+<table>
+<thead>
+<tr>
+<th>รายการ</th>
+<th>ผล</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CLI เดิม</td>
+<td>ยังอยู่ใน <code>app.py</code></td>
+</tr>
+<tr>
+<td>barcode / reorder point</td>
+<td>ยังทำงาน</td>
+</tr>
+<tr>
+<td>CSV</td>
+<td>reuse <code>CsvReportExporter</code></td>
+</tr>
+<tr>
+<td>JSON compatibility</td>
+<td>legacy key ยังรองรับ</td>
+</tr>
+<tr>
+<td>v2.0 regression</td>
+<td>25 passed</td>
+</tr>
+</tbody>
+</table>
+<h2>9. หลักฐานทดสอบ</h2>
+<table>
+<thead>
+<tr>
+<th>ชุด</th>
+<th>ผล</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>test_app.py</code></td>
+<td>14 passed</td>
+</tr>
+<tr>
+<td><code>test_program.py</code></td>
+<td>7 passed</td>
+</tr>
+<tr>
+<td><strong>รวม</strong></td>
+<td><strong>21 passed</strong></td>
+</tr>
+<tr>
+<td>regression v2.0</td>
+<td>25 passed</td>
+</tr>
+<tr>
+<td>flake8</td>
+<td>0</td>
+</tr>
+<tr>
+<td>bandit</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+<p>ตัวอย่าง integration test Desktop:
+- responsive breakpoints: Desktop / Compact / Narrow
+- seed database
+- dashboard metrics
+- LOW/OK status
+- Gold checkout 1,000 → 900
+- receipt formatting
+- CSV export</p>
+<h2>10. คุณภาพ</h2>
+<p>คำสั่งตรวจ:</p>
+<pre><code class="language-bash">python -m pytest test_app.py test_program.py -q
+flake8 app.py program.py test_program.py tools/build_reports.py
+bandit -q -r app.py program.py
+</code></pre>
+<p>ผลล่าสุด: ผ่านทั้งหมด</p>
+<h2>11. Jira</h2>
+<p>Epic SPM-28 และ Stories SPM-29…SPM-32 ยังคง Sprint, Story Point,
+parent และสถานะ Done เดิม แต่เปลี่ยน scope/summary จาก Web เป็น Desktop Program UI</p>
+<h2>12. ข้อจำกัด</h2>
+<ul>
+<li>ไม่มี Login / RBAC</li>
+<li>ไม่มี Online Payment</li>
+<li>SQLite เป็น local single-user</li>
+<li>Desktop UI ปัจจุบัน target Linux/Fedora GTK4</li>
+<li>UAT formal sign-off จาก Sprint 4 ยังรอลงนาม</li>
+</ul>
+<h2>13. Sprint Review</h2>
+<table>
+<thead>
+<tr>
+<th>หัวข้อ</th>
+<th>ผล</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>โปรแกรมรันได้</td>
+<td><code>python3 program.py</code> เปิด GTK4 window</td>
+</tr>
+<tr>
+<td>Domain reuse</td>
+<td>ใช้ Repository/Member/Checkout เดิม</td>
+</tr>
+<tr>
+<td>Test</td>
+<td>21 + 25 passed</td>
+</tr>
+<tr>
+<td>Code quality</td>
+<td>flake8 0 / bandit 0</td>
+</tr>
+<tr>
+<td>Jira</td>
+<td>อัปเดต scope เป็น Desktop Program</td>
+</tr>
+</tbody>
+</table>
+<h2>14. งานต่อไป</h2>
+<ul>
+<li>ทำ packaging เป็น executable/installer ถ้าต้องส่งให้ผู้ใช้ทั่วไป</li>
+<li>รองรับ PostgreSQL หากเปลี่ยนเป็น multi-user</li>
+<li>เพิ่ม role/login หากขยาย scope</li>
+<li>ปิด formal UAT sign-off</li>
+</ul>
+<h2>15. Evidence Index</h2>
+<table>
+<thead>
+<tr>
+<th>หมวด</th>
+<th>หลักฐาน</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>v3.0</td>
+<td><code>sprint2.md</code></td>
+</tr>
+<tr>
+<td>Desktop UI</td>
+<td><code>sprint3.md</code>, <code>program-plan.md</code></td>
+</tr>
+<tr>
+<td>โค้ด</td>
+<td><code>app.py</code>, <code>program.py</code></td>
+</tr>
+<tr>
+<td>Tests</td>
+<td><code>test_app.py</code>, <code>test_program.py</code></td>
+</tr>
+<tr>
+<td>Jira stories</td>
+<td><code>SPM-29-foundation.md</code> … <code>SPM-32-hardening.md</code></td>
+</tr>
+<tr>
+<td>Historical Web</td>
+<td><code>web/</code>, <code>web-plan.md</code> — superseded</td>
+</tr>
+</tbody>
+</table>
+<p class="note">อ่านเป็น PDF: <a href="sprint5.pdf">sprint5.pdf</a></p>
+<p class="note">รายงานอัตโนมัติจาก <code>Phase5/Sprint5/sprint5.md</code> — ข้อมูลสมมติเพื่อการเรียน (สร้างด้วย <code>tools/build_reports.py</code>)</p>
+</body>
+</html>

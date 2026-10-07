@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,
+      initial-scale=1.0">
+<title>sprint2 | SPM</title>
+<link rel="stylesheet" href="../../theme.css">
+<style>@page { size: A4; margin: 18mm 16mm; }
+body { font-family: "Noto Sans Thai", "Liberation Sans", sans-serif;
+  font-size: 11pt; line-height: 1.7; color: #1a1a1a; max-width: 900px;
+  margin: 0 auto; padding: 24px 20px 60px; }
+h1 { font-size: 22pt; border-bottom: 3px solid #1a56db; padding-bottom: 8px; }
+h2 { font-size: 14pt; color: #1a56db; margin-top: 1.6em;
+  border-bottom: 1px solid #e5e7eb; padding-bottom: 4px; }
+h3 { font-size: 12pt; margin-top: 1.2em; }
+table { border-collapse: collapse; width: 100%; margin: 0.9em 0;
+  font-size: 9.5pt; }
+th, td { border: 1px solid #cbd5e1; padding: 6px 9px; text-align: left;
+  vertical-align: top; }
+th { background: #eef2ff; }
+tr:nth-child(even) td { background: #fafbff; }
+code { font-family: "Noto Sans Mono", monospace; font-size: 9pt;
+  background: #f3f4f6; padding: 1px 5px; border-radius: 3px; }
+pre { background: #f3f4f6; padding: 12px; border-radius: 6px;
+  overflow-x: auto; font-size: 8.5pt; line-height: 1.5; }
+pre code { background: none; padding: 0; }
+blockquote { margin: 1em 0; padding: 8px 14px; border-left: 4px solid #1a56db;
+  background: #f5f8ff; }
+.nav { background: #1a1a2e; color: #fff; padding: 10px 16px;
+  border-radius: 8px; margin-bottom: 20px; font-size: 13px; }
+.nav a { color: #c7d6ff; text-decoration: none; margin-right: 14px; }
+.nav a:hover { color: #fff; text-decoration: underline; }
+.note { color: #5b6472; font-size: 10pt; margin-top: 40px;
+  border-top: 1px solid #e5e7eb; padding-top: 10px; }
+@media print { .nav { display: none; } }</style>
+</head>
+<body>
+<nav class="nav"><a href="../../index.html">หน้าแรก</a><a href="../../Phase1/README.html">Phase1</a><a href="../../Phase2/README.html">Phase2 (หน้านี้)</a><a href="../../Phase3/README.html">Phase3</a><a href="../../Phase4/README.html">Phase4</a><a href="../../Phase5/README.html">Phase5</a></nav>
+<h1>รายงานปิด Sprint 2 — Phase 2: ออกแบบและตั้งต้นทุนฐาน (W5–W7)</h1>
+<p>เอกสารนี้สรุปหลักฐานสปรินต์ที่สอง ซึ่งทำหน้าที่ "วางแผนก่อนลงมือ" — ออกแบบสถาปัตยกรรมเป้าหมาย
+ประเมินคุณภาพตามมาตรฐาน และตั้งงบฐานกับเกณฑ์คุมงบก่อนเข้าสู่การลงมือทำงาน
+ข้อมูลโครงการทั้งหมดเป็นข้อมูลสมมติเพื่อการเรียน ไม่ใช่ข้อมูลลูกค้าจริง</p>
+<h2>1. ข้อมูลสปรินต์</h2>
+<table>
+<thead>
+<tr>
+<th>รายการ</th>
+<th>ค่า</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Sprint</td>
+<td>Sprint 2 - Phase 2 (W5-7)</td>
+</tr>
+<tr>
+<td>Jira Sprint ID</td>
+<td>82 (state: closed)</td>
+</tr>
+<tr>
+<td>Story Points</td>
+<td>13 SP (SPM-11…SPM-14) ปิดครบทุกใบ</td>
+</tr>
+<tr>
+<td>Issues</td>
+<td>SPM-11, SPM-12, SPM-13, SPM-14</td>
+</tr>
+<tr>
+<td>หลักฐานประจำสัปดาห์</td>
+<td><code>week-5/</code> <code>week-6/</code> <code>week-7/</code></td>
+</tr>
+</tbody>
+</table>
+<p>เป้าหมาย: ออกแบบ To-Be architecture ที่รองรับ SQLite/สมาชิก, ประเมินคุณภาพ
+ISO 25010/14598, ตั้ง Cost Baseline ที่อนุมัติแล้ว พร้อมเกณฑ์แจ้งเตือนผลต่างงบ</p>
+<h2>2. ทีมและบทบาท</h2>
+<table>
+<thead>
+<tr>
+<th>บุคคล</th>
+<th>บทบาท</th>
+<th>ความรับผิดชอบในสปรินต์นี้</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ภานุวัฒน์ ต๋าคำ</td>
+<td>PM / Developer</td>
+<td>ประมาณการต้นทุน, จัดทำ budget worksheet, WBS</td>
+</tr>
+<tr>
+<td>เอกพันธ์ ทศทิศรังสรรค์</td>
+<td>QA / Tester</td>
+<td>กำหนดเป้าหมาย coverage และ quality gate</td>
+</tr>
+<tr>
+<td>ณฐภาพ สายหล้า</td>
+<td>Tech Lead / Architect</td>
+<td>ออกแบบ To-Be, สถาปัตยกรรม, มาตรการ CI</td>
+</tr>
+</tbody>
+</table>
+<h2>3. งานรายสัปดาห์ (W5–W7)</h2>
+<table>
+<thead>
+<tr>
+<th>สัปดาห์</th>
+<th>งานที่ทำ</th>
+<th>ไฟล์หลักฐาน</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>W5</td>
+<td>As-Is vs To-Be flowchart, ประเมินคุณภาพ ISO 25010 (SQuaRE 8 มิติ), จัดทำ budget worksheet</td>
+<td><code>week-5/architecture.md</code>, <code>iso25010_evaluation.md</code>, <code>budget_worksheet.md</code>, <code>work.md</code></td>
+</tr>
+<tr>
+<td>W6</td>
+<td>Communication Matrix + DoR/DoD, ออกแบบ To-Be Architecture (Singleton/Repository/Strategy), วิเคราะห์ Cost Variance</td>
+<td><code>week-6/Communication_Matrix_and_DoD.md</code>, <code>To_Be_Architecture.md</code>, <code>Cost_Variance_Analysis.md</code></td>
+</tr>
+<tr>
+<td>W7</td>
+<td>ปิด Cost Baseline พร้อมเกณฑ์ Threshold, Capacity Planning, รายงาน ISO/IEC 14598 + Quality Gate</td>
+<td><code>week-7/Cost_Baseline_and_Sprint_Plan.md</code>, <code>ISO_14598_Quality_Report.md</code></td>
+</tr>
+</tbody>
+</table>
+<h2>4. สิ่งที่ส่งมอบ</h2>
+<table>
+<thead>
+<tr>
+<th>สถานะ</th>
+<th>รายการ</th>
+<th>หลักฐาน/ข้อกำหนด</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Delivered</td>
+<td>สถาปัตยกรรม To-Be</td>
+<td>รองรับ SQLite, Member tier, Checkout ด้วย Repository Pattern</td>
+</tr>
+<tr>
+<td>Delivered</td>
+<td>แบบออกแบบฐานข้อมูล</td>
+<td>ตารางสินค้า/สมาชิก + กลยุทธ์ย้ายข้อมูลจาก JSON (<code>week-6/To_Be_Architecture.md</code>)</td>
+</tr>
+<tr>
+<td>Delivered</td>
+<td>Cost Baseline ที่อนุมัติ</td>
+<td>18,823 THB แบ่งเป็นแรงงาน 15,000 / โครงสร้างพื้นฐาน 1,000 / สำรอง 2,823</td>
+</tr>
+<tr>
+<td>Delivered</td>
+<td>เกณฑ์คุมผลต่างงบ</td>
+<td>ปกติ ≤5%, แจ้งเตือน 5–10%, วิกฤต &gt;10% (ให้พิจารณาตัด scope)</td>
+</tr>
+<tr>
+<td>Delivered</td>
+<td>Capacity Planning</td>
+<td>3 คน × 6 ชั่วโมง × 2 สัปดาห์ = 36 man-hours ต่อสปรินต์</td>
+</tr>
+<tr>
+<td>Delivered</td>
+<td>Communication Matrix + DoR/DoD</td>
+<td>ช่องทางสื่อสาร, เกณฑ์รับงาน (DoR) และเกณฑ์ส่งมอบ (DoD)</td>
+</tr>
+<tr>
+<td>Delivered</td>
+<td>เป้าหมายคุณภาพ ISO 14598</td>
+<td>v(G) ≤ 8, CBO ≤ 4, DIT ≤ 2, Coverage ≥ 85%</td>
+</tr>
+</tbody>
+</table>
+<h2>5. ผลประเมินคุณภาพ ISO/IEC 25010 (As-Is)</h2>
+<table>
+<thead>
+<tr>
+<th>มิติ</th>
+<th>สถานะ As-Is</th>
+<th>เป้าหมาย</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Functional suitability</td>
+<td>ผ่าน (ทำงานตามเมนูได้)</td>
+<td>คงเดิม</td>
+</tr>
+<tr>
+<td>Performance efficiency</td>
+<td>ผ่าน (ไม่มีระบบคิวขนาดใหญ่)</td>
+<td>คงเดิม</td>
+</tr>
+<tr>
+<td>Compatibility</td>
+<td>ผ่าน (เป็น CLI สแตนด์อโลน)</td>
+<td>คงเดิม</td>
+</tr>
+<tr>
+<td>Usability</td>
+<td>ต้องปรับ (เมนูซับซ้อน, ไม่มี validation)</td>
+<td>ปรับด้วย validator</td>
+</tr>
+<tr>
+<td>Reliability</td>
+<td><strong>ตก</strong> (เขียน JSON ทับตรง, ข้อมูลเสียได้)</td>
+<td>atomic write → ต่อยอด SQLite</td>
+</tr>
+<tr>
+<td>Security</td>
+<td><strong>ตก</strong> (ไม่มีการป้องกัน SQL injection เพราะยังไม่มี SQL)</td>
+<td>parameterized query 100%</td>
+</tr>
+<tr>
+<td>Maintainability</td>
+<td><strong>ตก</strong> (Monolithic, CC 14, global state)</td>
+<td>แยกชั้น + OOP</td>
+</tr>
+<tr>
+<td>Portability</td>
+<td>ผ่าน (Python ล้วน)</td>
+<td>คงเดิม</td>
+</tr>
+</tbody>
+</table>
+<h2>6. Cost Baseline และงบประมาณ (ตัวเลขสมมติเพื่อการเรียน)</h2>
+<table>
+<thead>
+<tr>
+<th>หมวด</th>
+<th style="text-align: right;">สัดส่วน</th>
+<th style="text-align: right;">จำนวน (THB)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ค่าแรงงานทางตรง (งาน refactor + ทดสอบ)</td>
+<td style="text-align: right;">80%</td>
+<td style="text-align: right;">15,000</td>
+</tr>
+<tr>
+<td>โครงสร้างพื้นฐานและเครื่องมือ</td>
+<td style="text-align: right;">5%</td>
+<td style="text-align: right;">1,000</td>
+</tr>
+<tr>
+<td>งบสำรองเผื่อฉุกเฉิน</td>
+<td style="text-align: right;">15%</td>
+<td style="text-align: right;">2,823</td>
+</tr>
+<tr>
+<td><strong>ยอดรวมที่อนุมัติ</strong></td>
+<td style="text-align: right;"><strong>100%</strong></td>
+<td style="text-align: right;"><strong>18,823</strong></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>[!IMPORTANT]
+<strong>ต้องไม่รวมตัวเลขคนละชุด:</strong> worksheet ของสัปดาห์ที่ 5 ระบุ 39,100 THB
+(แรงงาน 31,000 + โครงสร้างพื้นฐาน 3,000 + สำรอง 5,100) ซึ่งเป็นฐานคำนวณอีกชุดหนึ่ง
+ในรายงานนี้ใช้ <strong>18,823 THB ที่อนุมัติในสัปดาห์ที่ 7</strong> เป็นตัวควบคุมงบ</p>
+</blockquote>
+<h2>7. ตัวอย่างการวิเคราะห์ Cost Variance (สัปดาห์ที่ 6)</h2>
+<table>
+<thead>
+<tr>
+<th>ตัวแปร</th>
+<th style="text-align: right;">ค่า</th>
+<th>ผล</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>PV</td>
+<td style="text-align: right;">2,400 THB</td>
+<td>งบตามแผนของงานย้าย JSON → SQLite</td>
+</tr>
+<tr>
+<td>EV</td>
+<td style="text-align: right;">2,400 THB</td>
+<td>ทำเสร็จครบตาม DoD</td>
+</tr>
+<tr>
+<td>AC</td>
+<td style="text-align: right;">4,000 THB</td>
+<td>ใช้จริงสูงกว่าแผน</td>
+</tr>
+<tr>
+<td>CV = EV − AC</td>
+<td style="text-align: right;">−1,600 THB</td>
+<td>เกินงบ → เสนอดึงเงินสำรอง 15%</td>
+</tr>
+</tbody>
+</table>
+<p>บทเรียน: การย้ายระบบฐานข้อมูลมีต้นทุนแฝงเรื่อง validation/rollback ที่ไม่ได้อยู่ใน
+ประมาณการเดิม จึงต้องมีเงินสำรองและเกณฑ์แจ้งเตือนล่วงหน้า</p>
+<h2>8. Definition of Ready / Done ที่กำหนด</h2>
+<p><strong>DoR (เกณฑ์รับเข้าสปรินต์):</strong> คำอธิบายงานครบ · ประมาณการเวลาและผู้รับผิดชอบชัดเจน ·
+บทบาท RACI ระบุแล้ว · ความเสี่ยงหลักถูกระบุ</p>
+<p><strong>DoD (เกณฑ์ส่งมอบ):</strong> ผ่าน peer code review ตาม PEP 8 · PyTest ผ่าน 100% ·
+ไม่เพิ่มหนี้ทางเทคนิค · อัปเดต CHANGELOG · merge เข้า develop พร้อม Log Work</p>
+<h2>9. ความเสี่ยงและข้อจำกัด</h2>
+<table>
+<thead>
+<tr>
+<th>รายการ</th>
+<th>สถานะ</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ประมาณการต้นทุนต่างฐาน (39,100 vs 18,823)</td>
+<td>ต้องระบุฐานให้ชัดทุกครั้งที่อ้างอิง</td>
+</tr>
+<tr>
+<td>Capacity 36 man-hours ต่ำกว่างานจริงในภายหลัง</td>
+<td>พิสูจน์แล้วว่างานวิวัฒนาการล้นความจุ</td>
+</tr>
+<tr>
+<td>เป้าหมาย ISO 14598 ยังไม่ถูกวัดจริง</td>
+<td>ปิดกับ Sprint 3/4 (Hardening)</td>
+</tr>
+</tbody>
+</table>
+<h2>10. Sprint Review (ตามหลักฐานที่มี)</h2>
+<table>
+<thead>
+<tr>
+<th>หัวข้อ</th>
+<th>หลักฐาน</th>
+<th>ผล/ข้อสังเกต</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>สิ่งที่ส่งมอบ</td>
+<td>เอกสาร 6 ชุดใน <code>week-5</code>–<code>week-7</code></td>
+<td>ครบตาม DoR</td>
+</tr>
+<tr>
+<td>ผลที่ผ่าน</td>
+<td>Cost Baseline + เกณฑ์ + Capacity</td>
+<td>ตัวเลขสอดคล้องในเอกสารสัปดาห์ที่ 7</td>
+</tr>
+<tr>
+<td>การรับรอง</td>
+<td>ไม่มีลายเซ็น</td>
+<td>ไม่อ้างว่าได้รับการรับรอง</td>
+</tr>
+</tbody>
+</table>
+<h2>11. งานยกยอดไปสปรินต์ถัดไป</h2>
+<ul>
+<li>ปฏิบัติแผนที่อนุมัติ: รับ CR-01 ผ่าน Impact Analysis, ติดตามด้วย Burndown/EVM</li>
+<li>เก็บข้อมูล Log Work จริงเพื่อคำนวณ AC ให้ตรงกับแผน</li>
+<li>วัดเป้าหมาย ISO 14598 จริงในรอบ Hardening</li>
+</ul>
+<h2>12. ภาคผนวก Evidence Index</h2>
+<table>
+<thead>
+<tr>
+<th>หมวดหลักฐาน</th>
+<th>เส้นทาง</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>สถาปัตยกรรมและคุณภาพ</td>
+<td><code>week-5/architecture.md</code>, <code>iso25010_evaluation.md</code>, <code>week-7/ISO_14598_Quality_Report.md</code></td>
+</tr>
+<tr>
+<td>งบประมาณ</td>
+<td><code>week-7/Cost_Baseline_and_Sprint_Plan.md</code>, <code>week-5/budget_worksheet.md</code>, <code>week-6/Cost_Variance_Analysis.md</code></td>
+</tr>
+<tr>
+<td>เกณฑ์การทำงาน</td>
+<td><code>week-6/Communication_Matrix_and_DoD.md</code></td>
+</tr>
+<tr>
+<td>แบบออกแบบที่พัฒนาต่อใน Sprint 5</td>
+<td><code>Phase1/Sprint1/week-2/blueprint.md</code>, <code>Phase1/Sprint1/week-2/Member-Discount.md</code></td>
+</tr>
+</tbody>
+</table>
+<p class="note">อ่านเป็น PDF: <a href="sprint2.pdf">sprint2.pdf</a></p>
+<p class="note">รายงานอัตโนมัติจาก <code>Phase2/Sprint2/sprint2.md</code> — ข้อมูลสมมติเพื่อการเรียน (สร้างด้วย <code>tools/build_reports.py</code>)</p>
+</body>
+</html>

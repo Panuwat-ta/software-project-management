@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,
+      initial-scale=1.0">
+<title>SPM 32 hardening | SPM</title>
+<link rel="stylesheet" href="../../theme.css">
+<style>@page { size: A4; margin: 18mm 16mm; }
+body { font-family: "Noto Sans Thai", "Liberation Sans", sans-serif;
+  font-size: 11pt; line-height: 1.7; color: #1a1a1a; max-width: 900px;
+  margin: 0 auto; padding: 24px 20px 60px; }
+h1 { font-size: 22pt; border-bottom: 3px solid #1a56db; padding-bottom: 8px; }
+h2 { font-size: 14pt; color: #1a56db; margin-top: 1.6em;
+  border-bottom: 1px solid #e5e7eb; padding-bottom: 4px; }
+h3 { font-size: 12pt; margin-top: 1.2em; }
+table { border-collapse: collapse; width: 100%; margin: 0.9em 0;
+  font-size: 9.5pt; }
+th, td { border: 1px solid #cbd5e1; padding: 6px 9px; text-align: left;
+  vertical-align: top; }
+th { background: #eef2ff; }
+tr:nth-child(even) td { background: #fafbff; }
+code { font-family: "Noto Sans Mono", monospace; font-size: 9pt;
+  background: #f3f4f6; padding: 1px 5px; border-radius: 3px; }
+pre { background: #f3f4f6; padding: 12px; border-radius: 6px;
+  overflow-x: auto; font-size: 8.5pt; line-height: 1.5; }
+pre code { background: none; padding: 0; }
+blockquote { margin: 1em 0; padding: 8px 14px; border-left: 4px solid #1a56db;
+  background: #f5f8ff; }
+.nav { background: #1a1a2e; color: #fff; padding: 10px 16px;
+  border-radius: 8px; margin-bottom: 20px; font-size: 13px; }
+.nav a { color: #c7d6ff; text-decoration: none; margin-right: 14px; }
+.nav a:hover { color: #fff; text-decoration: underline; }
+.note { color: #5b6472; font-size: 10pt; margin-top: 40px;
+  border-top: 1px solid #e5e7eb; padding-top: 10px; }
+@media print { .nav { display: none; } }</style>
+</head>
+<body>
+<nav class="nav"><a href="../../index.html">หน้าแรก</a><a href="../../Phase1/README.html">Phase1</a><a href="../../Phase2/README.html">Phase2</a><a href="../../Phase3/README.html">Phase3</a><a href="../../Phase4/README.html">Phase4</a><a href="../../Phase5/README.html">Phase5 (หน้านี้)</a></nav>
+<h1>SPM-32 — D. Desktop Hardening + Release Candidate</h1>
+<ul>
+<li>Jira: <code>SPM-32</code> (5 SP) → Done</li>
+<li>งาน: hardening, tests, lint, security และคู่มือรัน Desktop Program</li>
+</ul>
+<h2>เกณฑ์ยอมรับ → หลักฐาน</h2>
+<ol>
+<li><code>python3 program.py</code> เปิดหน้าต่าง GTK4 จริงบน GNOME/Wayland</li>
+<li><code>test_app.py</code> 14 + <code>test_program.py</code> 7 = 21 passed</li>
+<li>regression v2.0 = 25 passed</li>
+<li><code>flake8 app.py program.py test_program.py tools/build_reports.py</code> = 0</li>
+<li><code>bandit -q -r app.py program.py</code> = 0</li>
+<li>UI ใช้ SQLite / Repository / Strategy / CheckoutService ชุดเดิม</li>
+<li>มี <code>program-plan.md</code> และคำสั่งรันใน README</li>
+</ol>
+<h2>UX/UI hardening รอบล่าสุด</h2>
+<ul>
+<li>ปรับ navigation sidebar และ active state ให้เห็นหน้าปัจจุบันชัดเจน</li>
+<li>เพิ่ม inline status banner สำหรับ feedback สำเร็จ/ผิดพลาด</li>
+<li>เพิ่ม empty state และจำนวนรายการใน Products/Members</li>
+<li>เพิ่ม LOW/OK badge และจัด visual hierarchy ของตารางใหม่</li>
+<li>เพิ่ม confirmation ก่อนลบข้อมูล</li>
+<li>ปรับ form state สำหรับ add/edit และ helper text</li>
+<li>ปรับ Checkout เป็นสองส่วน: ข้อมูลการขาย + ใบเสร็จ และเน้น grand total</li>
+<li>โปรแกรมเปิดจริงบน GNOME/Wayland หลังแก้ UX/UI โดยไม่มี runtime error</li>
+<li>เพิ่ม Responsive breakpoints: Desktop ≥980 px, Compact 760–979 px, Narrow &lt;760 px</li>
+<li>Sidebar เมนูหลักถูกจำกัดให้กว้างประมาณ 1/3 ของหน้าต่างจริง โดยตั้ง <code>hexpand=False</code>; Compact/Narrow จะปรับจำนวนคอลัมน์ของ form/cards และเรียง Checkout แนวตั้ง</li>
+<li>Products/Members table เลื่อนได้ในแนวนอนเมื่อหน้าต่างแคบ</li>
+</ul>
+<h2>ข้อกำหนด runtime</h2>
+<p>Fedora:</p>
+<pre><code class="language-bash">sudo dnf install python3-gobject gtk4
+python3 program.py
+</code></pre>
+<h2>หมายเหตุ</h2>
+<ul>
+<li>สถานะ Jira เดิมคงเป็น Done</li>
+<li>ไม่สร้าง/แก้ Git tag ในรอบนี้ เพราะ working tree ยังมีการเปลี่ยนแปลงที่ยังไม่ได้ commit</li>
+<li>Web implementation เดิมถูกเก็บเป็น historical evidence เท่านั้น</li>
+</ul>
+<p class="note">รายงานอัตโนมัติจาก <code>Phase5/Sprint5/SPM-32-hardening.md</code> — ข้อมูลสมมติเพื่อการเรียน (สร้างด้วย <code>tools/build_reports.py</code>)</p>
+</body>
+</html>

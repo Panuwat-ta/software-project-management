@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="สไลด์สรุป Sprint 5 SQLite Member Checkout GTK4 Desktop Program และ Quality Gate">
+<title>สไลด์ Sprint 5: v3.0 และ Desktop Program | SPM</title>
+<style>
+:root{--font:"Noto Sans Thai","Leelawadee UI",system-ui,sans-serif;--bg:#e7eeee;--paper:#fff;--ink:#122a38;--muted:#49616b;--accent:#0867a1;--line:#bfd0d4;--soft:#e8f3f8}
+*{box-sizing:border-box}
+body{margin:0;font-family:var(--font);color:var(--ink);background:var(--bg);min-height:100vh;display:grid;grid-template-rows:auto 1fr auto}
+a:focus-visible,button:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+.deck-header,.deck-controls{width:min(1440px,calc(100% - 48px));margin:auto;display:flex;align-items:center;justify-content:space-between;gap:18px;color:var(--muted);font-size:14px}
+.deck-header{padding:18px 0}.deck-controls{padding:18px 0}
+.back-link{color:var(--accent);font-weight:700;text-decoration:none}
+.deck-controls button{min-height:44px;padding:10px 16px;border:1px solid var(--line);background:var(--paper);color:var(--ink);font:700 15px var(--font);cursor:pointer}
+.deck-controls button:disabled{opacity:.35;cursor:default}.deck-controls button:hover:not(:disabled){background:var(--accent);border-color:var(--accent);color:#fff}
+.deck-frame{width:min(1440px,calc(100vw - 48px),calc((100vh - 132px) * 16 / 9));aspect-ratio:16/9;margin:auto;overflow:hidden;background:var(--paper);box-shadow:0 18px 46px rgb(18 42 56 / 18%)}
+.slide{display:none;height:100%;padding:3.5% 4.5%;align-content:center}
+.slide.active{display:grid}
+.slide h1{margin:0;letter-spacing:-.04em;line-height:1.08;font-size:clamp(36px,5vw,76px)}
+.slide h2{margin:0;letter-spacing:-.04em;line-height:1.08;font-size:clamp(24px,2.4vw,34px)}
+.slide-label{margin:0 0 20px;color:var(--accent);font-weight:800}
+.slide-lead{max-width:50ch;margin:10px 0 0;color:var(--muted);font-size:clamp(17px,1.8vw,26px);line-height:1.45}
+.cover-meta{margin:0;padding:14px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);color:var(--muted);line-height:1.7}
+.cover-layout,.content-layout{display:grid;grid-template-columns:1.12fr .88fr;gap:7%;align-items:center}
+.rule-list{margin:0;padding:0;list-style:none;border-top:1px solid var(--line)}
+.rule-list li{display:grid;grid-template-columns:32% 1fr;gap:18px;padding:10px 0;border-bottom:1px solid var(--line)}
+.rule-list strong{color:var(--accent)}
+table{width:100%;margin-top:16px;border-collapse:collapse;font-size:clamp(14px,1.45vw,21px)}
+th{padding:8px 14px;font-size:20px;background:var(--ink);color:#fff;text-align:left}
+td{padding:8px 14px;font-size:20px;border-bottom:1px solid var(--line)}
+tbody tr:nth-child(even){background:#f3f7f7}
+.metrics{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.metrics div{padding:14px 18px;border-right:1px solid var(--line)}
+.metrics div:last-child{border:0}
+.metrics b{display:block;font-size:clamp(26px,3.2vw,44px);letter-spacing:-.05em}
+.metrics span{display:block;margin-top:9px;color:var(--muted)}
+.next-steps{margin:0;padding-left:1.2em}
+.next-steps li{padding:8px 0;color:var(--muted);font-size:clamp(16px,1.6vw,24px)}
+@media (max-width:720px){.deck-header,.deck-controls{width:calc(100% - 32px);flex-wrap:wrap}.deck-frame{width:100%;aspect-ratio:auto;overflow:visible;box-shadow:none}.slide{height:auto;min-height:70vh}.cover-layout,.content-layout{grid-template-columns:1fr;gap:20px}.rule-list li{grid-template-columns:1fr;gap:4px}.metrics{grid-template-columns:1fr}th,td{padding:8px 10px}}
+@media print{@page{size:13.333in 7.5in;margin:0}.deck-header,.deck-controls{display:none}.deck-frame{width:13.333in;height:auto;aspect-ratio:auto;overflow:visible;box-shadow:none}.slide{display:grid;break-after:page;width:13.333in;height:7.5in;padding:.42in .60in}}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto !important}}
+</style>
+</head>
+<body>
+<header class="deck-header"><a class="back-link" href="sprint5.html">← รายงาน Sprint 5</a><span id="slide-counter" aria-live="polite">1 / 11</span></header>
+<main class="deck-frame" aria-label="สไลด์สรุป Sprint 5">
+<section class="slide active" id="slide-1">
+<div class="cover-layout"><div><p class="slide-label">Sprint 5 · Phase 5 · v3.0 + Desktop</p><h1>จาก CLI สู่<br>โปรแกรม Desktop</h1><p class="slide-lead">ปิดงานออกแบบที่ค้างตั้งแต่ Sprint 1: SQLite, member discount, checkout และ Desktop UI โดยไม่ทำ regression</p></div><p class="cover-meta">46 SP · 2 Epics · 9 Issues<br>Jira Sprint ID 86 · state: closed<br>ข้อมูลสมมติเพื่อการเรียน</p></div>
+</section>
+<section class="slide" id="slide-2">
+<h2>Sprint 5 แบ่งเป็น 2 Track แต่ใช้ domain เดียวกัน</h2><p class="slide-lead">ส่วน A ทำฐานธุรกิจให้แข็งแรง ส่วน B เพิ่มหน้าตาโปรแกรม Desktop</p><table><thead><tr><th>Track</th><th>Story Points</th><th>งาน</th></tr></thead><tbody><tr><td>A · v3.0</td><td>17 SP</td><td>SQLite · Migration · Member · Checkout · Tests</td></tr><tr><td>B · Desktop Program</td><td>29 SP</td><td>GTK4 · Dashboard · Products · Members · Checkout</td></tr><tr><td>รวม</td><td>46 SP</td><td>SPM-23…27 + SPM-29…32</td></tr></tbody></table>
+</section>
+<section class="slide" id="slide-3">
+<div class="content-layout"><div><h2>v3.0 ใช้ 3 pattern ลด coupling ของ data และ policy</h2><p class="slide-lead">CLI และ Desktop Program ใช้ business logic ชุดเดียว</p></div><ul class="rule-list"><li><strong>Singleton</strong><span>SQLiteDatabaseContext จัดการ connection / reset</span></li><li><strong>Repository</strong><span>InventoryRepository ซ่อน SQL และ persistence</span></li><li><strong>Strategy</strong><span>MemberTier แยก Regular / Silver / Gold / Platinum</span></li><li><strong>Transaction</strong><span>commit / rollback ทุก write ป้องกันข้อมูลค้างกลางทาง</span></li></ul></div>
+</section>
+<section class="slide" id="slide-4">
+<h2>Migration ต้องพิสูจน์ว่า data ไม่หายก่อนสลับระบบ</h2><p class="slide-lead">อ่าน legacy ผ่าน Product.from_dict แล้วตรวจผลก่อน/หลัง</p><table><thead><tr><th>รายการ</th><th>ผล</th></tr></thead><tbody><tr><td>Legacy key</td><td>รองรับ n / q / p / c</td></tr><tr><td>Default ใหม่</td><td>barcode='' · reorder_point=5</td></tr><tr><td>Verification</td><td>เทียบ count + total value 100%</td></tr><tr><td>ตัวอย่าง</td><td>2 records · 600.0 → SQLite 600.0</td></tr><tr><td>Startup</td><td>ย้ายอัตโนมัติเมื่อ DB ยังว่าง</td></tr></tbody></table>
+</section>
+<section class="slide" id="slide-5">
+<h2>Member Strategy ทำให้ส่วนลดเปลี่ยนได้โดยไม่กระจาย if-else</h2><p class="slide-lead">Checkout ใช้ policy เดียวทั้ง CLI และ Desktop UI</p><table><thead><tr><th>Tier</th><th>ส่วนลด</th><th>ซื้อ 1,000 บาท</th></tr></thead><tbody><tr><td>Regular</td><td>0%</td><td>1,000</td></tr><tr><td>Silver</td><td>5%</td><td>950</td></tr><tr><td>Gold</td><td>10%</td><td>900</td></tr><tr><td>Platinum</td><td>15%</td><td>850</td></tr></tbody></table>
+</section>
+<section class="slide" id="slide-6">
+<div class="content-layout"><div><h2>Desktop UI เป็น presentation layer ที่บาง</h2><p class="slide-lead">program.py reuse domain เดิมทั้งหมด</p></div><ul class="rule-list"><li><strong>Toolkit</strong><span>GTK4 / PyGObject</span></li><li><strong>หน้าจอ</strong><span>Dashboard · Products · Members · Checkout</span></li><li><strong>Run</strong><span>python3 program.py</span></li><li><strong>Domain</strong><span>Repository · MemberManager · CheckoutService · CSV</span></li></ul></div>
+</section>
+<section class="slide" id="slide-7">
+<h2>หน้าตาโปรแกรมทำงานผ่าน domain จริง</h2><p class="slide-lead">ไม่ต้องเปิด browser หรือรัน server</p><table><thead><tr><th>หน้าจอ</th><th>ความสามารถ</th></tr></thead><tbody><tr><td>Dashboard</td><td>ประเภทสินค้า · มูลค่ารวม · low-stock</td></tr><tr><td>Products</td><td>ค้นหา · เพิ่ม/แก้ไข · ตัด · ลบ · CSV</td></tr><tr><td>Members</td><td>CRUD + 4 tiers</td></tr><tr><td>Checkout</td><td>ส่วนลด + ใบเสร็จ + stock คงเหลือ</td></tr></tbody></table>
+</section>
+<section class="slide" id="slide-8">
+<h2>Quality Gate ผ่านทั้งชุดใหม่และ regression เดิม</h2><p class="slide-lead">การเพิ่ม Desktop Program ไม่ทำให้ v2.0 เสีย</p><div class="metrics"><div><b>21 / 21</b><span>Main tests</span></div><div><b>25 / 25</b><span>v2 Regression</span></div><div><b>0 / 0</b><span>Flake8 / Bandit</span></div></div>
+</section>
+<section class="slide" id="slide-9">
+<div class="content-layout"><div><h2>Desktop Program ถูกเปิดรันจริงก่อนส่งมอบ</h2><p class="slide-lead">QA ยืนยัน runtime และ Responsive ไม่ใช่ตรวจ static อย่างเดียว</p></div><ul class="rule-list"><li><strong>Runtime</strong><span>เปิด GTK4 window บน GNOME/Wayland</span></li><li><strong>Responsive</strong><span>Desktop ≥980 · Compact 760–979 · Narrow <760</span></li><li><strong>Tests</strong><span>test_program.py 7 integration cases · รวม responsive breakpoints</span></li><li><strong>Tables</strong><span>หน้าต่างแคบใช้ horizontal scroll ไม่บีบข้อมูล</span></li></ul></div>
+</section>
+<section class="slide" id="slide-10">
+<div class="content-layout"><div><h2>ข้อจำกัดของ Desktop build ถูกระบุไว้ชัด</h2><p class="slide-lead">สิ่งที่อยู่นอก scope ไม่ถูกอ้างว่าเป็น feature</p></div><ul class="rule-list"><li><strong>Auth</strong><span>ไม่มี Login / Role-based access</span></li><li><strong>Payment</strong><span>ไม่มี Online Payment</span></li><li><strong>Concurrency</strong><span>SQLite เหมาะ local single-user</span></li><li><strong>Packaging</strong><span>ยังเป็น .py; installer/executable เป็นงานต่อไป</span></li></ul></div>
+</section>
+<section class="slide" id="slide-11">
+<div class="cover-layout"><div><h2>Sprint 5 ปิดวงจรจาก CLI สู่โปรแกรม Desktop</h2><p class="slide-lead">Architecture ที่แยกชั้นทำให้เพิ่ม UI ได้โดย reuse Repository และ Strategy</p></div><ol class="next-steps"><li>เพิ่ม Member tier ใหม่ได้ด้วย Strategy</li><li>ทำ installer/executable ได้ภายหลัง</li><li>ปิด UAT sign-off</li><li>คง regression gate 21 + 25 tests ทุก release</li></ol></div>
+</section>
+</main>
+<footer class="deck-controls"><button id="previous" type="button" aria-label="สไลด์ก่อนหน้า">← ก่อนหน้า</button><button id="next" type="button" aria-label="สไลด์ถัดไป">ถัดไป →</button></footer>
+<script>
+(function(){
+var slides=Array.prototype.slice.call(document.querySelectorAll(".slide"));
+var count=document.getElementById("slide-counter");
+var storageKey='spm-sprint-5-summary-slides';
+function slideFromHash(){var m=/#slide-(\d+)/.exec(window.location.hash||"");if(!m)return null;var i=parseInt(m[1],10)-1;return(i>=0&&i<slides.length)?i:null;}
+function storedSlide(){try{var v=window.localStorage.getItem(storageKey);if(v===null)return null;var i=parseInt(v,10);return(i>=0&&i<slides.length)?i:null;}catch(err){return null;}}
+function rememberSlide(i){try{window.localStorage.setItem(storageKey,String(i));}catch(err){}}
+var current=slideFromHash();if(current===null)current=storedSlide();if(current===null)current=0;
+function show(i){current=Math.min(Math.max(i,0),slides.length-1);slides.forEach(function(s,n){s.classList.toggle("active",n===current);});if(count)count.textContent=(current+1)+" / "+slides.length;previousBtn.disabled=current===0;nextBtn.disabled=current===slides.length-1;rememberSlide(current);try{window.history.replaceState(null,"","#slide-"+(current+1));}catch(err){}}
+function showFromHash(){var i=slideFromHash();if(i!==null)show(i);}
+var previousBtn=document.getElementById("previous");var nextBtn=document.getElementById("next");
+previousBtn.addEventListener("click",function(){show(current-1);});nextBtn.addEventListener("click",function(){show(current+1);});
+document.addEventListener("keydown",function(e){if(e.key==="ArrowRight"||e.key==="PageDown"||e.key===" "){e.preventDefault();show(current+1);}else if(e.key==="ArrowLeft"||e.key==="PageUp"){e.preventDefault();show(current-1);}else if(e.key==="Home"){e.preventDefault();show(0);}else if(e.key==="End"){e.preventDefault();show(slides.length-1);}});
+window.addEventListener("hashchange",showFromHash);show(current);
+})();
+</script>
+</body>
+</html>

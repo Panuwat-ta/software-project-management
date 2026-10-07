@@ -1,0 +1,267 @@
+WEEK 11: FLOW METRICS & SCOPE FREEZE
+ENGSE202: Advanced Flow & Scope Freeze
+“ตรวจจับคอขวดบน Jira ด้วย CFD แสดงผลงานขยายขอบเขตด้วย Burnup Chart ทำข้อตกลง Scope Freeze และกระทบยอดค่าใช้จ่ายเครื่องมือพัฒนา”
+Academic Framework: PMBOK Guide 7th Edition - Project Performance Measurement & Governance
+ENGSE202: SOFTWARE PROJECT MANAGEMENT WEEK 11 MASTERCLASS
+
+1. CFD Analytics
+อ่านและตรวจจับจุดอุดตันคอขวด (Bottlenecks) ผ่าน Cumulative Flow Diagram บน Jira
+2. Burnup Tracking
+ใช้ Burnup Chart แสดงสัดส่วนความสำเร็จของการส่งมอบขอบเขตงาน CR-01 และ CR-02
+3. Scope Freeze
+ออกแบบฟอร์ม UAT Sign-off และทำข้อตกลง Scope Freeze Agreement สกัดกั้นคำของอก
+4. Reconciliation
+กระทบยอดค่าใช้จ่ายเครื่องมือจริง และวางแผนเปิด Sprint 3 (Hardening & Release)
+WEEKLY COURSE OBJECTIVES ENGSE202
+เป้าหมายการเรียนรู้ประจำสัปดาห์
+
+ฝั่งเทคนิค ENGSE225 (3 ชม. แรก)
+ฝั่งบริหาร ENGSE202 (3 ชม. หลัง)
+ผสานโค้ดจากกิ่ง cr01 และ cr02 เข้าสู่สาขา develop
+สแกนความปลอดภัยด้วย Flake8 และ Bandit ตรวจผ่าน 100%
+พัฒนาระบบ Atomic File Writing คุ้มกันความเสถียร
+Sprint 2 Review: สาธิต Working Software ตรวจรับงานตาม DoD
+Flow & Metric: วิเคราะห์คอขวดบน CFD และตัวเลข EVM ล่าสุด
+Scope Freeze: เซ็นสัญญาล็อกขอบเขต งดรับฟังก์ชันเพิ่มใน Sprint 3
+CROSS-COURSE ALIGNMENT สะพานเชื่อมโยงเทคนิคสู่การบริหาร
+สะพานเชื่อมโยงเทคนิคสู่การบริหาร
+
+ในช่วงท้ายของรอบการพัฒนา การดูเพียง Burndown Chart อาจไม่เพียงพอที่จะตรวจจับปัญหาคอขวดเชิงลึก:
+1. Cumulative Flow (CFD)
+แสดงการสะสมของงานในแต่ละสถานะ (To Do, In Progress, Review, Done) ข้ามมิติเวลา เพื่อชี้เป้า "คอขวด (Bottlenecks)"
+2. Burnup Chart
+แสดงการเติบโตของเนื้องานที่ทำเสร็จจริง เปรียบเทียบกับการเปลี่ยนแปลงของ "ขอบเขตงานทั้งหมด (Total Scope)"
+FLOW VISUAL ANALYTICS การติดตามสถานะโครงการขั้นสูง
+การติดตามสถานะโครงการขั้นสูง
+
+WORKFLOW ANATOMY โครงสร้างแผนภูมิ CUMULATIVE FLOW
+โครงสร้างแผนภูมิ Cumulative Flow
+แกน X: เส้นเวลา | แกน Y: จำนวนงานสะสม
+Done (แถบล่าง): งานที่ปิดสมบูรณ์แล้ว
+Code Review (แถบกลาง): ด่านตรวจ PR/QA
+In Progress (แถบบน): งานกำลังลงมือทำ
+
+สภาวะปกติ (Healthy Flow)
+แถบสีทุกชั้นมีความกว้างสม่ำเสมอ ขนานกัน และขยับขึ้นอย่างราบเรียบ ไร้จุดอุดตัน
+สภาวะคอขวด (Bottleneck ⚠️)
+แถบสีชั้น Code Review / QA บวมกว้างขึ้นผิดปกติ
+แสดงว่านักพัฒนาเขียนโค้ดเสร็จแล้วแต่งานไปติดค้างรอ Tech Lead ตรวจ PR นานเกินไป
+PROCESS DIAGNOSTIC การตรวจจับคอขวดบนบอร์ด CFD
+การตรวจจับคอขวดบนบอร์ด CFD
+
+Little's Law Formula
+ยิ่งปล่อยให้งานสะสมในช่อง Review สูง ระยะเวลาที่งานจะเสร็จจะยิ่งนานขึ้น
+มาตรการแก้ WIP Limits บน Jira
+จำกัดช่อง Code Review  3 ใบ หากเต็มโควต้า สมาชิกทุกคนต้องหยุดเขียนโค้ดใหม่แล้วมาช่วยกันรีวิวโค้ดที่ค้างให้เสร็จก่อน
+QUEUEING THEORY IN SOFTWARE กฎของลิตเติลและ WORK IN PROGRESS
+กฎของลิตเติลและ Work in Progress
+
+SCOPE VS PROGRESS ANALYTICS แผนภูมิ BURNUP CHART สะท้อนความจริง
+แผนภูมิ Burnup Chart สะท้อนความจริง
+ช่วยให้ลูกค้าเห็นชัดเจนว่าทีมส่งมอบงานตาม Scope ที่เพิ่มขึ้นจาก CR-01 และ CR-02 ไปแล้วกี่เปอร์เซ็นต์อย่างโปร่งใส
+
+ขอบเขตงาน (Scope Milestone)
+Story Points
+สถานะความสำเร็จ
+Initial Scope (แผนเดิม)
+20 Points
+ส่งมอบเสร็จสิ้น 100% 🟢
+CR-01 Scope Added (Barcode)
++5 Points
+ส่งมอบเสร็จสิ้น 100% 🟢
+CR-02 Scope Added (CSV Export)
++4 Points
+พัฒนาเสร็จ 2 จาก 4 Points 🟡
+Total Scope Completed
+27 / 29 Points
+สำเร็จ 93% ของเนื้องานรวม 🏆
+SPRINT 2 DELIVERY BENCHMARK วิเคราะห์ SPRINT 2 ด้วย BURNUP CHART
+วิเคราะห์ Sprint 2 ด้วย Burnup Chart
+
+ตัวแปร EVM สิ้นสุด Sprint 2
+ผลการคำนวณ Variances
+SV = EV - PV = 11,000 - 11,350 = -350 THB 🟡
+CV = EV - AC = 11,000 - 11,500 = -500 THB 🟡
+อยู่ใน Warning Zone ( ±5%) ควบคุมได้ดีมาก
+Planned Value (PV รวม): 11,350 THB (รวมงบ CR-02)
+Earned Value (EV จริง): 11,000 THB
+Actual Cost (AC จริง): 11,500 THB (ค่าแรง + เครื่องมือ)
+FINANCIAL PERFORMANCE REVIEW การประเมินผลต่าง EVM รอบ SPRINT 2
+การประเมินผลต่าง EVM รอบ Sprint 2
+
+Cost Performance Index (CPI)
+ทุกเงิน 1 บาทที่จ่ายไป โครงการได้เนื้องานมูลค่า 0.96 บาท
+Schedule Performance Index (SPI)
+โครงการดำเนินงานด้วยความเร็วคิดเป็น 97% ของแผน
+PERFORMANCE EFFICIENCY INDICES การคำนวณดัชนีเชิงลึก CPI และ SPI
+การคำนวณดัชนีเชิงลึก CPI และ SPI
+
+High Anxiety Period
+ก่อนวันส่งมอบจริง Stakeholders มักมีความกังวลสูงว่าระบบจะเสร็จทันสัปดาห์ที่ 12 และตอบโจทย์ธุรกิจจริงหรือไม่
+บทบาทของ PM มืออาชีพ
+เปลี่ยนความกังวลให้เป็นความมั่นใจ ผ่านการจัดเตรียมแบบฟอร์ม UAT Sign-off และการทำข้อตกลง Scope Freeze ชัดเจน
+STAKEHOLDER DIPLOMACY การบริหารความคาดหวังระยะสุดท้าย
+การบริหารความคาดหวังระยะสุดท้าย
+
+User Acceptance Testing (UAT): การทดสอบขั้นตอนสุดท้ายโดยผู้ใช้งานจริง เพื่อยืนยันว่าระบบตอบโจทย์ธุรกิจ:
+System Testing (ENGSE225)
+UAT Testing (ENGSE202)
+ทดสอบเชิงเทคนิค สแกนช่องโหว่
+รัน PyTest Full Suite 100% Pass
+เน้นว่าโค้ดทำงานถูกต้องตามสเปก
+ทดสอบความพึงพอใจการใช้งานจริง
+ตรวจความถูกต้องของข้อมูลรายงาน CSV
+เน้นว่าซอฟต์แวร์แก้ปัญหาธุรกิจได้จริง
+QUALITY VERIFICATION VS VALIDATION กรอบการทดสอบตรวจรับระบบ UAT
+กรอบการทดสอบตรวจรับระบบ UAT
+
+UAT ID
+สถานการณ์ทดสอบ (Business Scenario)
+เกณฑ์ตัดสิน
+สถานะตรวจรับ
+UAT-01
+เพิ่มสินค้าใหม่พร้อมระบุ Barcode และ Reorder Point
+บันทึกสำเร็จ ไร้ Crash
+Passed 🟢
+UAT-02
+ตัดสต็อกสินค้าจนต่ำกว่าเกณฑ์ และตรวจการแจ้งเตือน
+ขึ้น Alert ชัดเจน
+Passed 🟢
+UAT-03
+ส่งออกรายงาน CSV และเปิดตรวจไฟล์ใน Microsoft Excel
+Header/Data ถูกต้อง
+Passed 🟢
+ACCEPTANCE PROTOCOL การจัดทำแบบฟอร์มตรวจรับ UAT
+การจัดทำแบบฟอร์มตรวจรับ UAT
+
+BASELINE PROTECTION แนวคิดการล็อกขอบเขต SCOPE FREEZE
+แนวคิดการล็อกขอบเขต Scope Freeze
+เพื่อให้สัปดาห์ที่ 12 (Sprint 3) เป็นช่วงเวลาแห่งความนิ่ง มุ่งเน้นเฉพาะการทำ UAT และเตรียม Release Notes
+
+ขั้นตอนการเจรจาของ PM
+Future Backlog Strategy
+หากลูกค้ามีไอเดียใหม่เพิ่มเติม ให้บันทึกไว้ใน Future Backlog (สำหรับ Version 3.0) โดยไม่แตะต้อง Sprint ปัจจุบัน
+โชว์ Burnup Chart ยืนยันว่าส่งมอบ CR-01 และ CR-02 สำเร็จ
+ชี้แจงความเสี่ยงหากเพิ่มฟังก์ชันใหม่ในโค้งสุดท้าย
+ยื่นเอกสาร Scope Freeze Agreement ให้อาจารย์ลงนาม
+STAKEHOLDER AGREEMENT การเจรจาทำสัญญา SCOPE FREEZE
+การเจรจาทำสัญญา Scope Freeze
+
+Procurement Reconciliation
+กระบวนการรวบรวม ตรวจสอบ และกระทบยอดค่าใช้จ่ายจริงทั้งหมดที่เกิดขึ้นจากการเช่าใช้ SaaS และคลาวด์ เทียบกับ Cost Baseline
+เป้าหมายการเงินโครงการ
+สรุปยอดค่าใช้จ่ายเครื่องมือสุทธิ เคลียร์หนี้สินคงค้าง และเตรียมปิดสัญญาจัดซื้อจัดจ้างในสัปดาห์ที่ 12 อย่างโปร่งใส
+PROCUREMENT CLOSE-OUT การกระทบยอดต้นทุนเครื่องมือจริง
+การกระทบยอดต้นทุนเครื่องมือจริง
+
+Tool / Resource Item
+Baseline Budget
+Actual Spent
+Status / Remarks
+Jira Software License
+0 THB
+0 THB
+Free Tier (≤ 10 Users)
+GitHub Actions Compute
+0 THB
+0 THB
+ใช้ 1,250 / 2,000 Mins
+Cloud Server Hosting
+500 THB
+480 THB
+ประหยัด +20 THB 🟢
+รวมค่าใช้จ่ายเครื่องมือสุทธิ
+800 THB
+780 THB
+Under Budget (+20 THB 🟢)
+FINANCIAL LEDGER ตารางกระทบยอดค่าใช้จ่ายเครื่องมือ
+ตารางกระทบยอดค่าใช้จ่ายเครื่องมือ
+
+สถานะงบสำรองล่าสุด
+มาตรการสำหรับ Sprint 3
+งบสำรอง 675 บาท จะถูกล็อกไว้สำหรับกิจกรรม Hardening และแก้บั๊ก UAT หากไม่ได้ใช้จะคืนให้ Sponsor ท้ายโครงการ
+งบสำรองเริ่มต้น (Week 5): 2,025 THB
+เบิกจ่ายให้ CR-02 (Week 10): -1,350 THB
+งบสำรองคงเหลือสุทธิ: 675 THB 🟢
+RESERVE FUND GOVERNANCE การจัดการงบสำรองส่วนคงเหลือ
+การจัดการงบสำรองส่วนคงเหลือ
+
+Workshop: "Sprint 2 Review & Scope Freeze Agreement"
+1. Sprint 2 Demo
+สาธิตระบบคลังสินค้า (Barcode, Reorder Point, CSV) ต่อหน้าอาจารย์
+2. Complete Sprint 2
+ตรวจเกณฑ์ DoD ปิด Sprint 2 และสร้างกล่อง Sprint 3 บนบอร์ด Jira
+3. Scope Freeze Sign
+ยื่นสัญญา Scope Freeze Agreement และกรอกตาราง Procurement Reconciliation
+PRACTICAL LAB ACTIVITY แนะนำกิจกรรม WORKSHOP วันนี้
+แนะนำกิจกรรม Workshop วันนี้
+
+3 การสาธิตระบบต่อหน้าอาจารย์ (Sponsor):
+Demo 1 (CR-01): แสดงการเพิ่มสินค้ามี Barcode และตัดสต็อกให้เกิด Alert
+Demo 2 (CR-02): สั่งส่งออกไฟล์ .csv และเปิดตรวจใน Excel
+Demo 3 (Quality): สั่งรัน pytest และ flake8 โชว์ไฟเขียว 100%
+WORKSHOP EXECUTION STEP 1 ขั้นตอน 1: สาธิตระบบ SPRINT 2 DEMO
+ขั้นตอน 1: สาธิตระบบ Sprint 2 Demo
+
+เช็คลิสต์ DoD Sprint 2
+การตรวจรับงาน
+สมาชิกทุกคนกด Log Work บันทึกชั่วโมงจริงบน Jira ครบถ้วน เพื่อให้อาจารย์กดรับรองสถานะ Accepted
+โค้ดทั้งหมดผสานเข้า develop สมบูรณ์
+ผ่าน Peer Code Review บน GitHub
+PyTest Full Suite 100% Pass บน CI/CD
+WORKSHOP EXECUTION STEP 2 ขั้นตอน 2: ตรวจสอบเกณฑ์ DOD
+ขั้นตอน 2: ตรวจสอบเกณฑ์ DoD
+
+Complete Sprint 2 บน Jira
+กดปุ่ม Complete Sprint 2 บันทึกค่า Team Velocity เข้าสู่ระบบอัตโนมัติ
+Start Sprint 3 (Release Sprint)
+สร้างกล่อง Sprint 3 ดึงเฉพาะงาน UAT Testing, Security Audit และ Release Notes แล้วกดปุ่ม Start Sprint
+WORKSHOP EXECUTION STEP 3 ขั้นตอน 3: ปิด SPRINT 2 เปิด SPRINT 3
+ขั้นตอน 3: ปิด Sprint 2 เปิด Sprint 3
+
+ลงนาม Scope Freeze Agreement
+ยื่นเอกสารให้อาจารย์ (Sponsor) ลงนามยืนยันว่าจะไม่มีการเพิ่มฟังก์ชันใหม่ในสัปดาห์ที่ 12
+บันทึก Procurement Sheet
+รวบรวมค่าใช้จ่ายเครื่องมือจริง กรอกลงในตาราง Procurement Reconciliation Sheet แนบส่งในเล่มรายงาน
+WORKSHOP EXECUTION STEP 4 ขั้นตอน 4: สัญญา SCOPE FREEZE
+ขั้นตอน 4: สัญญา Scope Freeze
+
+ชิ้นงาน 1 (ENGSE225): รายงานผลการสแกนความปลอดภัย Static Analysis และซอร์สโค้ดสมบูรณ์บน develop
+ชิ้นงาน 2 (ENGSE225): ชุดทดสอบ Full Regression Test Suite และภาพบันทึกผลการรัน PyTest 100% Pass
+ชิ้นงาน 3 (ENGSE202): รายงานวิเคราะห์ Cumulative Flow Diagram (CFD) / Burnup Chart และบันทึกปิด Sprint 2
+ชิ้นงาน 4 (ENGSE202): เอกสารสัญญา Scope Freeze Sign-off และตารางกระทบยอด Procurement Sheet
+COMBINED DELIVERABLES CHECKLIST เช็คลิสต์สิ่งส่งมอบสัปดาห์ 11
+เช็คลิสต์สิ่งส่งมอบสัปดาห์ 11
+
+Flow Analytics
+ใช้ CFD เปิดโปงคอขวดและคุม WIP Limits ให้งานไหลลื่น
+Burnup Transparency
+สะท้อนความสำเร็จของการส่งมอบขอบเขตงานที่ขยายตัวอย่างโปร่งใส
+Scope Freeze
+ล็อกขอบเขตระบบเพื่อความพร้อมสูงสุดในการทำ UAT สัปดาห์สุดท้าย
+SESSION RECAP สรุปบทเรียนประจำสัปดาห์ที่ 11
+สรุปบทเรียนประจำสัปดาห์ที่ 11
+
+ช่วงถาม-ตอบ (Q&A Session)
+“การส่งมอบโครงการที่ประสบความสำเร็จ ไม่ได้ขึ้นอยู่กับว่าเราเขียนฟีเจอร์ได้เยอะแค่ไหนในวันสุดท้าย แต่ขึ้นอยู่กับความกล้าหาญในการล็อกขอบเขต เพื่อทุ่มเทเวลาให้กับการทดสอบคุณภาพและความพึงพอใจของผู้ใช้งานจริง”
+เตรียมความพร้อมสำหรับการตรวจรับงานใหญ่ (UAT) และการปล่อยเวอร์ชันจริง (Release v2.0) ในสัปดาห์ที่ 12
+ENGSE202: SOFTWARE PROJECT MANAGEMENT Q&A & DISCUSSION
+
+Project Management Institute. (2021). A Guide to the Project Management Body of Knowledge (PMBOK Guide) (7th ed.). Project Management Institute.
+Anderson, D. J. (2010). Kanban: Successful Evolutionary Change for Your Technology Business. Blue Hole Press.
+Flemming, Q. W., & Koppelman, J. M. (2010). Earned Value Project Management (4th ed.). Project Management Institute.
+Schwaber, K., & Sutherland, J. (2020). The Scrum Guide: The Definitive Guide to Scrum: The Rules of the Game.
+ISO/IEC/IEEE. (2021). Software and systems engineering — Software testing — Part 4: Test techniques (ISO/IEC/IEEE Standard No. 29119-4:2021).
+Little, J. D. (1961). A proof for the queuing formula: $L = \lambda W$. Operations Research, 9(3), 383-387.
+PROJECT MANAGEMENT BIBLIOGRAPHY เอกสารอ้างอิงทางวิชาการ
+เอกสารอ้างอิงทางวิชาการ
+
+https://static.getbeamer.com/blog/wp-content/uploads/2023/12/cumulative-flow-diagram.png
+Source: getbeamer.com
+https://images.ctfassets.net/zsv3d0ugroxu/4X0FwV0Wk7a5iB3xQe6M2Z/a3e1b7c43d84a7e937d531a7c3b28b7e/burnup_chart_example.png
+Source: www.atlassian.com
+https://blog.triaster.co.uk/hubfs/sign%20off.jpg
+Source: blog.triaster.co.uk
+https://media.licdn.com/dms/image/v2/D4D12AQH8y6B2xPZ5mA/article-cover_image-shrink_720_1280/article-cover_image-shrink_720_1280/0/1715082103408?e=2147483647&v=beta&t=3Xw0Ew79gN47rB2JcZ2v5X_zD2t3m0J_7R9oQ8u3a8E
+Source: www.linkedin.com
+Image Sources

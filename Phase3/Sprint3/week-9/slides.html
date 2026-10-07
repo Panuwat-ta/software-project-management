@@ -1,0 +1,367 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>สไลด์สัปดาห์ที่ 9 | CLI Inventory Management</title>
+  <style>
+    :root {
+      --font: "Noto Sans Thai", "Leelawadee UI", system-ui, sans-serif;
+      --serif: "TH Sarabun New", "Angsana New", Georgia, serif;
+      --bg: #e7eeee;
+      --paper: #fff;
+      --ink: #122a38;
+      --muted: #49616b;
+      --accent: #0867a1;
+      --line: #bfd0d4;
+      --soft: #e8f3f8;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: var(--font);
+      color: var(--ink);
+      background: var(--bg);
+      font-size: 24px;
+      line-height: 1.5;
+    }
+    a:focus-visible, button:focus-visible {
+      outline: 3px solid var(--accent);
+      outline-offset: 3px;
+    }
+    .back-link { color: var(--accent); font-weight: 700; text-decoration: none; }
+    .template-deck {
+      min-height: 100vh;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      background: var(--bg);
+    }
+    .deck-header, .deck-controls {
+      width: min(1440px, calc(100% - 48px));
+      margin: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      color: var(--muted);
+      font-size: 18px;
+    }
+    .deck-header { padding: 18px 0; }
+    .deck-controls { padding: 18px 0; }
+    .deck-controls button {
+      min-height: 44px;
+      padding: 10px 16px;
+      border: 1px solid var(--line);
+      background: var(--paper);
+      color: var(--ink);
+      font: 700 18px var(--font);
+      cursor: pointer;
+    }
+    .deck-controls button:disabled { opacity: .35; cursor: default; }
+.deck-controls button:hover:not(:disabled) {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+    }
+    .deck-frame {
+      width: min(1440px, calc(100vw - 48px), calc((100vh - 132px) * 16 / 9));
+      aspect-ratio: 16/9;
+      margin: auto;
+      overflow: hidden;
+      background: var(--paper);
+      box-shadow: 0 18px 46px rgb(18 42 56 / 18%);
+    }
+    .slide {
+      display: none;
+      height: 100%;
+      padding: 3.5% 4.5%;
+      align-content: center;
+      font-size: clamp(24px, 1.8vw, 28px);
+    }
+    .slide.active { display: grid; }
+    .slide h1, .slide h2 {
+      margin: 0;
+      letter-spacing: -.04em;
+      line-height: 1.08;
+    }
+    .slide h1 { font-size: clamp(36px, 5vw, 76px); }
+    .slide h2 { font-size: clamp(24px, 2.4vw, 34px); }
+    .slide-label {
+      margin: 0 0 20px;
+      color: var(--accent);
+      font-weight: 800;
+    }
+    .slide-lead {
+      max-width: 50ch;
+      margin: 10px 0 0;
+      color: var(--muted);
+      font-size: clamp(24px, 1.8vw, 26px);
+      line-height: 1.45;
+    }
+    .cover-layout, .content-layout {
+      display: grid;
+      grid-template-columns: 1.12fr .88fr;
+      gap: 7%;
+      align-items: center;
+    }
+    .cover-meta {
+      margin: 0;
+      padding: 14px 0;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      color: var(--muted);
+      line-height: 1.7;
+    }
+    .rule-list {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      border-top: 1px solid var(--line);
+    }
+    .rule-list li {
+      display: grid;
+      grid-template-columns: 32% 1fr;
+      gap: 18px;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--line);
+    }
+    .rule-list strong { color: var(--accent); }
+    table {
+      width: 100%;
+      margin-top: 16px;
+      border-collapse: collapse;
+      font-size: clamp(20px, 1.5vw, 24px);
+    }
+    th {
+      padding: 8px 14px;
+      background: var(--ink);
+      color: #fff;
+      text-align: left;
+    }
+    td {
+      padding: 8px 14px;
+      border-bottom: 1px solid var(--line);
+    }
+    tbody tr:nth-child(even) { background: #f3f7f7; }
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+    .metrics div { padding: 14px 18px; border-right: 1px solid var(--line); }
+    .metrics div:last-child { border: 0; }
+    .metrics b { display: block; font-size: clamp(26px, 3.2vw, 44px); letter-spacing: -.05em; }
+    .metrics span { display: block; margin-top: 9px; color: var(--muted); }
+    .next-steps { margin: 0; padding-left: 1.2em; }
+    .next-steps li {
+      padding: 8px 0;
+      color: var(--muted);
+      font-size: 24px;
+    }
+    @media (max-width: 720px) {
+      .deck-header, .deck-controls { width: calc(100% - 32px); flex-wrap: wrap; }
+      .deck-frame { width: 100%; aspect-ratio: auto; overflow: visible; box-shadow: none; }
+      .slide { height: auto; min-height: 70vh; padding: 6%; }
+      .cover-layout, .content-layout { grid-template-columns: 1fr; gap: 20px; }
+      .cover-meta { padding: 14px 0; }
+      .rule-list li { grid-template-columns: 1fr; gap: 4px; padding: 10px 0; }
+      .metrics { grid-template-columns: 1fr; }
+      .metrics div { padding: 12px 9px; border-right: 0; border-bottom: 1px solid var(--line); }
+      .metrics div:last-child { border-bottom: 0; }
+      th, td { padding: 8px 10px; }
+      .deck-controls button { padding: 8px 12px; }
+    }
+    @media print {
+      .template-deck { display: block; background: #fff; }
+      .deck-header, .deck-controls { display: none; }
+      .deck-frame { width: 100%; aspect-ratio: auto; overflow: visible; box-shadow: none; }
+      .slide { display: grid; break-after: page; height: auto; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      * { scroll-behavior: auto !important; }
+    }
+  </style></head>
+<body class="template-deck" data-template="evidence">
+  <header class="deck-header">
+    <a class="back-link" href="index.html">← กลับเอกสารสัปดาห์ที่ 9</a>
+    <span id="slide-counter" aria-live="polite">1 / 8</span>
+  </header>
+  <main class="deck-frame" aria-label="สไลด์สัปดาห์ที่ 9">
+    <section class="slide active" id="slide-1">
+      <div class="cover-layout">
+        <div>
+          <p class="slide-label">สัปดาห์ที่ 9 · EVM และการเปลี่ยนผ่าน</p>
+          <h1>วัดจริง ทบทวนจริง แล้วไปต่อ</h1>
+          <p class="slide-lead">ปิด Sprint 1 ด้วย EVM ทบทวน Retro และเปิด Sprint 2 [ข้อมูลจำลองเพื่อการศึกษา]</p>
+        </div>
+        <p class="cover-meta">เสร็จ 3 จาก 4 งาน<br>SV −1,000 CV −1,200 บาท<br>ความเร็วทีม 15 points</p>
+      </div>
+    </section>
+    <section class="slide" id="slide-2">
+      <h2>EVM นับจากเป้า 4 งาน เสร็จ 3 งาน จ่ายจริง 4,200 บาท</h2>
+      <p class="slide-lead">ที่มา: EVM_Sprint1.md — PV รวมงบการ์ดที่ตั้งเป้า EV รวมงบการ์ด Done AC จาก Log Work</p>
+      <table>
+        <thead><tr><th>ตัวแปร</th><th>วิธีนับ</th><th>มูลค่า</th></tr></thead>
+        <tbody>
+          <tr><td>PV</td><td>เป้า 4 งาน งานละ 1,000 บาท</td><td>4,000 บาท</td></tr>
+          <tr><td>EV</td><td>เสร็จผ่าน PyTest 3 งาน</td><td>3,000 บาท</td></tr>
+          <tr><td>AC</td><td>ค่าแรงจริงจาก Log Work</td><td>4,200 บาท</td></tr>
+        </tbody>
+      </table>
+    </section>
+    <section class="slide" id="slide-3">
+      <h2>EVM ชี้ว่าล่าช้า 1,000 บาทและเกินงบ 1,200 บาท</h2>
+      <p class="slide-lead">ที่มา: EVM_Sprint1.md — SV เท่ากับ EV ลบ PV CV เท่ากับ EV ลบ AC [ข้อมูลจำลองเพื่อการศึกษา]</p>
+      <table>
+        <thead><tr><th>ตัวชี้วัด</th><th>สูตร</th><th>ผลและคำแปล</th></tr></thead>
+        <tbody>
+          <tr><td>PV 4,000</td><td>งบตามแผน</td><td>เป้า 4 งาน</td></tr>
+          <tr><td>EV 3,000</td><td>งานเสร็จจริง</td><td>เสร็จ 3 งาน</td></tr>
+          <tr><td>AC 4,200</td><td>จ่ายจริง</td><td>ค่าแรง Log Work</td></tr>
+          <tr><td>SV −1,000</td><td>3,000 − 4,000</td><td>ล่าช้ากว่าแผน</td></tr>
+          <tr><td>CV −1,200</td><td>3,000 − 4,200</td><td>เกินงบประมาณ</td></tr>
+        </tbody>
+      </table>
+    </section>
+    <section class="slide" id="slide-4">
+      <div class="content-layout">
+        <div>
+          <h2>หนี้เทคนิคทำติดลบจึงยกงานค้างไป Sprint 2</h2>
+          <p class="slide-lead">ปิด Sprint 1 ที่ EV 3,000 บาท ที่มา: EVM_Sprint1.md [ข้อมูลจำลองเพื่อการศึกษา]</p>
+        </div>
+        <ul class="rule-list">
+          <li><strong>สาเหตุ</strong><span>หนี้เทคนิค app_v1 เสียเวลา merge conflict</span></li>
+          <li><strong>แผนเวลา</strong><span>ยกงานค้าง Sprint 2 เพิ่ม buffer</span></li>
+          <li><strong>แผนงบ</strong><span>ชดเชย −1,200 จากสำรองผ่านมติ CCB</span></li>
+        </ul>
+      </div>
+    </section>
+    <section class="slide" id="slide-5">
+      <h2>Retro สองเลนส์เปลี่ยนข้อบ่นเป็นข้อตกลงที่ทำได้</h2>
+      <p class="slide-lead">ที่มา: Retrospective_Sprint1.md — บอร์ด Mad Sad Glad กับ Start Stop Continue</p>
+      <table>
+        <thead><tr><th>เลนส์</th><th>ประเด็น Sprint 1</th></tr></thead>
+        <tbody>
+          <tr><td>Mad</td><td>merge conflict รุนแรง CI รันช้า</td></tr>
+          <tr><td>Sad</td><td>ประเมิน refactor ต่ำไป เจอหนี้ซ่อน</td></tr>
+          <tr><td>Glad</td><td>PyTest ดักบั๊ก เพื่อนช่วยเคลียร์ conflict</td></tr>
+          <tr><td>Start</td><td>เขียน PyTest ก่อนโค้ดตาม TDR</td></tr>
+          <tr><td>Stop</td><td>ดอง PR เกิน 24 ชม. commit ข้าม PR</td></tr>
+          <tr><td>Continue</td><td>สื่อสาร blocker ใน standup ทุกเช้า</td></tr>
+        </tbody>
+      </table>
+    </section>
+    <section class="slide" id="slide-6">
+      <div class="content-layout">
+        <div>
+          <h2>SMART บังคับตรวจ PR 12 ชม. และเขียนเทสต์ก่อนโค้ด</h2>
+          <p class="slide-lead">จาก Retro เป็นการ์ดงานบน backlog ที่มา: Retrospective_Sprint1.md</p>
+        </div>
+        <ul class="rule-list">
+          <li><strong>ตรวจ PR 12 ชม.</strong><span>reviewer ตรวจทุก PR หลังแจ้งเตือน</span></li>
+          <li><strong>TDR</strong><span>เขียน PyTest ล็อก CR-01 ก่อนโค้ดจริง</span></li>
+          <li><strong>วัดผล</strong><span>ไม่มีการ์ดค้างตรวจ ทุกงานมี RED ก่อน GREEN</span></li>
+        </ul>
+      </div>
+    </section>
+    <section class="slide" id="slide-7">
+      <div class="content-layout">
+        <div>
+          <h2>velocity 15 คุม Sprint 2 จึงรับ CR-01 ได้พอดี</h2>
+          <p class="slide-lead">ตั้งเป้า 20 ทำได้ 15 คุม Sprint 2 ไม่เกิน 15 ที่มา: Sprint_Transition.md [ข้อมูลจำลองเพื่อการศึกษา]</p>
+        </div>
+        <div class="metrics">
+          <div><b>15</b><span>points velocity Sprint 1</span></div>
+          <div><b>15</b><span>points เพดาน Sprint 2</span></div>
+          <div><b>CR-01</b><span>barcode reorder เข้า Sprint 2</span></div>
+        </div>
+      </div>
+    </section>
+    <section class="slide" id="slide-8">
+      <div class="cover-layout">
+        <div>
+          <h2>เดโมของจริงและผสานเข้า develop แล้วเปิด Sprint 2 ได้</h2>
+          <p class="slide-lead">เดโมด้วยของจริง ผสานเข้า develop เปิด Sprint 2 ที่มา: Sprint_Transition.md</p>
+        </div>
+        <ol class="next-steps">
+          <li>เดโมโครงสร้างใหม่ รัน pytest เขียวต่อหน้า sponsor</li>
+          <li>ผสานเข้า develop รัน full suite ไร้ regression</li>
+          <li>ดึง CR-01 เข้า Sprint 2 กด start อัปเดต log</li>
+        </ol>
+      </div>
+    </section>
+  </main>
+  <footer class="deck-controls"><button id="previous" type="button" aria-label="สไลด์ก่อนหน้า">← ก่อนหน้า</button><button id="next" type="button" aria-label="สไลด์ถัดไป">ถัดไป →</button></footer>
+  <script>
+
+const slides = [...document.querySelectorAll(".slide")];
+const count = document.querySelector("#slide-counter");
+const storageKey = "spm-week-9-evidence";
+function slideFromHash() {
+  const match = /#slide-(\d+)/.exec(window.location.hash || "");
+  if (!match) return null;
+  const index = Number.parseInt(match[1], 10) - 1;
+  return Number.isInteger(index) && index >= 0 && index < slides.length ? index : null;
+}
+function storedSlide() {
+  try {
+    const value = window.localStorage.getItem(storageKey);
+    if (value === null) return null;
+    const index = Number.parseInt(value, 10);
+    return Number.isInteger(index) && index >= 0 && index < slides.length ? index : null;
+  } catch (error) {
+    return null;
+  }
+}
+function rememberSlide(index) {
+  try {
+    window.localStorage.setItem(storageKey, String(index));
+  } catch (error) {
+  }
+}
+let current = slideFromHash() ?? storedSlide() ?? 0;
+function show(index) {
+  current = Math.min(Math.max(index, 0), slides.length - 1);
+  slides.forEach((slide, position) => slide.classList.toggle("active", position === current));
+  count.textContent = `${current + 1} / ${slides.length}`;
+  previousBtn.disabled = current === 0;
+  nextBtn.disabled = current === slides.length - 1;
+  rememberSlide(current);
+  try {
+    window.history.replaceState(null, "", `#slide-${current + 1}`);
+  } catch (error) {
+  }
+}
+function showFromHash() {
+  const index = slideFromHash();
+  if (index !== null) show(index);
+}
+var previousBtn = document.querySelector("#previous");
+var nextBtn = document.querySelector("#next");
+previousBtn.addEventListener("click", () => show(current - 1));
+nextBtn.addEventListener("click", () => show(current + 1));
+document.addEventListener("keydown", (event) => {
+  if (event.key === "ArrowRight" || event.key === "PageDown" || event.key === " ") {
+    event.preventDefault();
+    show(current + 1);
+  }
+  if (event.key === "ArrowLeft" || event.key === "PageUp") {
+    event.preventDefault();
+    show(current - 1);
+  }
+  if (event.key === "Home") {
+    event.preventDefault();
+    show(0);
+  }
+  if (event.key === "End") {
+    event.preventDefault();
+    show(slides.length - 1);
+  }
+});
+window.addEventListener("hashchange", showFromHash);
+show(current);
+  
+  </script>
+</body>
+</html>

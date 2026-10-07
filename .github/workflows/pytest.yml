@@ -5,10 +5,12 @@ on:
     branches:
       - main
       - develop
+      - phase2
   pull_request:
     branches:
       - main
       - develop
+      - phase2
 
 jobs:
   test:
@@ -28,6 +30,19 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
 
-    - name: Run PyTest
+    - name: Run PyTest (CLI + Desktop Program)
       run: |
-        pytest test_app.py --maxfail=1 --disable-warnings -q
+        python -m pytest test_app.py test_program.py \
+          --maxfail=1 --disable-warnings -q
+
+    - name: Lint (flake8 + bandit)
+      run: |
+        flake8 app.py program.py test_program.py tools/build_reports.py \
+          --count --statistics
+        bandit -q -r app.py program.py
+
+    - name: Verify generated reports are up to date
+      run: python3 tools/build_reports.py --check
+
+    - name: Verify evidence decks
+      run: python3 Phase1/Sprint1/templates/verify_evidence_decks.py

@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,
+      initial-scale=1.0">
+<title>sprint2 | SPM</title>
+<link rel="stylesheet" href="../../theme.css">
+<style>@page { size: A4; margin: 18mm 16mm; }
+body { font-family: "Noto Sans Thai", "Liberation Sans", sans-serif;
+  font-size: 11pt; line-height: 1.7; color: #1a1a1a; max-width: 900px;
+  margin: 0 auto; padding: 24px 20px 60px; }
+h1 { font-size: 22pt; border-bottom: 3px solid #1a56db; padding-bottom: 8px; }
+h2 { font-size: 14pt; color: #1a56db; margin-top: 1.6em;
+  border-bottom: 1px solid #e5e7eb; padding-bottom: 4px; }
+h3 { font-size: 12pt; margin-top: 1.2em; }
+table { border-collapse: collapse; width: 100%; margin: 0.9em 0;
+  font-size: 9.5pt; }
+th, td { border: 1px solid #cbd5e1; padding: 6px 9px; text-align: left;
+  vertical-align: top; }
+th { background: #eef2ff; }
+tr:nth-child(even) td { background: #fafbff; }
+code { font-family: "Noto Sans Mono", monospace; font-size: 9pt;
+  background: #f3f4f6; padding: 1px 5px; border-radius: 3px; }
+pre { background: #f3f4f6; padding: 12px; border-radius: 6px;
+  overflow-x: auto; font-size: 8.5pt; line-height: 1.5; }
+pre code { background: none; padding: 0; }
+blockquote { margin: 1em 0; padding: 8px 14px; border-left: 4px solid #1a56db;
+  background: #f5f8ff; }
+.nav { background: #1a1a2e; color: #fff; padding: 10px 16px;
+  border-radius: 8px; margin-bottom: 20px; font-size: 13px; }
+.nav a { color: #c7d6ff; text-decoration: none; margin-right: 14px; }
+.nav a:hover { color: #fff; text-decoration: underline; }
+.note { color: #5b6472; font-size: 10pt; margin-top: 40px;
+  border-top: 1px solid #e5e7eb; padding-top: 10px; }
+@media print { .nav { display: none; } }</style>
+</head>
+<body>
+<nav class="nav"><a href="../../index.html">หน้าแรก</a><a href="../../Phase1/README.html">Phase1</a><a href="../../Phase2/README.html">Phase2</a><a href="../../Phase3/README.html">Phase3</a><a href="../../Phase4/README.html">Phase4</a><a href="../../Phase5/README.html">Phase5 (หน้านี้)</a></nav>
+<h1>รายงาน Sprint 5 · ส่วน v3.0 — SQLite + Member System</h1>
+<p>เอกสารนี้สรุปหลักฐานในโฟลเดอร์ <code>Phase5/</code> สำหรับงานรายวิชา
+ข้อมูลโครงการทั้งหมดเป็นข้อมูลสมมติเพื่อการเรียน ไม่ใช่ข้อมูลลูกค้าจริง</p>
+<h2>1. วัตถุประสงค์และขอบเขตส่วน v3.0 ของ Sprint 5</h2>
+<p>เป้าหมายจาก epic SPM-22 คือลงมือทำ scope ที่ยกยอดจาก Sprint 1 ซึ่งตอนนั้น
+เป็นเพียงแบบออกแบบ (<code>Phase1/Sprint1/week-2/blueprint.md</code>, <code>Phase1/Sprint1/week-2/Member-Discount.md</code>,
+<code>Phase2/Sprint2/week-6/To_Be_Architecture.md</code>): ชั้นฐานข้อมูล SQLite แบบ Singleton ที่ใช้
+parameterized query, สคริปต์ย้าย <code>data.json</code> พร้อมยืนยัน, ระบบสมาชิก CRUD
+4 tiers ด้วย Strategy pattern, ผูกส่วนลดเข้า Checkout Flow พร้อมใบเสร็จ
+และชุดทดสอบอัตโนมัติครอบชั้น DB + เครื่องคำนวณส่วนลด + กัน SQL injection</p>
+<p>ข้อมูลการติดตามจาก Jira: งานชุดนี้อยู่ใน Sprint 5 (ID 86)
+5 issues (SPM-23…SPM-27, รวม 17 SP) สถานะ Done ทั้งหมด</p>
+<h2>2. ทีมและบทบาท</h2>
+<table>
+<thead>
+<tr>
+<th>บุคคล</th>
+<th>บทบาท</th>
+<th>ความรับผิดชอบหลัก</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Panuwat</td>
+<td>PM / Developer</td>
+<td>บริหารงานและพัฒนา</td>
+</tr>
+<tr>
+<td>Ekkapan</td>
+<td>QA / Tester</td>
+<td>ออกแบบและทดสอบอัตโนมัติ</td>
+</tr>
+<tr>
+<td>Nattapap</td>
+<td>Tech Lead / Architect</td>
+<td>ออกแบบสถาปัตยกรรมและทบทวนโค้ด</td>
+</tr>
+</tbody>
+</table>
+<h2>3. งานตามแผน SPM-23…SPM-27</h2>
+<table>
+<thead>
+<tr>
+<th>Issue</th>
+<th>งาน</th>
+<th style="text-align: right;">SP</th>
+<th>หลักฐาน</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SPM-23</td>
+<td>SQLite Database Layer (Singleton + Parameterized)</td>
+<td style="text-align: right;">5</td>
+<td><code>SPM-23-sqlite-layer.md</code>, <code>app.py</code> (<code>SQLiteDatabaseContext</code>, <code>InventoryRepository</code>)</td>
+</tr>
+<tr>
+<td>SPM-24</td>
+<td>Migrate JSON → SQLite พร้อมยืนยัน</td>
+<td style="text-align: right;">3</td>
+<td><code>SPM-24-migration.md</code>, <code>app.py</code> (<code>migrate_json_to_sqlite</code>, auto-migrate ใน CLI)</td>
+</tr>
+<tr>
+<td>SPM-25</td>
+<td>Member CRUD 4 tiers</td>
+<td style="text-align: right;">3</td>
+<td><code>SPM-25-member-crud.md</code>, <code>app.py</code> (<code>MemberTier</code> 4 คลาส, <code>Member</code>, <code>MemberManager</code>)</td>
+</tr>
+<tr>
+<td>SPM-26</td>
+<td>ส่วนลดเข้า Checkout Flow</td>
+<td style="text-align: right;">3</td>
+<td><code>SPM-26-checkout.md</code>, <code>app.py</code> (<code>CheckoutService</code>, เมนู CLI 7)</td>
+</tr>
+<tr>
+<td>SPM-27</td>
+<td>Tests ชั้น DB + Discount + Injection</td>
+<td style="text-align: right;">3</td>
+<td><code>SPM-27-tests.md</code>, <code>test_app.py</code> (9 เคสใหม่)</td>
+</tr>
+</tbody>
+</table>
+<h2>4. สิ่งที่ส่งมอบ</h2>
+<table>
+<thead>
+<tr>
+<th>สถานะ</th>
+<th>รายการ</th>
+<th>หลักฐาน/ข้อกำหนด</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Delivered</td>
+<td>Singleton + Repository (parameterized 100%)</td>
+<td><code>SQLiteDatabaseContext.getInstance</code>/<code>reset</code>; SQL ทุกเส้นใช้ <code>?</code> placeholders; <code>bandit</code> 0 issues</td>
+</tr>
+<tr>
+<td>Delivered</td>
+<td>Migration + verification</td>
+<td><code>match: True</code> (จำนวน + มูลค่าตรง 100%); รองรับคีย์เก่า <code>n</code>/<code>q</code>/<code>p</code>/<code>c</code> และค่าเริ่มต้น <code>barcode</code>/<code>reorder_point</code> ต่อเนื่องจาก BUG-101</td>
+</tr>
+<tr>
+<td>Delivered</td>
+<td>Member 4 tiers + fallback</td>
+<td>Regular 0% / Silver 5% / Gold 10% / Platinum 15%; tier ผิด/ว่าง → Regular โดยไม่ error</td>
+</tr>
+<tr>
+<td>Delivered</td>
+<td>Checkout + ใบเสร็จ</td>
+<td><code>subtotal</code>/<code>discount</code>/<code>grand_total</code> แยกบรรทัด; Gold 1,000 → 900; guest ราคาเต็ม; ตัดสต็อกใน transaction เดียว (commit/rollback); alert <code>&lt;= reorder_point</code> ยังทำงาน</td>
+</tr>
+<tr>
+<td>Delivered</td>
+<td>ความเข้ากันได้ถอยหลัง</td>
+<td><code>InventoryManager</code> (JSON + Atomic Save), <code>Product</code>, <code>CsvReportExporter</code> จาก v2.0 อยู่ครบ; CLI 5 → 8 เมนู</td>
+</tr>
+<tr>
+<td>Delivered</td>
+<td>หนี้ Sprint 1 บางส่วน</td>
+<td>Flake8 <code>E501</code> ใน <code>app.py</code>/<code>test_app.py</code> เคลียร์หมด (<code>flake8 app.py</code> exit 0)</td>
+</tr>
+</tbody>
+</table>
+<h2>5. หลักฐานทดสอบ</h2>
+<table>
+<thead>
+<tr>
+<th>ชุดทดสอบ</th>
+<th>ผล</th>
+<th>ขอบเขต</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>test_app.py</code> ที่รากรีโป</td>
+<td>14 passed</td>
+<td>5 เดิม (JSON) + 9 ใหม่ (singleton, injection, migration, member CRUD, fallback, checkout Gold/guest/alert, legacy JSON)</td>
+</tr>
+<tr>
+<td><code>Phase4/Sprint4/week-12/test_app.py</code></td>
+<td>25 passed</td>
+<td>regression v2.0 ไม่แตก</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Injection: <code>' OR '1'='1</code> และ <code>"; DROP TABLE --</code> ถูก treat เป็น string
+  ธรรมดา ตารางไม่พัง ยอดเงินเท่าเดิม</li>
+<li>E2E: JSON legacy ผสมคีย์สั้น/ยาว → migrate (<code>match: True</code>) →
+  สมัคร Gold → checkout 2×500 = 1,000 → สุทธิ 900 เหลือสต็อก 8</li>
+<li>Fixture แยก DB ต่อเทสต์ด้วย <code>tmp_path</code> + <code>SQLiteDatabaseContext.reset()</code>
+  กัน singleton รั่วข้ามเคส</li>
+</ul>
+<h2>6. คุณภาพโค้ดและหนี้คงเหลือ</h2>
+<ul>
+<li><code>flake8 app.py</code> → clean (exit 0); <code>bandit -r app.py</code> → 0 issues</li>
+<li>หนี้คงเหลือ: <code>test_app.py</code> ยังมี style nits เดิม (E302/W293) ไม่กระทบ
+  การรัน; งานพิธีการที่ยังค้างจาก Sprint 4 คือช่องลายเซ็น UAT
+  (tag <code>v2.0.0-evolution</code> สร้างแล้วในรอบตรวจรับ)</li>
+</ul>
+<h2>7. Jira และการติดตาม</h2>
+<ul>
+<li>งานชุดนี้อยู่ Sprint 5 (ID 86) ร่วมกับงาน Web (SPM-29…32);
+  epic SPM-22 ปิดแล้ว</li>
+</ul>
+<h2>8. ภาคผนวก Evidence Index</h2>
+<table>
+<thead>
+<tr>
+<th>หมวดหลักฐาน</th>
+<th>เส้นทาง</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>โค้ด v3.0</td>
+<td><code>app.py</code> (รากรีโป) + snapshot <code>Phase5/Sprint5/app.py</code></td>
+</tr>
+<tr>
+<td>ชุดทดสอบ</td>
+<td><code>test_app.py</code> (รากรีโป) + snapshot <code>Phase5/Sprint5/test_app.py</code></td>
+</tr>
+<tr>
+<td>หลักฐานราย issue</td>
+<td><code>Phase5/Sprint5/SPM-23-sqlite-layer.md</code> … <code>SPM-27-tests.md</code></td>
+</tr>
+<tr>
+<td>รายงานฉบับเว็บ</td>
+<td><code>Phase5/Sprint5/sprint2-report.html</code></td>
+</tr>
+<tr>
+<td>งานยกยอดต้นทาง</td>
+<td><code>Phase1/Sprint1/week-2/blueprint.md</code>, <code>Phase1/Sprint1/week-2/Member-Discount.md</code>, <code>Phase2/Sprint2/week-6/To_Be_Architecture.md</code></td>
+</tr>
+<tr>
+<td>รายงาน Sprint 4 / v2.0</td>
+<td><code>Phase4/Sprint4/sprint4.md</code></td>
+</tr>
+</tbody>
+</table>
+<p class="note">อ่านเป็น PDF: <a href="sprint2.pdf">sprint2.pdf</a></p>
+<p class="note">รายงานอัตโนมัติจาก <code>Phase5/Sprint5/sprint2.md</code> — ข้อมูลสมมติเพื่อการเรียน (สร้างด้วย <code>tools/build_reports.py</code>)</p>
+</body>
+</html>
